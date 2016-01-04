@@ -326,7 +326,7 @@
         <!-- 我的钱包 -->
         <activity
             android:name=".view.activity.MyWalletActivity"
-            android:theme="@style/FullBleedTheme">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
@@ -342,7 +342,21 @@
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".view.activity.CompleteInforActivity"
+            android:configChanges="orientation|keyboardHidden"
+           >
+        </activity>
+        <activity
+            android:name=".view.activity.IdentityAutherActivity"
+            android:configChanges="orientation|keyboardHidden"
+           >
+        </activity>
+        <activity
+            android:name=".view.activity.UploadPicActivity"
+            android:configChanges="orientation|keyboardHidden"
+            >
+        </activity>
     </application>
 
 </manifest>

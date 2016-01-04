@@ -1,0 +1,76 @@
+    <!-- 登录页 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bule"
+                android:orientation="vertical">
+
+<!-- 顶部标题 -->
+<com.topad.view.customviews.TitleView
+    android:id="@+id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="15dp"
+    android:paddingLeft="15dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/shenfenzheng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:gravity="left|center"
+            android:drawableRight="@drawable/arrow"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:padding="10dp"
+            android:text="身份证件"
+            android:onClick="onClick"
+            android:textSize="16dp"
+            android:visibility="visible"/>
+        <TextView
+            android:id="@+id/biyezheng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:onClick="onClick"
+            android:drawableRight="@drawable/arrow"
+            android:gravity="left|center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:padding="10dp"
+            android:text="毕业证/职业证书"
+            android:textSize="16dp"
+            android:visibility="visible"/>
+        <TextView
+            android:id="@+id/mingpian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@color/white"
+            android:layout_marginTop="1dp"
+            android:onClick="onClick"
+            android:drawableRight="@drawable/arrow"
+            android:gravity="left|center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:padding="10dp"
+            android:text="名片照"
+            android:textSize="16dp"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

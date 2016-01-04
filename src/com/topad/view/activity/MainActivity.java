@@ -367,6 +367,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.wszl://完善资料
+                intent = new Intent(MainActivity.this, CompleteInforActivity.class);
+                startActivity(intent);
                 break;
             case R.id.gsrz://公司认证
                 break;
