@@ -14,37 +14,17 @@ import java.util.Map;
  * todo
  */
 public class SharedPreferencesUtils {
-    /**
-     * 保存在手机里面的文件名
-     */
-    public static final String FILE_NAME = "wallet_app_sp";
+    /** 保存在手机里面的文件名 **/
+    public static final String FILE_NAME = "jike_app_sp";
     public static final String ACCOUNT = "account";
 
-
-    /**
-     * 存储数据key字段汇总
-     */
+    /** 存储数据key字段汇总 **/
     public static String KEY_TOKEN = "token";    //登录后服务端返回的token
-    public static String KEY_PURCHASE_FINANCE_TIPS = "purchase_finance_tips";    //预约填写页，页面下方提示
-    public static String KEY_FINANCE_RATE = "finance_rate";    //理财产品年化收益率
-    public static String KEY_LOGIN_USER_NAME = "user_name";    //登录账号名
-    public static String KEY_REAL_NAME = "real_name";    //真实姓名
-    public static String KEY_GESTURE_PWD = "gesture_pwd";    //手势密码
-    public static String KEY_GESTURE_PWD_SWITCH = "gesture_pwd_switch";    //手势密码开关
-    public static String KEY_GESTURE_PWD_ERR_COUNTS = "gesture_pwd_error_count";    //手势密码错误尝试次数
-    public static String KEY_APP_LAST_SWITCH_BACKGROUND_TIME = "app_last_switch_background_time";    //app上次切换后台时间
-    public static String KEY_APP_IN_BACKGROUND_STATE = "app_in_background_state";    //app在后台状态
-    public static String KEY_LOGIN_PWD = "login_pwd";    //登录密码
-    public static String KEY_LAUNCH_IMAGE_URL = "launch_image_url";    //launch页图片URL
-
-    public static String KEY_WEALTH_ANIMA = "key_wealth_anima";    //财富页面，提示总收益的动画是否执行过
-    public static String KEY_IS_REQUIRED_UPDATE = "isRequiredUpdate";    //检查更新状态
-
+    /** 存储数据userid字段汇总 **/
+    public static String USER_ID = "userid";    //登录后服务端返回的userid
 
     private static SharedPreferences sp = null;
     private static String curAccount;  //当前账户
-    public static String KEY_MARCHANTID = "merchantId";    //merchantId
-    public static String KEY_WALLET_SIGN = "wallet_sign";    //钱包签名
     /**
      * 获取数据存储实例句柄
      *

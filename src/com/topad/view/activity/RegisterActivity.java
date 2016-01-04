@@ -18,6 +18,7 @@ import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -327,9 +328,29 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            RegisterBean register = (RegisterBean) t;
+                            if (register != null) {
+                                // 本地缓存token
+                                if (!Utils.isEmpty(register.getToken())) {
+                                    SharedPreferencesUtils.clearCurAccount(mContext);
+                                    SharedPreferencesUtils.getInstance(mContext, mUserName);
+                                    SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.KEY_TOKEN, register.getToken());
+                                }
+
+                                // 本地存储userid
+                                if (!Utils.isEmpty(register.getUserid())) {
+                                    SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, register.getUserid());
+                                }
+
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+//                            // 是否登录
+//                            if (((TopADApplication)getApplication()).isLogin()) {
+//
+//                            }
+                            }
                         }
 
                         @Override

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.LoginBean;
@@ -16,6 +17,7 @@ import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -38,7 +40,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     /** 登录 **/
     private Button mBTLogin;
 
-    /** 用户名 **/
+    /** 用户名-手机号 **/
     private String mUserName;
     /** 密码 **/
     private String mPassword;
@@ -189,10 +191,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                        LoginBean login = (LoginBean) t;
+                        if (login != null) {
+                            // 本地缓存token
+                            if (!Utils.isEmpty(login.getToken())) {
+                                SharedPreferencesUtils.clearCurAccount(mContext);
+                                SharedPreferencesUtils.getInstance(mContext, mUserName);
+                                SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.KEY_TOKEN, login.getToken());
+                            }
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                            // 本地存储userid
+                            if (!Utils.isEmpty(login.getUserid())) {
+                                SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, login.getUserid());
+                            }
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+
+//                            // 是否登录
+//                            if (((TopADApplication)getApplication()).isLogin()) {
+//
+//                            }
+                        }
+
                     }
 
                     @Override
