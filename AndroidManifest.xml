@@ -69,7 +69,7 @@
         <!-- 闪屏页 -->
         <activity
             android:name=".view.activity.LaunchActivity"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/AppTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -80,7 +80,7 @@
         <!-- 登录页 -->
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -335,8 +335,7 @@
 
         <!-- 系统消息 -->
         <activity
-            android:name=".view.activity.SystemNewsActivity"
-            android:theme="@style/FullBleedTheme">
+            android:name=".view.activity.SystemNewsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
