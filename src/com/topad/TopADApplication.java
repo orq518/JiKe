@@ -6,8 +6,10 @@ import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 
 import com.topad.util.LogUtil;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.activity.MainActivity;
 import com.topad.view.fragment.BaseFragment;
@@ -22,11 +24,8 @@ public class TopADApplication extends Application {
     static int[] screenDispaly;
     private static PackageInfo mPackageInfo;
 
-
-    //    public static boolean mHomeNeedRefresh;// 首页是否需要刷新,true：回到首页需要刷新，false:不需刷新
     private String token;// 标识是否登录状态
-    private String identity;// 标识是否实名认证
-    private String bindCard;// 标识是否绑卡
+    private String userId;// UserId
 
     private Handler handler = new Handler();
     FragmentManager mFragmentManager;
@@ -74,9 +73,37 @@ public class TopADApplication extends Application {
         }
     }
 
+    /**
+     * 判断是否登录状态
+     */
+    public boolean isLogin() {
 
+        return !TextUtils.isEmpty(getToken());
+    }
 
+    /**
+     * 获取全局账户信息
+     *
+     * @return
+     */
+    public String getToken() {
+        if (TextUtils.isEmpty(token)) {
+            token = (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.KEY_TOKEN, "");
+        }
+        LogUtil.d("getToken()--->token:" + token);
+        return token;
+    }
 
-
-
+    /**
+     * 获取UserId
+     *
+     * @return
+     */
+    public String getUserId() {
+        if (TextUtils.isEmpty(userId)) {
+            userId = (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.USER_ID, "");
+        }
+        LogUtil.d("getUserId()--->userId:" + userId);
+        return userId;
+    }
 }

@@ -3,7 +3,7 @@ package com.topad.bean;
 import java.io.Serializable;
 
 /**
- * ${todo}<登录实体>
+ * ${todo}<注册实体>
  *
  * @author lht
  * @data: on 15/10/26 11:06
@@ -19,6 +19,16 @@ public class RegisterBean implements Serializable {
 	protected int status;
 	/** error信息 **/
 	protected String msg;
+	/** token **/
+	public String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getUserid() {
 		return userid;
