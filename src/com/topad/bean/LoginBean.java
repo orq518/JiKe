@@ -19,6 +19,16 @@ public class LoginBean implements Serializable {
 	protected int status;
 	/** error信息 **/
 	protected String msg;
+	/** userid **/
+	protected String userid;
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 
 	public String getToken() {
 		return token;
