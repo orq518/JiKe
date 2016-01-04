@@ -205,13 +205,18 @@
                     android:textSize="16dp"/>
             </LinearLayout>
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray"
+            />
+            <TextView
                 android:id="@+id/gerenjianjie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:gravity="left|center"
                 android:drawableRight="@drawable/arrow"
@@ -222,6 +227,33 @@
                 android:onClick="onClick"
                 android:textSize="16dp"
                 android:visibility="visible"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"
+                />
+            <TextView
+                android:id="@+id/xuanzezhiye"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white"
+                android:gravity="left|center"
+                android:drawableRight="@drawable/arrow"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:padding="10dp"
+                android:text="选择职业"
+                android:onClick="onClick"
+                android:textSize="16dp"
+                android:visibility="visible"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"
+            />
             <TextView
                 android:id="@+id/shenfenyanzheng"
                 android:layout_width="match_parent"
@@ -239,6 +271,11 @@
                 android:text="身份验证"
                 android:textSize="16dp"
                 android:visibility="visible"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"
+            />
         </LinearLayout>
 
         <!-- 登录 -->

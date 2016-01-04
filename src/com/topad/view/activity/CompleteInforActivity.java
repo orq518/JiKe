@@ -48,7 +48,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
     LinearLayout mainlayout;
     TextView tv_bithday;
-    TextView gerenjianjie, shenfenyanzheng;
+    TextView gerenjianjie,xuanzezhiye, shenfenyanzheng;
 
     @Override
     public int setLayoutById() {
@@ -70,8 +70,10 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         tv_bithday.setOnClickListener(this);
         mBTLogin.setOnClickListener(this);
         gerenjianjie = (TextView) findViewById(R.id.gerenjianjie);
+        xuanzezhiye = (TextView) findViewById(R.id.xuanzezhiye);
         shenfenyanzheng = (TextView) findViewById(R.id.shenfenyanzheng);
         gerenjianjie.setOnClickListener(this);
+        xuanzezhiye.setOnClickListener(this);
         shenfenyanzheng.setOnClickListener(this);
         // 设置登录按钮
         setNextBtnState(false);
@@ -120,6 +122,11 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.shenfenyanzheng://身份验证
                 Intent intent = new Intent(mContext, IdentityAutherActivity.class);
+                startActivity(intent);
+
+                break;
+            case R.id.xuanzezhiye://选择职业
+                 intent = new Intent(mContext, IdentityAutherActivity.class);
                 startActivity(intent);
 
                 break;
