@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import com.topad.R;
@@ -36,12 +37,31 @@ import java.util.ArrayList;
  * @author lht
  * @data: on 15/10/28 17:32
  */
-public class SelectProjectFragmnet extends BaseFragment {
+public class SelectProjectFragmnet extends BaseFragment implements  View.OnClickListener{
 	private static final String LTAG = SelectProjectFragmnet.class.getSimpleName();
 	/** 上下文 **/
 	private Context mContext;
 	/** 根view布局 **/
 	private View mRootView;
+	/** 全部 **/
+	private Button mBTAll;
+	/** 已托管 **/
+	private Button mBTTrusteeship;
+	/** 未托管 **/
+	private Button mBTNotTrusteeship;
+	/** 全部money **/
+	private Button mBTAllMoney;
+	/** 100元以下 **/
+	private Button mBT100;
+	/** 101-300元 **/
+	private Button mBT101300;
+	/** 300-1000元 **/
+	private Button mBT3001k;
+	/** 1000-1万元 **/
+	private Button mBT1k1w;
+	/** 1万元及以上 **/
+	private Button mBT1w;
+
 	/** 数据源 **/
 	private ArrayList<GroupBean> groups;
 	/** listView **/
@@ -49,14 +69,17 @@ public class SelectProjectFragmnet extends BaseFragment {
 	/** 适配器 **/
 	private SelectProjectEListAdapter adapter;
 
+	/** 类别 **/
+	private String type;
+	/** 钱类别 **/
+	private String moneyType;
+
 	@Override
 	public String getFragmentName() {
 		return LTAG;
 	}
 
-	/**
-	 * ***生命周期******
-	 */
+	/***** 生命周期 *****/
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -87,10 +110,30 @@ public class SelectProjectFragmnet extends BaseFragment {
 		groups = new ArrayList<GroupBean>();
 		getData();
 		listView = (CustomExpandableListView) mRootView.findViewById(R.id.listView);
+		mBTAll = (Button) mRootView.findViewById(R.id.btn_all);
+		mBTTrusteeship = (Button) mRootView.findViewById(R.id.btn_trusteeship);
+		mBTNotTrusteeship = (Button) mRootView.findViewById(R.id.btn_not_trusteeship);
+		mBTAllMoney = (Button) mRootView.findViewById(R.id.btn_all_money);
+		mBT100 = (Button) mRootView.findViewById(R.id.btn_100);
+		mBT101300 = (Button) mRootView.findViewById(R.id.btn_101_300);
+		mBT3001k = (Button) mRootView.findViewById(R.id.btn_301_1000);
+		mBT1k1w = (Button) mRootView.findViewById(R.id.btn_1000_1w);
+		mBT1w = (Button) mRootView.findViewById(R.id.btn_1w);
+
 		adapter = new SelectProjectEListAdapter(mContext, groups, listView);
 		listView.setAdapter(adapter);
 		listView.setOnChildClickListener(adapter);
 		listView.setGroupIndicator(null);
+
+		mBTAll.setOnClickListener(this);
+		mBTTrusteeship.setOnClickListener(this);
+		mBTNotTrusteeship.setOnClickListener(this);
+		mBTAllMoney.setOnClickListener(this);
+		mBT100.setOnClickListener(this);
+		mBT101300.setOnClickListener(this);
+		mBT3001k.setOnClickListener(this);
+		mBT1k1w.setOnClickListener(this);
+		mBT1w.setOnClickListener(this);
 	}
 
 	@Override
@@ -184,6 +227,49 @@ public class SelectProjectFragmnet extends BaseFragment {
 			}
 
 			groups.add(groupBean);
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			// 全部
+            case R.id.btn_all:
+				mBTAll.setTextColor(getResources().getColor(R.color.hot));
+                break;
+			// 已托管
+			case R.id.btn_trusteeship:
+
+				break;
+			// 未托管
+			case R.id.btn_not_trusteeship:
+
+				break;
+			// 全部money
+			case R.id.btn_all_money:
+
+				break;
+			// 全100元以下部
+			case R.id.btn_100:
+
+				break;
+			// 101-300元
+			case R.id.btn_101_300:
+
+				break;
+			// 300-1000元
+			case R.id.btn_301_1000:
+
+				break;
+			// 1000-1万元
+			case R.id.btn_1000_1w:
+
+				break;
+			// 1万元及以上
+			case R.id.btn_1w:
+
+				break;
+
 		}
 	}
 }
