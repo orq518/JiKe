@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.topad.R;
 import com.topad.bean.AdServiceBean;
 import com.topad.bean.SystemNewsBean;
@@ -17,30 +20,47 @@ import com.topad.util.Utils;
 import com.topad.view.customviews.PTRListView;
 import com.topad.view.customviews.PullToRefreshView;
 import com.topad.view.customviews.TitleView;
+import com.topad.view.customviews.mylist.MyListView;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 /**
- * ${todo}<请描述这个类是干什么的>
+ * ${todo}<系统消息>
  *
  * @author lht
  * @data: on 15/12/7 14:41
  */
-public class SystemNewsActivity extends BaseActivity implements View.OnClickListener,
-        PullToRefreshView.OnFooterRefreshListener{
+public class SystemNewsActivity extends BaseActivity implements View.OnClickListener{
     private static final String LTAG = SystemNewsActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
     /** 顶部布局 **/
     private TitleView mTitleView;
-    /** 下载更多 **/
-    private PullToRefreshView mPullToRefreshView;
     /** listView **/
-    private PTRListView mListView;
+    private MyListView mListView;
+    /** 只是用来模拟异步获取数据 **/
+    private Handler handler;
     /** 适配器 **/
     private ListAdapter adapter;
     /** 数据源 **/
     private ArrayList<SystemNewsBean> bankList = new ArrayList<SystemNewsBean>();
+
+    private final int MSG_REFRESH = 1000;
+    private final int MSG_LOADMORE = 2000;
+    protected android.os.Handler mHandler = new android.os.Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_REFRESH:
+
+                    break;
+
+                case MSG_LOADMORE:
+
+                    break;
+            }
+        }
+    };
 
     @Override
     public int setLayoutById() {
@@ -56,15 +76,14 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
     @Override
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);;
-        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.main_pull_refresh_view);
-        mListView = (PTRListView) findViewById(R.id.listview);
-
+        mListView = (MyListView) findViewById(R.id.listview);
     }
 
     @Override
     public void initData() {
-        showView();
         setData();
+
+        showView();
     }
 
     /**
@@ -75,13 +94,54 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
         mTitleView.setTitle("我的消息");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
+        // 设置listview可以加载、刷新
+        mListView.setPullLoadEnable(true);
+        mListView.setPullRefreshEnable(true);
+        // 设置适配器
         adapter = new ListAdapter();
         mListView.setAdapter(adapter);
+
+        // listview单击
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+//                Intent intent = new Intent(SystemNewsActivity.this, ADSDetailsActivity.class);
+//                intent.putExtra("title",bankList.get(position).name);
+//                startActivity(intent);
+            }
+        });
 
+        // 设置回调函数
+        mListView.setMyListViewListener(new MyListView.IMyListViewListener() {
+
+            @Override
+            public void onRefresh() {
+                // 模拟刷新数据，1s之后停止刷新
+                mHandler.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mListView.stopRefresh();
+                        Toast.makeText(SystemNewsActivity.this, "refresh",
+                                Toast.LENGTH_SHORT).show();
+                        mHandler.sendEmptyMessage(MSG_REFRESH);
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                mHandler.postDelayed(new Runnable() {
+                    // 模拟加载数据，1s之后停止加载
+                    @Override
+                    public void run() {
+                        mListView.stopLoadMore();
+                        Toast.makeText(SystemNewsActivity.this, "loadMore",
+                                Toast.LENGTH_SHORT).show();
+                        mHandler.sendEmptyMessage(MSG_LOADMORE);
+                    }
+                }, 1000);
             }
         });
     }
@@ -109,24 +169,6 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
             default:
                 break;
         }
-    }
-
-    /**
-     * 下拉监听
-     * @param view
-     */
-    @Override
-    public void onFooterRefresh(PullToRefreshView view) {
-        mPullToRefreshView.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                mPullToRefreshView.onFooterRefreshComplete();
-                Utils.showToast(mContext, "加载更多数据!");
-            }
-
-        }, 2000);
-
     }
 
     private class ListAdapter extends BaseAdapter {

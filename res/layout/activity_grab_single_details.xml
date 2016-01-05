@@ -29,6 +29,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!-- 详情 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
                         android:text="北京市聚宝网深圳分公司"
                         android:singleLine="true"
                         android:textSize="16sp"
+                        android:layout_marginTop="10dp"
                         android:textColor="@color/text_bg"/>
 
                     <RelativeLayout
@@ -78,7 +80,11 @@
                             android:text="出价："
                             android:singleLine="true"
                             android:textSize="16sp"
-                            android:textColor="@color/text_gray_bg"
+                            android:textColor="@color/text_bg"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="5dp"
                             android:layout_alignParentLeft="true"/>
 
                         <TextView
@@ -90,15 +96,25 @@
                             android:singleLine="true"
                             android:textSize="16sp"
                             android:textColor="@color/hot"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="5dp"
                             android:layout_toRightOf="@id/tv_price_tip"/>
 
-                        <ImageView
-                            android:id="@+id/im_icon"
+                        <TextView
+                            android:id="@+id/tv_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ads_icon_good"
-                            android:layout="@id/tv_praise"
+                            android:text="已托管"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:background="@drawable/grab_single_state"
                             android:layout_marginRight="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="35dp"
                             android:layout_alignParentRight="true"/>
 
                     </RelativeLayout>
@@ -112,14 +128,14 @@
                         android:textSize="16sp"
                         android:textColor="@color/text_gray_bg"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="20dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -146,42 +162,44 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp">
+                    android:layout_alignParentBottom="true">
 
                     <!-- 到期 -->
                     <Button
                         android:id="@+id/btn_countdown"
-                        style="@style/btn_bule_borad_style"
-                        android:layout_weight="1"
+                        style="@style/btn_white_borad_style"
+                        android:layout_weight="2"
                         android:focusable="false"
                         android:text="类型：广告创意-网站软件"
                         android:textColor="@color/text_gray_bg"
+                        android:textSize="16sp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"/>
 
                     <!-- 时间 -->
                     <Button
                         android:id="@+id/btn_time"
-                        style="@style/btn_bule_borad_style"
-                        android:layout_weight="2"
+                        style="@style/btn_white_borad_style"
+                        android:layout_weight="3"
                         android:focusable="false"
-                        android:drawableLeft="@drawable/adsd_button_collect"
+                        android:drawableLeft="@drawable/pic_time"
                         android:text="2015-10-22"
                         android:textColor="@color/text_gray_bg"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="0dp"/>
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <!-- 中部 -->
+            <!-- 我要提交 -->
             <RelativeLayout
+                android:id="@+id/ly_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="15dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_need"
@@ -242,6 +260,310 @@
                     android:layout_below="@id/tv_need_details_content"/>
 
             </RelativeLayout>
+
+            <!-- 抢单成功 -->
+            <LinearLayout
+                android:id="@+id/ly_success"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@color/white">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="matrix"
+                        android:src="@drawable/pic_success_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_success"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="抢单成功！"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+            </LinearLayout>
+
+            <!-- 申诉 -->
+            <LinearLayout
+                android:id="@+id/ly_appeal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/im_wealth_down_fund_record_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:paddingTop="3dp"
+                        android:src="@drawable/pic_representations" />
+
+                    <TextView
+                        android:id="@+id/tv_wealth_down_fund_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="申诉"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/im_wealth_down_fund_record_left"/>
+
+
+                    <ImageView
+                        android:id="@+id/im_wealth_down_fund_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/arrow" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:paddingTop="3dp"/>
+
+            </LinearLayout>
+
+            <!-- 未选择抢单人 -->
+            <LinearLayout
+                android:id="@+id/ly_not_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="已有"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="20dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_not_select_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="5"
+                        android:textSize="16sp"
+                        android:textColor="@color/hot"
+                        android:layout_marginLeft="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="人抢单，还未选择承接人。"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:paddingTop="3dp"/>
+
+            </LinearLayout>
+
+            <!-- 项目已取消 -->
+            <LinearLayout
+                android:id="@+id/ly_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@color/white">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="matrix"
+                        android:src="@drawable/pic_success_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="项目已取消"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+            </LinearLayout>
+
+            <!-- 已选择其他 -->
+            <LinearLayout
+                android:id="@+id/ly_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@color/white">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="matrix"
+                        android:src="@drawable/pic_success_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_other"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="对不起，此项目已选其他抢单人。"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

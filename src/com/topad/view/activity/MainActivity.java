@@ -8,7 +8,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,25 +22,45 @@ import com.topad.view.customviews.TitleView;
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
     private static final String LTAG = MainActivity.class.getSimpleName();
-    /** 上下文 **/
+    /**
+     * 上下文
+     **/
     private Context mContext;
-    /** title布局 **/
+    /**
+     * title布局
+     **/
     private TitleView mTitle;
-    /** 我有媒体 **/
+    /**
+     * 我有媒体
+     **/
     private ImageView mMyMedia;
-    /** 发布需求 **/
+    /**
+     * 发布需求
+     **/
     private ImageView mReleaseDemand;
-    /** 我要抢单 **/
+    /**
+     * 我要抢单
+     **/
     private ImageView mGrabSingle;
-    /** 广告创意 **/
+    /**
+     * 广告创意
+     **/
     private LinearLayout mAdvertisingCreativEe;
-    /** 营销策略 **/
+    /**
+     * 营销策略
+     **/
     private LinearLayout mMarketingStrategy;
-    /** 影视广告 **/
+    /**
+     * 影视广告
+     **/
     private LinearLayout mTVC;
-    /** 动漫创作 **/
+    /**
+     * 动漫创作
+     **/
     private LinearLayout mAnimeCreate;
-    /** 沉浸式状态栏 **/
+    /**
+     * 沉浸式状态栏
+     **/
     private SystemBarTintManager mTintManager;
 
     private DrawerLayout mDrawerLayout;
@@ -217,7 +236,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.grab_single://我要抢单
-                intent = new Intent(MainActivity.this, GrabSingleActivity.class);
+                intent = new Intent(MainActivity.this, MyGrabSingleActivity.class);
                 startActivity(intent);
                 break;
 
@@ -249,7 +268,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 float cx = event.getX();
                 float cy = event.getY();
                 moveXY = Math.abs(cx - lastX) + Math.abs(cy - lastY);
-                LogUtil.d("moveXY:"+moveXY);
+                LogUtil.d("moveXY:" + moveXY);
                 if (moveXY > 30) {
                     leftMenuTouch(v, false);
                     isNeedUp = false;
@@ -376,7 +395,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.wdqd://我的抢单
 
-                intent = new Intent(MainActivity.this, MyGrabsingleActivity.class);
+                intent = new Intent(MainActivity.this, GrabSingleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.wdxq://我的需求

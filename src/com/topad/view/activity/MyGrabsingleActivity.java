@@ -1,226 +1,224 @@
 package com.topad.view.activity;
 
+import android.graphics.Matrix;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
+import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.topad.R;
-import com.topad.bean.GrabSingleBean;
-import com.topad.util.Utils;
-import com.topad.view.customviews.PTRListView;
-import com.topad.view.customviews.PullToRefreshView;
-import com.topad.view.customviews.TitleView;
+import com.topad.view.fragment.GrabSingleFragment;
+import com.topad.view.fragment.SelectProjectFragmnet;
+
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * ${todo}<我的抢单>
+ * ${todo}<我要抢单－首页入口>
  *
  * @author lht
  * @data: on 15/10/27 17:31
  */
-public class MyGrabsingleActivity extends BaseActivity implements View.OnClickListener,PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
-    private static final String LTAG = MyGrabsingleActivity.class.getSimpleName();
+public class MyGrabSingleActivity extends BaseActivity implements View.OnClickListener {
+    private static final String LTAG = MyGrabSingleActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
-    /** 根view布局 **/
-    private View mRootView;
-    /** 下载更多 **/
-    private PullToRefreshView mPullToRefreshView;
-    /** listView **/
-    private PTRListView mListView;
-    /** 适配器 **/
-    private ListAdapter adapter;
-    /** 顶部布局 **/
-    private TitleView mTitleView;
-    /** 数据源 **/
-    private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
-    PullToRefreshView refreshView;
+    /** 页卡内容 **/
+    private ViewPager viewPager;
+    /** 动画图片 **/
+    private ImageView imageView;
+    /** 返回 **/
+    private TextView mBack;
+    /** 我要抢单 **/
+    private TextView tvGrabSingle;
+    /** 甄选项目 **/
+    private TextView tvSelectProject;
+
+    /** Tab页面列表 **/
+    private List<Fragment> fragments;
+    /** 动画图片偏移量 **/
+    private int offset = 0;
+    /** 当前页卡编号 **/
+    private int currIndex = 0;
+    /** 动画图片宽度 **/
+    private int bmpW;
+    private int selectedColor, unSelectedColor;
+    /** 页卡总数 **/
+    private static final int pageSize = 2;
+
     @Override
     public int setLayoutById() {
         mContext = this;
-        return 0;
+        return R.layout.activity_my_grab_single;
     }
 
     @Override
     public View setLayoutByView() {
-        mContext = this;
-        mRootView = LayoutInflater.from(this).inflate(R.layout.activity_my_grab_single, null);
-        return mRootView;
+        return null;
     }
     @Override
     public void initViews() {
-        refreshView= (PullToRefreshView) mRootView.findViewById(R.id.main_pull_refresh_view);
-        refreshView.setOnHeaderRefreshListener(this);
-        mTitleView = (TitleView) mRootView.findViewById(R.id.title);
-        mTitleView.setTitle("我的抢单");
-        mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-        mPullToRefreshView = (PullToRefreshView) mRootView.findViewById(R.id.main_pull_refresh_view);
-        mListView = (PTRListView) mRootView.findViewById(R.id.listview);
+        selectedColor = getResources().getColor(R.color.white);
+        unSelectedColor = getResources().getColor(R.color.gray);
 
-        adapter = new ListAdapter();
-        mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
-                intent.putExtra("title",bankList.get(position).name);
-                startActivity(intent);
-            }
-        });
-
-        setData();
+        InitImageView();
+        InitTextView();
+        InitViewPager();
     }
 
-    @Override
-    public void onHeaderRefresh(PullToRefreshView view) {
-
-    }
-
-    /**
-     * 顶部布局--按钮事件监听
-     */
-    public class TitleLeftOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    }
     @Override
     public void initData() {
 
     }
 
     /**
-     * 下拉监听
-     * @param view
+     * 初始化动画，这个就是页卡滑动时，下面的横线也滑动的效果，在这里需要计算一些数据
      */
-    @Override
-    public void onFooterRefresh(PullToRefreshView view) {
-        mPullToRefreshView.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                mPullToRefreshView.onFooterRefreshComplete();
-                Utils.showToast(mContext, "加载更多数据!");
-            }
-
-        }, 2000);
+    private void InitImageView() {
+        imageView = (ImageView) findViewById(R.id.iv_bottom_line);
+        bmpW = imageView.getLayoutParams().width;// 获取图片宽度
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenW = dm.widthPixels;// 获取分辨率宽度
+        offset = (screenW / pageSize - bmpW) / 4;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
+        Matrix matrix = new Matrix();
+        matrix.postTranslate(offset, 0);
+        imageView.setImageMatrix(matrix);// 设置动画初始位置
     }
 
+    /**
+     * 初始化头标
+     */
+    private void InitTextView() {
+        tvGrabSingle = (TextView) findViewById(R.id.tv_grab_single);
+        tvSelectProject = (TextView) findViewById(R.id.tv_select_project);
 
-    private class ListAdapter extends BaseAdapter {
-        private LayoutInflater mInflater;
+        tvGrabSingle.setTextColor(selectedColor);
+        tvSelectProject.setTextColor(unSelectedColor);
 
-        public ListAdapter() {
-            mInflater = LayoutInflater.from(mContext);
+        mBack.setOnClickListener(this);
+        tvGrabSingle.setOnClickListener(new MyOnClickListener(0));
+        tvSelectProject.setOnClickListener(new MyOnClickListener(1));
+    }
+
+    /**
+     * 初始化Viewpager页
+     */
+    private void InitViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.vPager);
+        fragments = new ArrayList<Fragment>();
+        fragments.add(new GrabSingleFragment());
+        fragments.add(new SelectProjectFragmnet());
+        viewPager.setAdapter(new myPagerAdapter(getSupportFragmentManager(), fragments));
+        viewPager.setCurrentItem(0);
+        viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
+    }
+
+    /**
+     * 头标点击监听
+     */
+    private class MyOnClickListener implements View.OnClickListener {
+        private int index = 0;
+
+        public MyOnClickListener(int i) {
+            index = i;
         }
 
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return bankList.size();
-        }
+        public void onClick(View v) {
 
-        @Override
-        public Object getItem(int arg0) {
-            // TODO Auto-generated method stub
-            return bankList.get(arg0);
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-            // TODO Auto-generated method stub
-            return arg0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if (convertView == null) {
-                convertView = mInflater.inflate((R.layout.fargment_grab_single_item), null);
-                holder = new ViewHolder();
-                holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
-                holder.name = (TextView) convertView .findViewById(R.id.tv_name);
-                holder.price = (TextView) convertView .findViewById(R.id.tv_price);
-                holder.content = (TextView) convertView .findViewById(R.id.tv_content);
-                holder.time = (Button) convertView .findViewById(R.id.btn_time);
-                holder.countdown = (Button) convertView .findViewById(R.id.btn_countdown);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
+            switch (index) {
+                case 0:
+                    tvGrabSingle.setTextColor(selectedColor);
+                    tvSelectProject.setTextColor(unSelectedColor);
+                    break;
+                case 1:
+                    tvSelectProject.setTextColor(selectedColor);
+                    tvGrabSingle.setTextColor(unSelectedColor);
+                    break;
             }
-
-            holder.name.setText(bankList.get(position).name);
-            holder.price.setText(bankList.get(position).price);
-            holder.content.setText(bankList.get(position).content);
-            holder.time.setText(bankList.get(position).time);
-            holder.countdown.setText(bankList.get(position).countdown);
-            return convertView;
+            viewPager.setCurrentItem(index);
         }
 
-        class ViewHolder {
-            ImageView icon;
-            TextView name;
-            TextView price;
-            TextView content;
-            TextView time;
-            TextView countdown;
+    }
+
+    /**
+     * 为选项卡绑定监听器
+     */
+    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
+//		int two = one * 2;// 页卡1 -> 页卡3 偏移量
+
+        public void onPageScrollStateChanged(int index) {
+        }
+
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        public void onPageSelected(int index) {
+            Animation animation = new TranslateAnimation(one * currIndex, one
+                    * index, 0, 0);// 显然这个比较简洁，只有一行代码。
+            currIndex = index;
+            animation.setFillAfter(true);// True:图片停在动画结束位置
+            animation.setDuration(300);
+            imageView.startAnimation(animation);
+
+            switch (index) {
+                case 0:
+                    tvGrabSingle.setTextColor(selectedColor);
+                    tvSelectProject.setTextColor(unSelectedColor);
+                    break;
+                case 1:
+                    tvSelectProject.setTextColor(selectedColor);
+                    tvGrabSingle.setTextColor(unSelectedColor);
+                    break;
+
+            }
         }
     }
 
     /**
-     * 设置数据--测试
+     * 定义适配器
      */
-    private void setData() {
-        GrabSingleBean bModel0 = new GrabSingleBean();
-        bModel0.name = "北京市聚宝网深圳分公司";
-        bModel0.price = "￥120000";
-        bModel0.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-        bModel0.time = "2015-10-22";
-        bModel0.countdown = "还有3天到期";
-        bankList.add(bModel0);
+    class myPagerAdapter extends FragmentPagerAdapter {
+        private List<Fragment> fragmentList;
 
-        GrabSingleBean bModel1 = new GrabSingleBean();
-        bModel1.name = "北京市聚宝网深圳分公司";
-        bModel1.price = "￥120000";
-        bModel1.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-        bModel1.time = "2015-10-22";
-        bModel1.countdown = "还有3天到期";
-        bankList.add(bModel1);
+        public myPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+            super(fm);
+            this.fragmentList = fragmentList;
+        }
 
-        GrabSingleBean bModel2 = new GrabSingleBean();
-        bModel2.name = "北京市聚宝网深圳分公司";
-        bModel2.price = "￥120000";
-        bModel2.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-        bModel2.time = "2015-10-22";
-        bModel2.countdown = "还有3天到期";
-        bankList.add(bModel2);
+        /**
+         * 得到每个页面
+         */
+        @Override
+        public Fragment getItem(int arg0) {
+            return (fragmentList == null || fragmentList.size() == 0) ? null
+                    : fragmentList.get(arg0);
+        }
 
-        GrabSingleBean bModel3 = new GrabSingleBean();
-        bModel3.name = "北京市聚宝网深圳分公司";
-        bModel3.price = "￥120000";
-        bModel3.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-        bModel3.time = "2015-10-22";
-        bModel3.countdown = "还有3天到期";
-        bankList.add(bModel3);
+        /**
+         * 每个页面的title
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
+        }
 
-        GrabSingleBean bModel4 = new GrabSingleBean();
-        bModel4.name = "北京市聚宝网深圳分公司";
-        bModel4.price = "￥120000";
-        bModel4.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-        bModel4.time = "2015-10-22";
-        bModel4.countdown = "还有3天到期";
-        bankList.add(bModel4);
+        /**
+         * 页面的总个数
+         */
+        @Override
+        public int getCount() {
+            return fragmentList == null ? 0 : fragmentList.size();
+        }
     }
 
     @Override

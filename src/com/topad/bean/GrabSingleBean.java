@@ -14,6 +14,7 @@ public class GrabSingleBean {
     public String icon;
     public String name;
     public String price;
+    public String state;
     public String content;
     public String time;
     public String countdown;
