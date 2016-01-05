@@ -28,7 +28,7 @@
                     android:layout_weight="1"
                     android:focusable="false"
                     android:text="全部"
-                    android:textColor="@color/text_gray_bg"
+                    android:textColor="@color/hot"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"/>
 
@@ -39,7 +39,7 @@
                     android:layout_weight="1"
                     android:focusable="false"
                     android:text="已托管"
-                    android:textColor="@color/hot"
+                    android:textColor="@color/text_gray_bg"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"/>
 
@@ -69,7 +69,7 @@
                     android:layout_weight="1"
                     android:focusable="false"
                     android:text="全部"
-                    android:textColor="@color/text_gray_bg"/>
+                    android:textColor="@color/hot"/>
 
                 <!-- 100元以下 -->
                 <Button
@@ -78,7 +78,7 @@
                     android:layout_weight="1"
                     android:focusable="false"
                     android:text="100元以下"
-                    android:textColor="@color/hot"/>
+                    android:textColor="@color/text_gray_bg"/>
 
                 <!-- 101-300元 -->
                 <Button
