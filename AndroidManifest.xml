@@ -230,6 +230,16 @@
             </intent-filter>
         </activity>
 
+        <!-- 我要抢单 -->
+        <activity
+            android:name=".view.activity.MyGrabSingleActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
+            </intent-filter>
+        </activity>
+
         <!-- 我要抢单详情页 -->
         <activity
             android:name=".view.activity.GrabSingleDetailsActivity"
@@ -336,6 +346,16 @@
         <!-- 系统消息 -->
         <activity
             android:name=".view.activity.SystemNewsActivity"
+            android:theme="@style/FullBleedTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+        <!-- 申诉页 -->
+        <activity
+            android:name=".view.activity.AppealActivity"
             android:theme="@style/FullBleedTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

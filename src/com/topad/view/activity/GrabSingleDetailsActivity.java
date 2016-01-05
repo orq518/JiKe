@@ -1,6 +1,7 @@
 package com.topad.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -42,12 +45,31 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
     private TextView mContent;
     /** 地址 **/
     private TextView mAddress;
+
+    /** 我要提交 **/
+    private RelativeLayout mLYDetails;
     /** 详细内容 **/
     private TextView mDetailsContent;
     /** 提交 **/
     private Button mSubmit;
     /** 数据源 **/
     private ArrayList<HashMap<String,String>> list;
+
+    /** 抢单成功 **/
+    private LinearLayout mLYSuccess;
+    /** 申诉 **/
+    private LinearLayout mLYAppeal;
+    /** 未选择抢单人 **/
+    private LinearLayout mLYNotSelect;
+    /** 未选择抢单人数 **/
+    private TextView mNotSelectNum;
+    /** 项目已取消 **/
+    private LinearLayout mLYCancel;
+    /** 已选择其他 **/
+    private LinearLayout mLYOther;
+
+    /** 状态 **/
+    private String state;
 
     @Override
     public int setLayoutById() {
@@ -63,39 +85,108 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
     @Override
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
-        mGridView = (MyGridView) findViewById(R.id.gv_in);
+
         mName = (TextView) findViewById(R.id.tv_name);
         mMoney = (TextView) findViewById(R.id.tv_price);
         mContent = (TextView) findViewById(R.id.tv_content);
         mAddress = (TextView) findViewById(R.id.tv_address);
+
+        // 我要提交
+        mLYDetails = (RelativeLayout) findViewById(R.id.ly_details);
+        mGridView = (MyGridView) findViewById(R.id.gv_in);
         mDetailsContent = (TextView) findViewById(R.id.tv_need_details_content);
         mSubmit = (Button) findViewById(R.id.btn_submit);
 
+        // 抢单成功
+        mLYSuccess = (LinearLayout) findViewById(R.id.ly_success);
+        mLYAppeal = (LinearLayout) findViewById(R.id.ly_appeal);
+
+        // 未选择抢单人
+        mLYNotSelect = (LinearLayout) findViewById(R.id.ly_not_select);
+        mNotSelectNum = (TextView) findViewById(R.id.tv_not_select_num);
+
+        // 项目已取消
+        mLYCancel = (LinearLayout) findViewById(R.id.ly_cancel);
+        // 已选择其他
+        mLYOther = (LinearLayout) findViewById(R.id.ly_other);
+
         mSubmit.setOnClickListener(this);
+        mLYAppeal.setOnClickListener(this);
 
-        // 设置title
-        mTitleView.setTitle("项目详情");
-        mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-
-        //为GridView设置适配器
-        mGridView.setAdapter(new MyAdapter(this, setData()));
 
     }
 
     @Override
     public void initData() {
+        // 接收数据
+        Intent intent = getIntent();
+        if (intent != null) {
+            state = intent.getStringExtra("state");
+        }
 
+        showView();
+    }
+
+    public void showView() {
+        // 设置title
+        mTitleView.setTitle("项目详情");
+        mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+
+        if("1".equals(state)){// 我要提交
+            mLYDetails.setVisibility(View.VISIBLE);
+            mLYSuccess.setVisibility(View.GONE);
+            mLYAppeal.setVisibility(View.GONE);
+            mLYNotSelect.setVisibility(View.GONE);
+            mLYCancel.setVisibility(View.GONE);
+            mLYOther.setVisibility(View.GONE);
+        }else if("2".equals(state)){// 抢单成功
+            mLYDetails.setVisibility(View.GONE);
+            mLYSuccess.setVisibility(View.VISIBLE);
+            mLYAppeal.setVisibility(View.VISIBLE);
+            mLYNotSelect.setVisibility(View.GONE);
+            mLYCancel.setVisibility(View.GONE);
+            mLYOther.setVisibility(View.GONE);
+        }else if("3".equals(state)){// 未选择抢单人
+            mLYDetails.setVisibility(View.GONE);
+            mLYSuccess.setVisibility(View.GONE);
+            mLYAppeal.setVisibility(View.GONE);
+            mLYNotSelect.setVisibility(View.VISIBLE);
+            mLYCancel.setVisibility(View.GONE);
+            mLYOther.setVisibility(View.GONE);
+        }else if("4".equals(state)){// 项目已取消
+            mLYDetails.setVisibility(View.GONE);
+            mLYSuccess.setVisibility(View.GONE);
+            mLYAppeal.setVisibility(View.GONE);
+            mLYNotSelect.setVisibility(View.GONE);
+            mLYCancel.setVisibility(View.VISIBLE);
+            mLYOther.setVisibility(View.GONE);
+        }else if("5".equals(state)){// 已选择其他
+            mLYDetails.setVisibility(View.GONE);
+            mLYSuccess.setVisibility(View.GONE);
+            mLYAppeal.setVisibility(View.GONE);
+            mLYNotSelect.setVisibility(View.GONE);
+            mLYCancel.setVisibility(View.GONE);
+            mLYOther.setVisibility(View.VISIBLE);
+        }
+
+        //为GridView设置适配器
+        mGridView.setAdapter(new MyAdapter(this, setData()));
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            // 收藏
+            // 提交
             case R.id.btn_submit:
-
+                finish();
                 break;
 
+            // 申诉
+            case R.id.ly_appeal:
+                Intent intent = new Intent(mContext, AppealActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
