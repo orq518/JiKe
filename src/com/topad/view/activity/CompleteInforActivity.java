@@ -1,8 +1,10 @@
 package com.topad.view.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -19,6 +21,7 @@ import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.LogUtil;
 import com.topad.util.Md5;
 import com.topad.util.Utils;
 import com.topad.view.customviews.PickDatePopwindow;
@@ -48,7 +51,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
     LinearLayout mainlayout;
     TextView tv_bithday;
-    TextView gerenjianjie,xuanzezhiye, shenfenyanzheng;
+    TextView gerenjianjie, xuanzezhiye, shenfenyanzheng;
 
     @Override
     public int setLayoutById() {
@@ -115,20 +118,25 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        Intent intent;
         switch (v.getId()) {
             case R.id.gerenjianjie://个人简介
 
 
                 break;
             case R.id.shenfenyanzheng://身份验证
-                Intent intent = new Intent(mContext, IdentityAutherActivity.class);
+                intent = new Intent(mContext, IdentityAutherActivity.class);
                 startActivity(intent);
 
                 break;
             case R.id.xuanzezhiye://选择职业
-                 intent = new Intent(mContext, IdentityAutherActivity.class);
+                intent = new Intent(mContext, ShareNeedsActivity.class);
+                intent.putExtra("from", "1");
                 startActivity(intent);
 
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(Constants.BroadCast_Action_GETZHIYE);
+                registerReceiver(broadcastReceiver, filter);
                 break;
             case R.id.btn_login://确认保存
 
@@ -170,4 +178,28 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         mBTLogin.setEnabled(flag);
         mBTLogin.setClickable(flag);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+        }
+
+    }
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (Constants.BroadCast_Action_GETZHIYE.equals(action)) {//取得职业
+                String zhiyeString = intent.getStringExtra("zhiye");
+                LogUtil.d("zhiyeString:"+zhiyeString);
+                if(!Utils.isEmpty(zhiyeString)) {
+                    xuanzezhiye.setText(zhiyeString);
+                }
+            }
+        }
+    };
 }

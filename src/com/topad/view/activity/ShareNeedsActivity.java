@@ -53,8 +53,10 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
     }
     /** 沉浸式状态栏 **/
     private SystemBarTintManager mTintManager;
+    String from;
     @Override
     public void initViews() {
+        from=getIntent().getStringExtra("from");
         mTintManager = new SystemBarTintManager(this);
         mTintManager.setStatusBarTintEnabled(true);
         mTintManager.setNavigationBarTintEnabled(true);
@@ -85,6 +87,8 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
         Intent intent = new Intent(ShareNeedsActivity.this, NeedsListActivity.class);
         TextView tv= (TextView) v;
         intent.putExtra("title",tv.getText().toString());
+        intent.putExtra("from",from);
+
         super.onClick(v);
         switch (v.getId()) {
             case R.id.tab01:
@@ -127,6 +131,9 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
                 break;
         }
         startActivity(intent);
+        if("1".equals(from)){
+            finish();
+        }
     }
 
     @Override

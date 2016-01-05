@@ -68,7 +68,7 @@ public class Constants {
     /**
      * 广播Action
      **/
-    public static final String BroadCast_Action_Login = "BroadCast_Action_Login";   //登录
+    public static final String BroadCast_Action_GETZHIYE = "BroadCast_Action_Login";   //获得职业
     public static final String BroadCast_Action_LogOut = "BroadCast_Action_Logout"; //登出
     public static final String BroadCast_Action_Clear_Token = "BroadCast_Action_Clear_Token";   //清除token
     public static final String BroadCast_Action_SUCCEED_Login_INDEX = "BroadCast_Action_SUCCEED_Login_INDEX";   //登录成功后跳转的tabindex

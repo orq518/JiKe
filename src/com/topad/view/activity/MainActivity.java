@@ -375,6 +375,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.cpsj://我的服务产品
                 break;
             case R.id.wdqd://我的抢单
+
+                intent = new Intent(MainActivity.this, MyGrabsingleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wdxq://我的需求
                 break;

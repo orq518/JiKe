@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.topad.R;
 import com.topad.bean.NeedsListBean;
 import com.topad.bean.SearchListBean;
+import com.topad.util.Constants;
 import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
@@ -80,13 +81,20 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     }
 
     String titleString = null;
-
-    /** 沉浸式状态栏 **/
+    /**
+     * from: null或者0 来自发布需求   1：来自职业选择
+     */
+    String from;
+    /**
+     * 沉浸式状态栏
+     **/
     private SystemBarTintManager mTintManager;
+
     private void applySelectedColor() {
         int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
         mTintManager.setTintColor(color);
     }
+
     @Override
     public void initViews() {
         mTintManager = new SystemBarTintManager(this);
@@ -96,6 +104,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         titleString = intent.getStringExtra("title");
         type = intent.getIntExtra("type", 0);
+        from = intent.getStringExtra("from");
         switch (type) {
             case 0:
                 tempArray = guanggaochuangyi;
@@ -158,8 +167,17 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
-                startActivity(intent);
+                if ("1".equals(from)) {
+                    Intent intent = new Intent(Constants.BroadCast_Action_GETZHIYE);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("zhiye", tempArray[position]);
+                    sendBroadcast(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -241,6 +259,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                 convertView = mInflater.inflate(R.layout.needs_list_item, null);
                 viewHolder = new ViewHolder();
                 viewHolder.left_ic = (ImageView) convertView.findViewById(R.id.left_ic);
+                viewHolder.right_ic = (ImageView) convertView.findViewById(R.id.right_ic);
                 viewHolder.name = (TextView) convertView.findViewById(R.id.name);
                 convertView.setTag(viewHolder);
             } else {
@@ -248,12 +267,15 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
             }
             viewHolder.name.setText(tempArray[position]);
             viewHolder.left_ic.setImageResource(tempArray_ic[position]);
+            if ("1".equals(from)) {
+                viewHolder.right_ic.setVisibility(View.INVISIBLE);
+            }
             return convertView;
         }
 
 
         class ViewHolder {
-            ImageView left_ic;
+            ImageView left_ic, right_ic;
             TextView name;
         }
 
