@@ -390,6 +390,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.gsrz://公司认证
+                intent=new Intent(MainActivity.this,UploadPicActivity.class);
+                intent.putExtra("title","公司认证");
+                intent.putExtra("type",3);
+                startActivity(intent);
                 break;
             case R.id.cpsj://我的服务产品
                 intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
