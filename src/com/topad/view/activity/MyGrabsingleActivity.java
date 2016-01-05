@@ -26,7 +26,7 @@ import java.util.List;
  * @author lht
  * @data: on 15/10/27 17:31
  */
-public class MyGrabSingleActivity extends BaseActivity implements View.OnClickListener {
+class MyGrabSingleActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MyGrabSingleActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
