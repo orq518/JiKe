@@ -205,7 +205,7 @@ public class ShareNeedsEditActivity extends BaseActivity implements IRecordFinis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (resultCode) {
+        switch (requestCode) {
             case PICKPHOTO:
                 if (data != null) {
                     LogUtil.d("ouou", "#####path:" + data.getStringExtra("path"));

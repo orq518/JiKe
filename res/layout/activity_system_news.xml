@@ -10,9 +10,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="15dp"
-        android:paddingLeft="15dp"
-        android:layout_marginTop="20dp"/>
+        android:drawablePadding="15dp"/>
 
     <com.topad.view.customviews.mylist.MyListView
         android:id="@+id/listview"

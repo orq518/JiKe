@@ -1,39 +1,42 @@
-<!-- 登录页 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bule"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bule"
+                android:orientation="vertical">
 
     <!-- 顶部标题 -->
     <com.topad.view.customviews.TitleView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="15dp"
-        android:paddingLeft="15dp"
-        android:layout_marginTop="20dp"/>
+        android:drawablePadding="15dp"/>
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:layout_below="@id/title"
         android:background="@color/app_bg"
-        android:layout_below="@id/title">
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/gray_bg">
-
+            android:background="@color/gray_bg"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/add_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/add_pic"
+            />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -45,10 +48,10 @@
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="48dp"
+                        android:layout_alignParentLeft="true"
                         android:background="@drawable/login_edit_left"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:layout_alignParentLeft="true"
                         android:visibility="visible"/>
 
                     <EditText
@@ -56,36 +59,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/login_edit"
+                        android:completionThreshold="1"
                         android:drawableLeft="@drawable/login_register_mobile"
                         android:drawablePadding="15dp"
-                        android:paddingLeft="15dp"
-                        android:textColorHint="#AAAAAA"
-                        android:textSize="15dp"
-                        android:singleLine="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:hint="&#160;&#160;输入手机号码"
                         android:inputType="number"
-                        android:completionThreshold="1"
                         android:maxLength="11"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"/>
+                        android:paddingLeft="15dp"
+                        android:singleLine="true"
+                        android:textColorHint="#AAAAAA"
+                        android:textSize="15dp"/>
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="50dp">
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="48dp"
+                        android:layout_alignParentLeft="true"
                         android:background="@drawable/login_edit_left"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:layout_alignParentLeft="true"
                         android:visibility="visible"/>
 
                     <EditText
@@ -93,18 +96,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/bg_edittext"
+                        android:completionThreshold="1"
                         android:drawableLeft="@drawable/login_register_key"
                         android:drawablePadding="15dp"
-                        android:paddingLeft="15dp"
-                        android:textColorHint="#AAAAAA"
-                        android:textSize="15dp"
-                        android:singleLine="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:hint="&#160;设置密码"
                         android:inputType="textPassword"
-                        android:completionThreshold="1"
                         android:maxLength="20"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"/>
+                        android:paddingLeft="15dp"
+                        android:singleLine="true"
+                        android:textColorHint="#AAAAAA"
+                        android:textSize="15dp"/>
 
                 </RelativeLayout>
 
@@ -114,13 +117,13 @@
             <Button
                 android:id="@+id/btn_login"
                 style="@style/btn_bule2_borad_style"
-                android:focusable="false"
-                android:text="登录"
-                android:textColor="@color/white"
+                android:layout_below="@id/tv_need_details_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:layout_below="@id/tv_need_details_content"/>
+                android:focusable="false"
+                android:text="登录"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 

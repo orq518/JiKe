@@ -1,0 +1,63 @@
+    <!-- 登录页 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bule"
+                android:orientation="vertical">
+
+<!-- 顶部标题 -->
+<com.topad.view.customviews.TitleView
+    android:id="@+id/title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="15dp"/>
+
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@color/gray_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/pic_1"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/upload_shenfenzheng_1"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scaleType="centerCrop"
+            android:padding="10dp"
+            android:onClick="onClick"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/pic_2"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/upload_shenfenzheng_2"
+            android:onClick="onClick"
+            android:scaleType="centerCrop"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:padding="10dp"
+            android:visibility="visible"/>
+        <!-- 登录 -->
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/btn_bule2_borad_style"
+            android:layout_below="@id/tv_need_details_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:focusable="false"
+            android:text="保存"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</ScrollView>
+</LinearLayout>

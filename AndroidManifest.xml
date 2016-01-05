@@ -69,7 +69,7 @@
         <!-- 闪屏页 -->
         <activity
             android:name=".view.activity.LaunchActivity"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/AppTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -80,7 +80,7 @@
         <!-- 登录页 -->
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -336,7 +336,7 @@
         <!-- 我的钱包 -->
         <activity
             android:name=".view.activity.MyWalletActivity"
-            android:theme="@style/FullBleedTheme">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
@@ -345,8 +345,7 @@
 
         <!-- 系统消息 -->
         <activity
-            android:name=".view.activity.SystemNewsActivity"
-            android:theme="@style/FullBleedTheme">
+            android:name=".view.activity.SystemNewsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
@@ -361,6 +360,23 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".view.activity.CompleteInforActivity"
+            android:configChanges="orientation|keyboardHidden"
+           >
+        </activity>
+        <activity
+            android:name=".view.activity.IdentityAutherActivity"
+            android:configChanges="orientation|keyboardHidden"
+           >
+        </activity>
+        <activity
+            android:name=".view.activity.UploadPicActivity"
+            android:configChanges="orientation|keyboardHidden"
+            >
         </activity>
 
     </application>
