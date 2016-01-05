@@ -87,7 +87,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / pageSize - bmpW) / 3;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
+        offset = (screenW / pageSize - bmpW) / 4;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         imageView.setImageMatrix(matrix);// 设置动画初始位置

@@ -37,7 +37,8 @@
             android:gravity="center"
             android:text="我要抢单"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginLeft="5dp"/>
 
         <TextView
             android:id="@+id/tv_select_project"
@@ -47,7 +48,8 @@
             android:gravity="center"
             android:text="甄选项目"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginRight="15dp"/>
 
         <TextView
             android:id="@+id/tv_right"
