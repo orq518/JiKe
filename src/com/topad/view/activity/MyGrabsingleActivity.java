@@ -97,6 +97,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
      * 初始化头标
      */
     private void InitTextView() {
+        mBack= (TextView) findViewById(R.id.tv_back);
         tvGrabSingle = (TextView) findViewById(R.id.tv_grab_single);
         tvSelectProject = (TextView) findViewById(R.id.tv_select_project);
 
