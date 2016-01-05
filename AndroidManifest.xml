@@ -378,7 +378,11 @@
             android:configChanges="orientation|keyboardHidden"
             >
         </activity>
-
+        <activity
+            android:name=".view.activity.MyNeedsActivity"
+            android:configChanges="orientation|keyboardHidden"
+        >
+        </activity>
     </application>
 
 </manifest>

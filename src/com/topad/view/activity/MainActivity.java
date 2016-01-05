@@ -399,6 +399,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.wdxq://我的需求
+                intent = new Intent(MainActivity.this, MyNeedsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.fbmt://我发布的媒体
                 intent = new Intent(MainActivity.this, ADSListActivity.class);
