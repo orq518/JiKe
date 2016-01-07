@@ -28,15 +28,17 @@
 
     <CheckBox
         android:id="@+id/chbGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:clickable="false"
         android:focusable="false"
+        android:focusableInTouchMode="false"
         android:background="@drawable/checkbox"
-        android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:visibility="gone"/>
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:button="@null"/>
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--android:layout_width="wrap_content"-->

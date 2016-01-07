@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ScrollView;
 
 import com.topad.R;
 import com.topad.bean.ChildBean;
@@ -43,6 +45,8 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	private Context mContext;
 	/** 根view布局 **/
 	private View mRootView;
+	/** scroll **/
+	private ScrollView mScroll;
 	/** 全部 **/
 	private Button mBTAll;
 	/** 已托管 **/
@@ -61,6 +65,8 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	private Button mBT1k1w;
 	/** 1万元及以上 **/
 	private Button mBT1w;
+	/** 确定 **/
+	private Button mBTSubmit;
 
 	/** 数据源 **/
 	private ArrayList<GroupBean> groups;
@@ -109,6 +115,8 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	private void initView() {
 		groups = new ArrayList<GroupBean>();
 		getData();
+
+		mScroll = (ScrollView) mRootView.findViewById(R.id.scroll);
 		listView = (CustomExpandableListView) mRootView.findViewById(R.id.listView);
 		mBTAll = (Button) mRootView.findViewById(R.id.btn_all);
 		mBTTrusteeship = (Button) mRootView.findViewById(R.id.btn_trusteeship);
@@ -119,11 +127,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 		mBT3001k = (Button) mRootView.findViewById(R.id.btn_301_1000);
 		mBT1k1w = (Button) mRootView.findViewById(R.id.btn_1000_1w);
 		mBT1w = (Button) mRootView.findViewById(R.id.btn_1w);
-
-		adapter = new SelectProjectEListAdapter(mContext, groups, listView);
-		listView.setAdapter(adapter);
-		listView.setOnChildClickListener(adapter);
-		listView.setGroupIndicator(null);
+		mBTSubmit = (Button) mRootView.findViewById(R.id.btn_submit);
 
 		mBTAll.setOnClickListener(this);
 		mBTTrusteeship.setOnClickListener(this);
@@ -134,6 +138,14 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 		mBT3001k.setOnClickListener(this);
 		mBT1k1w.setOnClickListener(this);
 		mBT1w.setOnClickListener(this);
+		mBTSubmit.setOnClickListener(this);
+
+		adapter = new SelectProjectEListAdapter(mContext, groups, listView);
+		listView.setAdapter(adapter);
+		listView.setOnChildClickListener(adapter);
+		listView.setGroupIndicator(null);
+
+		mScroll.smoothScrollTo(0,0);
 	}
 
 	@Override
@@ -236,37 +248,86 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 			// 全部
             case R.id.btn_all:
 				mBTAll.setTextColor(getResources().getColor(R.color.hot));
+				mBTTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
                 break;
+
 			// 已托管
 			case R.id.btn_trusteeship:
-
+				mBTAll.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBTTrusteeship.setTextColor(getResources().getColor(R.color.hot));
+				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 未托管
 			case R.id.btn_not_trusteeship:
-
+				mBTAll.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBTTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.hot));
 				break;
+
 			// 全部money
 			case R.id.btn_all_money:
-
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.hot));
+				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT3001k.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 全100元以下部
 			case R.id.btn_100:
-
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT100.setTextColor(getResources().getColor(R.color.hot));
+				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT3001k.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 101-300元
 			case R.id.btn_101_300:
-
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT101300.setTextColor(getResources().getColor(R.color.hot));
+				mBT3001k.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 300-1000元
 			case R.id.btn_301_1000:
-
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT3001k.setTextColor(getResources().getColor(R.color.hot));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 1000-1万元
 			case R.id.btn_1000_1w:
-
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT3001k.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.hot));
+				mBT1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				break;
+
 			// 1万元及以上
 			case R.id.btn_1w:
+				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT3001k.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1k1w.setTextColor(getResources().getColor(R.color.text_gray_bg));
+				mBT1w.setTextColor(getResources().getColor(R.color.hot));
+				break;
+
+			// 确定
+			case R.id.btn_submit:
 
 				break;
 
