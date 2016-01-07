@@ -365,27 +365,32 @@
 
         <activity
             android:name=".view.activity.CompleteInforActivity"
-            android:configChanges="orientation|keyboardHidden"
-           >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+        >
         </activity>
         <activity
             android:name=".view.activity.IdentityAutherActivity"
-            android:configChanges="orientation|keyboardHidden"
-           >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+        >
         </activity>
         <activity
             android:name=".view.activity.UploadPicActivity"
-            android:configChanges="orientation|keyboardHidden"
-            >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+        >
         </activity>
         <activity
             android:name=".view.activity.MyNeedsActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
         >
         </activity>
         <activity
             android:name=".view.activity.MyShareMediaListActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+        >
+        </activity>
+        <activity
+            android:name=".view.activity.PersonalProfileActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
         >
         </activity>
     </application>

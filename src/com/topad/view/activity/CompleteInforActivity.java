@@ -121,8 +121,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         Intent intent;
         switch (v.getId()) {
             case R.id.gerenjianjie://个人简介
-
-
+                intent = new Intent(mContext, PersonalProfileActivity.class);
+                startActivity(intent);
                 break;
             case R.id.shenfenyanzheng://身份验证
                 intent = new Intent(mContext, IdentityAutherActivity.class);
