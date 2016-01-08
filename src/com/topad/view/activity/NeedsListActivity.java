@@ -15,14 +15,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.MyInfoBean;
 import com.topad.bean.NeedsListBean;
 import com.topad.bean.SearchListBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 主界面
@@ -64,6 +71,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     ListView listview;
     ListViewAdapter adapter;
     int type;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public int setLayoutById() {
+        mContext = this;
         return R.layout.activity_search_list;
     }
 
@@ -170,9 +179,9 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                 if ("1".equals(from)) {
                     Intent intent = new Intent(Constants.BroadCast_Action_GETZHIYE);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("zhiye", tempArray[position]);
+                    intent.putExtra("zhiye", titleString+"-"+tempArray[position]);
                     sendBroadcast(intent);
-                    finish();
+                    getMyInfo(titleString, tempArray[position]);
                 } else {
                     Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
                     startActivity(intent);
@@ -180,6 +189,40 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
 
             }
         });
+    }
+
+    /**
+     * 更新职业
+     */
+    public void getMyInfo(String job1, String job2) {
+
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_UPDATEJOB).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("token", TopADApplication.getSelf().getToken());
+        rp.add("job1", job1);
+        rp.add("job2", job2);
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                MyInfoBean base = (MyInfoBean) t;
+                if (base != null) {
+                    ToastUtil.show(mContext, base.getMsg());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, MyInfoBean.class);
+
     }
 
     @Override

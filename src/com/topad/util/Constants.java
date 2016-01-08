@@ -32,6 +32,11 @@ public class Constants {
     public static final String UPDATE_INTRO = "/user/updateintro";
     // 获取广告服务产品列表（查询或我的产品列表）
     public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
+    /**
+     * 更新职业
+     */
+    public static final String URL_UPDATEJOB = "/user/updatejob";
+
     /*********
      * 下载图片拼接*/
     public static final String IMAGE_URL_HEADER = "/userimg/";

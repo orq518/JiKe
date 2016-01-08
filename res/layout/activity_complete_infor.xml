@@ -266,7 +266,7 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/text_gray_bg"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:visibility="visible"/>
                 </LinearLayout>
 

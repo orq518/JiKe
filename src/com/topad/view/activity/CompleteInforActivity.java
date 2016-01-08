@@ -190,6 +190,9 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                             String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
                             getHeaderPic(headerpicUrl);
                         }
+                        if (!Utils.isEmpty(myInfoBean.getJob1())&&!Utils.isEmpty(myInfoBean.getJob2())) {
+                            xuanzezhiye.setText(myInfoBean.getJob1()+"-"+myInfoBean.getJob2());
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
