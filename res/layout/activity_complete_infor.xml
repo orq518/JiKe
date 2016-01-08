@@ -32,6 +32,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="10dp"
+                           android:layout_gravity="center_horizontal"
+                           android:scaleType="centerInside"
+                           android:src="@drawable/add_pic"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -61,9 +67,6 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/white"
-                        android:completionThreshold="1"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:hint="请输入姓名"
                         android:singleLine="true"
                         android:textColorHint="#AAAAAA"
@@ -146,13 +149,11 @@
 
                     <TextView
                         android:id="@+id/tv_bithday"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:layout_margin="1dp"
                         android:layout_toRightOf="@id/bithday_tv"
                         android:background="@color/white"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:gravity="center_vertical"
                         android:hint="请选择出生日期"
                         android:onClick="onClick"
@@ -195,11 +196,7 @@
                         android:layout_margin="1dp"
                         android:background="@color/white"
                         android:completionThreshold="1"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:hint="请输入地址"
-                        android:inputType="number"
-                        android:maxLength="11"
                         android:singleLine="true"
                         android:textColorHint="#AAAAAA"
                         android:textSize="16dp"/>
@@ -258,15 +255,15 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
+                        android:drawablePadding="20dp"
                         android:drawableRight="@drawable/arrow"
                         android:gravity="right|center"
                         android:onClick="onClick"
-                        android:singleLine="true"
-                        android:textColor="@color/text_gray_bg"
                         android:padding="10dp"
-                        android:drawablePadding="20dp"
                         android:paddingRight="10dp"
+                        android:singleLine="true"
                         android:text=""
+                        android:textColor="@color/text_gray_bg"
                         android:textSize="16dp"
                         android:visibility="visible"/>
                 </LinearLayout>

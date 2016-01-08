@@ -87,7 +87,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle("我的抢单");
+        mTitleView.setTitle("我的需求");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         // 设置listview可以加载、刷新
