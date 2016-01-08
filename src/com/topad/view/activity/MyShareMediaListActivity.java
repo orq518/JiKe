@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceBean;
@@ -54,8 +55,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
     /** view **/
     private LinearLayout view;
-    /** 类别 **/
-    private String category;
 
     private final int MSG_REFRESH = 1000;
     private final int MSG_LOADMORE = 2000;
@@ -87,27 +86,13 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initViews() {
-        // 接收数据
-        Intent intent = getIntent();
-        if (intent != null) {
-            category = intent.getStringExtra("category");
-        }
 
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
-        if(!Utils.isEmpty(category)){
-            if(category.equals("1")){
-                mTitleView.setTitle(getString(R.string.ads_advertising_creative_title));
-            }else if(category.equals("2")){
-                mTitleView.setTitle(getString(R.string.ads_marketing_strategy_title));
-            }else if(category.equals("3")){
-                mTitleView.setTitle(getString(R.string.ads_tvc_title));
-            }else if(category.equals("4")){
-                mTitleView.setTitle(getString(R.string.ads_anime_create_title));
-            }
-        }
+        mTitleView.setTitle("我的服务产品设计");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-
+        mTitleView.setRightVisiable(true);
+        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "+");
         // listview
         mListView = (MyListView) findViewById(R.id.listview);
 
@@ -122,7 +107,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         setData();
 
         // 设置listview可以加载、刷新
-        mListView.setPullLoadEnable(true);
+        mListView.setPullLoadEnable(false);
         mListView.setPullRefreshEnable(true);
         // 设置适配器
         adapter = new ListAdapter(mContext);
@@ -196,6 +181,18 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         @Override
         public void onClick(View v) {
             finish();
+        }
+
+    }
+
+    /**
+     * 顶部布局--左按钮事件监听
+     */
+    public class TitleRightOnClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
         }
 
     }
@@ -274,7 +271,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             name.setText(bankList.get(position).getServicename());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
             money.setText(ssb.toString());
-            count.setText(bankList.get(position).getSalecount());
+            SpannableStringBuilder ssb2 = new SpannableStringBuilder("已出售：" +  bankList.get(position).getSalecount() + "笔");
+            count.setText(ssb2.toString());
             companyName.setText(bankList.get(position).getCompanyname());
 
             if(!Utils.isEmpty(bankList.get(position).getImglicense())){
@@ -325,8 +323,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         String url = sb.toString();
         RequestParams rp=new RequestParams();
 //        rp.add("type2", category);
-////        rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("userid", "0");
+        rp.add("userid", TopADApplication.getSelf().getUserId());
 
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
@@ -336,6 +333,12 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                     for(int i = 0; i < serviceBean.data.size(); i++){
                         bankList.add(serviceBean.data.get(i));
                     }
+                }
+
+                if(bankList == null || bankList.size() == 0){
+                    mListView.setPullLoadEnable(false);
+                }else{
+                    mListView.setPullLoadEnable(true);
                 }
             }
 
