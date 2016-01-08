@@ -19,6 +19,9 @@ public class Constants {
     // 重置密码
     public static final String URL_RESETPWD = "/user/resetpwd";
 
+    // 个人资料-上传图片（头像、身份证、毕业证、名片、公司认证营业执照、媒体代理证明）
+    public static final String UPLOAD_PHOTO = "/user/uploadphoto";
+
     /********* END *********/
 
     /**

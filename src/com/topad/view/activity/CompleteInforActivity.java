@@ -5,16 +5,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.UploadInterface;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.LoginBean;
@@ -23,10 +26,18 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Md5;
+import com.topad.util.PictureUtil;
+import com.topad.util.SharedPreferencesUtils;
+import com.topad.util.UploadUtil;
 import com.topad.util.Utils;
+import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.PickDatePopwindow;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.interfaces.IDatePick;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ${todo}<完善资料>
@@ -34,7 +45,7 @@ import com.topad.view.interfaces.IDatePick;
  * @author ouruiqiang
  * @data: on 15/11/2 16:35
  */
-public class CompleteInforActivity extends BaseActivity implements View.OnClickListener, IDatePick {
+public class CompleteInforActivity extends BaseActivity implements View.OnClickListener, IDatePick,UploadUtil.OnUploadProcessListener {
     private static final String LTAG = CompleteInforActivity.class.getSimpleName();
     /**
      * 上下文
@@ -52,7 +63,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
     LinearLayout mainlayout;
     TextView tv_bithday;
     TextView gerenjianjie, xuanzezhiye, shenfenyanzheng;
-
+    CircleImageView add_head_pic;
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -66,6 +77,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initViews() {
+        add_head_pic= (CircleImageView) findViewById(R.id.add_head_pic);
+        add_head_pic.setOnClickListener(this);
         mainlayout = (LinearLayout) findViewById(R.id.scroll_layout);
         mTitleView = (TitleView) findViewById(R.id.title);
         mBTLogin = (Button) findViewById(R.id.btn_login);
@@ -103,6 +116,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         tv_bithday.setText(dateString);
     }
 
+
+
     /**
      * 顶部布局--注册按钮事件监听
      */
@@ -120,6 +135,11 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         super.onClick(v);
         Intent intent;
         switch (v.getId()) {
+            case  R.id.add_head_pic://上传头像
+                Intent intent1 = new Intent(mContext,
+                        SelectPicPopupWindow.class);
+                startActivityForResult(intent1, PICKPHOTO);
+                break;
             case R.id.gerenjianjie://个人简介
                 intent = new Intent(mContext, PersonalProfileActivity.class);
                 startActivity(intent);
@@ -188,7 +208,60 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         }
 
     }
+    final int PICKPHOTO = 1;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        switch (requestCode) {
+            case PICKPHOTO:
+                if (data != null) {
+                    LogUtil.d("ouou", "#####path:" + data.getStringExtra("path"));
+                    String picPath = data.getStringExtra("path");
+                    if (!Utils.isEmpty(picPath)) {
+                        Bitmap image = PictureUtil
+                                .getSmallBitmap(picPath);
+                        if (image != null) {
+                            upLoadHeadPhoto(picPath);
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    public void upLoadHeadPhoto( String picPath){
+
+        File file = new File(picPath);
+        if(file!=null)
+        {
+            // 拼接url
+            StringBuffer sb = new StringBuffer();
+            sb.append(Constants.getCurrUrl()).append(Constants.UPLOAD_PHOTO).append("?");
+            String url = sb.toString();
+            String fileKey = "pic";
+            UploadUtil uploadUtil = UploadUtil.getInstance();;
+            uploadUtil.setOnUploadProcessListener(this); //设置监听器监听上传状态
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("orderId", "11111");
+            uploadUtil.uploadFile( picPath,fileKey, url,params);
+//            UploadUtil.uploadFile(file, url, new UploadInterface() {
+//                @Override
+//                public void onSucceed(BaseBean bean) {
+//
+//                }
+//
+//                @Override
+//                public void onFailed(BaseBean bean) {
+//
+//                }
+//            });
+        }
+
+
+    }
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
@@ -202,4 +275,20 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
+
+
+    @Override
+    public void onUploadDone(int responseCode, String message) {
+
+    }
+
+    @Override
+    public void onUploadProcess(int uploadSize) {
+
+    }
+
+    @Override
+    public void initUpload(int fileSize) {
+
+    }
 }
