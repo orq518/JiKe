@@ -3,6 +3,7 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceBean;
+import com.topad.bean.BaseBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.BaseSwipeAdapter;
@@ -43,7 +50,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     /** 适配器 **/
     private ListAdapter adapter;
     /** 数据源 **/
-    private ArrayList<AdServiceBean> bankList = new ArrayList<AdServiceBean>();
+    private ArrayList<AdProductBean> bankList = new ArrayList<AdProductBean>();
 
     /** view **/
     private LinearLayout view;
@@ -112,32 +119,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initData() {
-//        String merchantId = getIntent().getStringExtra("merchantId");
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(Constants.getCurrUrl()).append(Constants.URL_BANK_LIST)
-//                .append("?");
-//        sb.append("merchantId=").append(merchantId);
-//
-//        showProgressDialog();
-//        postWithoutLoading(sb.toString(), true, new HttpCallback() {
-//            @Override
-//            public <T> void onModel(T t) {
-//                closeProgressDialog();
-//
-//                BankListModel blModel = (BankListModel) t;
-//                if (blModel != null) {
-//                    bankList.clear();
-//                    bankList.addAll(blModel.bankList);
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(BaseModel base) {
-//
-//            }
-//        }, BankListModel.class);
-
         setData();
 
         // 设置listview可以加载、刷新
@@ -153,7 +134,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent intent = new Intent(MyShareMediaListActivity.this, ADSDetailsActivity.class);
-                intent.putExtra("title",bankList.get(position).name);
+                intent.putExtra("title",bankList.get(position).getServicename());
+                intent.putExtra("data",bankList.get(position));
                 startActivity(intent);
             }
         });
@@ -221,6 +203,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     public class ListAdapter extends BaseSwipeAdapter {
         // 上下文对象
         private Context mContext;
+        private ImageView authIcon;
         private ImageView icon;
         private TextView name;
         private TextView money;
@@ -254,13 +237,13 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
             // 双击的回调函数
             swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-                        @Override
-                        public void onDoubleClick(SwipeLayout layout,
-                                                  boolean surface) {
-                            Toast.makeText(mContext, "DoubleClick",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                @Override
+                public void onDoubleClick(SwipeLayout layout,
+                                          boolean surface) {
+                    Toast.makeText(mContext, "DoubleClick",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
 
             // 添加删除布局的点击事件
             v.findViewById(R.id.ll_menu).setOnClickListener(new View.OnClickListener() {
@@ -272,8 +255,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                     swipeLayout.close();
                     bankList.remove(position);
                     notifyDataSetChanged();
-        }
-    });
+                }
+            });
 
             return v;
         }
@@ -281,19 +264,24 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         // 对控件的填值操作独立出来了，我们可以在这个方法里面进行item的数据赋值
         @Override
         public void fillValues(int position, View convertView) {
-
+            authIcon = (ImageView) convertView.findViewById(R.id.ads_auth_icon);
             icon = (ImageView) convertView.findViewById(R.id.ads_icon);
             name = (TextView) convertView.findViewById(R.id.tv_name);
             money = (TextView) convertView.findViewById(R.id.tv_money);
             count = (TextView) convertView.findViewById(R.id.tv_count);
-            praise = (TextView) convertView.findViewById(R.id.tv_praise);
             companyName = (TextView) convertView.findViewById(R.id.tv_companyName);
 
-            name.setText(bankList.get(position).name);
-            money.setText(bankList.get(position).money);
-            count.setText(bankList.get(position).count);
-            praise.setText(bankList.get(position).praise);
-            companyName.setText(bankList.get(position).companyName);
+            name.setText(bankList.get(position).getServicename());
+            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
+            money.setText(ssb.toString());
+            count.setText(bankList.get(position).getSalecount());
+            companyName.setText(bankList.get(position).getCompanyname());
+
+            if(!Utils.isEmpty(bankList.get(position).getImglicense())){
+                authIcon.setImageDrawable(getResources().getDrawable(R.drawable.ads_icon_rz_ok));
+            }else{
+                authIcon.setImageDrawable(getResources().getDrawable(R.drawable.ads_icon_rz_ing));
+            }
 
             switch (position){
                 case 0:
@@ -331,45 +319,35 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
      * 设置数据--测试
      */
     private void setData() {
-        AdServiceBean bModel0 = new AdServiceBean();
-        bModel0.name = "提供原创产品广告/策划广告文案/广告脚本";
-        bModel0.money = "￥50000/单品";
-        bModel0.count = "已出售：15笔";
-        bModel0.praise = "100%";
-        bModel0.companyName = "中广托普广告传媒有限公司";
-        bankList.add(bModel0);
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_AD_SERVICE_GETLIST).append("?");
+        String url = sb.toString();
+        RequestParams rp=new RequestParams();
+//        rp.add("type2", category);
+////        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("userid", "0");
 
-        AdServiceBean bModel1 = new AdServiceBean();
-        bModel1.name = "提供原创产品广告/策划广告文案/广告脚本";
-        bModel1.money = "￥50000/单品";
-        bModel1.count = "已出售：15笔";
-        bModel1.praise = "100%";
-        bModel1.companyName = "中广托普广告传媒有限公司";
-        bankList.add(bModel1);
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                AdServiceBean serviceBean = (AdServiceBean) t;
+                if (serviceBean != null && serviceBean.data.size()!= 0) {
+                    for(int i = 0; i < serviceBean.data.size(); i++){
+                        bankList.add(serviceBean.data.get(i));
+                    }
+                }
+            }
 
-        AdServiceBean bModel2 = new AdServiceBean();
-        bModel2.name = "提供原创产品广告/策划广告文案/广告脚本";
-        bModel2.money = "￥50000/单品";
-        bModel2.count = "已出售：15笔";
-        bModel2.praise = "100%";
-        bModel2.companyName = "中广托普广告传媒有限公司";
-        bankList.add(bModel2);
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, "status = " + status + "\n"
+                        + "msg = " + msg);
+            }
+        }, AdServiceBean.class);
 
-        AdServiceBean bModel3 = new AdServiceBean();
-        bModel3.name = "提供原创产品广告/策划广告文案/广告脚本";
-        bModel3.money = "￥50000/单品";
-        bModel3.count = "已出售：15笔";
-        bModel3.praise = "100%";
-        bModel3.companyName = "中广托普广告传媒有限公司";
-        bankList.add(bModel3);
-
-        AdServiceBean bModel4 = new AdServiceBean();
-        bModel4.name = "提供原创产品广告/策划广告文案/广告脚本";
-        bModel4.money = "￥50000/单品";
-        bModel4.count = "已出售：15笔";
-        bModel4.praise = "100%";
-        bModel4.companyName = "中广托普广告传媒有限公司";
-        bankList.add(bModel4);
     }
 }
 

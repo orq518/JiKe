@@ -17,6 +17,7 @@ import com.topad.bean.RegisterBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.LogUtil;
 import com.topad.util.Md5;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
@@ -300,10 +301,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         public void onFailure(BaseBean base) {
                             int status = base.getStatus();// 状态码
                             String msg = base.getMsg();// 错误信息
-                            ToastUtil.show(mContext, "status = " + status + "\n"
-                                    + "msg = " + msg);
+
+                            if(status == 10001){// 验证码不存在
+
+                            }else if(status == 10002){// 验证码过期失效（大于30分钟）
+
+                            }else if(status == 10003){// 手机号已经被注册
+
+                            }
+
+                            LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                            ToastUtil.show(mContext, msg);
                         }
-                    }, BaseBean.class);
+                    }, BaseBean.class, true);
                 }else{
                     ToastUtil.show(mContext, "手机号不能为空！");
                 }

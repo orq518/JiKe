@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -9,8 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.bean.SearchListBean;
 import com.topad.util.RecordMediaPlayer;
 import com.topad.util.RecordTools;
 import com.topad.util.Utils;
@@ -61,10 +64,15 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private Button mETSubmit;
     /** 录音 **/
     private Button mRecord;
+    /** 媒体 **/
+    private TextView mMedia;
+    /** 地址 **/
+    private TextView mAddress;
 
     /** 类别 **/
     private String category;
-
+    public static int SELECT_MEDIA = 1;
+    public static int SELECT_ADDRESS= 2;
 
     @Override
     public int setLayoutById() {
@@ -103,6 +111,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mIVKeyboard = (ImageView) findViewById(R.id.ic_keyboard);
         mETSubmit = (Button) findViewById(R.id.bt_submit_release);
         mRecord = (Button) findViewById(R.id.record_bt);
+        mMedia = (TextView) findViewById(R.id.tv_select_media_newspaper);
+        mAddress = (TextView) findViewById(R.id.tv_select_media_address);
 
         if(!Utils.isEmpty(category)){
             if(category.equals("1")){
@@ -210,12 +220,14 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         switch (v.getId()) {
             // 选择媒体类别
             case R.id.lay_select_media:
-
+                Intent intents = new Intent(MediaReleaseActivity.this, SelectMediaListActivity.class);
+                startActivityForResult(intents, SELECT_MEDIA);
                 break;
+
             // 地址-- 定位进入地图
             case R.id.lay_address_media:
                 Intent intent = new Intent(MediaReleaseActivity.this, LocationMapActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, SELECT_ADDRESS);
                 break;
 
             // 键盘
@@ -255,5 +267,24 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SELECT_MEDIA && resultCode == RESULT_OK && data != null) {
+            // 媒体类型
+            Bundle MarsBuddle = data.getExtras();
+            String MarsMessage = MarsBuddle.getString( "mediaName");
+            mMedia.setVisibility(View.VISIBLE);
+            mMedia.setText(MarsMessage);
+        }else if(requestCode == SELECT_ADDRESS && resultCode == RESULT_OK && data != null){
+            // 地址
+            Bundle MarsBuddle = data.getExtras();
+            String MarsMessage = MarsBuddle.getString( "location");
+            mAddress.setVisibility(View.VISIBLE);
+            mAddress.setText(MarsMessage);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
