@@ -70,7 +70,10 @@
         <activity
             android:name=".view.activity.LaunchActivity"
             android:theme="@style/AppTheme">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
@@ -81,11 +84,6 @@
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
@@ -383,6 +381,17 @@
             android:configChanges="orientation|keyboardHidden"
         >
         </activity>
+
+        <!-- 媒体列表 -->
+        <activity
+            android:name=".view.activity.SelectMediaListActivity"
+            android:theme="@style/FullBleedTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

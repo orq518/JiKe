@@ -18,17 +18,18 @@ public class Constants {
     public static final String URL_GETCODE = "/user/getcode";
     // 重置密码
     public static final String URL_RESETPWD = "/user/resetpwd";
-
+    // 获取广告服务产品列表（查询或我的产品列表）
+    public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
     /********* END *********/
 
     /**
      * 测试环境
      */
-    public static final String URL_TEST = "http://topad.uput.cn/";
+    public static final String URL_TEST = "http://topad.uput.cn";
     /**
      * 生产环境
      */
-    public static final String URL_PUBLISH = "http://topad.uput.cn/";
+    public static final String URL_PUBLISH = "http://topad.uput.cn";
 
 
     // 当前环境，默认测试环境

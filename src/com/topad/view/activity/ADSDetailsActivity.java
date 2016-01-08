@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.bean.AdProductBean;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
@@ -57,6 +58,8 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
 
     /** 标题 **/
     private String title;
+    /** 数据 **/
+    private AdProductBean adProductBean;
 
     @Override
     public int setLayoutById() {
@@ -98,6 +101,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         Intent intent = getIntent();
         if (intent != null) {
             title = intent.getStringExtra("title");
+            adProductBean = (AdProductBean) intent.getSerializableExtra("data");
         }
 
         // 显示数据

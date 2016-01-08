@@ -209,10 +209,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             startActivity(intent);
                             finish();
 
-//                            // 是否登录
-//                            if (((TopADApplication)getApplication()).isLogin()) {
-//
-//                            }
                         }
 
                     }
