@@ -7,7 +7,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.MyInfoBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
+
+import java.util.List;
 
 /**
  * ${todo}<完善资料>
@@ -30,6 +40,7 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
      **/
     private Button mBTLogin;
     EditText et_personal_profile;
+    String myIntro;
 
     @Override
     public int setLayoutById() {
@@ -44,12 +55,14 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initViews() {
+        myIntro= getIntent().getStringExtra("myintro");
         mTitleView = (TitleView) findViewById(R.id.title);
-        et_personal_profile= (EditText) findViewById(R.id.et_personal_profile);
+        et_personal_profile = (EditText) findViewById(R.id.et_personal_profile);
         mBTLogin = (Button) findViewById(R.id.btn_ok);
         mBTLogin.setOnClickListener(this);
-        // 设置登录按钮
-        setNextBtnState(false);
+        if(!Utils.isEmpty(myIntro)){
+            et_personal_profile.setText(myIntro);
+        }
     }
 
     @Override
@@ -87,8 +100,11 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_ok://确认保存
-
-
+                if (!Utils.isEmpty(et_personal_profile.getText().toString())) {
+                    updateMyIntro();
+                } else {
+                    ToastUtil.show(mContext, "简介不能为空");
+                }
                 break;
 
             default:
@@ -96,6 +112,33 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
         }
     }
 
+    /**
+     * 更新个人简介
+     */
+    public void updateMyIntro() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.UPDATE_INTRO).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("token", TopADApplication.getSelf().getToken());
+        rp.add("intro", et_personal_profile.getText().toString());
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                ToastUtil.show(mContext, ((BaseBean) t).getMsg());
+                finish();
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, MyInfoBean.class);
+    }
 
     /**
      * 去除EditText的空格

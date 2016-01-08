@@ -32,12 +32,14 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
-                <ImageView android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_margin="10dp"
-                           android:layout_gravity="center_horizontal"
-                           android:scaleType="centerInside"
-                           android:src="@drawable/add_pic"/>
+                <!-- 头像 -->
+                <com.topad.view.customviews.CircleImageView
+                    android:id="@+id/add_head_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/add_pic"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                         android:visibility="visible"/>
 
                     <EditText
-                        android:id="@+id/et_birthday"
+                        android:id="@+id/et_realname"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
@@ -98,7 +100,7 @@
                                 android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/feerb1"
+                            android:id="@+id/sex1"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
@@ -111,7 +113,7 @@
                             android:textSize="15sp"/>
 
                         <RadioButton
-                            android:id="@+id/feerb2"
+                            android:id="@+id/sex2"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
@@ -264,7 +266,7 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/text_gray_bg"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:visibility="visible"/>
                 </LinearLayout>
 
