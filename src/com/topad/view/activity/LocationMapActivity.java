@@ -2,9 +2,11 @@ package com.topad.view.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -16,6 +18,7 @@ import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.topad.R;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
 /**
@@ -36,6 +39,8 @@ public class LocationMapActivity extends Activity implements LocationSource,
     private MapView mapView;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
+    /** 定位地址 **/
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +148,9 @@ public class LocationMapActivity extends Activity implements LocationSource,
     public void onLocationChanged(AMapLocation aLocation) {
         if (mListener != null && aLocation != null) {
             mListener.onLocationChanged(aLocation);// 显示系统小蓝点
+            if(!Utils.isEmpty(aLocation.getPoiName())){
+                location = aLocation.getPoiName();
+            }
         }
     }
 
@@ -185,8 +193,25 @@ public class LocationMapActivity extends Activity implements LocationSource,
 
         @Override
         public void onClick(View v) {
-            finish();
+            onBack();
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            onBack();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void onBack() {
+        if(!Utils.isEmpty(location)){
+            Intent intent = new Intent(LocationMapActivity.this, MediaReleaseActivity.class );
+            intent.putExtra( "location", location);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 }

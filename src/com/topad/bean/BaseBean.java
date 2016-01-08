@@ -1,6 +1,7 @@
 package com.topad.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 联网返回的要继承这个类  方便gson解析
@@ -36,4 +37,5 @@ public class BaseBean implements Serializable {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
 }

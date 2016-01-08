@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="选择媒体类别"
-                    android:textColor="@color/dark_gray_text"
+                    android:textColor="@color/text_bg"
                     android:textSize="18sp"/>
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_toRightOf="@id/tv_select_media"
                     android:text="日报"
                     android:textColor="@color/text_gray_bg"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone"/>
 
                 <ImageView
@@ -144,7 +144,7 @@
                 android:id="@+id/lay_address_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="@dimen/dimen_15"
+                android:padding="14dp"
                 android:background="@color/white">
 
                 <TextView
@@ -153,8 +153,20 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="地址位置"
-                    android:textColor="@color/dark_gray_text"
+                    android:textColor="@color/text_bg"
                     android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv_select_media_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/tv_address_media"
+                    android:text="三元桥东"
+                    android:textColor="@color/text_gray_bg"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -174,7 +186,7 @@
                 android:id="@+id/lay_prove_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="@dimen/dimen_15"
+                android:padding="14dp"
                 android:background="@color/white">
 
                 <TextView
@@ -183,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="媒体代理证明/经管证明"
-                    android:textColor="@color/dark_gray_text"
+                    android:textColor="@color/text_bg"
                     android:textSize="18sp"/>
 
                 <ImageView

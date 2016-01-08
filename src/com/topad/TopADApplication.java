@@ -2,6 +2,7 @@ package com.topad;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -105,5 +106,13 @@ public class TopADApplication extends Application {
         }
         LogUtil.d("getUserId()--->userId:" + userId);
         return userId;
+    }
+
+    /**
+     * 退出登录
+     */
+    public void logout() {
+        token = null;
+        SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_TOKEN, "");
     }
 }

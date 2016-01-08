@@ -1,192 +1,6 @@
 
 package com.topad.util;
-/*
-*/
-/**
- * The author 欧瑞强 on 2016/1/8.
- * todo 文件上传
- * <p/>
- * 上传工具类
- *
- * @author spring sky
- * Email:vipa1888@163.com
- * QQ:840950105
- * MyName:石明政
- * <p/>
- * android上传文件到服务器
- * @param file       需要上传的文件
- * @param RequestURL 请求的rul
- * @return 返回响应的内容
- * <p/>
- * 当文件不为空，把文件包装并且上传
- * <p/>
- * 这里重点注意：
- * name里面的值为服务器端需要key   只有这个key 才可以得到对应的文件
- * filename是文件的名字，包含后缀名的   比如:abc.png
- * <p/>
- * 获取响应码  200=成功
- * 当响应成功，获取响应的流
- *//*
 
-
-import java.io.InputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.UUID;
-
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.topad.UploadInterface;
-
-*/
-/**
- * 上传工具类
- *
- * @author spring sky
- *         Email:vipa1888@163.com
- *         QQ:840950105
- *         MyName:石明政
- *//*
-
-public class UploadUtil {
-    private static final String TAG = "uploadFile";
-    private static final int TIME_OUT = 10 * 1000;   //超时时间
-    private static final String CHARSET = "utf-8"; //设置编码
-
-    */
-/**
- * android上传文件到服务器
- *
- * @param file       需要上传的文件
- * @param RequestURL 请求的rul
- * @return 返回响应的内容
- *//*
-
-    public static void uploadFile(File file, String RequestURL, UploadInterface uploadListener) {
-
-        try {
-            new RemoveAliasTask(file, RequestURL, uploadListener).execute();
-        } catch (Exception e) {
-
-        }
-    }
-
-    static class RemoveAliasTask extends AsyncTask<Void, Void, String> {
-
-        File file;
-        String RequestURL;
-        UploadInterface uploadListener;
-
-        public RemoveAliasTask(File file, String RequestURL, UploadInterface uploadListener) {
-            this.file = file;
-            this.RequestURL = RequestURL;
-            this.uploadListener = uploadListener;
-        }
-
-        protected String doInBackground(Void... params) {
-            try {
-
-                String result = null;
-                String BOUNDARY = UUID.randomUUID().toString();  //边界标识   随机生成
-                String PREFIX = "--", LINE_END = "\r\n";
-                String CONTENT_TYPE = "multipart/form-data";   //内容类型
-
-                try {
-                    URL url = new URL(RequestURL);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(TIME_OUT);
-                    conn.setConnectTimeout(TIME_OUT);
-                    conn.setDoInput(true);  //允许输入流
-                    conn.setDoOutput(true); //允许输出流
-                    conn.setUseCaches(false);  //不允许使用缓存
-                    conn.setRequestMethod("POST");  //请求方式
-                    conn.setRequestProperty("Charset", CHARSET);  //设置编码
-                    conn.setRequestProperty("connection", "keep-alive");
-                    conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
-
-                    if (file != null) {
-                        */
-/**
- * 当文件不为空，把文件包装并且上传
- *//*
-
-                        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-                        StringBuffer sb = new StringBuffer();
-                        sb.append(PREFIX);
-                        sb.append(BOUNDARY);
-                        sb.append(LINE_END);
-                        */
-/**
- * 这里重点注意：
- * name里面的值为服务器端需要key   只有这个key 才可以得到对应的文件
- * filename是文件的名字，包含后缀名的   比如:abc.png
- *//*
-
-
-                        sb.append("Content-Disposition: form-data; name=\"img\"; filename=\"" + file.getName() + "\"" + LINE_END);
-                        sb.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END);
-                        sb.append(LINE_END);
-                        dos.write(sb.toString().getBytes());
-                        InputStream is = new FileInputStream(file);
-                        byte[] bytes = new byte[1024];
-                        int len = 0;
-                        while ((len = is.read(bytes)) != -1) {
-                            dos.write(bytes, 0, len);
-                        }
-                        is.close();
-                        dos.write(LINE_END.getBytes());
-                        byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
-                        dos.write(end_data);
-                        dos.flush();
-                        */
-/**
- * 获取响应码  200=成功
- * 当响应成功，获取响应的流
- *//*
-
-                        int res = conn.getResponseCode();
-                        Log.e(TAG, "response code:" + res);
-                        if (res == 200) {
-                            Log.e(TAG, "request success");
-                            InputStream input = conn.getInputStream();
-                            StringBuffer sb1 = new StringBuffer();
-                            int ss;
-                            while ((ss = input.read()) != -1) {
-                                sb1.append((char) ss);
-                            }
-                            result = sb1.toString();
-                            Log.e(TAG, "result : " + result);
-                        }
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                return result;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-            }
-        }
-
-    }
-}*/
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -199,16 +13,24 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.LogRecord;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
+import com.topad.R;
+import com.topad.view.customviews.CircleProgressDialog;
+
 /**
- *
  * 上传工具类
+ *
  * @author spring sky<br>
- * Email :vipa1888@163.com<br>
- * QQ: 840950105<br>
- * 支持上传文件和参数
+ *         Email :vipa1888@163.com<br>
+ *         QQ: 840950105<br>
+ *         支持上传文件和参数
  */
 public class UploadUtil {
     private static UploadUtil uploadUtil;
@@ -216,6 +38,7 @@ public class UploadUtil {
     private static final String PREFIX = "--";
     private static final String LINE_END = "\r\n";
     private static final String CONTENT_TYPE = "multipart/form-data"; // 内容类型
+    static Context mContext;
 
     private UploadUtil() {
 
@@ -223,12 +46,14 @@ public class UploadUtil {
 
     /**
      * 单例模式获取上传工具类
+     *
      * @return
      */
-    public static UploadUtil getInstance() {
+    public static UploadUtil getInstance(Context context) {
         if (null == uploadUtil) {
             uploadUtil = new UploadUtil();
         }
+        mContext = context;
         return uploadUtil;
     }
 
@@ -260,12 +85,9 @@ public class UploadUtil {
     /**
      * android上传文件到服务器
      *
-     * @param filePath
-     * 需要上传的文件的路径
-     * @param fileKey
-     * 在网页上<input type=file name=xxx/> xxx就是这里的fileKey
-     * @param RequestURL
-     * 请求的URL
+     * @param filePath   需要上传的文件的路径
+     * @param fileKey    在网页上<input type=file name=xxx/> xxx就是这里的fileKey
+     * @param RequestURL 请求的URL
      */
     public void uploadFile(String filePath, String fileKey, String RequestURL,
                            Map<String, String> param) {
@@ -286,12 +108,9 @@ public class UploadUtil {
     /**
      * android上传文件到服务器
      *
-     * @param file
-     * 需要上传的文件
-     * @param fileKey
-     * 在网页上<input type=file name=xxx/> xxx就是这里的fileKey
-     * @param RequestURL
-     * 请求的URL
+     * @param file       需要上传的文件
+     * @param fileKey    在网页上<input type=file name=xxx/> xxx就是这里的fileKey
+     * @param RequestURL 请求的URL
      */
     public void uploadFile(final File file, final String fileKey,
                            final String RequestURL, final Map<String, String> param) {
@@ -299,7 +118,7 @@ public class UploadUtil {
             sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
             return;
         }
-
+        showProgressDialog();
         Log.i(TAG, "请求的URL=" + RequestURL);
         Log.i(TAG, "请求的fileName=" + file.getName());
         Log.i(TAG, "请求的fileKey=" + fileKey);
@@ -310,6 +129,43 @@ public class UploadUtil {
             }
         }).start();
 
+    }
+
+    public CircleProgressDialog mReadingProgress;
+
+    /**
+     * 可取消的进度条
+     *
+     */
+    public void showProgressDialog() {
+        if (mReadingProgress == null || !mReadingProgress.isShowing()) {
+            if (mReadingProgress == null) {
+                mReadingProgress = new CircleProgressDialog(mContext, R.style.loading_dialog);
+            }
+            mReadingProgress.setCancelable(true);
+            mReadingProgress.show();
+            if (true) {
+                mReadingProgress.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 关闭loading对话框
+     *
+     * @param
+     * @return void
+     * @Description:
+     */
+    public void closeProgressDialog() {
+        if (mReadingProgress != null) {
+            mReadingProgress.dismiss();
+            mReadingProgress = null;
+        }
     }
 
     private void toUploadFile(File file, String fileKey, String RequestURL,
@@ -372,7 +228,7 @@ public class UploadUtil {
             sb.append(PREFIX).append(BOUNDARY).append(LINE_END);
             sb.append("Content-Disposition:form-data; name=\"" + fileKey
                     + "\"; filename=\"" + file.getName() + "\"" + LINE_END);
-            sb.append("Content-Type:image/pjpeg" + LINE_END); // 这里配置的Content-type很重要的 ，用于服务器端辨别文件的类型的
+            sb.append("Content-Type:image/jpeg" + LINE_END); // 这里配置的Content-type很重要的 ，用于服务器端辨别文件的类型的
             sb.append(LINE_END);
             params = sb.toString();
             sb = null;
@@ -415,8 +271,8 @@ public class UploadUtil {
                 }
                 result = sb1.toString();
                 Log.e(TAG, "result : " + result);
-                sendMessage(UPLOAD_SUCCESS_CODE, "上传结果："
-                        + result);
+                sendMessage(UPLOAD_SUCCESS_CODE, result);
+                mHandler.sendEmptyMessage(1);
                 return;
             } else {
                 Log.e(TAG, "request error");
@@ -424,34 +280,60 @@ public class UploadUtil {
                 return;
             }
         } catch (MalformedURLException e) {
-            sendMessage(UPLOAD_SERVER_ERROR_CODE, "上传失败：error=" + e.getMessage());
+            sendMessage(UPLOAD_SERVER_ERROR_CODE, e.getMessage());
             e.printStackTrace();
+            mHandler.sendEmptyMessage(1);
             return;
         } catch (IOException e) {
             sendMessage(UPLOAD_SERVER_ERROR_CODE, "上传失败：error=" + e.getMessage());
             e.printStackTrace();
+            mHandler.sendEmptyMessage(1);
             return;
         }
     }
 
     /**
      * 发送上传结果
+     *
      * @param responseCode
      * @param responseMessage
      */
     private void sendMessage(int responseCode, String responseMessage) {
-        onUploadProcessListener.onUploadDone(responseCode, responseMessage);
+//        onUploadProcessListener.onUploadDone(responseCode, responseMessage);
+        Message msg = new Message();
+        msg.what=0;
+        msg.arg1 = responseCode;
+        msg.obj = responseMessage;
+        mHandler.sendMessage(msg);
     }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    int responseCode = msg.arg1;
+                    String responseMessage = (String) msg.obj;
+                    onUploadProcessListener.onUploadDone(responseCode, responseMessage);
+                    break;
+                case 1:
+                    closeProgressDialog();
+                    break;
+            }
+
+        }
+    };
 
     /**
      * 下面是一个自定义的回调函数，用到回调上传文件是否完成
      *
      * @author shimingzheng
-     *
      */
     public static interface OnUploadProcessListener {
         /**
          * 上传响应
+         *
          * @param responseCode
          * @param message
          */
@@ -459,12 +341,14 @@ public class UploadUtil {
 
         /**
          * 上传中
+         *
          * @param uploadSize
          */
         void onUploadProcess(int uploadSize);
 
         /**
          * 准备上传
+         *
          * @param fileSize
          */
         void initUpload(int fileSize);
@@ -495,6 +379,7 @@ public class UploadUtil {
 
     /**
      * 获取上传使用的时间
+     *
      * @return
      */
     public static int getRequestTime() {

@@ -6,7 +6,7 @@ public class Constants {
     public static final int INTERNAL_VERSION = 1;
     public static final String T_CHANNEL = "HD_COMMON";
 
-    public static  String softVersionName;
+    public static String softVersionName;
     /*********
      * 接口
      *********/
@@ -22,16 +22,27 @@ public class Constants {
     // 个人资料-上传图片（头像、身份证、毕业证、名片、公司认证营业执照、媒体代理证明）
     public static final String UPLOAD_PHOTO = "/user/uploadphoto";
 
-    /********* END *********/
-
+    // 个人资料-上传头像
+    public static final String UPLOAD_HEAD = "/user/updatehead";
+    // 获取个人资料
+    public static final String GETINFO = "/user/getinfo";
+    // 提交个人资料
+    public static final String SAVEINFO = "/user/savebasicinfo";
+    // 更新个人简介
+    public static final String UPDATE_INTRO = "/user/updateintro";
+    // 获取广告服务产品列表（查询或我的产品列表）
+    public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
+    /*********
+     * 下载图片拼接*/
+    public static final String IMAGE_URL_HEADER = "/userimg/";
     /**
      * 测试环境
      */
-    public static final String URL_TEST = "http://topad.uput.cn/";
+    public static final String URL_TEST = "http://topad.uput.cn";
     /**
      * 生产环境
      */
-    public static final String URL_PUBLISH = "http://topad.uput.cn/";
+    public static final String URL_PUBLISH = "http://topad.uput.cn";
 
 
     // 当前环境，默认测试环境
