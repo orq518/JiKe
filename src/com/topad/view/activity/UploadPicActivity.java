@@ -34,7 +34,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
     Button btn_save;
     String title;
     /**
-     * 0：上传身份证  1：上传毕业证  2：上传名片
+     * 0：上传身份证  1：上传毕业证  2：上传名片  3，上传公司认证
      */
     int type;
     @Override
@@ -71,6 +71,9 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                 break;
             case 2:
                 pic_1.setImageResource(R.drawable.upload_mingpian);
+                break;
+            case 3:
+                pic_1.setImageResource(R.drawable.uploadback);
                 break;
         }
         int width=Utils.getScreenWidth(this);
