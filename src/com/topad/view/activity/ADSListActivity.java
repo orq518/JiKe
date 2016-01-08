@@ -132,7 +132,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         setData();
 
         // 设置listview可以加载、刷新
-        mListView.setPullLoadEnable(true);
+        mListView.setPullLoadEnable(false);
         mListView.setPullRefreshEnable(true);
         // 设置适配器
         adapter = new ListAdapter(mContext);
@@ -284,7 +284,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             name.setText(bankList.get(position).getServicename());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
             money.setText(ssb.toString());
-            count.setText(bankList.get(position).getSalecount());
+            SpannableStringBuilder ssb2 = new SpannableStringBuilder("已出售：" +  bankList.get(position).getSalecount() + "笔");
+            count.setText(ssb2.toString());
             companyName.setText(bankList.get(position).getCompanyname());
 
             if(!Utils.isEmpty(bankList.get(position).getImglicense())){
@@ -336,7 +337,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         RequestParams rp=new RequestParams();
 //        rp.add("type2", category);
 ////        rp.add("userid", TopADApplication.getSelf().getUserId());
-//        rp.add("userid", "0");
+        rp.add("userid", "0");
 
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
@@ -346,6 +347,12 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                     for(int i = 0; i < serviceBean.data.size(); i++){
                         bankList.add(serviceBean.data.get(i));
                     }
+                }
+
+                if(bankList == null || bankList.size() == 0){
+                    mListView.setPullLoadEnable(false);
+                }else{
+                    mListView.setPullLoadEnable(true);
                 }
             }
 

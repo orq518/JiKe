@@ -75,7 +75,6 @@ public class TitleView extends RelativeLayout {
         mTitle.setText(textId);
     }
 
-
     public void setLeftIcon(int resId) {
         mLeft.setImageResource(resId);
         mLeft.setVisibility(View.VISIBLE);
@@ -91,6 +90,10 @@ public class TitleView extends RelativeLayout {
 
     public void setRightVisiable(boolean visible) {
         mRigh.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public void setRightImageVisiable(boolean visible) {
+        mRightImage.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setRightClickListener(OnClickListener lis, String text) {
