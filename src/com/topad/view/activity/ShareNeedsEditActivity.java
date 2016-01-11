@@ -40,10 +40,7 @@ import java.util.List;
  * 发布需求编辑界面
  */
 public class ShareNeedsEditActivity extends BaseActivity implements IRecordFinish, View.OnClickListener, IDatePick {
-
-    /**
-     * title布局
-     **/
+    /** title布局 **/
     private TitleView mTitle;
     MediaAdapter adapter;
     TextView data_pic;
