@@ -44,16 +44,9 @@ import java.util.List;
 /**
  * 发布需求编辑界面
  */
-<<<<<<< HEAD:src/com/topad/view/activity/ShareNeedsEditActivity_Peixun.java
 public class ShareNeedsEditActivity_Peixun extends BaseActivity implements IRecordFinish, View.OnClickListener, IDatePick {
 
-    /**
-     * title布局
-     **/
-=======
-public class ShareNeedsEditActivity extends BaseActivity implements IRecordFinish, View.OnClickListener, IDatePick {
     /** title布局 **/
->>>>>>> d0c1040ac9fca69752108691567b4b71c457bf5e:src/com/topad/view/activity/ShareNeedsEditActivity.java
     private TitleView mTitle;
     MediaAdapter adapter;
     TextView data_pic;

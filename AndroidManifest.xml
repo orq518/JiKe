@@ -411,7 +411,6 @@
             </intent-filter>
         </activity>
 
-<<<<<<< HEAD
         <!-- 媒体列表 -->
         <activity
             android:name=".view.activity.ShareNeedsEditActivity_Zhaopin"
@@ -430,7 +429,6 @@
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
-=======
         <!-- 添加产品 -->
         <activity
             android:name=".view.activity.AddProductActivity"
@@ -449,7 +447,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 
->>>>>>> d0c1040ac9fca69752108691567b4b71c457bf5e
     </application>
 
 </manifest>

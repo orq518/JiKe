@@ -166,7 +166,6 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     intent.putExtra("zhiye", titleString + "-" + tempArray[position]);
                     sendBroadcast(intent);
                     getMyInfo(titleString, tempArray[position]);
-<<<<<<< HEAD
                 } else {
                     switch (type) {
                         case 0:
@@ -201,8 +200,9 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     }
 
 
-=======
-                } else if("2".equals(from)){
+                }
+
+                /*else if("2".equals(from)){
                     Intent intent = new Intent(Constants.BROADCAST_ACTION_PRODUCT_CLASS);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra( "media_class", arrayTV[type] + "-" + tempArray[position]);
@@ -211,10 +211,9 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     sendBroadcast(intent);
                     finish();
                 }else {
-                    Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
+                    Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity_Peixun.class);
                     startActivity(intent);
->>>>>>> d0c1040ac9fca69752108691567b4b71c457bf5e
-                }
+                }*/
 
             }
         });

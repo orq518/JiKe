@@ -34,7 +34,6 @@ public class Constants {
     public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
     // 更新职业
     public static final String URL_UPDATEJOB = "/user/updatejob";
-<<<<<<< HEAD
 
     /**
      * 发布需求
@@ -51,9 +50,7 @@ public class Constants {
 
     /*********
      * 下载图片拼接*/
-=======
     // 下载图片拼接
->>>>>>> d0c1040ac9fca69752108691567b4b71c457bf5e
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品
     public static final String URL_ADD_PRODUCT= "/adservice/add";
