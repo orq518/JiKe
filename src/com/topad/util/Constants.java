@@ -41,7 +41,10 @@ public class Constants {
      * 发布需求
      */
     public static final String URL_NEED_ADD = "/need/add";
-
+    /**
+     * 更新其它图片数据
+     */
+    public static final String URL_UPDATE_IMG = "/user/updateimg";
 
 
 
