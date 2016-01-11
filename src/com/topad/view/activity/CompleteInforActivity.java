@@ -293,7 +293,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
 
                 IntentFilter filter = new IntentFilter();
-                filter.addAction(Constants.BroadCast_Action_GETZHIYE);
+                filter.addAction(Constants.BROADCAST_ACTION_GETZHIYE);
                 registerReceiver(broadcastReceiver, filter);
                 break;
             case R.id.btn_login://确认保存
@@ -479,7 +479,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         @Override
         public void onReceive(final Context context, final Intent intent) {
             final String action = intent.getAction();
-            if (Constants.BroadCast_Action_GETZHIYE.equals(action)) {//取得职业
+            if (Constants.BROADCAST_ACTION_GETZHIYE.equals(action)) {//取得职业
                 String zhiyeString = intent.getStringExtra("zhiye");
                 LogUtil.d("zhiyeString:" + zhiyeString);
                 if (!Utils.isEmpty(zhiyeString)) {

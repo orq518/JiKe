@@ -56,6 +56,11 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     String[] qitafuwu = new String[]{"品牌起名/公司起名", "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询服务"};
     int[] qitafuwu_ic = new int[]{R.drawable.others_quming, R.drawable.others_mingpian, R.drawable.others_shuchu, R.drawable.others_chuban, R.drawable.others_zhanlan, R.drawable.others_law};
 
+    private String[] arrayTV = new String[]{"广告创意", "平面设计", "营销推广",
+            "影视动漫", "文案策划", "广告监测",
+            "专家培训", "管理咨询", "网站建设",
+            "公关服务", "企业招聘", "其他服务"};
+
     String[] tempArray;
     int[] tempArray_ic;
     /**
@@ -84,26 +89,11 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     }
 
     String titleString = null;
-    /**
-     * from: null或者0 来自发布需求   1：来自职业选择
-     */
+    /** from: null或者0 来自发布需求   1：来自职业选择 2: 产品类别列表页 **/
     String from;
-    /**
-     * 沉浸式状态栏
-     **/
-    private SystemBarTintManager mTintManager;
-
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
-    }
 
     @Override
     public void initViews() {
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
         Intent intent = getIntent();
         titleString = intent.getStringExtra("title");
         type = intent.getIntExtra("type", 0);
@@ -171,11 +161,12 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if ("1".equals(from)) {
-                    Intent intent = new Intent(Constants.BroadCast_Action_GETZHIYE);
+                    Intent intent = new Intent(Constants.BROADCAST_ACTION_GETZHIYE);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("zhiye", titleString + "-" + tempArray[position]);
                     sendBroadcast(intent);
                     getMyInfo(titleString, tempArray[position]);
+<<<<<<< HEAD
                 } else {
                     switch (type) {
                         case 0:
@@ -210,6 +201,19 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     }
 
 
+=======
+                } else if("2".equals(from)){
+                    Intent intent = new Intent(Constants.BROADCAST_ACTION_PRODUCT_CLASS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra( "media_class", arrayTV[type] + "-" + tempArray[position]);
+                    intent.putExtra( "type1", type);
+                    intent.putExtra( "type2", position);
+                    sendBroadcast(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
+                    startActivity(intent);
+>>>>>>> d0c1040ac9fca69752108691567b4b71c457bf5e
                 }
 
             }

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.logging.Handler;
 
 /**
- * ${todo}<我发布的媒体>
+ * ${todo}<我的服务产品>
  *     category＝ 广告创意－1、营销策略－2、影视广告－3、动漫创作－4
  * @author lht
  * @data: on 15/10/26 11:06
@@ -86,7 +86,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initViews() {
-
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
         mTitleView.setTitle("我的服务产品设计");
@@ -192,6 +191,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(MyShareMediaListActivity.this, AddProductActivity.class);
+            startActivity(intent);
 
         }
 
