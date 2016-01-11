@@ -46,9 +46,7 @@ import java.util.List;
  */
 public class ShareNeedsEditActivity_Peixun extends BaseActivity implements IRecordFinish, View.OnClickListener, IDatePick {
 
-    /**
-     * title布局
-     **/
+    /** title布局 **/
     private TitleView mTitle;
     MediaAdapter adapter;
     TextView data_pic;

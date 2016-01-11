@@ -32,16 +32,17 @@ public class Constants {
     public static final String UPDATE_INTRO = "/user/updateintro";
     // 获取广告服务产品列表（查询或我的产品列表）
     public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
-    /**
-     * 更新职业
-     */
+    // 更新职业
     public static final String URL_UPDATEJOB = "/user/updatejob";
 
     /**
      * 发布需求
      */
     public static final String URL_NEED_ADD = "/need/add";
-
+    /**
+     * 更新其它图片数据
+     */
+    public static final String URL_UPDATE_IMG = "/user/updateimg";
 
 
 
@@ -49,7 +50,15 @@ public class Constants {
 
     /*********
      * 下载图片拼接*/
+    // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
+    // 添加产品
+    public static final String URL_ADD_PRODUCT= "/adservice/add";
+    // 添加案例图片
+    public static final String URL_ADD_PHOTO= "/adservice/addphoto";
+    // 添加案例
+    public static final String URL_ADD_CASE= "/adservice/addcase";
+
     /**
      * 测试环境
      */
@@ -97,10 +106,11 @@ public class Constants {
     /**
      * 广播Action
      **/
-    public static final String BroadCast_Action_GETZHIYE = "BroadCast_Action_Login";   //获得职业
-    public static final String BroadCast_Action_LogOut = "BroadCast_Action_Logout"; //登出
-    public static final String BroadCast_Action_Clear_Token = "BroadCast_Action_Clear_Token";   //清除token
-    public static final String BroadCast_Action_SUCCEED_Login_INDEX = "BroadCast_Action_SUCCEED_Login_INDEX";   //登录成功后跳转的tabindex
+    public static final String BROADCAST_ACTION_GETZHIYE = "broadcast_action_login";   //获得职业
+    public static final String BROADCAST_ACTION_PRODUCT_CLASS = "broadcast_action_product_class";   //我的产品类别
+    public static final String BROADCAST_ACTION_LOGOUT = "broadcast_action_logout"; //登出
+    public static final String BROADCAST_ACTION_CLEAR_TOKEN = "broadcast_action_clear_token";   //清除token
+    public static final String BROADCAST_ACTION_SUCCEED_LOGIN_INDEX = "broadcast_action_succeed_login_index";   //登录成功后跳转的tabindex
 
 
 }

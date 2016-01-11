@@ -41,7 +41,7 @@
                           android:onClick="onClick"
                           android:paddingBottom="@dimen/dimen_15"
                           android:paddingTop="@dimen/dimen_20"
-                          android:text="光告创意"
+                          android:text="广告创意"
                     />
                 <TextView android:id="@+id/tab02"
                           android:layout_width="fill_parent"

@@ -1,0 +1,182 @@
+<!-- 注册页 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bule"
+    android:orientation="vertical">
+
+    <!-- 顶部标题 -->
+    <com.topad.view.customviews.TitleView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="15dp"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/app_bg"
+        android:layout_below="@id/title">
+
+        <LinearLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/gray_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/gray_bg">
+
+                <!-- 产品类别 -->
+                <LinearLayout
+                    android:id="@+id/ly_product_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="visible">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/dark_gray_text"
+                        android:layout_marginTop="0dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:id="@+id/tv_product_class_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="产品类别"
+                            android:textSize="16sp"
+                            android:layout_alignParentLeft="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_product_class"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="--"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_gray_bg"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/tv_product_class_tip"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginRight="16dp"
+                            android:src="@drawable/arrow" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/dark_gray_text"
+                        android:paddingTop="3dp"/>
+
+                </LinearLayout>
+
+                <!-- 产品名称 -->
+                <EditText
+                    android:id="@+id/et_product_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_board_gray"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="输入产品名称"
+                    android:textColorHint="@color/text_gray_bg"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:visibility="visible"/>
+
+                <!-- 产品报价 -->
+                <EditText
+                    android:id="@+id/et_product_offer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_board_gray"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="输入产品报价（元）"
+                    android:textColorHint="@color/text_gray_bg"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:visibility="visible"/>
+
+                <!-- 产品详情 -->
+                <EditText
+                    android:id="@+id/et_product_details"
+                    android:layout_width="fill_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/btn_board_gray"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:hint=""
+                    android:textColorHint="@color/text_gray_bg"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:visibility="visible"
+                    android:gravity="top"/>
+
+                <ImageView
+                    android:id="@+id/iv_add_item"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/pic_add_item"
+                    android:scaleType="fitXY"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 底部布局 -->
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <!-- 提交 -->
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/btn_bule3_borad_style"
+            android:layout_height="60dp"
+            android:focusable="false"
+            android:text="提交"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
