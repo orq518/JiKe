@@ -19,17 +19,11 @@ import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.MyInfoBean;
-import com.topad.bean.NeedsListBean;
-import com.topad.bean.SearchListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.SystemBarTintManager;
-import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 主界面
@@ -179,12 +173,43 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                 if ("1".equals(from)) {
                     Intent intent = new Intent(Constants.BroadCast_Action_GETZHIYE);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("zhiye", titleString+"-"+tempArray[position]);
+                    intent.putExtra("zhiye", titleString + "-" + tempArray[position]);
                     sendBroadcast(intent);
                     getMyInfo(titleString, tempArray[position]);
                 } else {
-                    Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity.class);
-                    startActivity(intent);
+                    switch (type) {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 11:
+                            Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity_Normal.class);
+                            intent.putExtra("type1",titleString);
+                            intent.putExtra("type2",tempArray[position]);
+                            startActivity(intent);
+                            break;
+                        case 6:
+                            intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity_Peixun.class);
+                            intent.putExtra("type1",titleString);
+                            intent.putExtra("type2",tempArray[position]);
+                            startActivity(intent);
+                            break;
+
+                        case 10:
+                            intent = new Intent(NeedsListActivity.this, QiyeZhaopin3Activity.class);
+                            intent.putExtra("type",position);
+                            intent.putExtra("type1",titleString);
+                            intent.putExtra("type2",tempArray[position]);
+                            startActivity(intent);
+                            break;
+                    }
+
+
                 }
 
             }

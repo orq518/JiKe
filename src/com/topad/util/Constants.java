@@ -37,6 +37,16 @@ public class Constants {
      */
     public static final String URL_UPDATEJOB = "/user/updatejob";
 
+    /**
+     * 发布需求
+     */
+    public static final String URL_NEED_ADD = "/need/add";
+
+
+
+
+
+
     /*********
      * 下载图片拼接*/
     public static final String IMAGE_URL_HEADER = "/userimg/";

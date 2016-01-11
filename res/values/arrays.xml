@@ -254,6 +254,179 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
                 <enum name="pull_out" value="1"/>
             </attr>
         </declare-styleable>
- 
 
+   <!-- <key>广告公司类</key>-->
+    <string-array name="guanggaogongsi">
+        <item>企业管理</item>
+        <item>广告创意</item>
+        <item>美术设计</item>
+        <item>广告文案</item>
+        <item>广告摄影</item>
+        <item>影视制作</item>
+        <item>客户经理</item>
+        <item>客户服务</item>
+        <item>广告销售</item>
+        <item>媒介策划</item>
+        <item>营销策划</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>市场公关</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+    <!--<key>广告主类</key>-->
+    <string-array name="guanggaozhu">
+        <item>经营管理</item>
+        <item>品牌管理</item>
+        <item>营销策划</item>
+        <item>媒介经理</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+   <!-- <key>电视媒体类</key>-->
+    <string-array name="dianshimeiti">
+        <item>广告管理</item>
+        <item>广告销售</item>
+        <item>媒介管理</item>
+        <item>媒介策划</item>
+        <item>内容管理</item>
+        <item>栏目策划</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+   <!-- <key>广播媒体类</key>-->
+    <string-array name="guangbomeiti">
+        <item>广告管理</item>
+        <item>广告销售</item>
+        <item>媒介管理</item>
+        <item>媒介策划</item>
+        <item>内容管理</item>
+        <item>栏目策划</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+   <!-- <key>报纸/杂志类</key>-->
+    <string-array name="baozhizazhi">
+        <item>广告管理</item>
+        <item>广告销售</item>
+        <item>媒介管理</item>
+        <item>媒介策划</item>
+        <item>内容管理</item>
+        <item>栏目策划</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+    <!--<key>户外媒体类</key>-->
+    <string-array name="huwaimeiti">
+        <item>公司运营</item>
+        <item>广告管理</item>
+        <item>广告销售</item>
+        <item>媒介管理</item>
+        <item>媒介策划</item>
+        <item>媒体维护</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+   <!-- <key>互联网媒体类</key>-->
+    <string-array name="hulianwangmeiti">
+        <item>广告管理</item>
+        <item>广告销售</item>
+        <item>媒介管理</item>
+        <item>媒介策划</item>
+        <item>内容管理</item>
+        <item>栏目策划</item>
+        <item>市场公关</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+    <!--<key>营销策划类</key>-->
+    <string-array name="yingxiaocehua">
+        <item>公司管理</item>
+        <item>营销策划</item>
+        <item>活动策划</item>
+        <item>品牌管理</item>
+        <item>媒介策划</item>
+        <item>市场公关</item>
+        <item>客户经理</item>
+        <item>客户服务</item>
+        <item>财务</item>
+        <item>办公行政</item>
+        <item>人力资源</item>
+        <item>法务</item>
+        <item>其他</item>
+    </string-array>
+    <!--<key>技术人才</key>-->
+    <string-array name="jishurencai">
+        <item>技术管理</item>
+        <item>网站策划</item>
+        <item>网络设计</item>
+        <item>APP 开发</item>
+        <item>UI 设计</item>
+        <item>游戏软件开发</item>
+        <item>编程</item>
+        <item>网络工程师</item>
+        <item>网络测试</item>
+        <item>信息编辑</item>
+        <item>其他</item>
+    </string-array>
+    <!--<key>大学生实习</key>-->
+    <string-array name="daxueshengshixi">
+        <item>新闻</item>
+        <item>传播</item>
+        <item>广告</item>
+        <item>艺术</item>
+        <item>动画</item>
+        <item>播音主持</item>
+        <item>信息工程</item>
+        <item>计算机</item>
+        <item>媒体管理</item>
+        <item>文学</item>
+        <item>政治</item>
+        <item>法律</item>
+        <item>教育</item>
+        <item>医学</item>
+        <item>农业</item>
+        <item>能源</item>
+        <item>工商企业管理</item>
+        <item>环境</item>
+        <item>工程</item>
+        <item>软件</item>
+        <item>外国语</item>
+        <item>经济</item>
+        <item>金融</item>
+        <item>化工</item>
+        <item>物理</item>
+        <item>数学</item>
+        <item>其他</item>
+    </string-array>
 </resources>

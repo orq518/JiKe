@@ -19,7 +19,6 @@ import android.widget.ViewFlipper;
 
 import com.topad.R;
 import com.topad.util.LogUtil;
-import com.topad.view.activity.ShareNeedsEditActivity;
 import com.topad.view.customviews.wheelview.NumericWheelAdapter;
 import com.topad.view.customviews.wheelview.OnWheelChangedListener;
 import com.topad.view.customviews.wheelview.WheelView;
