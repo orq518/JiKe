@@ -35,15 +35,15 @@ public class MyInfoBean extends BaseBean{
      * imgcard2 :
      */
 
-    private List<DataEntity> data;
+    private DataEntity data;
 
 
-    public void setData(List<DataEntity> data) {
+    public void setData(DataEntity data) {
         this.data = data;
     }
 
 
-    public List<DataEntity> getData() {
+    public DataEntity getData() {
         return data;
     }
 

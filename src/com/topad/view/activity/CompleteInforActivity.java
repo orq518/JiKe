@@ -162,11 +162,10 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
-                    List data = base.getData();
+                    myInfoBean = base.getData();
 
                     try {
 
-                        myInfoBean = (MyInfoBean.DataEntity) data.get(0);
                         String name = myInfoBean.getNickname();
                         String sex = myInfoBean.getSex();
                         String address = myInfoBean.getAddress();

@@ -34,6 +34,22 @@ public class Constants {
     public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
     // 更新职业
     public static final String URL_UPDATEJOB = "/user/updatejob";
+
+    /**
+     * 发布需求
+     */
+    public static final String URL_NEED_ADD = "/need/add";
+    /**
+     * 更新其它图片数据
+     */
+    public static final String URL_UPDATE_IMG = "/user/updateimg";
+
+
+
+
+
+    /*********
+     * 下载图片拼接*/
     // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品

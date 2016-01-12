@@ -45,7 +45,13 @@
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/common_btn_red</item>
     </style>
-
+    <style name="ucf_btn_orange_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/common_btn_height</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@color/orange</item>
+    </style>
     <style name="ucf_btn_red_borad_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/common_btn_height</item>
@@ -220,5 +226,8 @@
         <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->
+    </style>
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox</item>
     </style>
 </resources>
