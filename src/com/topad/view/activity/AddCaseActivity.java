@@ -1,41 +1,40 @@
 package com.topad.view.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
-import com.topad.TopADApplication;
-import com.topad.amap.ToastUtil;
-import com.topad.bean.BaseBean;
 import com.topad.bean.CaseBean;
-import com.topad.net.HttpCallback;
-import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.LogUtil;
 import com.topad.util.PictureUtil;
 import com.topad.util.UploadUtil;
 import com.topad.util.Utils;
+import com.topad.view.customviews.MyGridviewCase;
 import com.topad.view.customviews.TitleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,7 +52,9 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
     /** 产品详情 **/
     private EditText mETDetails;
     /** 添加案例 **/
-    private ImageView mIVAdd;
+    private MyGridviewCase mAddDetailGridview;
+    /** Adapter **/
+    private MediaAdapter adapter;
     /** 提交 **/
     private Button mBTAdd;
 
@@ -61,8 +62,12 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
     private String intro;
     /** 案例实体 **/
     private CaseBean caseBean;
+    /** 回调常量 **/
     final int PICKPHOTO = 1;
-
+    /** 案例图片数据元 **/
+    private List<CaseType> caseTypeList = new ArrayList<CaseType>();
+    private ArrayList<String> imgs = new ArrayList<String>();
+    private ArrayList<String> picPaths = new ArrayList<String>();
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -78,10 +83,9 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
         mETDetails = (EditText) findViewById(R.id.et_case_details);
-        mIVAdd = (ImageView) findViewById(R.id.iv_add_case);
+        mAddDetailGridview = (MyGridviewCase) findViewById(R.id.add_case_gridview);
         mBTAdd = (Button) findViewById(R.id.btn_add_case);
 
-        mIVAdd.setOnClickListener(this);
         mBTAdd.setOnClickListener(this);
     }
 
@@ -132,6 +136,38 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         });
+
+        adapter = new MediaAdapter(this);
+        mAddDetailGridview.setAdapter(adapter);
+        mAddDetailGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CaseType meidaType = (CaseType) adapter.getItem(position);
+                if (meidaType.type.equals("1")) {//图片
+//                    Intent intent = new Intent(AddCaseActivity.this, PicLookActivity.class);
+//                    intent.putExtra("picpath", meidaType.pathString);
+//                    startActivity(intent);
+                }else if (meidaType.type.equals("2")) {//添加图片
+                    //使用startActivityForResult启动SelectPicPopupWindow当返回到此Activity的时候就会调用onActivityResult函数
+                    Intent intent = new Intent(mContext,  SelectPicPopupWindow.class);
+                    startActivityForResult(intent, PICKPHOTO);
+                }
+            }
+        });
+
+        mAddDetailGridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CaseType meidaType = (CaseType) adapter.getItem(position);
+                meidaType.isShowDeleteed = true;
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+        initPicData();
+
+        caseBean = new CaseBean();
     }
 
     /**
@@ -151,21 +187,19 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
         super.onClick(v);
         Intent intent;
         switch (v.getId()) {
-            // 添加案例
-            case R.id.iv_add_case:
-                intent = new Intent(mContext,  SelectPicPopupWindow.class);
-                startActivityForResult(intent, PICKPHOTO);
-                break;
-
             // 提交
             case R.id.btn_add_case:
                 if(!Utils.isEmpty(intro)){
                     caseBean.setIntro(intro);
                 }
-                intent = new Intent(AddCaseActivity.this, AddProductActivity.class );
-                intent.putExtra("data", caseBean);
-                setResult(RESULT_OK, intent);
-                finish();
+
+                if(caseBean.getPicPaths() != null && caseBean.getPicPaths().size() > 0){
+                    intent = new Intent(AddCaseActivity.this, AddProductActivity.class );
+                    intent.putExtra("data", caseBean);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
                 break;
 
             default:
@@ -236,15 +270,24 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
                             String status = respObj.getString("status");// 状态码
                             String msg = respObj.getString("msg");// 错误信息
                             String img = respObj.getString("img");// 图片名
-                            if (!Utils.isEmpty(img)) {
-                                caseBean = new CaseBean();
-                                caseBean.setPicPath(img);
+
+                            if (!Utils.isEmpty(img)) { // 成功
+                                imgs.add(img);
+                                caseBean.setImgs(imgs);
 
                                 Bitmap image = PictureUtil.getSmallBitmap(picPath);
                                 if(image != null){
-                                    mIVAdd.setImageBitmap(image);
+                                    picPaths.add(picPath);
+                                    caseBean.setPicPaths(picPaths);
+
+                                    CaseType meidaType = new CaseType();
+                                    meidaType.type = "1";
+                                    meidaType.image = image;
+                                    meidaType.picPath = img;
+                                    caseTypeList.add(0, meidaType);
+                                    adapter.notifyDataSetChanged();
                                 }
-                            } else {//上传失败
+                            } else { // 上传失败
                                 if (!Utils.isEmpty(msg)) {
                                     Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                                 } else {
@@ -283,19 +326,134 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
 
             Map<String, String> params = new HashMap<String, String>();
             uploadUtil.uploadFile(picPath, fileKey, url, params);
-//            UploadUtil.uploadFile(file, url, new UploadInterface() {
-//                @Override
-//                public void onSucceed(BaseBean bean) {
-//
-//                }
-//
-//                @Override
-//                public void onFailed(BaseBean bean) {
-//
-//                }
-//            });
         }
 
 
+    }
+
+    /**
+     * 自定义适配器
+     */
+    class MediaAdapter extends BaseAdapter {
+        private LayoutInflater inflater;
+        int width;
+
+
+        public MediaAdapter(Context context) {
+            super();
+            inflater = LayoutInflater.from(context);
+            int[] screenSize = Utils.getScreenDispaly(mContext);
+            width = screenSize[0];
+        }
+
+        public void setData(List<CaseType> meidaTypeList) {
+            meidaTypeList.clear();
+            meidaTypeList.addAll(meidaTypeList);
+            notifyDataSetChanged();
+        }
+
+        public List<CaseType> getData() {
+            return caseTypeList;
+        }
+
+        @Override
+        public int getCount() {
+            if (null != caseTypeList) {
+                return caseTypeList.size();
+            } else {
+                return 0;
+            }
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return caseTypeList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.case_layout, null);
+                viewHolder = new ViewHolder();
+                viewHolder.play = (ImageView) convertView.findViewById(R.id.play);
+                viewHolder.delete = (ImageView) convertView.findViewById(R.id.delete);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            CaseType caseType = caseTypeList.get(position);
+            if (caseType.type.equals("1")) { // 图片
+                viewHolder.play.setImageBitmap(caseType.image);
+                viewHolder.play.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+            else if (caseType.type.equals("2")) { //添加图片
+                viewHolder.play.setImageResource(R.drawable.pic_add_item);
+                viewHolder.play.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+            }
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.play.getLayoutParams();
+            LogUtil.d("##params.width:" + params.width);
+            params.width = (width - 100) / 4;
+            params.height = (width - 100) / 4;
+            if (caseType.isShowDeleteed) {
+                viewHolder.delete.setVisibility(View.VISIBLE);
+                viewHolder.delete.setTag(caseType.picPath);
+
+                viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String tag = (String) v.getTag();
+                        int index = -1;
+                        CaseType curType = null;
+                        for (int i = 0; i < caseTypeList.size(); i++) {
+                            if (tag.equals(caseTypeList.get(i).image)) {
+                                curType = caseTypeList.get(i);
+                                index = i;
+
+                                break;
+                            }
+                        }
+
+                        caseTypeList.remove(index);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                });
+            } else {
+                viewHolder.delete.setVisibility(View.GONE);
+            }
+            return convertView;
+        }
+
+    }
+
+    class ViewHolder {
+        public ImageView play;
+        public ImageView delete;
+    }
+
+    class CaseType {
+        String type;  // 1：图片  2：添加图片
+        String picPath;
+        Bitmap image;
+        boolean isShowDeleteed;
+    }
+
+    /**
+     * 初始化添加案例
+     */
+    public void initPicData() {
+        CaseType meidaType_pic = new CaseType();
+        meidaType_pic.type = "2";
+        caseTypeList.add(meidaType_pic);
+        adapter.notifyDataSetChanged();
     }
 }

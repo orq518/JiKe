@@ -44,12 +44,6 @@ public class Constants {
      */
     public static final String URL_UPDATE_IMG = "/user/updateimg";
 
-
-
-
-
-    /*********
-     * 下载图片拼接*/
     // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品
