@@ -13,7 +13,8 @@ public class SearchItemBean implements Serializable {
      */
     private static final long serialVersionUID = 4768927122317982665L;
     public String locaion;
-    public String name;
     public String type;
+    public String name;
+    public String lanmu_name;//第一分类
     public String voice;
 }

@@ -262,7 +262,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 isNeedUp = true;
                 lastX = event.getX();
                 lastY = event.getY();
-                leftMenuTouch(v, true);
+                leftMenuTouch(v, true, false);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float cx = event.getX();
@@ -270,21 +270,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 moveXY = Math.abs(cx - lastX) + Math.abs(cy - lastY);
                 LogUtil.d("moveXY:" + moveXY);
                 if (moveXY > 30) {
-                    leftMenuTouch(v, false);
+                    leftMenuTouch(v, false, false);
                     isNeedUp = false;
                 }
 
                 break;
             case MotionEvent.ACTION_UP:
                 if (isNeedUp) {
-                    leftMenuTouch(v, false);
+                    leftMenuTouch(v, false,true);
                 }
                 break;
         }
         return false;
     }
 
-    public void leftMenuTouch(View v, boolean isPressed) {
+    public void leftMenuTouch(View v, boolean isPressed,boolean isGogoNew) {
         if (isPressed) {
             switch (v.getId()) {
                 case R.id.csmm:
@@ -372,7 +372,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ((TextView) (v.findViewById(R.id.tv_quit))).setTextColor(getResources().getColor(R.color.white));
                     break;
             }
-            leftMenuClick(v);
+            if(isGogoNew) {
+                leftMenuClick(v);
+            }
         }
 
     }

@@ -43,7 +43,10 @@ public class Constants {
      * 更新其它图片数据
      */
     public static final String URL_UPDATE_IMG = "/user/updateimg";
-
+    /**
+     * 媒体搜索
+     */
+    public static final String URL_MEDIA_SEARCH = "/media/search";
 
 
 

@@ -155,12 +155,12 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                 startActivityForResult(intent2, PICKPHOTO_2);
                 break;
             case R.id.btn_save://确认保存
-
+                if (type == 0 && (Utils.isEmpty(pathString1) || Utils.isEmpty(pathString2))) {
+                    ToastUtil.show(mContext,"请上传身份证正反面");
+                    return;
+                }
                 if (!Utils.isEmpty(pathString1)) {
                     uploadPic(pathString1);
-                }
-                if (!Utils.isEmpty(pathString2)) {
-                    uploadPic(pathString2);
                 }
                 break;
 
@@ -201,9 +201,9 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                                     if (Utils.isEmpty(img_name2) && !Utils.isEmpty(pathString2)) {
                                         uploadPic(pathString2);
                                     }
-                                    if(!Utils.isEmpty(img_name1)&&!Utils.isEmpty(img_name2)){
+                                    if (!Utils.isEmpty(img_name1) && !Utils.isEmpty(img_name2)) {
                                         submit();
-                                    }else{
+                                    } else {
                                         Toast.makeText(mContext, "身份证上传失败", Toast.LENGTH_SHORT).show();
                                     }
 
@@ -268,7 +268,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
     public void submit() {
         // 拼接url
         StringBuffer sb = new StringBuffer();
-        sb.append(Constants.getCurrUrl()).append(Constants.UPLOAD_HEAD).append("?");
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_UPDATE_IMG).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());

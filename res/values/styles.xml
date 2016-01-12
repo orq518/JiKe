@@ -83,7 +83,13 @@
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/common_btn_border_bule2</item>
     </style>
-
+    <style name="btn_bule5_borad_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/common_btn_border_bule2</item>
+    </style>
     <style name="btn_bule3_borad_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
