@@ -166,7 +166,15 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     intent.putExtra("zhiye", titleString + "-" + tempArray[position]);
                     sendBroadcast(intent);
                     getMyInfo(titleString, tempArray[position]);
-                } else {
+                } else if("2".equals(from)){
+                    Intent intent = new Intent(Constants.BROADCAST_ACTION_PRODUCT_CLASS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra( "media_class", arrayTV[type] + "-" + tempArray[position]);
+                    intent.putExtra( "type1", type);
+                    intent.putExtra( "type2", position);
+                    sendBroadcast(intent);
+                    finish();
+                }else {
                     switch (type) {
                         case 0:
                         case 1:
