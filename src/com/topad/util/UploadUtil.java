@@ -22,6 +22,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.topad.R;
+import com.topad.util.imagecompress.ImageCompress;
 import com.topad.view.customviews.CircleProgressDialog;
 
 /**
@@ -96,7 +97,9 @@ public class UploadUtil {
             return;
         }
         try {
-            File file = new File(filePath);
+//            File file = new File(filePath);
+            File file = ImageCompress.doCompress(filePath);
+
             uploadFile(file, fileKey, RequestURL, param);
         } catch (Exception e) {
             sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");

@@ -64,7 +64,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
      **/
     private ListViewAdapter adapter;
     /**
-     * 选择好的条件
+     * 选择好的搜索条件
      */
     ArrayList<SearchItemBean> itemBeans = new ArrayList<SearchItemBean>();
 
@@ -72,7 +72,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
      * view
      **/
     private LinearLayout view;
-
+int curPage=1;
     private final int MSG_REFRESH = 1000;
     private final int MSG_LOADMORE = 2000;
     protected android.os.Handler mHandler = new android.os.Handler() {
@@ -88,7 +88,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             }
         }
     };
-
+    int searchType;
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -103,13 +103,15 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initViews() {
+        searchType = getIntent().getIntExtra("searchtype", 0);
+        itemBeans=getIntent().getParcelableArrayListExtra("searchKeys");
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
         mTitleView.setTitle("搜索");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
         mTitleView.setRightVisiable(true);
         mListView = (MyListView) findViewById(R.id.listview);
-
+        submitSearch(curPage,0);
     }
 
     /**
@@ -143,31 +145,13 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onRefresh() {
-                // 模拟刷新数据，1s之后停止刷新
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.stopRefresh();
-                        Toast.makeText(SearchResultListActivity.this, "refresh",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_REFRESH);
-                    }
-                }, 1000);
+                curPage=1;
+                submitSearch(curPage,0);
             }
 
             @Override
             public void onLoadMore() {
-                mHandler.postDelayed(new Runnable() {
-                    // 模拟加载数据，1s之后停止加载
-                    @Override
-                    public void run() {
-                        mListView.stopLoadMore();
-                        Toast.makeText(SearchResultListActivity.this, "loadMore",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_LOADMORE);
-                    }
-                }, 1000);
+                submitSearch(curPage,1);
             }
         });
 
@@ -265,6 +249,104 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             TextView name, lanmu, type, time, location;
             Button contactme;
         }
+
+    }
+
+    /**
+     * 提交搜索
+     * refreshType 0:下拉刷新   1：上拉加载更多
+     */
+    public void submitSearch(int page,final int refreshType) {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_SEARCH).append("?");
+        String url = sb.toString();
+
+
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("token", TopADApplication.getSelf().getToken());
+        rp.add("page", ""+page);
+        rp.add("type1", (searchType+1)+"");
+
+        for (int i = 0; i < itemBeans.size(); i++) {
+            SearchItemBean itembean = itemBeans.get(i);
+
+            String parameName1=null;
+            String parameName2=null;
+            String parameName3=null;
+            String parameName4=null;
+            switch (i) {
+                case 0:
+                    parameName1="type21";
+                    parameName2="type31";
+                    parameName3="str11";
+                    parameName4="str21";
+                    break;
+                case 1:
+                    parameName1="type22";
+                    parameName2="type32";
+                    parameName3="str12";
+                    parameName4="str22";
+                    break;
+                case 2:
+                    parameName1="type23";
+                    parameName2="type33";
+                    parameName3="str13";
+                    parameName4="str23";
+                    break;
+            }
+            switch (searchType) {
+                case 0://电视
+                case 1://广播
+                    //第一个条件
+                    rp.add(parameName1, itembean.type);//第二个分类条件
+                    rp.add(parameName2, "");//户外搜索有值  第三个分类条件
+                    rp.add(parameName3, itembean.name);//文本框1
+                    rp.add(parameName4, itembean.lanmu_name);
+                    break;
+                case 2://报纸
+                case 4://杂志
+                case 5://网络
+                    //第一个条件
+                    rp.add(parameName1, itembean.type);//第二个分类条件
+                    rp.add(parameName2, "");//户外搜索有值  第三个分类条件
+                    rp.add(parameName3, itembean.name);//文本框1
+                    rp.add(parameName4, "");
+                    break;
+                case 3://户外
+                    //第一个条件
+                    rp.add(parameName1, itembean.type);//第二个分类条件
+                    rp.add(parameName2, itembean.name);//户外搜索有值  第三个分类条件
+                    rp.add(parameName3, itembean.locaion);//文本框1
+                    rp.add(parameName4, "");
+                    break;
+
+            }
+        }
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                BaseBean base = (BaseBean) t;
+                if (base != null) {
+                    ToastUtil.show(mContext, base.getMsg());
+                    if(refreshType==0){
+                        curPage=1;
+                        mListView.stopRefresh();
+                    }else{
+                        mListView.stopLoadMore();
+                        curPage++;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, BaseBean.class);
 
     }
 }
