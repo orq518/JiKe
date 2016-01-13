@@ -43,6 +43,7 @@ public class Constants {
      * 更新其它图片数据
      */
     public static final String URL_UPDATE_IMG = "/user/updateimg";
+<<<<<<< HEAD
     /**
      * 媒体搜索
      */
@@ -53,6 +54,9 @@ public class Constants {
 
     /*********
      * 下载图片拼接*/
+=======
+
+>>>>>>> 9b0a8099b0e15f4a2098037bb96603fe5ad55171
     // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品

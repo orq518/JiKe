@@ -114,5 +114,6 @@ public class TopADApplication extends Application {
     public void logout() {
         token = null;
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_TOKEN, "");
+        SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_ID, "");
     }
 }

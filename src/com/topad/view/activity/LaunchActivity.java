@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
 
 /**
  * ${todo}<闪屏页>
@@ -53,7 +54,15 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void finishThis() {
-        startActivity(new Intent(mCtx, MainActivity.class));
+        // 是否登录
+        if (((TopADApplication)getApplication()).isLogin()) {
+            startActivity(new Intent(mCtx, MainActivity.class));
+
+
+        }else{
+            startActivity(new Intent(mCtx, LoginActivity.class));
+        }
+
         finish();
     }
 
