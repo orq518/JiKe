@@ -3,6 +3,7 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
@@ -17,8 +18,11 @@ import android.widget.Toast;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
+import com.topad.bean.AdDetailsBean;
 import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceBean;
+import com.topad.bean.AdServiceCaseListBean;
+import com.topad.bean.AdServiceDetailsBean;
 import com.topad.bean.BaseBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
@@ -36,7 +40,7 @@ import java.util.logging.Handler;
 
 /**
  * ${todo}<我的服务产品>
- *     category＝ 广告创意－1、营销策略－2、影视广告－3、动漫创作－4
+ *
  * @author lht
  * @data: on 15/10/26 11:06
  */
@@ -57,18 +61,47 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
     /** view **/
     private LinearLayout view;
+    /** 请求页数 **/
+    private int page = 1;
 
-    private final int MSG_REFRESH = 1000;
-    private final int MSG_LOADMORE = 2000;
+    private final int MSG_CASE_LIST = 1000;
     protected android.os.Handler mHandler = new android.os.Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MSG_REFRESH:
+                case MSG_CASE_LIST:
+                    Bundle b = msg.getData();
+                    final AdDetailsBean detailsBean = (AdDetailsBean) b.getSerializable("details_bean");
+                    String serviceId = b.getString("service_id");
 
-                    break;
+                    // 获取产品案例列表信息
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_CASE_LIST).append("?");
+                    String url = sb.toString();
+                    RequestParams rp=new RequestParams();
+                    rp.add("serviceid", serviceId);
+//                    rp.add("serviceid", "6");
 
-                case MSG_LOADMORE:
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            AdServiceCaseListBean bean = (AdServiceCaseListBean) t;
+                            if(bean != null){
+                                Intent intent = new Intent(MyShareMediaListActivity.this, AddProductActivity.class);
+                                intent.putExtra("data_details", detailsBean);
+                                intent.putExtra("data_case", bean);
+                                intent.putExtra("from", "1");
+                                startActivity(intent);
+                            }
+                        }
 
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+                            ToastUtil.show(mContext, "status = " + status + "\n"
+                                    + "msg = " + msg);
+                        }
+                    }, AdServiceCaseListBean.class);
                     break;
             }
         }
@@ -93,7 +126,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         mTitleView.setTitle("我的服务产品设计");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
         mTitleView.setRightVisiable(true);
-        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "+");
+        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "+" , 30);
+
         // listview
         mListView = (MyListView) findViewById(R.id.listview);
 
@@ -102,7 +136,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     /**
      * 请求数据
      */
-
     @Override
     public void initData() {
         setData();
@@ -118,11 +151,49 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent intent = new Intent(MyShareMediaListActivity.this, ADSDetailsActivity.class);
-                intent.putExtra("title",bankList.get(position).getServicename());
-                intent.putExtra("data",bankList.get(position));
-                startActivity(intent);
+                                    final int position, long id) {
+                final String serviceId = bankList.get(position - 1).getServiceid();
+
+                // 获取产品详情信息
+                StringBuffer sb = new StringBuffer();
+                sb.append(Constants.getCurrUrl()).append(Constants.URL_GET_INFO).append("?");
+                String url = sb.toString();
+                RequestParams rp=new RequestParams();
+                rp.add("serviceid", serviceId);
+//                rp.add("serviceid", "6");
+                postWithLoading(url, rp, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+
+                        final AdServiceDetailsBean detailsBean = (AdServiceDetailsBean) t;
+                        if(detailsBean != null && detailsBean.data.size()>0){
+
+                            mHandler.postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    Message msg = new Message();
+                                    Bundle b = new Bundle();// 存放数据
+                                    b.putSerializable("details_bean", detailsBean.data.get(0));
+                                    b.putString("service_id", serviceId);
+                                    msg.setData(b);
+                                    msg.what = MSG_CASE_LIST;
+                                    mHandler.sendMessage(msg);
+                                }
+                            }, 500);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, AdServiceDetailsBean.class);
             }
         });
 
@@ -131,31 +202,15 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onRefresh() {
-                // 模拟刷新数据，1s之后停止刷新
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.stopRefresh();
-                        Toast.makeText(MyShareMediaListActivity.this, "refresh",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_REFRESH);
-                    }
-                }, 1000);
+                bankList.clear();
+                page = 1;
+                setData();
             }
 
             @Override
             public void onLoadMore() {
-                mHandler.postDelayed(new Runnable() {
-                    // 模拟加载数据，1s之后停止加载
-                    @Override
-                    public void run() {
-                        mListView.stopLoadMore();
-                        Toast.makeText(MyShareMediaListActivity.this, "loadMore",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_LOADMORE);
-                    }
-                }, 1000);
+                page ++;
+                setData();
             }
         });
 
@@ -187,19 +242,23 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     }
 
     /**
-     * 顶部布局--左按钮事件监听
+     * 顶部布局--右按钮事件监听
      */
     public class TitleRightOnClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MyShareMediaListActivity.this, AddProductActivity.class);
+            intent.putExtra("from", "2");
             startActivity(intent);
 
         }
 
     }
 
+    /**
+     * 自定义适配器
+     */
     public class ListAdapter extends BaseSwipeAdapter {
         // 上下文对象
         private Context mContext;
@@ -250,11 +309,36 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
                 @Override
                 public void onClick(View arg0) {
-                    Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
                     // 点击完成之后，关闭删除menu
-                    swipeLayout.close();
-                    bankList.remove(position);
-                    notifyDataSetChanged();
+                    // 拼接url
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_DEL_SERVICE).append("?");
+                    String url = sb.toString();
+                    RequestParams rp=new RequestParams();
+                    rp.add("userid", TopADApplication.getSelf().getUserId());
+                    rp.add("serviceid", bankList.get(position).getServiceid());
+                    rp.add("token", TopADApplication.getSelf().getToken());
+
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            if(bankList.size() > 0){
+                                swipeLayout.close();
+                                bankList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+                            ToastUtil.show(mContext, "status = " + status + "\n"
+                                    + "msg = " + msg);
+                        }
+                    }, BaseBean.class);
+
                 }
             });
 
@@ -329,7 +413,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         rp.add("type1", "");
         rp.add("type2", "");
         rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("page", "1");
+        rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -340,12 +424,14 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                     }
                 }
 
+                mListView.stopRefresh();
+
                 if(bankList == null || bankList.size() == 0){
                     mListView.setPullLoadEnable(false);
                 }else{
                     mListView.setPullLoadEnable(true);
                 }
-            }
+        }
 
             @Override
             public void onFailure(BaseBean base) {

@@ -34,24 +34,30 @@ public class Constants {
     public static final String URL_AD_SERVICE_GETLIST = "/adservice/getlist";
     // 更新职业
     public static final String URL_UPDATEJOB = "/user/updatejob";
-
-    /**
-     * 发布需求
-     */
+    // 发布需求
     public static final String URL_NEED_ADD = "/need/add";
-    /**
-     * 更新其它图片数据
-     */
+    // 更新其它图片数据
     public static final String URL_UPDATE_IMG = "/user/updateimg";
-
     // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
+    // 下载案例图片拼接
+    public static final String CASE_IMAGE_URL_HEADER = "/serviceimg/";
     // 添加产品
     public static final String URL_ADD_PRODUCT= "/adservice/add";
     // 添加案例图片
     public static final String URL_ADD_PHOTO= "/adservice/addphoto";
     // 添加案例
     public static final String URL_ADD_CASE= "/adservice/addcase";
+    // 删除产品
+    public static final String URL_DEL_SERVICE= "/adservice/delservice";
+    // 修改产品
+    public static final String URL_EDIT_SERVICE= "/adservice/saveedit";
+    // 产品详细信息
+    public static final String URL_GET_INFO = "/adservice/getinfo";
+    // 产品案例列表
+    public static final String URL_CASE_LIST = "/adservice/caselist";
+    // 删除案例
+    public static final String URL_DEL_CASE = " /adservice/delcase";
 
     /**
      * 测试环境

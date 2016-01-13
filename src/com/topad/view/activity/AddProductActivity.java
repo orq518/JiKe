@@ -23,6 +23,10 @@ import android.widget.TextView;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
+import com.topad.bean.AdDetailsBean;
+import com.topad.bean.AdProductBean;
+import com.topad.bean.AdServiceCaseListBean;
+import com.topad.bean.AdServiceDetailsBean;
 import com.topad.bean.AddCaseBean;
 import com.topad.bean.AddProductBean;
 import com.topad.bean.BaseBean;
@@ -30,6 +34,7 @@ import com.topad.bean.CaseBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.ImageManager;
 import com.topad.util.LogUtil;
 import com.topad.util.PictureUtil;
 import com.topad.util.Utils;
@@ -40,12 +45,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ${todo}<添加产品页>
+ * ${todo}<添加/编辑产品页>
  *
  * @author lht
  * @data: on 15/11/2 18:06
  */
-public class AddProductActivity extends BaseActivity implements View.OnClickListener{
+public class AddProductActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = AddProductActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
@@ -63,7 +68,6 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
     private EditText mETDetails;
     /** 提交 **/
     private Button mBTAdd;
-
     /** 职业分类1 **/
     private String type1;
     /** 职业分类2 **/
@@ -74,17 +78,23 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
     private String price;
     /** 产品简介 **/
     private String intro;
-
     /** 数据源 **/
     private ArrayList<CaseBean> caseList = new ArrayList<CaseBean>();
-    final int CASE = 1;
 
+    final int CASE = 1;
     /** 添加案例 **/
     private MyGridviewCase mAddDetailGridview;
     /** Adapter **/
     private MediaAdapter adapter;
     /** 案例图片数据元 **/
     private List<CaseType> caseTypeList = new ArrayList<CaseType>();
+    /** 编辑-产品详情数据元 **/
+    private AdDetailsBean mAdDetailsBean;
+    /** 编辑-产品案例数据元 **/
+    private AdServiceCaseListBean mAdCaseListBean;
+
+    /** 来源 1-编辑，2-添加 **/
+    private String from;
 
     @Override
     public int setLayoutById() {
@@ -114,6 +124,17 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initData() {
+        // 接收数据
+        Intent intent = getIntent();
+        if (intent != null) {
+            mAdDetailsBean = (AdDetailsBean) intent.getSerializableExtra("data_details");
+            mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
+            from = intent.getStringExtra("from");
+
+        } else {
+            LogUtil.d(LTAG + "--" + "intent is null!");
+        }
+
         showView();
     }
 
@@ -121,11 +142,53 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
      * 显示数据
      */
     private void showView() {
+        // 编辑
+        if ("1".equals(from)) {
+            if (!Utils.isEmpty(mAdDetailsBean.getServicename())) {
+                mETName.setText(mAdDetailsBean.getServicename());
+            }
+
+            if (!Utils.isEmpty(mAdDetailsBean.getPrice())) {
+                mETOffer.setText(mAdDetailsBean.getPrice());
+            }
+
+            if (!Utils.isEmpty(mAdDetailsBean.getIntro())) {
+                mETDetails.setText(mAdDetailsBean.getIntro());
+            }
+
+            if (!Utils.isEmpty(mAdDetailsBean.getType1()) &&
+                    !Utils.isEmpty(mAdDetailsBean.getType2())) {
+                mTVClass.setText(mAdDetailsBean.getType1() + "-" + mAdDetailsBean.getType2());
+                mTVClass.setVisibility(View.VISIBLE);
+            }
+
+            for(int i=0; i<mAdCaseListBean.data.size(); i++){
+                CaseType meidaType = new CaseType();
+                meidaType.type = "1";
+                if(!Utils.isEmpty(mAdCaseListBean.data.get(i).getImgs())){
+                    String[] aa = mAdCaseListBean.data.get(i).getImgs().split("\\|");
+                    if(aa.length > 0){
+                        meidaType.picPath = aa[0];
+                    }
+                }
+                caseTypeList.add(0, meidaType);
+            }
+        } else {
+
+        }
+
         // 设置顶部标题布局
         mTitleView.setTitle("我的服务产品设计方案");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
-        setNextBtnState(false);
+        if (!Utils.isEmpty(mETName.getText().toString())
+                && !Utils.isEmpty(mETOffer.getText().toString())
+                && !Utils.isEmpty(mETDetails.getText().toString())
+                && !Utils.isEmpty(mTVClass.getText().toString())) {
+            setNextBtnState(true);
+        } else {
+            setNextBtnState(false);
+        }
 
         // 产品名称
         mETName.addTextChangedListener(new TextWatcher() {
@@ -242,6 +305,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         });
 
         adapter = new MediaAdapter(this);
+        initPicData();
         mAddDetailGridview.setAdapter(adapter);
         mAddDetailGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -249,7 +313,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 CaseType meidaType = (CaseType) adapter.getItem(position);
                 if (meidaType.type.equals("1")) {//图片
 
-                }else if (meidaType.type.equals("2")) {//添加案例
+                } else if (meidaType.type.equals("2")) {//添加案例
                     Intent intent = new Intent(mContext, AddCaseActivity.class);
                     startActivityForResult(intent, CASE);
                 }
@@ -266,7 +330,6 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        initPicData();
     }
 
     /**
@@ -389,38 +452,76 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
      * @return
      */
     public void submit() {
-        // 拼接url
-        StringBuffer sb = new StringBuffer();
-        sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_PRODUCT).append("?");
-        String url = sb.toString();
-        RequestParams rp=new RequestParams();
-        rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("type1", type1);
-        rp.add("type2", type2);
-        rp.add("servicename", servicename);
-        rp.add("price", price);
-        rp.add("intro", intro);
-        rp.add("token", TopADApplication.getSelf().getToken());
 
-        postWithLoading(url, rp, false, new HttpCallback() {
-            @Override
-            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                AddProductBean bean = (AddProductBean) t;
-                if (bean != null && !Utils.isEmpty(bean.getServiceid())
-                        &&  caseList != null && caseList.size() > 1 ) {
-                    addCase(bean.getServiceid());
+        if ("1".equals(from)) { // 编辑
+            // 拼接url
+            StringBuffer sb = new StringBuffer();
+            sb.append(Constants.getCurrUrl()).append(Constants.URL_EDIT_SERVICE).append("?");
+            String url = sb.toString();
+            RequestParams rp = new RequestParams();
+            rp.add("userid", TopADApplication.getSelf().getUserId());
+            rp.add("type1", type1);
+            rp.add("type2", type2);
+            rp.add("servicename", servicename);
+            rp.add("price", price);
+            rp.add("intro", intro);
+            rp.add("token", TopADApplication.getSelf().getToken());
+
+            postWithLoading(url, rp, false, new HttpCallback() {
+                @Override
+                public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                    AddProductBean bean = (AddProductBean) t;
+                    if (bean != null && !Utils.isEmpty(bean.getServiceid())
+                            && caseList != null && caseList.size() > 1) {
+                        addCase(bean.getServiceid());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(BaseBean base) {
-                int status = base.getStatus();// 状态码
-                String msg = base.getMsg();// 错误信息
+                @Override
+                public void onFailure(BaseBean base) {
+                    int status = base.getStatus();// 状态码
+                    String msg = base.getMsg();// 错误信息
 
-                LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
-                ToastUtil.show(mContext, msg);
-            }
-        }, AddProductBean.class, true);
+                    LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                    ToastUtil.show(mContext, msg);
+                }
+            }, AddProductBean.class, true);
+
+        } else { // 添加
+            // 拼接url
+            StringBuffer sb = new StringBuffer();
+            sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_PRODUCT).append("?");
+            String url = sb.toString();
+            RequestParams rp = new RequestParams();
+            rp.add("userid", TopADApplication.getSelf().getUserId());
+            rp.add("type1", type1);
+            rp.add("type2", type2);
+            rp.add("servicename", servicename);
+            rp.add("price", price);
+            rp.add("intro", intro);
+            rp.add("token", TopADApplication.getSelf().getToken());
+
+            postWithLoading(url, rp, false, new HttpCallback() {
+                @Override
+                public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                    AddProductBean bean = (AddProductBean) t;
+                    if (bean != null && !Utils.isEmpty(bean.getServiceid())
+                            && caseList != null && caseList.size() > 1) {
+                        addCase(bean.getServiceid());
+                    }
+                }
+
+                @Override
+                public void onFailure(BaseBean base) {
+                    int status = base.getStatus();// 状态码
+                    String msg = base.getMsg();// 错误信息
+
+                    LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                    ToastUtil.show(mContext, msg);
+                }
+            }, AddProductBean.class, true);
+
+        }
 
     }
 
@@ -430,20 +531,20 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
      * @return
      */
     public void addCase(String serviceid) {
-        for(int i = 0; i < caseList.size(); i++){
+        for (int i = 0; i < caseList.size(); i++) {
             // 拼接url
             StringBuffer sb = new StringBuffer();
             sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_CASE).append("?");
             String url = sb.toString();
-            RequestParams rp=new RequestParams();
+            RequestParams rp = new RequestParams();
             rp.add("userid", TopADApplication.getSelf().getUserId());
             rp.add("serviceid", serviceid);
 
             StringBuffer img = new StringBuffer();
-            for(int j = 0; j < caseList.get(i).getImgs().size(); j++){
-                if(j >= 1 && j < caseList.get(i).getImgs().size() - 1){
-                    img.append( "|" + caseList.get(i).getImgs().get(i));
-                }else{
+            for (int j = 0; j < caseList.get(i).getImgs().size(); j++) {
+                if (j >= 1 && j < caseList.get(i).getImgs().size() - 1) {
+                    img.append("|" + caseList.get(i).getImgs().get(i));
+                } else {
                     img.append(caseList.get(i).getImgs().get(i));
                 }
 
@@ -532,10 +633,26 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             }
             CaseType caseType = caseTypeList.get(position);
             if (caseType.type.equals("1")) { // 图片
-                viewHolder.play.setImageBitmap(caseType.image);
+                if(caseType.image == null){
+                    String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + caseType.picPath;
+
+                    ImageManager.getInstance(mContext).getBitmap(picUrl,
+                            new ImageManager.ImageCallBack() {
+                                @Override
+                                public void loadImage(ImageView imageView, Bitmap bitmap) {
+                                    if (bitmap != null && imageView != null) {
+                                        imageView.setImageBitmap(bitmap);
+                                        imageView
+                                                .setScaleType(ImageView.ScaleType.FIT_XY);
+                                    }
+                                }
+                            }, viewHolder.play);
+                }else{
+                    viewHolder.play.setImageBitmap(caseType.image);
+                }
+
                 viewHolder.play.setScaleType(ImageView.ScaleType.FIT_XY);
-            }
-            else if (caseType.type.equals("2")) { //添加图片
+            } else if (caseType.type.equals("2")) { //添加图片
                 viewHolder.play.setImageResource(R.drawable.pic_add_item);
                 viewHolder.play.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
@@ -552,11 +669,50 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+//                        // 删除案例
+//                        StringBuffer sb = new StringBuffer();
+//                        sb.append(Constants.getCurrUrl()).append(Constants.URL_DEL_CASE).append("?");
+//                        String url = sb.toString();
+//                        RequestParams rp=new RequestParams();
+//                        rp.add("userid", TopADApplication.getSelf().getUserId());
+//                        rp.add("caseid", );
+//                        rp.add("token", TopADApplication.getSelf().getToken());
+//
+//                        postWithLoading(url, rp, false, new HttpCallback() {
+//                            @Override
+//                            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+//                                String tag = (String) v.getTag();
+//                                int index = -1;
+//                                CaseType curType = null;
+//                                for (int i = 0; i < caseTypeList.size(); i++) {
+//                                    if (tag.equals(caseTypeList.get(i).picPath)) {
+//                                        curType = caseTypeList.get(i);
+//                                        index = i;
+//
+//                                        break;
+//                                    }
+//                                }
+//
+//                                caseTypeList.remove(index);
+//                                adapter.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onFailure(BaseBean base) {
+//                                int status = base.getStatus();// 状态码
+//                                String msg = base.getMsg();// 错误信息
+//                                ToastUtil.show(mContext, "status = " + status + "\n"
+//                                        + "msg = " + msg);
+//                            }
+//                        }, BaseBean.class);
+
+
                         String tag = (String) v.getTag();
                         int index = -1;
                         CaseType curType = null;
                         for (int i = 0; i < caseTypeList.size(); i++) {
-                            if (tag.equals(caseTypeList.get(i).image)) {
+                            if (tag.equals(caseTypeList.get(i).picPath)) {
                                 curType = caseTypeList.get(i);
                                 index = i;
 
@@ -598,10 +754,5 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         meidaType_pic.type = "2";
         caseTypeList.add(meidaType_pic);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

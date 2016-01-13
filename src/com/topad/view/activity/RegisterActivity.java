@@ -96,7 +96,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mTitleView.setTitle("注册");
         mTitleView.setLeftVisiable(false);
         mTitleView.setRightVisiable(false);
-        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "登录");
+        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "登录", 18);
 
         setNextBtnState(false);
 
