@@ -1,6 +1,9 @@
 package com.topad.bean;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * ${todo}<案例>
@@ -12,9 +15,10 @@ public class CaseBean  implements Serializable {
     /**product
      * serialVersionUID:TODO（用一句话描述这个变量表示什么）
      */
-    private static final long serialVersionUID = 4768927122567982665L;
+    private static final long serialVersionUID = 4768457122567982665L;
     private String intro;
-    private String picPath;
+    private ArrayList<String> imgs;
+    private ArrayList<String> picPaths;
 
     public String getIntro() {
         return intro;
@@ -24,11 +28,19 @@ public class CaseBean  implements Serializable {
         this.intro = intro;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public ArrayList<String> getImgs() {
+        return imgs;
     }
 
-    public void setPicPath(String picPath) {
-        this.picPath = picPath;
+    public void setImgs(ArrayList<String> imgs) {
+        this.imgs = imgs;
+    }
+
+    public ArrayList<String> getPicPaths() {
+        return picPaths;
+    }
+
+    public void setPicPaths(ArrayList<String> picPaths) {
+        this.picPaths = picPaths;
     }
 }

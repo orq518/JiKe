@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import com.topad.TopADApplication;
 import com.topad.view.customviews.UcfToast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -1004,5 +1006,26 @@ public class Utils {
             }
         }
         return "";
+    }
+
+    /**
+     * 该方法的方法参数为一个Bitmap,最后返回的就是字节数组了。
+     * @param bitmap
+     * @return
+     */
+    public static byte[] getBytes(Bitmap bitmap){
+        //实例化字节数组输出流
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);//压缩位图
+        return baos.toByteArray();//创建分配字节数组
+    }
+
+    /**
+     * 该方法的方法参数为一个字节数组，返回的就是Bitmap
+     * @param data
+     * @return
+     */
+    public static Bitmap getBitmap(byte[] data){
+        return BitmapFactory.decodeByteArray(data, 0, data.length);//从字节数组解码位图
     }
 }

@@ -4,33 +4,40 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
-import com.topad.bean.AdProductBean;
+import com.topad.bean.AddCaseBean;
+import com.topad.bean.AddProductBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.CaseBean;
-import com.topad.bean.RegisterBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
-import com.topad.util.Md5;
-import com.topad.util.SharedPreferencesUtils;
+import com.topad.util.PictureUtil;
 import com.topad.util.Utils;
+import com.topad.view.customviews.MyGridviewCase;
 import com.topad.view.customviews.TitleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ${todo}<添加产品页>
@@ -54,8 +61,6 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
     private EditText mETOffer;
     /** 产品详情 **/
     private EditText mETDetails;
-    /** 添加案例 **/
-    private ImageView mIVAdd;
     /** 提交 **/
     private Button mBTAdd;
 
@@ -70,10 +75,16 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
     /** 产品简介 **/
     private String intro;
 
-    /** 案例实体 **/
     /** 数据源 **/
     private ArrayList<CaseBean> caseList = new ArrayList<CaseBean>();
     final int CASE = 1;
+
+    /** 添加案例 **/
+    private MyGridviewCase mAddDetailGridview;
+    /** Adapter **/
+    private MediaAdapter adapter;
+    /** 案例图片数据元 **/
+    private List<CaseType> caseTypeList = new ArrayList<CaseType>();
 
     @Override
     public int setLayoutById() {
@@ -94,11 +105,10 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         mETName = (EditText) findViewById(R.id.et_product_name);
         mETOffer = (EditText) findViewById(R.id.et_product_offer);
         mETDetails = (EditText) findViewById(R.id.et_product_details);
-        mIVAdd = (ImageView) findViewById(R.id.iv_add_item);
         mBTAdd = (Button) findViewById(R.id.btn_add);
+        mAddDetailGridview = (MyGridviewCase) findViewById(R.id.add_case_gridview);
 
         mLYClass.setOnClickListener(this);
-        mIVAdd.setOnClickListener(this);
         mBTAdd.setOnClickListener(this);
     }
 
@@ -230,6 +240,33 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
+
+        adapter = new MediaAdapter(this);
+        mAddDetailGridview.setAdapter(adapter);
+        mAddDetailGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CaseType meidaType = (CaseType) adapter.getItem(position);
+                if (meidaType.type.equals("1")) {//图片
+
+                }else if (meidaType.type.equals("2")) {//添加案例
+                    Intent intent = new Intent(mContext, AddCaseActivity.class);
+                    startActivityForResult(intent, CASE);
+                }
+            }
+        });
+
+        mAddDetailGridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CaseType meidaType = (CaseType) adapter.getItem(position);
+                meidaType.isShowDeleteed = true;
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+        initPicData();
     }
 
     /**
@@ -259,52 +296,9 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 registerReceiver(broadcastReceiver, filter);
                 break;
 
-            // 添加案例
-            case R.id.iv_add_item:
-                intent = new Intent(mContext, AddCaseActivity.class);
-                startActivityForResult(intent, CASE);
-                break;
-
             // 提交
             case R.id.btn_add:
-
-                // 拼接url
-                StringBuffer sb = new StringBuffer();
-                sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_PRODUCT).append("?");
-                String url = sb.toString();
-                RequestParams rp=new RequestParams();
-                rp.add("userid", TopADApplication.getSelf().getUserId());
-                rp.add("type1", type1);
-                rp.add("type2", type2);
-                rp.add("servicename", servicename);
-                rp.add("price", price);
-                rp.add("intro", intro);
-                rp.add("token", TopADApplication.getSelf().getToken());
-
-
-                postWithLoading(url, rp, false, new HttpCallback() {
-                    @Override
-                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-
-                    }
-
-                    @Override
-                    public void onFailure(BaseBean base) {
-                        int status = base.getStatus();// 状态码
-                        String msg = base.getMsg();// 错误信息
-
-//                        if(status == 10001){// 验证码不存在
-//
-//                        }else if(status == 10002){// 验证码过期失效（大于30分钟）
-//
-//                        }else if(status == 10003){// 手机号已经被注册
-//
-//                        }
-
-                        LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
-                        ToastUtil.show(mContext, msg);
-                    }
-                }, BaseBean.class, true);
+                submit();
                 break;
 
             default:
@@ -373,11 +367,241 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                     Bundle buddle = data.getExtras();
                     CaseBean caseBean = (CaseBean) buddle.getSerializable("data");
                     caseList.add(caseBean);
+
+                    CaseType meidaType = new CaseType();
+                    meidaType.type = "1";
+                    Bitmap image = PictureUtil.getSmallBitmap(caseBean.getPicPaths().get(0));
+                    meidaType.image = image;
+                    meidaType.picPath = caseBean.getImgs().get(0);
+                    caseTypeList.add(0, meidaType);
+                    adapter.notifyDataSetChanged();
                 }
                 break;
             default:
                 break;
 
         }
+    }
+
+    /**
+     * 提交
+     *
+     * @return
+     */
+    public void submit() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_PRODUCT).append("?");
+        String url = sb.toString();
+        RequestParams rp=new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("type1", type1);
+        rp.add("type2", type2);
+        rp.add("servicename", servicename);
+        rp.add("price", price);
+        rp.add("intro", intro);
+        rp.add("token", TopADApplication.getSelf().getToken());
+
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                AddProductBean bean = (AddProductBean) t;
+                if (bean != null && !Utils.isEmpty(bean.getServiceid())
+                        &&  caseList != null && caseList.size() > 1 ) {
+                    addCase(bean.getServiceid());
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+
+                LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                ToastUtil.show(mContext, msg);
+            }
+        }, AddProductBean.class, true);
+
+    }
+
+    /**
+     * 提交案例
+     *
+     * @return
+     */
+    public void addCase(String serviceid) {
+        for(int i = 0; i < caseList.size(); i++){
+            // 拼接url
+            StringBuffer sb = new StringBuffer();
+            sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_CASE).append("?");
+            String url = sb.toString();
+            RequestParams rp=new RequestParams();
+            rp.add("userid", TopADApplication.getSelf().getUserId());
+            rp.add("serviceid", serviceid);
+
+            StringBuffer img = new StringBuffer();
+            for(int j = 0; j < caseList.get(i).getImgs().size(); j++){
+                if(j >= 1 && j < caseList.get(i).getImgs().size() - 1){
+                    img.append( "|" + caseList.get(i).getImgs().get(i));
+                }else{
+                    img.append(caseList.get(i).getImgs().get(i));
+                }
+
+            }
+            rp.add("imgs", img.toString());
+            rp.add("intro", caseList.get(i).getIntro());
+            rp.add("token", TopADApplication.getSelf().getToken());
+
+            postWithLoading(url, rp, false, new HttpCallback() {
+                @Override
+                public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                    AddCaseBean bean = (AddCaseBean) t;
+                    if (bean != null && !Utils.isEmpty(bean.getCaseid())) {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(BaseBean base) {
+                    int status = base.getStatus();// 状态码
+                    String msg = base.getMsg();// 错误信息
+
+                    LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                    ToastUtil.show(mContext, msg);
+                }
+            }, AddCaseBean.class, true);
+        }
+    }
+
+
+    /**
+     * 自定义适配器
+     */
+    class MediaAdapter extends BaseAdapter {
+        private LayoutInflater inflater;
+        int width;
+
+
+        public MediaAdapter(Context context) {
+            super();
+            inflater = LayoutInflater.from(context);
+            int[] screenSize = Utils.getScreenDispaly(mContext);
+            width = screenSize[0];
+        }
+
+        public void setData(List<CaseType> meidaTypeList) {
+            meidaTypeList.clear();
+            meidaTypeList.addAll(meidaTypeList);
+            notifyDataSetChanged();
+        }
+
+        public List<CaseType> getData() {
+            return caseTypeList;
+        }
+
+        @Override
+        public int getCount() {
+            if (null != caseTypeList) {
+                return caseTypeList.size();
+            } else {
+                return 0;
+            }
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return caseTypeList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.case_layout, null);
+                viewHolder = new ViewHolder();
+                viewHolder.play = (ImageView) convertView.findViewById(R.id.play);
+                viewHolder.delete = (ImageView) convertView.findViewById(R.id.delete);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            CaseType caseType = caseTypeList.get(position);
+            if (caseType.type.equals("1")) { // 图片
+                viewHolder.play.setImageBitmap(caseType.image);
+                viewHolder.play.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+            else if (caseType.type.equals("2")) { //添加图片
+                viewHolder.play.setImageResource(R.drawable.pic_add_item);
+                viewHolder.play.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+            }
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.play.getLayoutParams();
+            LogUtil.d("##params.width:" + params.width);
+            params.width = (width - 100) / 4;
+            params.height = (width - 100) / 4;
+            if (caseType.isShowDeleteed) {
+                viewHolder.delete.setVisibility(View.VISIBLE);
+                viewHolder.delete.setTag(caseType.picPath);
+
+                viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String tag = (String) v.getTag();
+                        int index = -1;
+                        CaseType curType = null;
+                        for (int i = 0; i < caseTypeList.size(); i++) {
+                            if (tag.equals(caseTypeList.get(i).image)) {
+                                curType = caseTypeList.get(i);
+                                index = i;
+
+                                break;
+                            }
+                        }
+
+                        caseTypeList.remove(index);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                });
+            } else {
+                viewHolder.delete.setVisibility(View.GONE);
+            }
+            return convertView;
+        }
+
+    }
+
+    class ViewHolder {
+        public ImageView play;
+        public ImageView delete;
+    }
+
+    class CaseType {
+        String type;  // 1：图片  2：添加图片
+        String picPath;
+        Bitmap image;
+        boolean isShowDeleteed;
+    }
+
+    /**
+     * 初始化添加案例
+     */
+    public void initPicData() {
+        CaseType meidaType_pic = new CaseType();
+        meidaType_pic.type = "2";
+        caseTypeList.add(meidaType_pic);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

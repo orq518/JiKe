@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.util.LogUtil;
 import com.topad.util.SystemBarTintManager;
 import com.topad.view.customviews.TitleView;
@@ -425,6 +426,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.quit://注销
+                ((TopADApplication) TopADApplication.getContext()).logout();
+
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;

@@ -49,11 +49,8 @@ public class Constants {
     public static final String URL_MEDIA_SEARCH = "/media/search";
 
 
-
-
     /*********
      * 下载图片拼接*/
-    // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品
     public static final String URL_ADD_PRODUCT= "/adservice/add";

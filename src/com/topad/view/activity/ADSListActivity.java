@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
@@ -26,6 +27,7 @@ import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.ImageManager;
 import com.topad.util.Md5;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
@@ -294,19 +296,18 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                 authIcon.setImageDrawable(getResources().getDrawable(R.drawable.ads_icon_rz_ing));
             }
 
-            switch (position){
-                case 0:
-                    icon.setImageResource(R.drawable.product0);
-                    break;
-                case 1:
-                    icon.setImageResource(R.drawable.product1);
-                    break;
-                case 2:
-                    icon.setImageResource(R.drawable.product2);
-                    break;
-                case 3:
-                    icon.setImageResource(R.drawable.product3);
-                    break;
+            if(!Utils.isEmpty(bankList.get(position).getImghead())){
+                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
+                        new ImageManager.ImageCallBack() {
+                            @Override
+                            public void loadImage(ImageView imageView, Bitmap bitmap) {
+                                if (bitmap != null && imageView != null) {
+                                    imageView.setImageBitmap(bitmap);
+                                    imageView
+                                            .setScaleType(ImageView.ScaleType.FIT_XY);
+                                }
+                            }
+                        }, icon);
             }
 
         }
@@ -335,10 +336,11 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         sb.append(Constants.getCurrUrl()).append(Constants.URL_AD_SERVICE_GETLIST).append("?");
         String url = sb.toString();
         RequestParams rp=new RequestParams();
-//        rp.add("type2", category);
-////        rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("userid", "0");
-
+        rp.add("type1", category);
+        rp.add("type2", category);
+        rp.add("userid", "0");
+        rp.add("page", "1");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
