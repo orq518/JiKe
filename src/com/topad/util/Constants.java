@@ -43,8 +43,14 @@ public class Constants {
      * 更新其它图片数据
      */
     public static final String URL_UPDATE_IMG = "/user/updateimg";
+    /**
+     * 媒体搜索
+     */
+    public static final String URL_MEDIA_SEARCH = "/media/search";
 
-    // 下载图片拼接
+
+    /*********
+     * 下载图片拼接*/
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 添加产品
     public static final String URL_ADD_PRODUCT= "/adservice/add";

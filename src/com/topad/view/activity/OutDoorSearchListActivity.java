@@ -238,6 +238,7 @@ public class OutDoorSearchListActivity extends BaseActivity implements View.OnCl
             bean.isSelected = true;
             bean.type = type;
             adapter.notifyDataSetChanged();
+            onBack();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

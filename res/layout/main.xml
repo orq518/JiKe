@@ -14,10 +14,10 @@
     <EditText
         android:id="@+id/sh"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@id/title"
         android:layout_margin="10dip"
-        android:background="@drawable/cityhot_edittext_bg"
+        android:background="@drawable/btn_board_gray"
         android:drawableLeft="@drawable/wb_search_icon"
         android:drawablePadding="5dp"
         android:hint="输入城市名或拼音"

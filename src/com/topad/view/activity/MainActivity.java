@@ -14,8 +14,15 @@ import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.MyInfoBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.SystemBarTintManager;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
 /**
@@ -132,6 +139,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         };
         mDrawerToggle.syncState();
         initLeftMenu();
+        getMyInfo();//获取我的个人信息
 //
 //        // Set the drawer toggle as the DrawerListener
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -263,7 +271,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 isNeedUp = true;
                 lastX = event.getX();
                 lastY = event.getY();
-                leftMenuTouch(v, true);
+                leftMenuTouch(v, true, false);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float cx = event.getX();
@@ -271,21 +279,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 moveXY = Math.abs(cx - lastX) + Math.abs(cy - lastY);
                 LogUtil.d("moveXY:" + moveXY);
                 if (moveXY > 30) {
-                    leftMenuTouch(v, false);
+                    leftMenuTouch(v, false, false);
                     isNeedUp = false;
                 }
 
                 break;
             case MotionEvent.ACTION_UP:
                 if (isNeedUp) {
-                    leftMenuTouch(v, false);
+                    leftMenuTouch(v, false, true);
                 }
                 break;
         }
         return false;
     }
 
-    public void leftMenuTouch(View v, boolean isPressed) {
+    public void leftMenuTouch(View v, boolean isPressed, boolean isGogoNew) {
         if (isPressed) {
             switch (v.getId()) {
                 case R.id.csmm:
@@ -373,7 +381,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ((TextView) (v.findViewById(R.id.tv_quit))).setTextColor(getResources().getColor(R.color.white));
                     break;
             }
-            leftMenuClick(v);
+            if (isGogoNew) {
+                leftMenuClick(v);
+            }
         }
 
     }
@@ -391,9 +401,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.gsrz://公司认证
-                intent=new Intent(MainActivity.this,UploadPicActivity.class);
-                intent.putExtra("title","公司认证");
-                intent.putExtra("type",3);
+                intent = new Intent(MainActivity.this, UploadPicActivity.class);
+                intent.putExtra("title", "公司认证");
+                intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
             case R.id.cpsj://我的服务产品
@@ -448,6 +458,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void applySelectedColor() {
         int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
         mTintManager.setTintColor(color);
+    }
+    /**
+     * 获取我的个人信息
+     */
+    public void getMyInfo() {
+
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.GETINFO).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        postWithoutLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                MyInfoBean base = (MyInfoBean) t;
+                if (base != null) {
+                    TopADApplication.getSelf().setMyInfo(base.getData());
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, MyInfoBean.class);
+
     }
 
 }

@@ -15,8 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
 import com.topad.bean.SearchItemBean;
 import com.topad.bean.SearchListBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.RecordMediaPlayer;
 import com.topad.util.RecordTools;
@@ -129,13 +135,18 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     case 0://电视
                     case 1://广播
                         EditText tv_type = (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
-                        curItem.name = tv_type.getText().toString();
                         EditText tv_program_name = (EditText) outdoor_search_layout.findViewById(R.id.tv_program_name);
-                        curItem.type = tv_program_name.getText().toString();
-                        if (Utils.isEmpty(curItem.name)) {
-                            Toast.makeText(mContext, "请输入电视台名称", Toast.LENGTH_SHORT).show();
+                        TextView media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                        curItem.type = media_type1.getText().toString();
+                        curItem.name = tv_type.getText().toString();
+                        curItem.lanmu_name=tv_program_name.getText().toString();
+//                        curItem.type = tv_program_name.getText().toString();
+//                        curItem.type = tv_type.getText().toString();
+                        if (Utils.isEmpty(curItem.type)) {
+                            Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
                             return;
-                        } else if (Utils.isEmpty(curItem.type)) {
+                        }
+                        if (Utils.isEmpty(curItem.lanmu_name)) {
                             Toast.makeText(mContext, "请输入栏目名称", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -152,6 +163,8 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                             tv_program_name.setText("");
                             curItem.name = "";
                             curItem.type = "";
+                            curItem.lanmu_name="";
+                            media_type1.setText("--");
                         }
 
 
@@ -159,10 +172,12 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     case 2://报纸
                     case 4://杂志
                     case 5://网络
+                         media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                        curItem.type = media_type1.getText().toString();
                         EditText et_name = (EditText) outdoor_search_layout.findViewById(R.id.et_name);
                         curItem.name = et_name.getText().toString();
                         if (Utils.isEmpty(curItem.name)) {
-                            Toast.makeText(mContext, "请输入报纸名称", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!Utils.isEmpty(curItem.name) && !Utils.isEmpty(curItem.type)) {
@@ -211,7 +226,8 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
                 }
                 layout_keyboard.setVisibility(View.VISIBLE);
-
+                layout_voice.setVisibility(View.VISIBLE);
+                layout_keyboard.setVisibility(View.GONE);
             }
         });
         search_selected_layout = (LinearLayout) findViewById(R.id.search_selected_layout);
@@ -222,6 +238,14 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
             case 0://电视
             case 1://广播
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.tv_search_item, null);
+                if(searchType==1){
+                   TextView tv_tips= (TextView) outdoor_search_layout.findViewById(R.id.tips);
+                    tv_tips.setText("广播类别");
+                    EditText tv_name= (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
+                    tv_name.setHint("请输入广播名称");
+//                    EditText tv_program_name= (EditText) outdoor_search_layout.findViewById(R.id.tv_program_name);
+//                    tv_program_name.setHint("请输入广播名称");
+                }
                 break;
             case 2://报纸
             case 4://杂志
@@ -254,6 +278,21 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
     }
 
+    /**
+     * 提交搜索
+     */
+    public void submitSearch() {
+        if(itemBeans.size()<=0){
+            ToastUtil.show(mContext,"搜索条件为空");
+            return;
+        }
+        Intent mIntent=new Intent(mContext,SearchResultListActivity.class);
+        mIntent.putExtra("searchtype",searchType);
+        mIntent.putParcelableArrayListExtra("searchKeys",itemBeans);
+        startActivity(mIntent);
+        finish();
+
+    }
 
     /**
      * 刷新选择好的条目
@@ -269,8 +308,8 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     TextView tvName = (TextView) tv_search_selected.findViewById(R.id.city);
                     TextView tv_Type = (TextView) tv_search_selected.findViewById(R.id.media_name);
                     ImageView tv_delete = (ImageView) tv_search_selected.findViewById(R.id.delete);
-                    tvName.setText(itembean.name);
-                    tv_Type.setText(itembean.type);
+                    tvName.setText(itembean.type);
+                    tv_Type.setText(itembean.name);
                     tv_search_selected.setTag("" + i);
                     tv_delete.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -291,8 +330,8 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     TextView baizhiName = (TextView) search_selected.findViewById(R.id.city);
                     TextView media_Type = (TextView) search_selected.findViewById(R.id.media_name);
                     ImageView delete2 = (ImageView) search_selected.findViewById(R.id.delete);
-                    baizhiName.setText(itembean.name);
-                    media_Type.setText(itembean.type);
+                    baizhiName.setText(itembean.type);
+                    media_Type.setText(itembean.name);
                     search_selected.setTag("" + i);
                     delete2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -315,6 +354,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     ImageView delete = (ImageView) outdoor_search_selected.findViewById(R.id.delete);
                     media_name.setText(itembean.name);
                     media_type.setText(itembean.type);
+                    city.setText(itembean.locaion);
                     outdoor_search_selected.setTag("" + i);
                     delete.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -327,8 +367,6 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                         }
                     });
                     search_selected_layout.addView(outdoor_search_selected);
-//                    outdoor_search_item.setVisibility(View.GONE);
-
 
                     break;
 
@@ -363,13 +401,14 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 //            TextView media_name= (TextView) outdoor_search_layout.findViewById(R.id.media_name);
             TextView media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
             media_type.setText(mediaType);
-            curItem.type = mediaType;
+            curItem.name = mediaType;
 
 
         } else if (requestCode == PICKCITY && resultCode == RESULT_OK && data != null) {
-            if(locationTV!=null) {
+            if (locationTV != null) {
                 String cityString = data.getStringExtra("city");
                 locationTV.setText(cityString);
+                curItem.locaion=cityString;
             }
 
         }
@@ -405,6 +444,10 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                 layout_voice.setVisibility(View.VISIBLE);
                 record.setText("按住说话");
                 break;
+            case R.id.bt_identity_next_step:
+                submitSearch();
+                break;
+
 //            case R.id.newspaper_layout://报纸
 //                break;
 //            case R.id.outdoor_layout://户外

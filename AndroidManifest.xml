@@ -446,7 +446,11 @@
             android:name=".view.activity.AddCaseActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
-
+        <!-- 产品案例页 -->
+        <activity
+            android:name=".view.activity.SearchResultListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
     </application>
 
 </manifest>
