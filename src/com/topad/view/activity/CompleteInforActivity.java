@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -109,7 +111,56 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         gerenjianjie.setOnClickListener(this);
         xuanzezhiye.setOnClickListener(this);
         shenfenyanzheng.setOnClickListener(this);
-        getMyInfo();
+        myInfoBean = TopADApplication.getSelf().getMyInfo();
+        if (myInfoBean != null) {
+            mHandler.sendEmptyMessageDelayed(0, 500);
+        } else {
+            getMyInfo();
+        }
+
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            initViewData();
+        }
+    };
+
+    public void initViewData() {
+        try {
+
+            String name = myInfoBean.getNickname();
+            String sex = myInfoBean.getSex();
+            String address = myInfoBean.getAddress();
+            String birthday = myInfoBean.getBirthday();
+
+            if (!Utils.isEmpty(name)) {
+                et_realname.setText(name);
+            }
+            if (("1").equals(sex)) {
+                sex1.setChecked(true);
+            } else {
+                sex2.setChecked(true);
+            }
+            if (!Utils.isEmpty(address)) {
+                et_address.setText(address);
+            }
+            if (!Utils.isEmpty(birthday)) {
+                tv_bithday.setText(birthday);
+            }
+            if (!Utils.isEmpty(myInfoBean.getJob1()) && !Utils.isEmpty(myInfoBean.getJob2())) {
+                xuanzezhiye.setText(myInfoBean.getJob1() + "-" + myInfoBean.getJob2());
+            }
+            if (!Utils.isEmpty(myInfoBean.getImghead())) {
+                String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
+                getHeaderPic(headerpicUrl);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -164,37 +215,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 if (base != null) {
                     myInfoBean = base.getData();
 
-                    try {
-
-                        String name = myInfoBean.getNickname();
-                        String sex = myInfoBean.getSex();
-                        String address = myInfoBean.getAddress();
-                        String birthday = myInfoBean.getBirthday();
-
-                        if (!Utils.isEmpty(name)) {
-                            et_realname.setText(name);
-                        }
-                        if (("1").equals(sex)) {
-                            sex1.setChecked(true);
-                        } else {
-                            sex2.setChecked(true);
-                        }
-                        if (!Utils.isEmpty(address)) {
-                            et_address.setText(address);
-                        }
-                        if (!Utils.isEmpty(birthday)) {
-                            tv_bithday.setText(birthday);
-                        }
-                        if (!Utils.isEmpty(myInfoBean.getImghead())) {
-                            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
-                            getHeaderPic(headerpicUrl);
-                        }
-                        if (!Utils.isEmpty(myInfoBean.getJob1())&&!Utils.isEmpty(myInfoBean.getJob2())) {
-                            xuanzezhiye.setText(myInfoBean.getJob1()+"-"+myInfoBean.getJob2());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    initViewData();
 //                    String status = respObj.getString("status");// 状态码
 //                    String msg = respObj.getString("msg");// 错误信息
 //                    String img = respObj.getString("img");// 图片名

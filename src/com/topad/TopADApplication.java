@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.topad.bean.MyInfoBean;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
@@ -30,7 +31,7 @@ public class TopADApplication extends Application {
 
     private Handler handler = new Handler();
     FragmentManager mFragmentManager;
-
+    MyInfoBean.DataEntity myInfoBean;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -115,5 +116,22 @@ public class TopADApplication extends Application {
         token = null;
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_TOKEN, "");
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_ID, "");
+    }
+
+    /**
+     * 保存我的个人信息
+     * @return
+     */
+    public void setMyInfo(MyInfoBean.DataEntity myInfo) {
+        myInfoBean = myInfo;
+    }
+
+    /**
+     * 获取UserId
+     *
+     * @return
+     */
+    public MyInfoBean.DataEntity getMyInfo() {
+        return myInfoBean;
     }
 }

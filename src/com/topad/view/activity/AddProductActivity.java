@@ -165,6 +165,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             for(int i=0; i<mAdCaseListBean.data.size(); i++){
                 CaseType meidaType = new CaseType();
                 meidaType.type = "1";
+                meidaType.id = mAdCaseListBean.data.get(i).getId();
                 if(!Utils.isEmpty(mAdCaseListBean.data.get(i).getImgs())){
                     String[] aa = mAdCaseListBean.data.get(i).getImgs().split("\\|");
                     if(aa.length > 0){
@@ -452,8 +453,8 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
      * @return
      */
     public void submit() {
-
-        if ("1".equals(from)) { // 编辑
+        // 编辑
+        if ("1".equals(from)) {
             // 拼接url
             StringBuffer sb = new StringBuffer();
             sb.append(Constants.getCurrUrl()).append(Constants.URL_EDIT_SERVICE).append("?");
@@ -487,7 +488,9 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 }
             }, AddProductBean.class, true);
 
-        } else { // 添加
+        }
+        // 添加
+        else {
             // 拼接url
             StringBuffer sb = new StringBuffer();
             sb.append(Constants.getCurrUrl()).append(Constants.URL_ADD_PRODUCT).append("?");
@@ -558,7 +561,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                     AddCaseBean bean = (AddCaseBean) t;
                     if (bean != null && !Utils.isEmpty(bean.getCaseid())) {
-
+                        finish();
                     }
                 }
 
@@ -620,7 +623,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.case_layout, null);
@@ -668,62 +671,60 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
 
                 viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(final View v) {
+                        // 删除案例
+                        if(!Utils.isEmpty(caseTypeList.get(position).id)){
+                            StringBuffer sb = new StringBuffer();
+                            sb.append(Constants.getCurrUrl()).append(Constants.URL_DEL_CASE).append("?");
+                            String url = sb.toString();
+                            RequestParams rp=new RequestParams();
+                            rp.add("userid", TopADApplication.getSelf().getUserId());
+                            rp.add("caseid", caseTypeList.get(position).id);
+                            rp.add("token", TopADApplication.getSelf().getToken());
 
-//                        // 删除案例
-//                        StringBuffer sb = new StringBuffer();
-//                        sb.append(Constants.getCurrUrl()).append(Constants.URL_DEL_CASE).append("?");
-//                        String url = sb.toString();
-//                        RequestParams rp=new RequestParams();
-//                        rp.add("userid", TopADApplication.getSelf().getUserId());
-//                        rp.add("caseid", );
-//                        rp.add("token", TopADApplication.getSelf().getToken());
-//
-//                        postWithLoading(url, rp, false, new HttpCallback() {
-//                            @Override
-//                            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-//                                String tag = (String) v.getTag();
-//                                int index = -1;
-//                                CaseType curType = null;
-//                                for (int i = 0; i < caseTypeList.size(); i++) {
-//                                    if (tag.equals(caseTypeList.get(i).picPath)) {
-//                                        curType = caseTypeList.get(i);
-//                                        index = i;
-//
-//                                        break;
-//                                    }
-//                                }
-//
-//                                caseTypeList.remove(index);
-//                                adapter.notifyDataSetChanged();
-//                            }
-//
-//                            @Override
-//                            public void onFailure(BaseBean base) {
-//                                int status = base.getStatus();// 状态码
-//                                String msg = base.getMsg();// 错误信息
-//                                ToastUtil.show(mContext, "status = " + status + "\n"
-//                                        + "msg = " + msg);
-//                            }
-//                        }, BaseBean.class);
+                            postWithLoading(url, rp, false, new HttpCallback() {
+                                @Override
+                                public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                                    String tag = (String) v.getTag();
+                                    int index = -1;
+                                    CaseType curType = null;
+                                    for (int i = 0; i < caseTypeList.size(); i++) {
+                                        if (tag.equals(caseTypeList.get(i).picPath)) {
+                                            curType = caseTypeList.get(i);
+                                            index = i;
 
+                                            break;
+                                        }
+                                    }
 
-                        String tag = (String) v.getTag();
-                        int index = -1;
-                        CaseType curType = null;
-                        for (int i = 0; i < caseTypeList.size(); i++) {
-                            if (tag.equals(caseTypeList.get(i).picPath)) {
-                                curType = caseTypeList.get(i);
-                                index = i;
+                                    caseTypeList.remove(index);
+                                    adapter.notifyDataSetChanged();
+                                }
 
-                                break;
+                                @Override
+                                public void onFailure(BaseBean base) {
+                                    int status = base.getStatus();// 状态码
+                                    String msg = base.getMsg();// 错误信息
+                                    ToastUtil.show(mContext, "status = " + status + "\n"
+                                            + "msg = " + msg);
+                                }
+                            }, BaseBean.class);
+                        }else{
+                            String tag = (String) v.getTag();
+                            int index = -1;
+                            CaseType curType = null;
+                            for (int i = 0; i < caseTypeList.size(); i++) {
+                                if (tag.equals(caseTypeList.get(i).picPath)) {
+                                    curType = caseTypeList.get(i);
+                                    index = i;
+
+                                    break;
+                                }
                             }
+
+                            caseTypeList.remove(index);
+                            adapter.notifyDataSetChanged();
                         }
-
-                        caseTypeList.remove(index);
-                        adapter.notifyDataSetChanged();
-
-
                     }
                 });
             } else {
@@ -740,6 +741,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
     }
 
     class CaseType {
+        String id;
         String type;  // 1：图片  2：添加图片
         String picPath;
         Bitmap image;

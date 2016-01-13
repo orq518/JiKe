@@ -38,6 +38,8 @@ public class Constants {
     public static final String URL_NEED_ADD = "/need/add";
     // 更新其它图片数据
     public static final String URL_UPDATE_IMG = "/user/updateimg";
+    // 媒体搜索
+    public static final String URL_MEDIA_SEARCH = "/media/search";
     // 下载图片拼接
     public static final String IMAGE_URL_HEADER = "/userimg/";
     // 下载案例图片拼接
@@ -57,7 +59,7 @@ public class Constants {
     // 产品案例列表
     public static final String URL_CASE_LIST = "/adservice/caselist";
     // 删除案例
-    public static final String URL_DEL_CASE = " /adservice/delcase";
+    public static final String URL_DEL_CASE = "/adservice/delcase";
 
     /**
      * 测试环境

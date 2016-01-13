@@ -13,9 +13,11 @@ import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
+import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.ImageManager;
 import com.topad.util.LogUtil;
 import com.topad.util.PictureUtil;
 import com.topad.util.UploadUtil;
@@ -50,6 +52,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
     String title;
     String pathString1, pathString2;
     String img_name1, img_name2;
+    MyInfoBean.DataEntity myInfoBean;
     /**
      * 0：上传身份证  1：上传毕业证  2：上传名片  3，上传公司认证
      */
@@ -81,17 +84,46 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
         pic_1.setOnClickListener(this);
         pic_2.setOnClickListener(this);
         btn_save.setOnClickListener(this);
+        myInfoBean = TopADApplication.getSelf().getMyInfo();
+
         switch (type) {
             case 0:
+                if (myInfoBean != null) {
+                    if (!Utils.isEmpty(myInfoBean.getImgcard1())) {
+                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard1();
+                        getPic(headerpicUrl, pic_1);
+                    }
+                    if (!Utils.isEmpty(myInfoBean.getImgcard2())) {
+                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard2();
+                        getPic(headerpicUrl, pic_2);
+                    }
+                }
+
                 break;
             case 1:
-                pic_1.setImageResource(R.drawable.upload_biyezheng);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgdiploma())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgdiploma();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.upload_biyezheng);
+                }
                 break;
             case 2:
-                pic_1.setImageResource(R.drawable.upload_mingpian);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgnamecard())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgnamecard();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.upload_mingpian);
+                }
+
                 break;
             case 3:
-                pic_1.setImageResource(R.drawable.uploadback);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.uploadback);
+                }
                 break;
         }
         int width = Utils.getScreenWidth(this);
@@ -104,6 +136,21 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
             params2.height = params2.width * 2 / 3;
         }
 
+    }
+
+
+    public void getPic(String imageURL, ImageView imageView) {
+        ImageManager.getInstance(this).getBitmap(imageURL,
+                new ImageManager.ImageCallBack() {
+                    @Override
+                    public void loadImage(ImageView imageView, Bitmap bitmap) {
+                        if (bitmap != null && imageView != null) {
+                            imageView.setImageBitmap(bitmap);
+                            imageView
+                                    .setScaleType(ImageView.ScaleType.FIT_XY);
+                        }
+                    }
+                }, imageView);
     }
 
     @Override
@@ -155,12 +202,12 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                 startActivityForResult(intent2, PICKPHOTO_2);
                 break;
             case R.id.btn_save://确认保存
-
+                if (type == 0 && (Utils.isEmpty(pathString1) || Utils.isEmpty(pathString2))) {
+                    ToastUtil.show(mContext, "请上传身份证正反面");
+                    return;
+                }
                 if (!Utils.isEmpty(pathString1)) {
                     uploadPic(pathString1);
-                }
-                if (!Utils.isEmpty(pathString2)) {
-                    uploadPic(pathString2);
                 }
                 break;
 
@@ -201,9 +248,9 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                                     if (Utils.isEmpty(img_name2) && !Utils.isEmpty(pathString2)) {
                                         uploadPic(pathString2);
                                     }
-                                    if(!Utils.isEmpty(img_name1)&&!Utils.isEmpty(img_name2)){
+                                    if (!Utils.isEmpty(img_name1) && !Utils.isEmpty(img_name2)) {
                                         submit();
-                                    }else{
+                                    } else {
                                         Toast.makeText(mContext, "身份证上传失败", Toast.LENGTH_SHORT).show();
                                     }
 
@@ -268,7 +315,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
     public void submit() {
         // 拼接url
         StringBuffer sb = new StringBuffer();
-        sb.append(Constants.getCurrUrl()).append(Constants.UPLOAD_HEAD).append("?");
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_UPDATE_IMG).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
@@ -296,6 +343,22 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
+
+                    switch (type) {
+                        case 0:
+                            TopADApplication.getSelf().getMyInfo().setImgcard1(img_name1);
+                            TopADApplication.getSelf().getMyInfo().setImgcard2(img_name2);
+                            break;
+                        case 1:
+                            TopADApplication.getSelf().getMyInfo().setImgdiploma(img_name1);
+                            break;
+                        case 2:
+                            TopADApplication.getSelf().getMyInfo().setImgnamecard(img_name1);
+                            break;
+                        case 3:
+                            TopADApplication.getSelf().getMyInfo().setImglicense(img_name1);
+                            break;
+                    }
                     ToastUtil.show(mContext, base.getMsg());
                 }
             }

@@ -129,6 +129,7 @@
                 android:layout_marginLeft="@dimen/dimen_20"
                 android:layout_marginRight="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_30"
+                android:onClick="onClick"
                 android:text="提交搜索"/>
         </LinearLayout>
     </ScrollView>
