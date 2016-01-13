@@ -78,8 +78,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                     sb.append(Constants.getCurrUrl()).append(Constants.URL_CASE_LIST).append("?");
                     String url = sb.toString();
                     RequestParams rp=new RequestParams();
-//                    rp.add("serviceid", serviceId);
-                    rp.add("serviceid", "6");
+                    rp.add("serviceid", serviceId);
+//                    rp.add("serviceid", "6");
 
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
