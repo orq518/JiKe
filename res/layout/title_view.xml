@@ -65,7 +65,7 @@
             android:paddingRight="8dp"
             android:paddingTop="3dp"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:visibility="gone"/>
 
         <ImageView
