@@ -3,15 +3,11 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Looper;
-import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,16 +22,10 @@ import com.topad.amap.ToastUtil;
 import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceBean;
 import com.topad.bean.BaseBean;
-import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
-import com.topad.util.Md5;
-import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
-import com.topad.view.customviews.PTRListView;
-import com.topad.view.customviews.PullToRefreshView;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.BaseSwipeAdapter;
 import com.topad.view.customviews.mylist.MyListView;
@@ -44,7 +34,6 @@ import com.topad.view.customviews.mylist.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * ${todo}<广告服务－广告创意、营销策略、影视广告、动漫创作>

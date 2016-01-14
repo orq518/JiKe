@@ -20,7 +20,6 @@ import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.LogUtil;
 import com.topad.util.PictureUtil;
 import com.topad.util.UploadUtil;

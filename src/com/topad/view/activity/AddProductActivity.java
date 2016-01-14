@@ -20,13 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.AdDetailsBean;
-import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceCaseListBean;
-import com.topad.bean.AdServiceDetailsBean;
 import com.topad.bean.AddCaseBean;
 import com.topad.bean.AddProductBean;
 import com.topad.bean.BaseBean;
@@ -34,7 +35,6 @@ import com.topad.bean.CaseBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.LogUtil;
 import com.topad.util.PictureUtil;
 import com.topad.util.Utils;
@@ -639,17 +639,39 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 if(caseType.image == null){
                     String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + caseType.picPath;
 
-                    ImageManager.getInstance(mContext).getBitmap(picUrl,
-                            new ImageManager.ImageCallBack() {
+//                    ImageManager.getInstance(mContext).getBitmap(picUrl,
+//                            new ImageManager.ImageCallBack() {
+//                                @Override
+//                                public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                                    if (bitmap != null && imageView != null) {
+//                                        imageView.setImageBitmap(bitmap);
+//                                        imageView
+//                                                .setScaleType(ImageView.ScaleType.FIT_XY);
+//                                    }
+//                                }
+//                            }, viewHolder.play);
+                    ImageLoader.getInstance().displayImage(picUrl, viewHolder.play, TopADApplication.getSelf().getImageLoaderOption(),
+                            new ImageLoadingListener(){
                                 @Override
-                                public void loadImage(ImageView imageView, Bitmap bitmap) {
-                                    if (bitmap != null && imageView != null) {
-                                        imageView.setImageBitmap(bitmap);
-                                        imageView
-                                                .setScaleType(ImageView.ScaleType.FIT_XY);
-                                    }
+                                public void onLoadingStarted(String s, View view) {
+
                                 }
-                            }, viewHolder.play);
+
+                                @Override
+                                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+                                }
+
+                                @Override
+                                public void onLoadingCancelled(String s, View view) {
+
+                                }
+                            });
                 }else{
                     viewHolder.play.setImageBitmap(caseType.image);
                 }

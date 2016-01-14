@@ -12,7 +12,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
-import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CycleImageLayout;
 import com.topad.view.customviews.TitleView;

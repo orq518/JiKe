@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -21,23 +19,17 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
-import com.topad.bean.LoginBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
-import com.topad.util.JSONUtils;
 import com.topad.util.LogUtil;
-import com.topad.util.Md5;
 import com.topad.util.PictureUtil;
-import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.UploadUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
@@ -45,14 +37,11 @@ import com.topad.view.customviews.PickDatePopwindow;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.interfaces.IDatePick;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

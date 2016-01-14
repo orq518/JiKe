@@ -30,7 +30,6 @@ import com.topad.bean.BaseBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.BaseSwipeAdapter;
