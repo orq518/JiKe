@@ -4,11 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.topad.bean.MyInfoBean;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
@@ -32,13 +39,39 @@ public class TopADApplication extends Application {
     private Handler handler = new Handler();
     FragmentManager mFragmentManager;
     MyInfoBean.DataEntity myInfoBean;
+    DisplayImageOptions options;
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
+        //设置ImageLoader参数
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(false)
+                .showImageForEmptyUri(R.drawable.stay_tuned_icon)
+                .showImageOnFail(R.drawable.stay_tuned_icon)
+                .showImageOnLoading(R.drawable.stay_tuned_icon)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .displayer(new SimpleBitmapDisplayer()).build();
+        initImageLoader(this);
     }
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you may tune some of them,
+        // or you can create default configuration by
+        //  ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
 
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
+    }
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
@@ -96,6 +129,10 @@ public class TopADApplication extends Application {
         return token;
     }
 
+    public DisplayImageOptions getImageLoaderOption() {
+        return options;
+    }
+
     /**
      * 获取UserId
      *
@@ -120,6 +157,7 @@ public class TopADApplication extends Application {
 
     /**
      * 保存我的个人信息
+     *
      * @return
      */
     public void setMyInfo(MyInfoBean.DataEntity myInfo) {

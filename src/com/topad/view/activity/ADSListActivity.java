@@ -3,20 +3,19 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Looper;
-import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -26,16 +25,10 @@ import com.topad.bean.AdServiceBean;
 import com.topad.bean.AdServiceCaseListBean;
 import com.topad.bean.AdServiceDetailsBean;
 import com.topad.bean.BaseBean;
-import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
-import com.topad.util.Md5;
-import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
-import com.topad.view.customviews.PTRListView;
-import com.topad.view.customviews.PullToRefreshView;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.BaseSwipeAdapter;
 import com.topad.view.customviews.mylist.MyListView;
@@ -44,7 +37,6 @@ import com.topad.view.customviews.mylist.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * ${todo}<广告服务－广告创意、营销策略、影视广告、动漫创作>
@@ -359,17 +351,38 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             }
 
             if(!Utils.isEmpty(bankList.get(position).getImghead())){
-                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
-                        new ImageManager.ImageCallBack() {
+//                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
+//                        new ImageManager.ImageCallBack() {
+//                            @Override
+//                            public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                                if (bitmap != null && imageView != null) {
+//                                    imageView.setImageBitmap(bitmap);
+//                                    imageView
+//                                            .setScaleType(ImageView.ScaleType.FIT_XY);
+//                                }
+//                            }
+//                        }, icon);
+                ImageLoader.getInstance().displayImage(bankList.get(position).getImghead(), icon, TopADApplication.getSelf().getImageLoaderOption(),
+                        new ImageLoadingListener(){
                             @Override
-                            public void loadImage(ImageView imageView, Bitmap bitmap) {
-                                if (bitmap != null && imageView != null) {
-                                    imageView.setImageBitmap(bitmap);
-                                    imageView
-                                            .setScaleType(ImageView.ScaleType.FIT_XY);
-                                }
+                            public void onLoadingStarted(String s, View view) {
+
                             }
-                        }, icon);
+
+                            @Override
+                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String s, View view) {
+
+                            }
+                        });
             }
 
         }

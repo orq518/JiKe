@@ -11,36 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"/>
-    <RelativeLayout
-        android:id="@+id/bottom_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/dark_gray">
-        <TextView android:layout_width="wrap_content" android:layout_height="fill_parent"
-                  android:gravity="center_vertical"
-                  android:text="总价：￥0.0元"
-                  android:layout_marginLeft="10dp"
-                  android:textColor="@color/white"
-                  android:textSize="@dimen/textsize_16"/>
-        <TextView
-            android:id="@+id/tv_submit"
-            android:layout_width="wrap_content" android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:background="@color/orange"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingRight="@dimen/dimen_15"
-            android:text="提交"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_16"/>
-    </RelativeLayout>
     <!-- 内容 -->
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/bottom_layout"
         android:layout_below="@id/title"
         android:background="@color/app_bg"
         android:fillViewport="true">
@@ -245,7 +220,26 @@
 
 
                 </LinearLayout>
-
+                <Button
+                    android:id="@+id/tv_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_need_details_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/btn_board_orange"
+                    android:focusable="false"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:onClick="onClick"
+                    android:paddingTop="8dp"
+                    android:text="提交"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="@dimen/textsize_18"/>
 
             </LinearLayout>
 

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -67,12 +68,11 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
      * 选择好的搜索条件
      */
     ArrayList<SearchItemBean> itemBeans = new ArrayList<SearchItemBean>();
-
     /**
      * view
      **/
     private LinearLayout view;
-int curPage=1;
+    int curPage = 1;
     private final int MSG_REFRESH = 1000;
     private final int MSG_LOADMORE = 2000;
     protected android.os.Handler mHandler = new android.os.Handler() {
@@ -89,6 +89,7 @@ int curPage=1;
         }
     };
     int searchType;
+
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -104,14 +105,14 @@ int curPage=1;
     @Override
     public void initViews() {
         searchType = getIntent().getIntExtra("searchtype", 0);
-        itemBeans=getIntent().getParcelableArrayListExtra("searchKeys");
+        itemBeans = getIntent().getParcelableArrayListExtra("searchKeys");
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
         mTitleView.setTitle("搜索");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
         mTitleView.setRightVisiable(true);
         mListView = (MyListView) findViewById(R.id.listview);
-        submitSearch(curPage,0);
+        submitSearch(curPage, 0);
     }
 
     /**
@@ -133,10 +134,6 @@ int curPage=1;
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-//                Intent intent = new Intent(SearchResultListActivity.this, ADSDetailsActivity.class);
-//                intent.putExtra("title",bankList.get(position).getServicename());
-//                intent.putExtra("data",bankList.get(position));
-//                startActivity(intent);
             }
         });
 
@@ -145,13 +142,13 @@ int curPage=1;
 
             @Override
             public void onRefresh() {
-                curPage=1;
-                submitSearch(curPage,0);
+                curPage = 1;
+                submitSearch(curPage, 0);
             }
 
             @Override
             public void onLoadMore() {
-                submitSearch(curPage,1);
+                submitSearch(curPage, 1);
             }
         });
 
@@ -256,7 +253,7 @@ int curPage=1;
      * 提交搜索
      * refreshType 0:下拉刷新   1：上拉加载更多
      */
-    public void submitSearch(int page,final int refreshType) {
+    public void submitSearch(int page, final int refreshType) {
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_SEARCH).append("?");
@@ -266,34 +263,34 @@ int curPage=1;
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("token", TopADApplication.getSelf().getToken());
-        rp.add("page", ""+page);
-        rp.add("type1", (searchType+1)+"");
+        rp.add("page", "" + page);
+        rp.add("type1", (searchType + 1) + "");
 
         for (int i = 0; i < itemBeans.size(); i++) {
             SearchItemBean itembean = itemBeans.get(i);
 
-            String parameName1=null;
-            String parameName2=null;
-            String parameName3=null;
-            String parameName4=null;
+            String parameName1 = null;
+            String parameName2 = null;
+            String parameName3 = null;
+            String parameName4 = null;
             switch (i) {
                 case 0:
-                    parameName1="type21";
-                    parameName2="type31";
-                    parameName3="str11";
-                    parameName4="str21";
+                    parameName1 = "type21";
+                    parameName2 = "type31";
+                    parameName3 = "str11";
+                    parameName4 = "str21";
                     break;
                 case 1:
-                    parameName1="type22";
-                    parameName2="type32";
-                    parameName3="str12";
-                    parameName4="str22";
+                    parameName1 = "type22";
+                    parameName2 = "type32";
+                    parameName3 = "str12";
+                    parameName4 = "str22";
                     break;
                 case 2:
-                    parameName1="type23";
-                    parameName2="type33";
-                    parameName3="str13";
-                    parameName4="str23";
+                    parameName1 = "type23";
+                    parameName2 = "type33";
+                    parameName3 = "str13";
+                    parameName4 = "str23";
                     break;
             }
             switch (searchType) {
@@ -330,10 +327,10 @@ int curPage=1;
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
-                    if(refreshType==0){
-                        curPage=1;
+                    if (refreshType == 0) {
+                        curPage = 1;
                         mListView.stopRefresh();
-                    }else{
+                    } else {
                         mListView.stopLoadMore();
                         curPage++;
                     }

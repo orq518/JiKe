@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -27,7 +30,6 @@ import com.topad.bean.BaseBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.BaseSwipeAdapter;
@@ -370,17 +372,38 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
 
             if(!Utils.isEmpty(bankList.get(position).getImghead())){
-                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
-                        new ImageManager.ImageCallBack() {
+//                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
+//                        new ImageManager.ImageCallBack() {
+//                            @Override
+//                            public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                                if (bitmap != null && imageView != null) {
+//                                    imageView.setImageBitmap(bitmap);
+//                                    imageView
+//                                            .setScaleType(ImageView.ScaleType.FIT_XY);
+//                                }
+//                            }
+//                        }, icon);
+                ImageLoader.getInstance().displayImage(bankList.get(position).getImghead(), icon, TopADApplication.getSelf().getImageLoaderOption(),
+                        new ImageLoadingListener(){
                             @Override
-                            public void loadImage(ImageView imageView, Bitmap bitmap) {
-                                if (bitmap != null && imageView != null) {
-                                    imageView.setImageBitmap(bitmap);
-                                    imageView
-                                            .setScaleType(ImageView.ScaleType.FIT_XY);
-                                }
+                            public void onLoadingStarted(String s, View view) {
+
                             }
-                        }, icon);
+
+                            @Override
+                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String s, View view) {
+
+                            }
+                        });
             }
 
         }
