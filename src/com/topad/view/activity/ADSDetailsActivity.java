@@ -2,6 +2,8 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -14,10 +16,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.topad.R;
-import com.topad.bean.AdProductBean;
+import com.topad.bean.AdDetailsBean;
+import com.topad.bean.AdServiceCaseListBean;
+import com.topad.util.Constants;
+import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ${todo}<服务详情>
@@ -43,6 +51,8 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     private TextView mPraise;
     /** 成交额 **/
     private TextView mBusiness;
+    /** 认证 **/
+    private ImageView mAuthIcon;
     /** 地址 **/
     private TextView mAddress;
     /** 内容 **/
@@ -56,10 +66,16 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     /** 购买此产品 **/
     private Button mBuy;
 
-    /** 标题 **/
-    private String title;
-    /** 数据 **/
-    private AdProductBean adProductBean;
+    /** 编辑-产品详情数据元 **/
+    private AdDetailsBean mAdDetailsBean;
+    /** 编辑-产品案例数据元 **/
+    private AdServiceCaseListBean mAdCaseListBean;
+    /** 认证状态 **/
+    private String mImgLicense;
+    /** 地址 **/
+    private String address;
+    /** 案例图片数据元 **/
+    private List<String> imgs = new ArrayList<String>();
 
     @Override
     public int setLayoutById() {
@@ -83,6 +99,8 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         mPraise = (TextView) findViewById(R.id.tv_praise);
         mBusiness = (TextView) findViewById(R.id.tv_business);
         mPraise = (TextView) findViewById(R.id.tv_praise);
+        mAuthIcon = (ImageView) findViewById(R.id.ads_auth_icon);
+
         mAddress = (TextView) findViewById(R.id.tv_address);
         mContent = (TextView) findViewById(R.id.tv_introduce_content);
         mGridView = (MyGridView) findViewById(R.id.gv_case);
@@ -100,10 +118,42 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            title = intent.getStringExtra("title");
-            adProductBean = (AdProductBean) intent.getSerializableExtra("data");
-        }
+            mAdDetailsBean = (AdDetailsBean) intent.getSerializableExtra("data_details");
+            mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
+            mImgLicense = intent.getStringExtra("data_img_license");
+            address = intent.getStringExtra("data_address");
 
+        }
+        // 名称
+        if(!Utils.isEmpty(mAdDetailsBean.getServicename())){
+            mName.setText(mAdDetailsBean.getServicename());
+        }
+        // 价钱
+        if(!Utils.isEmpty(mAdDetailsBean.getPrice())){
+            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  mAdDetailsBean.getPrice() + "/单品");
+            mMoney.setText(ssb.toString());
+        }
+        // 笔数
+        if(!Utils.isEmpty(mAdDetailsBean.getSalecount())){
+            SpannableStringBuilder ssb2 = new SpannableStringBuilder("已出售：" +  mAdDetailsBean.getSalecount() + "笔");
+            mCount.setText(ssb2.toString());
+        }
+        // 认证
+        if(!Utils.isEmpty(mImgLicense)){
+            mAuthIcon.setImageDrawable(getResources().getDrawable(R.drawable.ads_icon_rz_ok));
+        }else{
+            mAuthIcon.setImageDrawable(getResources().getDrawable(R.drawable.ads_icon_rz_ing));
+        }
+        // 内容
+        if(!Utils.isEmpty(mAdDetailsBean.getIntro())){
+            mContent.setText(mAdDetailsBean.getIntro());
+        }
+        // 地址
+        if(!Utils.isEmpty(address)){
+            mAddress.setText(address);
+        }else{
+            mAddress.setText("");
+        }
         // 显示数据
         showView();
     }
@@ -113,9 +163,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
      */
     private void showView() {
         // 设置顶部标题布局
-        if (!Utils.isEmpty(title)) {
-            mTitleView.setTitle(title);
-        }
+        mTitleView.setTitle("产品详情");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         mScrollView.scrollTo(0, 0);
@@ -126,12 +174,12 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(ADSDetailsActivity.this, ADSCaseActivity.class);
-                intent.putExtra("title", "巡游VI设计");
+                intent.putExtra("data_case", mAdCaseListBean);
                 startActivity(intent);
             }
         });
 
-
+        setData();
     }
 
     @Override
@@ -171,21 +219,21 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     class MyAdapter extends BaseAdapter {
         //上下文对象
         private Context context;
-        //图片数组
-        private Integer[] imgs = {
-                R.drawable.product0, R.drawable.product1, R.drawable.product2,
-                R.drawable.product3, R.drawable.product0, R.drawable.product0,
-                R.drawable.product0, R.drawable.product0, R.drawable.product0,
-                R.drawable.product0, R.drawable.product0, R.drawable.product0,
-                R.drawable.product0, R.drawable.product0, R.drawable.product0
-        };
+//        //图片数组
+//        private Integer[] imgs = {
+//                R.drawable.product0, R.drawable.product1, R.drawable.product2,
+//                R.drawable.product3, R.drawable.product0, R.drawable.product0,
+//                R.drawable.product0, R.drawable.product0, R.drawable.product0,
+//                R.drawable.product0, R.drawable.product0, R.drawable.product0,
+//                R.drawable.product0, R.drawable.product0, R.drawable.product0
+//        };
 
         MyAdapter(Context context) {
             this.context = context;
         }
 
         public int getCount() {
-            return imgs.length;
+            return imgs.size();
         }
 
         public Object getItem(int item) {
@@ -211,8 +259,36 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
             } else {
                 imageView = (ImageView) convertView;
             }
-            imageView.setImageResource(imgs[position]);//为ImageView设置图片资源
+
+            //为ImageView设置图片资源
+            String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + imgs.get(position);
+            ImageManager.getInstance(mContext).getBitmap(picUrl,
+                    new ImageManager.ImageCallBack() {
+                        @Override
+                        public void loadImage(ImageView imageView, Bitmap bitmap) {
+                            if (bitmap != null && imageView != null) {
+                                imageView.setImageBitmap(bitmap);
+                                imageView
+                                        .setScaleType(ImageView.ScaleType.FIT_XY);
+                            }
+                        }
+                    }, imageView);
+
             return imageView;
+        }
+    }
+
+    /**
+     * 设置案例数据
+     */
+    private void setData() {
+        if(mAdCaseListBean != null && mAdCaseListBean.data.size()>0){
+            if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getImgs())){
+                String[] aa = mAdCaseListBean.data.get(0).getImgs().split("\\|");
+                for(int i = 0; i < aa.length; i++){
+                    imgs.add(0, aa[i]);
+                }
+            }
         }
     }
 }

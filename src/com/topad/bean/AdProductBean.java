@@ -35,6 +35,8 @@ public class AdProductBean implements Serializable {
     /**  **/
     public String adddate;
     /**  **/
+    public String address;
+    /**  **/
     public String isdelete;
     /**  **/
     public String nickname;
@@ -234,5 +236,13 @@ public class AdProductBean implements Serializable {
 
     public void setSalecount(String salecount) {
         this.salecount = salecount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

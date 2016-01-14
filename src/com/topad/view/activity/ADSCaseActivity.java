@@ -12,11 +12,14 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.bean.AdServiceCaseListBean;
+import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CycleImageLayout;
 import com.topad.view.customviews.TitleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ${todo}<案例 >
@@ -36,10 +39,10 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
     /** 轮播banner **/
     private CycleImageLayout mBannerView;
 
-    /** 标题 **/
-    private String title;
+    /** 编辑-产品案例数据元 **/
+    private AdServiceCaseListBean mAdCaseListBean;
     /** 数据 **/
-    private ArrayList<String> imageUrlList;
+    private ArrayList<String> imageUrlList = new ArrayList<String>();
 
     @Override
     public int setLayoutById() {
@@ -65,7 +68,7 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            title = intent.getStringExtra("title");
+            mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
         }
 
         showView();
@@ -76,13 +79,14 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
      */
     private void showView() {
         // 设置顶部标题布局
-        if (!Utils.isEmpty(title)) {
-            mTitleView.setTitle(title);
-        }
+        mTitleView.setTitle("案例详情");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         mBannerView.setImageResources(setData(), null, this);
-
+        // 内容
+        if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getIntro())){
+            mContent.setText(mAdCaseListBean.data.get(0).getIntro());
+        }
     }
 
     @Override
@@ -139,8 +143,13 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
     }
 
     public ArrayList<String> setData(){
-        for(int i = 0; i<2; i++){
-            imageUrlList.add("http://api.hongdoulicai.com/assets/images/banner/1.png");
+        if(mAdCaseListBean != null && mAdCaseListBean.data.size()>0){
+            if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getImgs())){
+                String[] aa = mAdCaseListBean.data.get(0).getImgs().split("\\|");
+                for(int i = 0; i < aa.length; i++){
+                    imageUrlList.add(0, Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + aa[i]);
+                }
+            }
         }
         return imageUrlList;
     }
