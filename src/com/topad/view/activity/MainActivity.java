@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -12,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -23,6 +27,7 @@ import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
+import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.TitleView;
 
 /**
@@ -74,6 +79,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     LinearLayout left_drawer;
+    CircleImageView imageView_header;//头像
+    TextView tv_name;//名字
+    MyInfoBean.DataEntity myInfoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +143,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                myInfoBean = TopADApplication.getSelf().getMyInfo();
+                if (myInfoBean != null) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
+                    String nameString = myInfoBean.getNickname();
+                    if (!Utils.isEmpty(nameString) && !Utils.isEmpty(headerpicUrl)) {
+                        tv_name.setText(nameString);
+                        ImageLoader.getInstance().displayImage(headerpicUrl, imageView_header, TopADApplication.getSelf().getImageLoaderOption());
+                    }else{
+                        getMyInfo();
+                    }
+                } else {
+                    getMyInfo();
+                }
+
+
             }
         };
         mDrawerToggle.syncState();
@@ -161,6 +184,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.wdqb).setOnTouchListener(this);
         findViewById(R.id.xtxx).setOnTouchListener(this);
         findViewById(R.id.quit).setOnTouchListener(this);
+        imageView_header = (CircleImageView) findViewById(R.id.header_im);
+        tv_name = (TextView) findViewById(R.id.tv_name);
     }
 
     @Override
@@ -278,7 +303,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 float cy = event.getY();
                 moveXY = Math.abs(cx - lastX) + Math.abs(cy - lastY);
                 LogUtil.d("moveXY:" + moveXY);
-                if (moveXY > 30) {
+                if (moveXY > 20) {
                     leftMenuTouch(v, false, false);
                     isNeedUp = false;
                 }
@@ -459,6 +484,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
         mTintManager.setTintColor(color);
     }
+
     /**
      * 获取我的个人信息
      */
@@ -475,7 +501,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
+                    myInfoBean=base.getData();
                     TopADApplication.getSelf().setMyInfo(base.getData());
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
+                    String nameString = myInfoBean.getNickname();
+                    if (!Utils.isEmpty(nameString) && !Utils.isEmpty(headerpicUrl)) {
+                        tv_name.setText(nameString);
+                        ImageLoader.getInstance().displayImage(headerpicUrl, imageView_header, TopADApplication.getSelf().getImageLoaderOption());
+                    }
                 }
             }
 
