@@ -252,7 +252,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,8 +266,8 @@
                     <!-- 广告创意 -->
                     <LinearLayout
                         android:id="@+id/advertising_creative_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:background="@drawable/homepage_icon_idea"
                         android:gravity="center_vertical"
@@ -275,11 +276,11 @@
 
                     </LinearLayout>
 
-                    <!-- 营销策略 -->
+                    <!-- 营销推广 -->
                     <LinearLayout
                         android:id="@+id/marketing_strategy_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:background="@drawable/homepage_icon_plan"
                         android:gravity="center_vertical"
@@ -298,11 +299,11 @@
                     android:background="@color/gray"
                     android:paddingBottom="1dp">
 
-                    <!-- 影视广告 -->
+                    <!-- 影视动漫 -->
                     <LinearLayout
                         android:id="@+id/tvc_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:background="@drawable/homepage_icon_video"
                         android:gravity="center_vertical"
@@ -311,11 +312,11 @@
 
                     </LinearLayout>
 
-                    <!-- 动漫创作 -->
+                    <!-- 文案策划 -->
                     <LinearLayout
                         android:id="@+id/anime_create_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="170dp"
+                        android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:background="@drawable/homepage_icon_cartoon"
                         android:gravity="center_vertical"
@@ -336,7 +337,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -360,7 +362,8 @@
                 android:orientation="horizontal"
                 android:background="@color/gray"
                 android:paddingTop="1dp"
-                android:paddingBottom="1dp">
+                android:paddingBottom="1dp"
+                android:visibility="visible">
 
                 <!-- vi设计 -->
                 <LinearLayout
@@ -419,13 +422,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@color/gray"
-                android:paddingBottom="1dp">
+                android:paddingBottom="1dp"
+                android:visibility="visible">
 
-                <!-- 产品设计 -->
+                <!-- 广告设计 -->
                 <LinearLayout
                     android:id="@+id/product_design_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="100dp"
                     android:orientation="horizontal"
                     android:background="@drawable/homepage_icon_product"
                     android:gravity="center_vertical"
@@ -440,8 +444,8 @@
                 <!-- 包装设计 -->
                 <LinearLayout
                     android:id="@+id/packing_design_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="100dp"
                     android:orientation="horizontal"
                     android:background="@drawable/homepage_icon_pack"
                     android:gravity="center_vertical"
@@ -458,8 +462,8 @@
                 <!-- 装修设计 -->
                 <LinearLayout
                     android:id="@+id/renovation_design_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="100dp"
                     android:orientation="horizontal"
                     android:background="@drawable/homepage_icon_decoration"
                     android:gravity="center_vertical"
@@ -480,7 +484,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -505,7 +510,8 @@
                 android:orientation="horizontal"
                 android:background="@color/gray_bg"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingBottom="5dp"
+                android:visibility="visible">
 
                 <!-- 公关服务 -->
                 <LinearLayout
@@ -678,7 +684,7 @@
 
                 </LinearLayout>
 
-                <!-- 设备租赁 -->
+                <!-- 图文输出 -->
                 <LinearLayout
                     android:id="@+id/equipment_lease_layout"
                     android:layout_width="match_parent"
@@ -698,7 +704,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="设备租赁"
+                        android:text="图文输出"
                         android:textColor="@color/text_bg"
                         android:layout_marginTop="5dp"
                         android:textSize="16sp"
@@ -706,7 +712,7 @@
 
                 </LinearLayout>
 
-                <!-- 会议会展 -->
+                <!-- 展览服务 -->
                 <LinearLayout
                     android:id="@+id/conference_layout"
                     android:layout_width="match_parent"
@@ -726,7 +732,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="会议会展"
+                        android:text="展览服务"
                         android:textColor="@color/text_bg"
                         android:layout_marginTop="5dp"
                         android:textSize="16sp"
@@ -747,8 +753,8 @@
                 <!-- 法律服务 -->
                 <LinearLayout
                     android:id="@+id/legal_services_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="90dp"
                     android:orientation="vertical"
                     android:background="@drawable/homepage_icon_law"
                     android:gravity="center"
@@ -756,11 +762,11 @@
 
                 </LinearLayout>
 
-                <!-- 知识产权 -->
+                <!-- 起名服务 -->
                 <LinearLayout
                     android:id="@+id/intellectual_property_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="90dp"
                     android:orientation="vertical"
                     android:background="@drawable/homepage_icon_knowledge"
                     android:gravity="center"
@@ -773,8 +779,8 @@
                 <!-- 网站建议 -->
                 <LinearLayout
                     android:id="@+id/website_suggestion_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="90dp"
                     android:orientation="vertical"
                     android:background="@drawable/homepage_icon_webmake"
                     android:gravity="center"
