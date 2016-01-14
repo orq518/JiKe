@@ -112,6 +112,7 @@ public class Constants {
      **/
     public static final String BROADCAST_ACTION_GETZHIYE = "broadcast_action_login";   //获得职业
     public static final String BROADCAST_ACTION_PRODUCT_CLASS = "broadcast_action_product_class";   //我的产品类别
+    public static final String BROADCAST_ACTION_MEDIA_CLASS = "broadcast_action_media_class";   //我的媒体类别
     public static final String BROADCAST_ACTION_LOGOUT = "broadcast_action_logout"; //登出
     public static final String BROADCAST_ACTION_CLEAR_TOKEN = "broadcast_action_clear_token";   //清除token
     public static final String BROADCAST_ACTION_SUCCEED_LOGIN_INDEX = "broadcast_action_succeed_login_index";   //登录成功后跳转的tabindex
