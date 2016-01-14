@@ -19,6 +19,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -235,17 +239,39 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
     }
 
     public void getHeaderPic(String imageURL) {
-        ImageManager.getInstance(this).getBitmap(imageURL,
-                new ImageManager.ImageCallBack() {
+//        ImageManager.getInstance(this).getBitmap(imageURL,
+//                new ImageManager.ImageCallBack() {
+//                    @Override
+//                    public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                        if (bitmap != null && imageView != null) {
+//                            imageView.setImageBitmap(bitmap);
+//                            imageView
+//                                    .setScaleType(ImageView.ScaleType.FIT_XY);
+//                        }
+//                    }
+//                }, add_head_pic);
+        ImageLoader.getInstance().displayImage(imageURL, add_head_pic, TopADApplication.getSelf().getImageLoaderOption(),
+                new ImageLoadingListener(){
                     @Override
-                    public void loadImage(ImageView imageView, Bitmap bitmap) {
-                        if (bitmap != null && imageView != null) {
-                            imageView.setImageBitmap(bitmap);
-                            imageView
-                                    .setScaleType(ImageView.ScaleType.FIT_XY);
-                        }
+                    public void onLoadingStarted(String s, View view) {
+
                     }
-                }, add_head_pic);
+
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
+
+                    }
+                });
     }
 
     /**

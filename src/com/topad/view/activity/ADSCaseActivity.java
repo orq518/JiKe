@@ -6,7 +6,12 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CycleImageLayout;
@@ -83,17 +88,38 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void displayImage(String imageURL, ImageView imageView) {
-        ImageManager.getInstance(mContext).getBitmap(imageURL,
-                new ImageManager.ImageCallBack() {
+//        ImageManager.getInstance(mContext).getBitmap(imageURL,
+//                new ImageManager.ImageCallBack() {
+//                    @Override
+//                    public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                        if (bitmap != null && imageView != null) {
+//                            imageView.setImageBitmap(bitmap);
+//                            imageView
+//                                    .setScaleType(ImageView.ScaleType.FIT_XY);
+//                        }
+//                    }
+//                }, imageView);
+        ImageLoader.getInstance().displayImage(imageURL, imageView, TopADApplication.getSelf().getImageLoaderOption(),
+                new ImageLoadingListener(){
                     @Override
-                    public void loadImage(ImageView imageView, Bitmap bitmap) {
-                        if (bitmap != null && imageView != null) {
-                            imageView.setImageBitmap(bitmap);
-                            imageView
-                                    .setScaleType(ImageView.ScaleType.FIT_XY);
-                        }
+                    public void onLoadingStarted(String s, View view) {
+
                     }
-                }, imageView);
+
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
+
+                    }
+                });
     }
 
     @Override

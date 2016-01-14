@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -140,17 +143,38 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
 
 
     public void getPic(String imageURL, ImageView imageView) {
-        ImageManager.getInstance(this).getBitmap(imageURL,
-                new ImageManager.ImageCallBack() {
+//        ImageManager.getInstance(this).getBitmap(imageURL,
+//                new ImageManager.ImageCallBack() {
+//                    @Override
+//                    public void loadImage(ImageView imageView, Bitmap bitmap) {
+//                        if (bitmap != null && imageView != null) {
+//                            imageView.setImageBitmap(bitmap);
+//                            imageView
+//                                    .setScaleType(ImageView.ScaleType.FIT_XY);
+//                        }
+//                    }
+//                }, imageView);
+        ImageLoader.getInstance().displayImage(imageURL, imageView, TopADApplication.getSelf().getImageLoaderOption(),
+                new ImageLoadingListener(){
                     @Override
-                    public void loadImage(ImageView imageView, Bitmap bitmap) {
-                        if (bitmap != null && imageView != null) {
-                            imageView.setImageBitmap(bitmap);
-                            imageView
-                                    .setScaleType(ImageView.ScaleType.FIT_XY);
-                        }
+                    public void onLoadingStarted(String s, View view) {
+
                     }
-                }, imageView);
+
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
+
+                    }
+                });
     }
 
     @Override
