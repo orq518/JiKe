@@ -72,21 +72,23 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
     /** 类别 **/
     private String category;
 
-    private final int MSG_REFRESH = 1000;
-    private final int MSG_LOADMORE = 2000;
-    protected android.os.Handler mHandler = new android.os.Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_REFRESH:
-
-                    break;
-
-                case MSG_LOADMORE:
-
-                    break;
-            }
-        }
-    };
+//    private final int MSG_REFRESH = 1000;
+//    private final int MSG_LOADMORE = 2000;
+//    protected android.os.Handler mHandler = new android.os.Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case MSG_REFRESH:
+//
+//                    break;
+//
+//                case MSG_LOADMORE:
+//
+//                    break;
+//            }
+//        }
+//    };
+    /** 请求页数 **/
+    private int page = 1;
 
     @Override
     public int setLayoutById() {
@@ -160,31 +162,36 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onRefresh() {
-                // 模拟刷新数据，1s之后停止刷新
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.stopRefresh();
-                        Toast.makeText(ADSListActivity.this, "refresh",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_REFRESH);
-                    }
-                }, 1000);
+//                // 模拟刷新数据，1s之后停止刷新
+//                mHandler.postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        mListView.stopRefresh();
+//                        Toast.makeText(ADSListActivity.this, "refresh",
+//                                Toast.LENGTH_SHORT).show();
+//                        mHandler.sendEmptyMessage(MSG_REFRESH);
+//                    }
+//                }, 1000);
+                bankList.clear();
+                page = 1;
+                setData();
             }
 
             @Override
             public void onLoadMore() {
-                mHandler.postDelayed(new Runnable() {
-                    // 模拟加载数据，1s之后停止加载
-                    @Override
-                    public void run() {
-                        mListView.stopLoadMore();
-                        Toast.makeText(ADSListActivity.this, "loadMore",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_LOADMORE);
-                    }
-                }, 1000);
+//                mHandler.postDelayed(new Runnable() {
+//                    // 模拟加载数据，1s之后停止加载
+//                    @Override
+//                    public void run() {
+//                        mListView.stopLoadMore();
+//                        Toast.makeText(ADSListActivity.this, "loadMore",
+//                                Toast.LENGTH_SHORT).show();
+//                        mHandler.sendEmptyMessage(MSG_LOADMORE);
+//                    }
+//                }, 1000);
+                page ++;
+                setData();
             }
         });
 
@@ -267,9 +274,12 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                 public void onClick(View arg0) {
                     Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
                     // 点击完成之后，关闭删除menu
-                    swipeLayout.close();
-                    bankList.remove(position);
-                    notifyDataSetChanged();
+                    if(bankList.size() > 0){
+                        swipeLayout.close();
+                        bankList.remove(position);
+                        notifyDataSetChanged();
+                    }
+
         }
     });
 
@@ -351,6 +361,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             return position;
         }
     }
+
     /**
      * 设置数据--测试
      */
@@ -363,8 +374,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         rp.add("userid", "0");
         rp.add("type1", category);
         rp.add("type2", category);
-        rp.add("userid", "0");
-        rp.add("page", "1");
+        rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -374,6 +384,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                         bankList.add(serviceBean.data.get(i));
                     }
                 }
+                mListView.stopRefresh();
 
                 if(bankList == null || bankList.size() == 0){
                     mListView.setPullLoadEnable(false);

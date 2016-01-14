@@ -96,10 +96,11 @@ public class TitleView extends RelativeLayout {
         mRightImage.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    public void setRightClickListener(OnClickListener lis, String text) {
+    public void setRightClickListener(OnClickListener lis, String text, int size) {
         mRigh.setOnClickListener(lis);
         if (text != null) {
             mRigh.setText(text);
+            mRigh.setTextSize(size);
             mRigh.setVisibility(View.VISIBLE);
         } else {
             mRigh.setVisibility(View.GONE);

@@ -413,7 +413,7 @@ public class AddCaseActivity extends BaseActivity implements View.OnClickListene
                         int index = -1;
                         CaseType curType = null;
                         for (int i = 0; i < caseTypeList.size(); i++) {
-                            if (tag.equals(caseTypeList.get(i).image)) {
+                            if (tag.equals(caseTypeList.get(i).picPath)) {
                                 curType = caseTypeList.get(i);
                                 index = i;
 

@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         mTitleView.setTitle("登录");
         mTitleView.setLeftVisiable(false);
         mTitleView.setRightVisiable(false);
-        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "注册");
+        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "注册", 18);
 
         // 设置手机号
         mETUserName.addTextChangedListener(new TextWatcher() {
