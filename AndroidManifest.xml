@@ -450,6 +450,12 @@
             android:name=".view.activity.SearchResultListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+        <!-- 发布媒体户外类别2级 -->
+        <activity
+            android:name=".view.activity.SelectediaSecondListOutDoorActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
     </application>
 
 </manifest>

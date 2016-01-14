@@ -1,5 +1,6 @@
 package com.topad.view.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.bean.SearchListBean;
+import com.topad.util.Constants;
 import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
@@ -24,20 +26,20 @@ import com.topad.view.customviews.TitleView;
 import java.util.ArrayList;
 
 /**
- * ${todo}<选择媒体列表>
+ * ${todo}<选择媒体户外二级列表>
  *
  * @author lht
  * @data: on 15/10/27 14:40
  */
-public class SelectMediaListActivity extends BaseActivity implements View.OnClickListener {
-    private static final String LTAG = SelectMediaListActivity.class.getSimpleName();
-    /** itle布局 **/
+public class SelectediaSecondListOutDoorActivity extends BaseActivity implements View.OnClickListener {
+    private static final String LTAG = SelectediaSecondListOutDoorActivity.class.getSimpleName();
     private TitleView mTitle;
     private ListView listview;
     private ListViewAdapter adapter;
+    private String[] huwaiString;
     private String[] mediaString;
     /** 类别 **/
-    private String category;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +60,26 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
     public void initViews() {
         Intent intent = getIntent();
         if (intent != null) {
-            category = intent.getStringExtra("category");
+            type = intent.getStringExtra("type");
         }
-        if("1".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.dianshi);
-        }else if("2".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.guangbo);
-        }else if("3".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.baozhi);
-        }else if("4".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.huwai);
-        }else if("5".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.zazhi);
-        }else if("6".equals(category)){
-            mediaString =  getResources().getStringArray(R.array.wangluo);
+        if("0".equals(type)){
+            huwaiString = getResources().getStringArray(R.array.jichang);
+        } else if("1".equals(type)){
+            huwaiString = getResources().getStringArray(R.array.gaotie);
+        }else if("2".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.huochezhan);
+        }else if("3".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.ditie);
+        }else if("4".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.gongjiao);
+        }else if("5".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.chengshidapai);
+        }else if("6".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.gidingchangsuo);
+        }else if("7".equals(type)){
+            huwaiString =  getResources().getStringArray(R.array.louyudianti);
         }
+        mediaString =  getResources().getStringArray(R.array.huwai);
 
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
@@ -82,26 +89,16 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
 
         listview = (ListView) findViewById(R.id.listview);
 
-
-
         adapter = new ListViewAdapter(this);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // 户外
-                if("4".equals(category)){
-                    Intent intent = new Intent(SelectMediaListActivity.this, SelectediaSecondListOutDoorActivity.class );
-                    intent.putExtra( "type", position +"");
-                    startActivity(intent);
-                    finish();
-                }else{
-                    Intent intent = new Intent(SelectMediaListActivity.this, MediaReleaseActivity.class );
-                    intent.putExtra( "mediaName", mediaString[position]);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+                Intent intent = new Intent(Constants.BROADCAST_ACTION_MEDIA_CLASS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra( "media_class", mediaString[Integer.parseInt(type)] + "-" + huwaiString[position]);
+                sendBroadcast(intent);
+                finish();
             }
         });
     }
@@ -155,12 +152,12 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
 
         @Override
         public int getCount() {
-            return mediaString.length;
+            return huwaiString.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return mediaString[position];
+            return huwaiString[position];
         }
 
         @Override
@@ -181,7 +178,7 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.name.setText(mediaString[position]);
+            viewHolder.name.setText(huwaiString[position]);
             viewHolder.left_ic.setVisibility(View.INVISIBLE);
             viewHolder.type.setVisibility(View.INVISIBLE);
 
@@ -203,5 +200,7 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }
 
