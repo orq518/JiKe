@@ -1,7 +1,9 @@
 package com.topad.view.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -325,6 +327,11 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 Intent intents = new Intent(MediaReleaseActivity.this, SelectMediaListActivity.class);
                 intents.putExtra("category", category);
                 startActivityForResult(intents, SELECT_MEDIA);
+
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(Constants.BROADCAST_ACTION_MEDIA_CLASS);
+                registerReceiver(broadcastReceiver, filter);
+
                 break;
 
             // 地址-- 定位进入地图
@@ -485,4 +492,29 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             }
         }, ReleaseMediaBean.class, true);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+        }
+
+    }
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (Constants.BROADCAST_ACTION_MEDIA_CLASS.equals(action)) { //我的类别
+                String str = intent.getStringExtra("media_class");
+                if (!Utils.isEmpty(str) ) {
+                    // 媒体类型
+                    mMedia.setVisibility(View.VISIBLE);
+                    mMedia.setText(str);
+                }
+            }
+        }
+    };
 }
