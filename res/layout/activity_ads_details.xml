@@ -174,7 +174,8 @@
                                     android:text="100%"
                                     android:textSize="16sp"
                                     android:layout_alignParentRight="true"
-                                    android:textColor="@color/text_gray_bg"/>
+                                    android:textColor="@color/text_gray_bg"
+                                    android:visibility="gone"/>
 
                                 <ImageView
                                     android:id="@+id/ads_good_icon"
@@ -183,7 +184,8 @@
                                     android:background="@drawable/ads_icon_good"
                                     android:layout_toLeftOf="@id/tv_praise"
                                     android:layout="@id/tv_praise"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:visibility="gone"/>
 
                             </RelativeLayout>
 
@@ -197,9 +199,10 @@
                             android:text="近三个月成交：2000000.00万元"
                             android:textSize="16sp"
                             android:textColor="@color/text_gray_bg"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:layout_below="@id/layout_count"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:visibility="invisible"/>
 
                     </RelativeLayout>
 
@@ -286,7 +289,8 @@
                     android:stretchMode="columnWidth"
                     android:gravity="center"
                     android:layout_below="@id/tv_case"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:listSelector="#00000000"/>
 
             </RelativeLayout>
 

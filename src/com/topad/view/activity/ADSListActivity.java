@@ -20,8 +20,11 @@ import android.widget.Toast;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
+import com.topad.bean.AdDetailsBean;
 import com.topad.bean.AdProductBean;
 import com.topad.bean.AdServiceBean;
+import com.topad.bean.AdServiceCaseListBean;
+import com.topad.bean.AdServiceDetailsBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
@@ -68,24 +71,54 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
     private LinearLayout view;
     /** 类别 **/
     private String category;
-
-//    private final int MSG_REFRESH = 1000;
-//    private final int MSG_LOADMORE = 2000;
-//    protected android.os.Handler mHandler = new android.os.Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case MSG_REFRESH:
-//
-//                    break;
-//
-//                case MSG_LOADMORE:
-//
-//                    break;
-//            }
-//        }
-//    };
     /** 请求页数 **/
     private int page = 1;
+
+    private final int MSG_CASE_LIST = 1000;
+    protected android.os.Handler mHandler = new android.os.Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_CASE_LIST:
+                    Bundle b = msg.getData();
+                    final AdDetailsBean detailsBean = (AdDetailsBean) b.getSerializable("details_bean");
+                    String serviceId = b.getString("service_id");
+                    final String imgLicense = b.getString("data_img_license");
+                    final String address = b.getString("data_address");
+
+                    // 获取产品案例列表信息
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_CASE_LIST).append("?");
+                    String url = sb.toString();
+                    RequestParams rp=new RequestParams();
+//                    rp.add("serviceid", serviceId);
+                    rp.add("serviceid", "6");
+
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            AdServiceCaseListBean bean = (AdServiceCaseListBean) t;
+                            if(bean != null){
+                                Intent intent = new Intent(ADSListActivity.this, ADSDetailsActivity.class);
+                                intent.putExtra("data_details", detailsBean);
+                                intent.putExtra("data_case", bean);
+                                intent.putExtra("data_img_license", imgLicense);
+                                intent.putExtra("data_address", address);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+                            ToastUtil.show(mContext, "status = " + status + "\n"
+                                    + "msg = " + msg);
+                        }
+                    }, AdServiceCaseListBean.class);
+                    break;
+            }
+        }
+    };
 
     @Override
     public int setLayoutById() {
@@ -146,11 +179,51 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent intent = new Intent(ADSListActivity.this, ADSDetailsActivity.class);
-                intent.putExtra("title",bankList.get(position).getServicename());
-                intent.putExtra("data",bankList.get(position));
-                startActivity(intent);
+                                    final int position, long id) {
+                final String serviceId = bankList.get(position - 1).getServiceid();
+
+                // 获取产品详情信息
+                StringBuffer sb = new StringBuffer();
+                sb.append(Constants.getCurrUrl()).append(Constants.URL_GET_INFO).append("?");
+                String url = sb.toString();
+                RequestParams rp=new RequestParams();
+                rp.add("serviceid", serviceId);
+//                rp.add("serviceid", "6");
+                postWithLoading(url, rp, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+
+                        final AdServiceDetailsBean detailsBean = (AdServiceDetailsBean) t;
+                        if(detailsBean != null && detailsBean.data.size()>0){
+
+                            mHandler.postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    Message msg = new Message();
+                                    Bundle b = new Bundle();// 存放数据
+                                    b.putSerializable("details_bean", detailsBean.data.get(0));
+                                    b.putString("service_id", serviceId);
+                                    b.putString("data_img_license", bankList.get(position - 1).getImglicense());
+                                    b.putString("data_address", bankList.get(position - 1).getAddress());
+                                    msg.setData(b);
+                                    msg.what = MSG_CASE_LIST;
+                                    mHandler.sendMessage(msg);
+                                }
+                            }, 500);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, AdServiceDetailsBean.class);
             }
         });
 
@@ -159,17 +232,6 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onRefresh() {
-//                // 模拟刷新数据，1s之后停止刷新
-//                mHandler.postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        mListView.stopRefresh();
-//                        Toast.makeText(ADSListActivity.this, "refresh",
-//                                Toast.LENGTH_SHORT).show();
-//                        mHandler.sendEmptyMessage(MSG_REFRESH);
-//                    }
-//                }, 1000);
                 bankList.clear();
                 page = 1;
                 setData();
@@ -177,16 +239,6 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onLoadMore() {
-//                mHandler.postDelayed(new Runnable() {
-//                    // 模拟加载数据，1s之后停止加载
-//                    @Override
-//                    public void run() {
-//                        mListView.stopLoadMore();
-//                        Toast.makeText(ADSListActivity.this, "loadMore",
-//                                Toast.LENGTH_SHORT).show();
-//                        mHandler.sendEmptyMessage(MSG_LOADMORE);
-//                    }
-//                }, 1000);
                 page ++;
                 setData();
             }
@@ -348,8 +400,10 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         String url = sb.toString();
         RequestParams rp=new RequestParams();
         rp.add("userid", "0");
-        rp.add("type1", category);
-        rp.add("type2", category);
+//        rp.add("type1", category);
+//        rp.add("type2", category);
+        rp.add("type1", "0");
+        rp.add("type2", "0");
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
