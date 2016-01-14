@@ -36,6 +36,8 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
     private ListView listview;
     private ListViewAdapter adapter;
     private String[] mediaString;
+    /** 类别 **/
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,24 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initViews() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            category = intent.getStringExtra("category");
+        }
+        if("1".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.dianshi);
+        }else if("2".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.guangbo);
+        }else if("3".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.baozhi);
+        }else if("4".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.huwai);
+        }else if("5".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.zazhi);
+        }else if("6".equals(category)){
+            mediaString =  getResources().getStringArray(R.array.wangluo);
+        }
+
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
         // 设置顶部布局
@@ -61,7 +81,9 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
 
         listview = (ListView) findViewById(R.id.listview);
-        mediaString =  getResources().getStringArray(R.array.dianshi);
+
+
+
         adapter = new ListViewAdapter(this);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

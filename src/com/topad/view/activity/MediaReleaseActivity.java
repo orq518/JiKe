@@ -3,6 +3,8 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +15,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.AddProductBean;
+import com.topad.bean.BaseBean;
+import com.topad.bean.ReleaseMediaBean;
 import com.topad.bean.SearchListBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
+import com.topad.util.LogUtil;
 import com.topad.util.RecordMediaPlayer;
 import com.topad.util.RecordTools;
 import com.topad.util.Utils;
@@ -44,14 +55,10 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private LinearLayout mLayKeyboard;
     /** 语音播放 **/
     private LinearLayout mVoiceLayout;
-    /** 户外 **/
-    private EditText mETOutdoor;
-    /** 电视台 **/
-    private EditText mETTV;
+    /** 媒体名 **/
+    private EditText mETMediaName;
     /** 栏目 **/
     private EditText mETColumn;
-    /** 报纸 **/
-    private EditText mETNewpager;
     /** 详情 **/
     private EditText mETDetails;
     /** 添加 **/
@@ -61,7 +68,9 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     /** 键盘 **/
     private ImageView mIVKeyboard;
     /** 提交 **/
-    private Button mETSubmit;
+    private Button mBTSubmit;
+    /** 提交并继续 **/
+    private Button mBTAdd;
     /** 录音 **/
     private Button mRecord;
     /** 媒体 **/
@@ -71,6 +80,15 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
     /** 类别 **/
     private String category;
+    /** 媒体名称 **/
+    private String mediaName;
+    /** 栏目名称 **/
+    private String subName;
+    /** lat **/
+    private double lat;
+    /** lon **/
+    private double lon;
+
     public static int SELECT_MEDIA = 1;
     public static int SELECT_ADDRESS= 2;
 
@@ -101,15 +119,15 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mLayVoice = (LinearLayout) findViewById(R.id.layout_voice);
         mLayKeyboard = (LinearLayout) findViewById(R.id.layout_keyboard);
         mVoiceLayout = (LinearLayout) findViewById(R.id.voice_layout);
-        mETOutdoor = (EditText) findViewById(R.id.et_outdoor);
-        mETTV = (EditText) findViewById(R.id.et_tv);
+
+        mETMediaName = (EditText) findViewById(R.id.et_media_name);
         mETColumn = (EditText) findViewById(R.id.et_column);
-        mETNewpager = (EditText) findViewById(R.id.et_newpager);
         mETDetails = (EditText) findViewById(R.id.et_details);
         mETAdd = (ImageView) findViewById(R.id.iv_add);
         mIVVoice = (ImageView) findViewById(R.id.ic_voice);
         mIVKeyboard = (ImageView) findViewById(R.id.ic_keyboard);
-        mETSubmit = (Button) findViewById(R.id.bt_submit_release);
+        mBTSubmit = (Button) findViewById(R.id.bt_submit_release);
+        mBTAdd = (Button) findViewById(R.id.bt_add);
         mRecord = (Button) findViewById(R.id.record_bt);
         mMedia = (TextView) findViewById(R.id.tv_select_media_newspaper);
         mAddress = (TextView) findViewById(R.id.tv_select_media_address);
@@ -117,41 +135,30 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         if(!Utils.isEmpty(category)){
             if(category.equals("1")){
                 mTitleView.setTitle("电视媒体发布");
-                mETOutdoor.setVisibility(View.GONE);
-                mETTV.setVisibility(View.VISIBLE);
+                mETMediaName.setHint("电视台名称：例如 CCTV1");
                 mETColumn.setVisibility(View.VISIBLE);
-                mETNewpager.setVisibility(View.GONE);
+                mETColumn.setHint("具体栏目：中国新闻");
             }else if(category.equals("2")){
                 mTitleView.setTitle("广播媒体发布");
-                mETOutdoor.setVisibility(View.GONE);
-                mETTV.setVisibility(View.VISIBLE);
+                mETMediaName.setHint("广播电台名称：例如 中央人民广播电台");
                 mETColumn.setVisibility(View.VISIBLE);
-                mETNewpager.setVisibility(View.GONE);
+                mETColumn.setHint("具体栏目：中国之声");
             }else if(category.equals("3")){
                 mTitleView.setTitle("报纸媒体发布");
-                mETOutdoor.setVisibility(View.GONE);
-                mETTV.setVisibility(View.GONE);
+                mETMediaName.setHint("报纸名称：例如 人民日报");
                 mETColumn.setVisibility(View.GONE);
-                mETNewpager.setVisibility(View.VISIBLE);
             }else if(category.equals("4")){
                 mTitleView.setTitle("户外媒体发布");
-                mETOutdoor.setVisibility(View.VISIBLE);
-                mETTV.setVisibility(View.GONE);
+                mETMediaName.setHint("媒体名称：例如 首都机场 T3 航站楼");
                 mETColumn.setVisibility(View.GONE);
-                mETNewpager.setVisibility(View.GONE);
-
             }else if(category.equals("5")){
                 mTitleView.setTitle("杂志媒体发布");
-                mETOutdoor.setVisibility(View.GONE);
-                mETTV.setVisibility(View.GONE);
+                mETMediaName.setHint("杂志名称：例如 时尚");
                 mETColumn.setVisibility(View.GONE);
-                mETNewpager.setVisibility(View.VISIBLE);
             }else if(category.equals("6")){
                 mTitleView.setTitle("网络媒体发布");
-                mETOutdoor.setVisibility(View.GONE);
-                mETTV.setVisibility(View.GONE);
+                mETMediaName.setHint("网媒名称：例如 爱奇艺");
                 mETColumn.setVisibility(View.GONE);
-                mETNewpager.setVisibility(View.VISIBLE);
             }
         }
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
@@ -163,10 +170,105 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mLayAddressMedia.setOnClickListener(this);
         mLayProveMedia.setOnClickListener(this);
         mETAdd.setOnClickListener(this);
-        mETSubmit.setOnClickListener(this);
+        mBTSubmit.setOnClickListener(this);
+        mBTSubmit.setOnClickListener(this);
         mIVVoice.setOnClickListener(this);
         mIVKeyboard.setOnClickListener(this);
         mRecord.setOnClickListener(this);
+
+        // 媒体名称
+        mETMediaName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                String data = getData(mETMediaName);
+                if (!Utils.isEmpty(data)) {
+                    mediaName = data;
+                    String subName = getData(mETMediaName);
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+                String name = getData(mETMediaName);
+
+                if(category.equals("1") || category.equals("2")){
+                    String subName = getData(mETColumn);
+                    if (!Utils.isEmpty(name)
+                            && !Utils.isEmpty(subName)
+                            && !Utils.isEmpty(mMedia.getText().toString())
+                            && !Utils.isEmpty(mAddress.getText().toString())) {
+                        setNextBtnState(true);
+                    } else {
+                        setNextBtnState(false);
+                    }
+                }else{
+                    if (!Utils.isEmpty(name)
+                            && !Utils.isEmpty(mMedia.getText().toString())
+                            && !Utils.isEmpty(mAddress.getText().toString())) {
+                        setNextBtnState(true);
+                    } else {
+                        setNextBtnState(false);
+                    }
+                }
+            }
+        });
+
+        // lanmu名称
+        mETColumn.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                String data = getData(mETColumn);
+                if (!Utils.isEmpty(data)) {
+                    subName = data;
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+                String name = getData(mETMediaName);
+                String subName = getData(mETColumn);
+                if(category.equals("1") || category.equals("2")){
+                    if (!Utils.isEmpty(name)
+                            && !Utils.isEmpty(subName)
+                            && !Utils.isEmpty(mMedia.getText().toString())
+                            && !Utils.isEmpty(mAddress.getText().toString())) {
+                        setNextBtnState(true);
+                    } else {
+                        setNextBtnState(false);
+                    }
+                }else{
+                    if (!Utils.isEmpty(name)
+                            && !Utils.isEmpty(mMedia.getText().toString())
+                            && !Utils.isEmpty(mAddress.getText().toString())) {
+                        setNextBtnState(true);
+                    } else {
+                        setNextBtnState(false);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -221,6 +323,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             // 选择媒体类别
             case R.id.lay_select_media:
                 Intent intents = new Intent(MediaReleaseActivity.this, SelectMediaListActivity.class);
+                intents.putExtra("category", category);
                 startActivityForResult(intents, SELECT_MEDIA);
                 break;
 
@@ -239,7 +342,10 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
             // 证明
             case R.id.lay_prove_media:
-
+                intent = new Intent(mContext, UploadPicActivity.class);
+                intent.putExtra("title", "公司认证");
+                intent.putExtra("type", 3);
+                startActivity(intent);
                 break;
 
             // 语音
@@ -261,7 +367,12 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
             // 提交
             case R.id.bt_submit_release:
+                submit("0");
+                break;
 
+            // 提交并继续
+            case R.id.bt_add:
+                submit("1");
                 break;
 
             default:
@@ -280,11 +391,98 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         }else if(requestCode == SELECT_ADDRESS && resultCode == RESULT_OK && data != null){
             // 地址
             Bundle MarsBuddle = data.getExtras();
-            String MarsMessage = MarsBuddle.getString( "location");
+            String MarsMessage = MarsBuddle.getString("location");
+            lon = MarsBuddle.getDouble("lon");
+            lat = MarsBuddle.getDouble("lon");
             mAddress.setVisibility(View.VISIBLE);
             mAddress.setText(MarsMessage);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 去除EditText的空格
+     *
+     * @param et
+     * @return
+     */
+    public String getData(EditText et) {
+        String s = et.getText().toString();
+        return s.replaceAll(" ", "");
+    }
+
+    /**
+     * 设置下一步按钮
+     *
+     * @param flag
+     */
+    private void setNextBtnState(boolean flag) {
+        if (mBTAdd == null)
+            return;
+        mBTAdd.setEnabled(flag);
+        mBTAdd.setClickable(flag);
+        mBTSubmit.setEnabled(flag);
+        mBTSubmit.setClickable(flag);
+    }
+
+    /**
+     * 提交
+     *
+     * @return
+     */
+    public void submit(final String type) {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_ADD).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("type1", category); // 1-6
+        rp.add("type2", mMedia.getText().toString()); // 传中文名
+        rp.add("type3", "");
+        rp.add("medianame", mediaName);
+        if(!Utils.isEmpty(category)){
+            if(category.equals("1") || category.equals("2")){
+                rp.add("subname", subName);
+            }else{
+                rp.add("subname", "");
+            }
+        }
+
+        rp.add("location", mAddress.getText().toString());
+        rp.add("longitude", lat + "");
+        rp.add("latitude", lon + "");
+        rp.add("mediacert", "");
+        rp.add("token", TopADApplication.getSelf().getToken());
+
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                ReleaseMediaBean bean = (ReleaseMediaBean) t;
+                if (bean != null) {
+                    if("0".equals(type)){
+                        finish();
+                    }else{
+                        mMedia.setText("");
+                        mAddress.setText("");
+                        mediaName = "";
+                        subName = "";
+                        lat = 0.0;
+                        lon = 0.0;
+                        mMedia.setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+
+                LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+                ToastUtil.show(mContext, msg);
+            }
+        }, ReleaseMediaBean.class, true);
     }
 }
