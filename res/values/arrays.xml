@@ -12,7 +12,7 @@
         <item>我要抢单</item>
     </string-array>
 
-    <!-- 首页导航 -->
+    <!-- 户外 -->
     <string-array name="huwai">
         <!--机场、高铁、火车站、地铁、公交、城市大牌、特定场所、 楼宇电梯-->
         <item>机场</item>

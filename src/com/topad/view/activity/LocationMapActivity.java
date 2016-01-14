@@ -41,6 +41,10 @@ public class LocationMapActivity extends Activity implements LocationSource,
     private LocationManagerProxy mAMapLocationManager;
     /** 定位地址 **/
     private String location;
+    /** lat **/
+    private double lat;
+    /** lon **/
+    private double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +154,8 @@ public class LocationMapActivity extends Activity implements LocationSource,
             mListener.onLocationChanged(aLocation);// 显示系统小蓝点
             if(!Utils.isEmpty(aLocation.getPoiName())){
                 location = aLocation.getPoiName();
+                lat = aLocation.getLatitude();
+                lon = aLocation.getLongitude();
             }
         }
     }
@@ -210,6 +216,8 @@ public class LocationMapActivity extends Activity implements LocationSource,
         if(!Utils.isEmpty(location)){
             Intent intent = new Intent(LocationMapActivity.this, MediaReleaseActivity.class );
             intent.putExtra( "location", location);
+            intent.putExtra( "lat", lat);
+            intent.putExtra( "lon", lon);
             setResult(RESULT_OK, intent);
         }
         finish();

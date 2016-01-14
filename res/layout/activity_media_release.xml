@@ -74,64 +74,36 @@
                 android:layout_height="0.5dp"
                 android:background="@color/gray"/>
 
-            <!-- 户外 -->
+            <!-- 媒体名-->
             <EditText
-                android:id="@+id/et_outdoor"
+                android:id="@+id/et_media_name"
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                android:hint="输入媒体名称 如：首都机场T3航站楼保住"
+                android:hint="电视台名称：例如 CCTV1"
                 android:textColorHint="@color/text_gray_bg"
                 android:textSize="14sp"
                 android:singleLine="true"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
-            <!-- 电视、广播 电视台-->
-            <EditText
-                android:id="@+id/et_tv"
-                android:layout_width="fill_parent"
-                android:layout_height="35dp"
-                android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="15dp"
-                android:hint="请输入电视台名称"
-                android:textColorHint="@color/text_gray_bg"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:visibility="gone"/>
-
-            <!-- 栏目 -->
+            <!-- 栏目(电视、广播)-->
             <EditText
                 android:id="@+id/et_column"
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                android:hint="请输入栏目名称"
+                android:hint="具体栏目：中国新闻"
                 android:textColorHint="@color/text_gray_bg"
                 android:textSize="14sp"
                 android:singleLine="true"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
-            <EditText
-                android:id="@+id/et_newpager"
-                android:layout_width="fill_parent"
-                android:layout_height="35dp"
-                android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="15dp"
-                android:hint="请输入报纸名称 如：北京晚报"
-                android:textColorHint="@color/text_gray_bg"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -152,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="地址位置"
+                    android:text="选择媒体所在地"
                     android:textColor="@color/text_bg"
                     android:textSize="18sp"/>
 
@@ -253,7 +225,8 @@
                 android:layout_marginRight="@dimen/dimen_15"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ic_voice"
@@ -292,7 +265,8 @@
                 android:layout_marginRight="@dimen/dimen_15"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -313,14 +287,39 @@
             </LinearLayout>
 
             <!-- 提交发布 -->
-            <Button
-                android:id="@+id/bt_submit_release"
-                style="@style/btn_bule2_borad_style"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="提交发布"/>
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <!-- 提交 -->
+                <Button
+                    android:id="@+id/bt_submit_release"
+                    style="@style/btn_white_borad_style"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:text="提&#160;&#160;交"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- 提交并继续 -->
+                <Button
+                    android:id="@+id/bt_add"
+                    style="@style/btn_bule3_borad_style"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="提交并继续添加"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

@@ -15,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.bean.AdDetailsBean;
 import com.topad.bean.AdServiceCaseListBean;
 import com.topad.util.Constants;
-import com.topad.util.ImageManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
@@ -262,18 +265,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
 
             //为ImageView设置图片资源
             String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + imgs.get(position);
-            ImageManager.getInstance(mContext).getBitmap(picUrl,
-                    new ImageManager.ImageCallBack() {
-                        @Override
-                        public void loadImage(ImageView imageView, Bitmap bitmap) {
-                            if (bitmap != null && imageView != null) {
-                                imageView.setImageBitmap(bitmap);
-                                imageView
-                                        .setScaleType(ImageView.ScaleType.FIT_XY);
-                            }
-                        }
-                    }, imageView);
-
+            ImageLoader.getInstance().displayImage(picUrl, imageView, TopADApplication.getSelf().getImageLoaderOption());
             return imageView;
         }
     }

@@ -3,6 +3,8 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;

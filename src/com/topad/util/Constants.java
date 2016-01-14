@@ -60,6 +60,8 @@ public class Constants {
     public static final String URL_CASE_LIST = "/adservice/caselist";
     // 删除案例
     public static final String URL_DEL_CASE = "/adservice/delcase";
+    // 发布媒体
+    public static final String URL_MEDIA_ADD = "/media/add";
 
     /**
      * 测试环境
