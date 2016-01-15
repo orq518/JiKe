@@ -27,8 +27,7 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/11/4 15:02
  */
-public class LocationMapActivity extends Activity implements LocationSource,
-        AMapLocationListener {
+public class LocationMapActivity extends Activity implements LocationSource, AMapLocationListener {
     private static final String LTAG = LocationMapActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;

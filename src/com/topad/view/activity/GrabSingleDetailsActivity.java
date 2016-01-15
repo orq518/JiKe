@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.bean.AdDetailsBean;
 import com.topad.bean.GrabSingleBean;
+import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
 
@@ -45,6 +48,10 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
     private TextView mContent;
     /** 地址 **/
     private TextView mAddress;
+    /** 类型 **/
+    private TextView mTVType;
+    /** 时间 **/
+    private TextView mTVTime;
 
     /** 我要提交 **/
     private RelativeLayout mLYDetails;
@@ -70,6 +77,8 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
     /** 状态 **/
     private String state;
+    /** 状态 **/
+    private GrabSingleBean grabSingleBean;
 
     @Override
     public int setLayoutById() {
@@ -90,6 +99,8 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
         mMoney = (TextView) findViewById(R.id.tv_price);
         mContent = (TextView) findViewById(R.id.tv_content);
         mAddress = (TextView) findViewById(R.id.tv_address);
+        mTVType = (TextView) findViewById(R.id.tv_type);
+        mTVTime = (TextView) findViewById(R.id.tv_time);
 
         // 我要提交
         mLYDetails = (RelativeLayout) findViewById(R.id.ly_details);
@@ -121,6 +132,7 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
+            grabSingleBean = (GrabSingleBean) intent.getSerializableExtra("data_details");
             state = intent.getStringExtra("state");
         }
 
@@ -167,6 +179,40 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
             mLYNotSelect.setVisibility(View.GONE);
             mLYCancel.setVisibility(View.GONE);
             mLYOther.setVisibility(View.VISIBLE);
+        }
+
+        // 名字
+        if(!Utils.isEmpty(grabSingleBean.getTitle())){
+            mName.setText(grabSingleBean.getTitle());
+        }
+
+        // 价格
+        if(!Utils.isEmpty(grabSingleBean.getBudget())){
+            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + grabSingleBean.getBudget());
+            mMoney.setText(ssb.toString());
+        }
+
+        // 介绍
+        if(!Utils.isEmpty(grabSingleBean.getDetail())){
+            mContent.setText(grabSingleBean.getDetail());
+        }
+
+        // 地址
+        if(!Utils.isEmpty(grabSingleBean.getAddress())){
+            mAddress.setText(grabSingleBean.getAddress());
+        }
+
+        // 类别
+        if(!Utils.isEmpty(grabSingleBean.getType1())
+                && !Utils.isEmpty(grabSingleBean.getType2())){
+            SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+            mTVType.setText(ssb.toString());
+        }
+
+        // 时间
+        if(!Utils.isEmpty(grabSingleBean.getAdddate())){
+            String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+            mTVTime.setText(sourceStrArray[0]);
         }
 
         //为GridView设置适配器
@@ -229,22 +275,6 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
         //创建View方法
         public View getView(int position, View convertView, ViewGroup parent) {
-//            ImageView imageView;
-//            if (convertView == null) {
-//                imageView = new ImageView(context);
-//                imageView.setLayoutParams(
-//                        new GridView.LayoutParams(
-//                                (int) (getResources().getDisplayMetrics().density*75),
-//                                (int) (getResources().getDisplayMetrics().density*75)));//设置ImageView对象布局
-//                imageView.setAdjustViewBounds(false);//设置边界对齐
-//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);//设置刻度的类型
-//                imageView.setPadding(8, 8, 8, 8);//设置间距
-//            } else {
-//                imageView = (ImageView) convertView;
-//            }
-//            imageView.setImageResource(imgs[position]);//为ImageView设置图片资源
-//            return imageView;
-
             if(convertView == null){
                 //根据布局文件获取View返回值
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_grab_single_details_item_layout, null);

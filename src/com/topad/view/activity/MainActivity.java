@@ -2,7 +2,6 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -14,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
@@ -35,46 +32,58 @@ import com.topad.view.customviews.TitleView;
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
     private static final String LTAG = MainActivity.class.getSimpleName();
-    /**
-     * 上下文
-     **/
+    // 上下文
     private Context mContext;
-    /**
-     * title布局
-     **/
+    // title布局
     private TitleView mTitle;
-    /**
-     * 我有媒体
-     **/
+    // 我有媒体\
     private ImageView mMyMedia;
-    /**
-     * 发布需求
-     **/
+    // 发布需求\
     private ImageView mReleaseDemand;
-    /**
-     * 我要抢单
-     **/
+    // 我要抢单
     private ImageView mGrabSingle;
-    /**
-     * 广告创意
-     **/
+    // 广告创意
     private LinearLayout mAdvertisingCreativEe;
-    /**
-     * 营销策略
-     **/
+    // 营销策略
     private LinearLayout mMarketingStrategy;
-    /**
-     * 影视广告
-     **/
+    // 影视广告
     private LinearLayout mTVC;
-    /**
-     * 动漫创作
-     **/
+    // 动漫创作
     private LinearLayout mAnimeCreate;
-    /**
-     * 沉浸式状态栏
-     **/
-    private SystemBarTintManager mTintManager;
+    // vi设计
+    private LinearLayout mViDesign;
+    // LOGO设计
+    private LinearLayout mLogoDesign;
+    // APP/UI设计
+    private LinearLayout mAppUiDesign;
+    // 海报设计
+    private LinearLayout mProductDesign;
+    // 包装设计
+    private LinearLayout mDackingDesign;
+    // 装修设计
+    private LinearLayout mRenovationDesign;
+    // 公关服务
+    private LinearLayout mPublicRelationsService;
+    // 管理咨询
+    private LinearLayout mManagementConsultation;
+    // 网络营销
+    private LinearLayout mNetworkMarketing;
+    // 专业培训
+    private LinearLayout mProfessionalTraining;
+    // 广告检测
+    private LinearLayout mCommercialDetection;
+    // 商务报告
+    private LinearLayout mBusinessReport;
+    // 图文输出
+    private LinearLayout mEquipmentLease;
+    // 展览服务
+    private LinearLayout mConference;
+    // 法律服务
+    private LinearLayout mLegalServices;
+    // 起名服务
+    private LinearLayout mIntellectualProperty;
+    // 网站建议
+    private LinearLayout mWebsiteSuggestion;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -100,10 +109,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initViews() {
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
 
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
@@ -114,6 +119,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mMarketingStrategy = (LinearLayout) findViewById(R.id.marketing_strategy_layout);
         mTVC = (LinearLayout) findViewById(R.id.tvc_layout);
         mAnimeCreate = (LinearLayout) findViewById(R.id.anime_create_layout);
+        mViDesign = (LinearLayout) findViewById(R.id.vi_design_layout);
+        mLogoDesign = (LinearLayout) findViewById(R.id.logo_design_layout);
+        mAppUiDesign = (LinearLayout) findViewById(R.id.app_ui_design_layout);
+        mProductDesign = (LinearLayout) findViewById(R.id.product_design_layout);
+        mDackingDesign = (LinearLayout) findViewById(R.id.packing_design_layout);
+        mRenovationDesign = (LinearLayout) findViewById(R.id.renovation_design_layout);
+        mPublicRelationsService = (LinearLayout) findViewById(R.id.public_relations_service_layout);
+        mManagementConsultation = (LinearLayout) findViewById(R.id.management_consultation_layout);
+        mNetworkMarketing = (LinearLayout) findViewById(R.id.network_marketing_layout);
+        mProfessionalTraining = (LinearLayout) findViewById(R.id.professional_training_layout);
+        mCommercialDetection = (LinearLayout) findViewById(R.id.commercial_detection_layout);
+        mBusinessReport = (LinearLayout) findViewById(R.id.business_report_layout);
+        mEquipmentLease = (LinearLayout) findViewById(R.id.equipment_lease_layout);
+        mConference = (LinearLayout) findViewById(R.id.conference_layout);
+        mLegalServices = (LinearLayout) findViewById(R.id.legal_services_layout);
+        mIntellectualProperty = (LinearLayout) findViewById(R.id.intellectual_property_layout);
+        mWebsiteSuggestion = (LinearLayout) findViewById(R.id.website_suggestion_layout);
 
         // 设置顶部布局
         mTitle.setTitle(getString(R.string.main_title));
@@ -127,6 +149,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mMarketingStrategy.setOnClickListener(this);
         mTVC.setOnClickListener(this);
         mAnimeCreate.setOnClickListener(this);
+        mViDesign.setOnClickListener(this);
+        mLogoDesign.setOnClickListener(this);
+        mAppUiDesign.setOnClickListener(this);
+        mProductDesign.setOnClickListener(this);
+        mDackingDesign.setOnClickListener(this);
+        mRenovationDesign.setOnClickListener(this);
+        mPublicRelationsService.setOnClickListener(this);
+        mManagementConsultation.setOnClickListener(this);
+        mNetworkMarketing.setOnClickListener(this);
+        mProfessionalTraining.setOnClickListener(this);
+        mCommercialDetection.setOnClickListener(this);
+        mBusinessReport.setOnClickListener(this);
+        mEquipmentLease.setOnClickListener(this);
+        mConference.setOnClickListener(this);
+        mLegalServices.setOnClickListener(this);
+        mIntellectualProperty.setOnClickListener(this);
+        mWebsiteSuggestion.setOnClickListener(this);
 
         left_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         // Set the list's click listener
@@ -237,25 +276,169 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             case R.id.advertising_creative_layout://广告创意
                 intent = new Intent(MainActivity.this, ADSListActivity.class);
-                intent.putExtra("category", "1");
+                intent.putExtra("title", "广告创意");
+                intent.putExtra("type1", "广告创意");
+                intent.putExtra("type2", "");
                 startActivity(intent);
                 break;
 
-            case R.id.marketing_strategy_layout://营销策略
+            case R.id.marketing_strategy_layout://营销推广
                 intent = new Intent(MainActivity.this, ADSListActivity.class);
-                intent.putExtra("category", "2");
+                intent.putExtra("title", "营销推广");
+                intent.putExtra("type1", "营销推广");
+                intent.putExtra("type2", "");
                 startActivity(intent);
                 break;
 
-            case R.id.tvc_layout://影视广告
+            case R.id.tvc_layout://影视动漫
                 intent = new Intent(MainActivity.this, ADSListActivity.class);
-                intent.putExtra("category", "3");
+                intent.putExtra("title", "影视动漫");
+                intent.putExtra("type1", "影视动漫");
+                intent.putExtra("type2", "");
                 startActivity(intent);
                 break;
 
-            case R.id.anime_create_layout://动漫创作
+            case R.id.anime_create_layout://文案策划
                 intent = new Intent(MainActivity.this, ADSListActivity.class);
-                intent.putExtra("category", "4");
+                intent.putExtra("title", "文案策划");
+                intent.putExtra("type1", "文案策划");
+                intent.putExtra("type2", "");
+                startActivity(intent);
+                break;
+
+            case R.id.vi_design_layout://VI设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "VI设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "VI设计");
+                startActivity(intent);
+                break;
+
+            case R.id.logo_design_layout://LOGO设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "LOGO设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "LOGO设计");
+                startActivity(intent);
+                break;
+
+            case R.id.app_ui_design_layout://APP/UI设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "APP/UI设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "APP/UI设计");
+                startActivity(intent);
+                break;
+
+            case R.id.product_design_layout://海报设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "海报设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "海报设计");
+                startActivity(intent);
+                break;
+
+            case R.id.packing_design_layout://包装设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "包装设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "包装设计");
+                startActivity(intent);
+                break;
+
+            case R.id.renovation_design_layout://装修设计
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "装修设计");
+                intent.putExtra("type1", "平面设计");
+                intent.putExtra("type2", "装修设计");
+                startActivity(intent);
+                break;
+
+            case R.id.public_relations_service_layout://公关服务
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "公关服务");
+                intent.putExtra("type1", "公关服务");
+                intent.putExtra("type2", "");
+                startActivity(intent);
+                break;
+
+            case R.id.management_consultation_layout://管理咨询
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "管理咨询");
+                intent.putExtra("type1", "管理咨询");
+                intent.putExtra("type2", "");
+                startActivity(intent);
+                break;
+
+            case R.id.network_marketing_layout://网络营销
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "网络营销");
+                intent.putExtra("type1", "营销推广");
+                intent.putExtra("type2", "网络营销");
+                startActivity(intent);
+                break;
+
+            case R.id.professional_training_layout://专业培训
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "专业培训");
+                intent.putExtra("type1", "专业培训");
+                intent.putExtra("type2", "");
+                startActivity(intent);
+                break;
+
+            case R.id.commercial_detection_layout://广告监测
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "广告监测");
+                intent.putExtra("type1", "广告监测");
+                intent.putExtra("type2", "");
+                startActivity(intent);
+                break;
+
+            case R.id.business_report_layout://商业报告
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "商业报告");
+                intent.putExtra("type1", "管理咨询");
+                intent.putExtra("type2", "各类行业研究报告");
+                startActivity(intent);
+                break;
+
+            case R.id.equipment_lease_layout://图文输出
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "图文输出");
+                intent.putExtra("type1", "其他服务");
+                intent.putExtra("type2", "图文输出");
+                startActivity(intent);
+                break;
+
+            case R.id.conference_layout://展览服务
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "展览服务");
+                intent.putExtra("type1", "其他服务");
+                intent.putExtra("type2", "展览服务");
+                startActivity(intent);
+                break;
+
+            case R.id.legal_services_layout://法律服务
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "法律服务");
+                intent.putExtra("type1", "其他服务");
+                intent.putExtra("type2", "法律咨询服务");
+                startActivity(intent);
+                break;
+
+            case R.id.intellectual_property_layout://起名服务
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "起名服务");
+                intent.putExtra("type1", "其他服务");
+                intent.putExtra("type2", "品牌起名/公司起名");
+                startActivity(intent);
+                break;
+
+            case R.id.website_suggestion_layout://网站建设
+                intent = new Intent(MainActivity.this, ADSListActivity.class);
+                intent.putExtra("title", "网站建设");
+                intent.putExtra("type1", "网站建设");
+                intent.putExtra("type2", "");
                 startActivity(intent);
                 break;
 
@@ -425,39 +608,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 intent = new Intent(MainActivity.this, CompleteInforActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.gsrz://公司认证
                 intent = new Intent(MainActivity.this, UploadPicActivity.class);
                 intent.putExtra("title", "公司认证");
                 intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
+
             case R.id.cpsj://我的服务产品
                 intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
                 intent.putExtra("category", "1");//广告创意1营销策略2影视广告3动漫创作4
                 startActivity(intent);
                 break;
-            case R.id.wdqd://我的抢单
 
-                intent = new Intent(MainActivity.this, GrabSingleActivity.class);
+            case R.id.wdqd://我的抢单
+                intent = new Intent(MainActivity.this, MyGrabSingleListActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.wdxq://我的需求
                 intent = new Intent(MainActivity.this, MyNeedsActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.fbmt://我发布的媒体
-                intent = new Intent(MainActivity.this, ADSListActivity.class);
-                intent.putExtra("category", "1");//广告创意1营销策略2影视广告3动漫创作4
+                intent = new Intent(MainActivity.this, MyMediaReleaseListActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.wdqb://我的钱包
                 intent = new Intent(MainActivity.this, MyWalletActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.xtxx://系统消息
                 intent = new Intent(MainActivity.this, SystemNewsActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.quit://注销
                 ((TopADApplication) TopADApplication.getContext()).logout();
 
@@ -478,11 +667,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mDrawerLayout.openDrawer(left_drawer);
         }
 
-    }
-
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
     }
 
     /**

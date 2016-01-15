@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
-                        android:text="北京市聚宝网深圳分公司"
+                        android:text=""
                         android:singleLine="true"
                         android:textSize="16sp"
                         android:layout_marginTop="10dp"
@@ -92,7 +92,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical|left"
-                            android:text="￥12000"
+                            android:text=""
                             android:singleLine="true"
                             android:textSize="16sp"
                             android:textColor="@color/hot"
@@ -115,7 +115,8 @@
                             android:paddingBottom="5dp"
                             android:paddingLeft="5dp"
                             android:paddingRight="35dp"
-                            android:layout_alignParentRight="true"/>
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone"/>
 
                     </RelativeLayout>
 
@@ -124,7 +125,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
-                        android:text="高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="@color/text_gray_bg"
                         android:layout_alignParentLeft="true"
@@ -147,7 +148,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical|left"
-                            android:text="北京市西城区广安门外大街248号机械大厦1001"
+                            android:text=""
                             android:textSize="16sp"
                             android:layout_marginLeft="10dp"
                             android:textColor="@color/text_gray_bg"
@@ -165,28 +166,35 @@
                     android:layout_alignParentBottom="true">
 
                     <!-- 到期 -->
-                    <Button
-                        android:id="@+id/btn_countdown"
-                        style="@style/btn_white_borad_style"
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:background="@drawable/btn_board_white_square"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
                         android:layout_weight="2"
                         android:focusable="false"
-                        android:text="类型：广告创意-网站软件"
+                        android:text=""
                         android:textColor="@color/text_gray_bg"
                         android:textSize="16sp"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"/>
+                        android:paddingRight="10dp"
+                        android:gravity="center"/>
 
                     <!-- 时间 -->
-                    <Button
-                        android:id="@+id/btn_time"
-                        style="@style/btn_white_borad_style"
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:background="@drawable/btn_board_white_square"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
                         android:layout_weight="3"
                         android:focusable="false"
                         android:drawableLeft="@drawable/pic_time"
-                        android:text="2015-10-22"
+                        android:text=""
+                        android:textSize="16sp"
                         android:textColor="@color/text_gray_bg"
                         android:paddingLeft="20dp"
-                        android:paddingRight="20dp"/>
+                        android:paddingRight="20dp"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -252,7 +260,7 @@
                     style="@style/btn_bule2_borad_style"
                     android:layout_weight="1"
                     android:focusable="false"
-                    android:text="我要提交"
+                    android:text="我要抢单"
                     android:textColor="@color/white"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

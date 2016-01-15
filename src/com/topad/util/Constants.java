@@ -62,6 +62,10 @@ public class Constants {
     public static final String URL_DEL_CASE = "/adservice/delcase";
     // 发布媒体
     public static final String URL_MEDIA_ADD = "/media/add";
+    // 获取需求列表（抢单列表，我的需求，我的抢单）
+    public static final String URL_NEED_GETLIST = "/need/getlist";
+    // 获取我发布媒体列表
+    public static final String URL_MEDIA_GETLIST = "/media/getlist";
 
     /**
      * 测试环境

@@ -82,7 +82,8 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="35dp"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -108,9 +109,11 @@
         android:layout_alignParentBottom="true">
 
         <!-- 时间 -->
-        <Button
-            android:id="@+id/btn_time"
-            style="@style/btn_white_borad_style"
+        <TextView
+            android:id="@+id/tv_time"
+            android:background="@drawable/btn_board_white_square"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_weight="1"
             android:focusable="false"
             android:drawableLeft="@drawable/pic_time"
@@ -118,21 +121,25 @@
             android:textSize="16sp"
             android:textColor="@color/text_bg"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:gravity="center"/>
 
         <!-- 到期 -->
-        <Button
-            android:id="@+id/btn_countdown"
-            style="@style/btn_white_borad_style"
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:background="@drawable/btn_board_white_square"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_weight="1"
             android:focusable="false"
             android:text="还有3天到期"
             android:textSize="16sp"
             android:textColor="@color/text_bg"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:gravity="center"
+            android:visibility="visible"/>
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -63,8 +63,12 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
     /** view **/
     private LinearLayout view;
-    /** 类别 **/
-    private String category;
+    /** title **/
+    private String title;
+    /** 类别1 **/
+    private String type1;
+    /** 类别2 **/
+    private String type2;
     /** 请求页数 **/
     private int page = 1;
 
@@ -131,21 +135,15 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            category = intent.getStringExtra("category");
+            title = intent.getStringExtra("title");
+            type1 = intent.getStringExtra("type1");
+            type2 = intent.getStringExtra("type2");
         }
 
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
-        if(!Utils.isEmpty(category)){
-            if(category.equals("1")){
-                mTitleView.setTitle(getString(R.string.ads_advertising_creative_title));
-            }else if(category.equals("2")){
-                mTitleView.setTitle(getString(R.string.ads_marketing_strategy_title));
-            }else if(category.equals("3")){
-                mTitleView.setTitle(getString(R.string.ads_tvc_title));
-            }else if(category.equals("4")){
-                mTitleView.setTitle(getString(R.string.ads_anime_create_title));
-            }
+        if(!Utils.isEmpty(title)){
+            mTitleView.setTitle(title);
         }
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
@@ -353,17 +351,6 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             }
 
             if(!Utils.isEmpty(bankList.get(position).getImghead())){
-//                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
-//                        new ImageManager.ImageCallBack() {
-//                            @Override
-//                            public void loadImage(ImageView imageView, Bitmap bitmap) {
-//                                if (bitmap != null && imageView != null) {
-//                                    imageView.setImageBitmap(bitmap);
-//                                    imageView
-//                                            .setScaleType(ImageView.ScaleType.FIT_XY);
-//                                }
-//                            }
-//                        }, icon);
                 ImageLoader.getInstance().displayImage(bankList.get(position).getImghead(), icon, TopADApplication.getSelf().getImageLoaderOption(),
                         new ImageLoadingListener(){
                             @Override
@@ -415,10 +402,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         String url = sb.toString();
         RequestParams rp=new RequestParams();
         rp.add("userid", "0");
-//        rp.add("type1", category);
-//        rp.add("type2", category);
-        rp.add("type1", "0");
-        rp.add("type2", "0");
+        rp.add("type1", type1);
+        rp.add("type2", type2);
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override

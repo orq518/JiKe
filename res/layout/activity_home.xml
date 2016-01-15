@@ -425,7 +425,7 @@
                 android:paddingBottom="1dp"
                 android:visibility="visible">
 
-                <!-- 广告设计 -->
+                <!-- 海报设计 -->
                 <LinearLayout
                     android:id="@+id/product_design_layout"
                     android:layout_width="170dp"
@@ -627,7 +627,7 @@
                 android:padding="5dp"
                 android:layout_marginTop="10dp">
 
-                <!-- 广告检测 -->
+                <!-- 广告监测 -->
                 <LinearLayout
                     android:id="@+id/commercial_detection_layout"
                     android:layout_width="match_parent"
@@ -648,7 +648,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="广告检测"
+                        android:text="广告监测"
                         android:textColor="@color/text_bg"
                         android:layout_marginTop="5dp"
                         android:textSize="16sp"
