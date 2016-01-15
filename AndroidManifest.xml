@@ -219,7 +219,7 @@
 
         <!-- 我要抢单 -->
         <activity
-            android:name=".view.activity.GrabSingleActivity"
+            android:name=".view.activity.MyGrabSingleListActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -445,19 +445,28 @@
             android:name=".view.activity.AddCaseActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <!-- 产品案例页 -->
         <activity
             android:name=".view.activity.SearchResultListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <!-- 发布媒体户外类别2级 -->
         <activity
             android:name=".view.activity.SelectediaSecondListOutDoorActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <!-- 发布媒体上传证明 -->
         <activity
             android:name=".view.activity.MediaReoeaseUploadPicActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
+        <!-- 我的媒体发布列表 -->
+        <activity
+            android:name=".view.activity.MyMediaReleaseListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 

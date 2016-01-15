@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
 import com.topad.bean.AdServiceBean;
+import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
+import com.topad.bean.GrabSingleListBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.activity.ADSDetailsActivity;
@@ -51,27 +59,13 @@ public class GrabSingleFragment extends BaseFragment{
 	private ListAdapter adapter;
 	/** 数据源 **/
 	private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
+	/** 请求页数 **/
+	private int page = 1;
 
 	@Override
 	public String getFragmentName() {
 		return LTAG;
 	}
-
-	private final int MSG_REFRESH = 1000;
-	private final int MSG_LOADMORE = 2000;
-	protected android.os.Handler mHandler = new android.os.Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-				case MSG_REFRESH:
-
-					break;
-
-				case MSG_LOADMORE:
-
-					break;
-			}
-		}
-	};
 
 	/**
 	 * ***生命周期******
@@ -124,6 +118,7 @@ public class GrabSingleFragment extends BaseFragment{
 									int position, long id) {
 				Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
 				intent.putExtra("state", "1");
+				intent.putExtra("data_details", bankList.get(position-1));
 				startActivity(intent);
 			}
 		});
@@ -133,31 +128,15 @@ public class GrabSingleFragment extends BaseFragment{
 
 			@Override
 			public void onRefresh() {
-				// 模拟刷新数据，1s之后停止刷新
-				mHandler.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						mListView.stopRefresh();
-						Toast.makeText(mContext, "refresh",
-								Toast.LENGTH_SHORT).show();
-						mHandler.sendEmptyMessage(MSG_REFRESH);
-					}
-				}, 1000);
+				bankList.clear();
+				page = 1;
+				setData();
 			}
 
 			@Override
 			public void onLoadMore() {
-				mHandler.postDelayed(new Runnable() {
-					// 模拟加载数据，1s之后停止加载
-					@Override
-					public void run() {
-						mListView.stopLoadMore();
-						Toast.makeText(mContext, "loadMore",
-								Toast.LENGTH_SHORT).show();
-						mHandler.sendEmptyMessage(MSG_LOADMORE);
-					}
-				}, 1000);
+				page ++;
+				setData();
 			}
 		});
 	}
@@ -176,32 +155,6 @@ public class GrabSingleFragment extends BaseFragment{
 	 * 请求数据
 	 */
 	public void initData() {
-//        String merchantId = getIntent().getStringExtra("merchantId");
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(Constants.getCurrUrl()).append(Constants.URL_BANK_LIST)
-//                .append("?");
-//        sb.append("merchantId=").append(merchantId);
-//
-//        showProgressDialog();
-//        postWithoutLoading(sb.toString(), true, new HttpCallback() {
-//            @Override
-//            public <T> void onModel(T t) {
-//                closeProgressDialog();
-//
-//                BankListModel blModel = (BankListModel) t;
-//                if (blModel != null) {
-//                    bankList.clear();
-//                    bankList.addAll(blModel.bankList);
-//                    adapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(BaseModel base) {
-//
-//            }
-//        }, BankListModel.class);
-
 		setData();
 	}
 
@@ -241,20 +194,23 @@ public class GrabSingleFragment extends BaseFragment{
 				holder.price = (TextView) convertView .findViewById(R.id.tv_price);
 				holder.state = (TextView) convertView .findViewById(R.id.tv_state);
 				holder.content = (TextView) convertView .findViewById(R.id.tv_content);
-				holder.time = (Button) convertView .findViewById(R.id.btn_time);
-				holder.countdown = (Button) convertView .findViewById(R.id.btn_countdown);
+				holder.time = (TextView) convertView .findViewById(R.id.tv_time);
+				holder.countdown = (TextView) convertView .findViewById(R.id.tv_countdown);
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
-			holder.name.setText(bankList.get(position).name);
-			holder.price.setText(bankList.get(position).price);
-			holder.state.setText(bankList.get(position).state);
-			holder.content.setText(bankList.get(position).content);
-			holder.time.setText(bankList.get(position).time);
-			holder.countdown.setText(bankList.get(position).countdown);
+			holder.name.setText(bankList.get(position).getTitle());
+			SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
+			holder.price.setText(ssb.toString());
+			holder.state.setText(bankList.get(position).getStatus());
+			holder.content.setText(bankList.get(position).getDetail());
+			String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
+			holder.time.setText(sourceStrArray[0]);
+			SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
+			holder.countdown.setText(ssbs.toString());
 			return convertView;
 		}
 
@@ -270,52 +226,45 @@ public class GrabSingleFragment extends BaseFragment{
 	}
 
 	/**
-	 * 设置数据--测试
+	 * 设置数据
 	 */
 	private void setData() {
-		GrabSingleBean bModel0 = new GrabSingleBean();
-		bModel0.name = "北京市聚宝网深圳分公司";
-		bModel0.price = "￥120000";
-		bModel0.state = "已托管";
-		bModel0.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-		bModel0.time = "2015-10-22";
-		bModel0.countdown = "还有3天到期";
-		bankList.add(bModel0);
+		// 拼接url
+		StringBuffer sb = new StringBuffer();
+		sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETLIST).append("?");
+		String url = sb.toString();
+		RequestParams rp=new RequestParams();
+		rp.add("userid", TopADApplication.getSelf().getUserId());
+		rp.add("type1", "0"); // 当是我的数据默认为0
+		rp.add("type2", "0");// 当是我的数据默认为0
+		rp.add("isselfpost", "0"); // 是否是自己发布的
+		rp.add("isqd", "0"); // 我要抢单该值为1
+		rp.add("page", page + "");
+		postWithLoading(url, rp, false, new HttpCallback() {
+			@Override
+			public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+				GrabSingleListBean bean = (GrabSingleListBean) t;
+				if (bean != null && bean.data.size()!= 0) {
+					for(int i = 0; i < bean.data.size(); i++){
+						bankList.add(bean.data.get(i));
+					}
+				}
+				mListView.stopRefresh();
 
-		GrabSingleBean bModel1 = new GrabSingleBean();
-		bModel1.name = "北京市聚宝网深圳分公司";
-		bModel1.price = "￥120000";
-		bModel1.state = "已托管";
-		bModel1.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-		bModel1.time = "2015-10-22";
-		bModel1.countdown = "还有3天到期";
-		bankList.add(bModel1);
+				if(bankList == null || bankList.size() == 0){
+					mListView.setPullLoadEnable(false);
+				}else{
+					mListView.setPullLoadEnable(true);
+				}
+			}
 
-		GrabSingleBean bModel2 = new GrabSingleBean();
-		bModel2.name = "北京市聚宝网深圳分公司";
-		bModel2.price = "￥120000";
-		bModel2.state = "已托管";
-		bModel2.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-		bModel2.time = "2015-10-22";
-		bModel2.countdown = "还有3天到期";
-		bankList.add(bModel2);
-
-		GrabSingleBean bModel3 = new GrabSingleBean();
-		bModel3.name = "北京市聚宝网深圳分公司";
-		bModel3.price = "￥120000";
-		bModel3.state = "已托管";
-		bModel3.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-		bModel3.time = "2015-10-22";
-		bModel3.countdown = "还有3天到期";
-		bankList.add(bModel3);
-
-		GrabSingleBean bModel4 = new GrabSingleBean();
-		bModel4.name = "北京市聚宝网深圳分公司";
-		bModel4.price = "￥120000";
-		bModel4.state = "已托管";
-		bModel4.content = "高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～";
-		bModel4.time = "2015-10-22";
-		bModel4.countdown = "还有3天到期";
-		bankList.add(bModel4);
+			@Override
+			public void onFailure(BaseBean base) {
+				int status = base.getStatus();// 状态码
+				String msg = base.getMsg();// 错误信息
+				ToastUtil.show(mContext, "status = " + status + "\n"
+						+ "msg = " + msg);
+			}
+		}, GrabSingleListBean.class);
 	}
 }

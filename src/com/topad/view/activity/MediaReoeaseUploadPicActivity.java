@@ -46,7 +46,6 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     private TitleView mTitleView;
     private ImageView pic_1, pic_2;
     private Button btn_save;
-    private String title;
     private String pathString1, pathString2;
     private String img_name1, img_name2;
     private MyInfoBean.DataEntity myInfoBean;
@@ -65,7 +64,6 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     @Override
     public void initViews() {
         Intent intent = getIntent();
-        title = intent.getStringExtra("title");
         mTitleView = (TitleView) findViewById(R.id.title);
         pic_1 = (ImageView) findViewById(R.id.pic_1);
         pic_2 = (ImageView) findViewById(R.id.pic_2);
@@ -127,7 +125,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle(title);
+        mTitleView.setTitle("公司认证");
         mTitleView.setLeftVisiable(true);
         mTitleView.setRightVisiable(false);
         mTitleView.setLeftClickListener(new TitleRightOnClickListener());
@@ -262,6 +260,9 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
+                    Intent intent = new Intent(MediaReoeaseUploadPicActivity.this, MediaReleaseActivity.class );
+                    intent.putExtra( "mediacert", img_name1);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
