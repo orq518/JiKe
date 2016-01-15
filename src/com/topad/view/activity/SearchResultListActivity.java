@@ -102,9 +102,31 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         return view;
     }
 
+    String type1;
+
     @Override
     public void initViews() {
         searchType = getIntent().getIntExtra("searchtype", 0);
+        switch (searchType) {
+            case 0://电视
+                type1 = "电视";
+                break;
+            case 1://广播
+                type1 = "广播";
+                break;
+            case 2://报纸
+                type1 = "报纸";
+                break;
+            case 3://户外
+                type1 = "户外";
+                break;
+            case 4://杂志
+                type1 = "杂志";
+                break;
+            case 5://网络
+                type1 = "网络";
+                break;
+        }
         itemBeans = getIntent().getParcelableArrayListExtra("searchKeys");
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
@@ -264,7 +286,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("token", TopADApplication.getSelf().getToken());
         rp.add("page", "" + page);
-        rp.add("type1", (searchType + 1) + "");
+        rp.add("type1", type1);
 
         for (int i = 0; i < itemBeans.size(); i++) {
             SearchItemBean itembean = itemBeans.get(i);
