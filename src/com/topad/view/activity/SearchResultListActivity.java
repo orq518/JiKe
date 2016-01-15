@@ -2,8 +2,8 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Message;
-import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +15,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
-import com.topad.bean.AdProductBean;
-import com.topad.bean.AdServiceBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.SearchItemBean;
+import com.topad.bean.SearchResultBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.LogUtil;
+import com.topad.util.SharedPreferencesUtils;
+import com.topad.util.UploadUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
-import com.topad.view.customviews.mylist.BaseSwipeAdapter;
 import com.topad.view.customviews.mylist.MyListView;
-import com.topad.view.customviews.mylist.SimpleSwipeListener;
-import com.topad.view.customviews.mylist.SwipeLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Handler;
 
 /**
@@ -68,6 +75,11 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
      * 选择好的搜索条件
      */
     ArrayList<SearchItemBean> itemBeans = new ArrayList<SearchItemBean>();
+    /**
+     * 搜索结果
+     */
+    ArrayList<SearchResultBean.DataEntity> searchResultList = new ArrayList<>();
+    String voicePath;
     /**
      * view
      **/
@@ -127,6 +139,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                 type1 = "网络";
                 break;
         }
+        voicePath = getIntent().getStringExtra("voicePath");
         itemBeans = getIntent().getParcelableArrayListExtra("searchKeys");
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
@@ -229,12 +242,12 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
 
         @Override
         public int getCount() {
-            return 5;
+            return searchResultList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return itemBeans.get(position);
+            return searchResultList.get(position);
         }
 
         @Override
@@ -243,7 +256,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.search_result_list_item, null);
@@ -259,6 +272,52 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+
+            /**
+             * id : 10
+             * addtime : 2016-01-15 11:13:14
+             * medianame : cctv1
+             * location : 嘉和丽园公寓(东门)
+             * subname : qqqq
+             * type1 : 电视
+             * type3 :
+             * userid : 8
+             * type2 : 中央电视台
+             * longitude : 39.958031
+             * latitude : 116.465878
+             * mediacert :
+             */
+            SearchResultBean.DataEntity bean = searchResultList.get(position);
+            String addtime = bean.getAddtime();
+            String medianame = bean.getMedianame();
+            String location = bean.getLocation();
+            String type1 = bean.getType1();
+            String type2 = bean.getType2();
+            String type3 = bean.getType3();
+            String longitude = bean.getLongitude();
+            String latitude = bean.getLatitude();
+            String userid = bean.getUserid();
+            String mediacert = bean.getMediacert();
+            //左侧头像
+            String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + mediacert;
+            ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
+            viewHolder.name.setText(medianame);
+            viewHolder.lanmu.setText(type2);
+            viewHolder.type.setText(type1);
+            viewHolder.time.setText(addtime);
+            viewHolder.location.setText(location);
+            viewHolder.contactme.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    if(Utils.isEmpty(voicePath)){
+//                        contactme(userid,);
+//                    }else{
+//                        uploadMedia(voicePath);
+//                    }
+
+                }
+            });
+
             return convertView;
         }
 
@@ -269,6 +328,90 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             Button contactme;
         }
 
+    }
+
+    public void uploadMedia(final String pathString) {
+
+        File file = new File(pathString);
+        if (file != null) {
+            // 拼接url
+            StringBuffer sb = new StringBuffer();
+            sb.append(Constants.getCurrUrl()).append(Constants.UPLOAD_PHOTO).append("?");
+            String url = sb.toString();
+            String fileKey = "userfile";
+            UploadUtil uploadUtil = UploadUtil.getInstance(mContext);
+            uploadUtil.setOnUploadProcessListener(new UploadUtil.OnUploadProcessListener() {
+                @Override
+                public void onUploadDone(int responseCode, String message) {
+                    LogUtil.d("#responseCode:" + responseCode);
+                    LogUtil.d("#message:" + message);
+                    if (responseCode == 1 && !Utils.isEmpty(message)) {//上传图片之后服务器返回数据  有可能失败
+                        try {
+                            JSONObject respObj = new JSONObject(message);
+                            String status = respObj.getString("status");// 状态码
+                            String msg = respObj.getString("msg");// 错误信息
+                            String img = respObj.getString("img");// 图片名
+//                            contactme(userid,);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+//
+                    } else {//上传失败  服务器报错
+                        Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onUploadProcess(int uploadSize) {
+                }
+
+                @Override
+                public void initUpload(int fileSize) {
+
+                }
+            }); //设置监听器监听上传状态
+
+            Map<String, String> params = new HashMap<String, String>();
+            uploadUtil.uploadFile(pathString, fileKey, url, params);
+        }
+
+
+    }
+
+    /**
+     * @param userid  媒体发布用户ID
+     * @param mediaid 媒体id
+     * @param recfile 查询时的录音文件
+     */
+    public void contactme(String userid, String mediaid, String recfile) {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_CONTACTME).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("token", TopADApplication.getSelf().getToken());
+        rp.add("userid2", userid);
+        rp.add("mediaid", mediaid);
+        rp.add("recfile", recfile);
+        String phoneNumber = (String) SharedPreferencesUtils.get(mContext, SharedPreferencesUtils.USER_PHONR, "");
+        rp.add("mobile", phoneNumber);
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                BaseBean base = (BaseBean) t;
+                if (base != null) {
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, BaseBean.class);
     }
 
     /**
@@ -346,16 +489,20 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                BaseBean base = (BaseBean) t;
+                SearchResultBean base = (SearchResultBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
                     if (refreshType == 0) {
                         curPage = 1;
                         mListView.stopRefresh();
+                        searchResultList.clear();
+                        searchResultList.addAll(base.getData());
                     } else {
+                        searchResultList.addAll(base.getData());
                         mListView.stopLoadMore();
                         curPage++;
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -365,7 +512,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                 String msg = base.getMsg();// 错误信息
                 ToastUtil.show(mContext, msg);
             }
-        }, BaseBean.class);
+        }, SearchResultBean.class);
 
     }
 }

@@ -27,22 +27,36 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/11/2 16:35
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = LoginActivity.class.getSimpleName();
-    /** 上下文 **/
+    /**
+     * 上下文
+     **/
     private Context mContext;
-    /** 顶部布局 **/
+    /**
+     * 顶部布局
+     **/
     private TitleView mTitleView;
-    /** 用户名 **/
+    /**
+     * 用户名
+     **/
     private EditText mETUserName;
-    /** 密码 **/
+    /**
+     * 密码
+     **/
     private EditText mETPassword;
-    /** 登录 **/
+    /**
+     * 登录
+     **/
     private Button mBTLogin;
 
-    /** 用户名-手机号 **/
+    /**
+     * 用户名-手机号
+     **/
     private String mUserName;
-    /** 密码 **/
+    /**
+     * 密码
+     **/
     private String mPassword;
 
     @Override
@@ -184,9 +198,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 StringBuffer sb = new StringBuffer();
                 sb.append(Constants.getCurrUrl()).append(Constants.URL_LOGIN).append("?");
                 String url = sb.toString();
-                RequestParams rp=new RequestParams();
+                RequestParams rp = new RequestParams();
                 rp.add("mobile", mUserName);
-                rp.add("pwd",  Md5.md5s(mPassword));
+                rp.add("pwd", Md5.md5s(mPassword));
 
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override
@@ -204,6 +218,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             if (!Utils.isEmpty(login.getUserid())) {
                                 SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, login.getUserid());
                             }
+                            // 本地存储mobienumber
+                            SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PHONR, mUserName);
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -228,7 +244,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
-
 
 
     /**

@@ -62,6 +62,9 @@ public class Constants {
     public static final String URL_DEL_CASE = "/adservice/delcase";
     // 发布媒体
     public static final String URL_MEDIA_ADD = "/media/add";
+    // 请联系我
+    public static final String URL_CONTACTME = "/media/contactme";
+
 
     /**
      * 测试环境

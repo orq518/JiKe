@@ -139,7 +139,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                         TextView media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
                         curItem.type = media_type1.getText().toString();
                         curItem.name = tv_type.getText().toString();
-                        curItem.lanmu_name=tv_program_name.getText().toString();
+                        curItem.lanmu_name = tv_program_name.getText().toString();
 //                        curItem.type = tv_program_name.getText().toString();
 //                        curItem.type = tv_type.getText().toString();
                         if (Utils.isEmpty(curItem.type)) {
@@ -163,7 +163,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                             tv_program_name.setText("");
                             curItem.name = "";
                             curItem.type = "";
-                            curItem.lanmu_name="";
+                            curItem.lanmu_name = "";
                             media_type1.setText("--");
                         }
 
@@ -172,7 +172,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     case 2://报纸
                     case 4://杂志
                     case 5://网络
-                         media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                        media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
                         curItem.type = media_type1.getText().toString();
                         EditText et_name = (EditText) outdoor_search_layout.findViewById(R.id.et_name);
                         curItem.name = et_name.getText().toString();
@@ -238,10 +238,10 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
             case 0://电视
             case 1://广播
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.tv_search_item, null);
-                if(searchType==1){
-                   TextView tv_tips= (TextView) outdoor_search_layout.findViewById(R.id.tips);
+                if (searchType == 1) {
+                    TextView tv_tips = (TextView) outdoor_search_layout.findViewById(R.id.tips);
                     tv_tips.setText("广播类别");
-                    EditText tv_name= (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
+                    EditText tv_name = (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
                     tv_name.setHint("请输入广播名称");
 //                    EditText tv_program_name= (EditText) outdoor_search_layout.findViewById(R.id.tv_program_name);
 //                    tv_program_name.setHint("请输入广播名称");
@@ -263,9 +263,11 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         layout_voice = (LinearLayout) findViewById(R.id.layout_voice);
         layout_keyboard = (LinearLayout) findViewById(R.id.layout_keyboard);
         record = (Button) findViewById(R.id.record_bt);
+        //录音
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                voicePathStirng=null;
                 RecordTools recordTools = new RecordTools(mContext, SearchActivity.this);
                 recordTools.showVoiceDialog();
             }
@@ -282,13 +284,15 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
      * 提交搜索
      */
     public void submitSearch() {
-        if(itemBeans.size()<=0){
-            ToastUtil.show(mContext,"搜索条件为空");
+        if (itemBeans.size() <= 0) {
+            ToastUtil.show(mContext, "搜索条件为空");
             return;
         }
-        Intent mIntent=new Intent(mContext,SearchResultListActivity.class);
-        mIntent.putExtra("searchtype",searchType);
-        mIntent.putParcelableArrayListExtra("searchKeys",itemBeans);
+        Intent mIntent = new Intent(mContext, SearchResultListActivity.class);
+
+        mIntent.putExtra("voicePath", voicePathStirng);
+        mIntent.putExtra("searchtype", searchType);
+        mIntent.putParcelableArrayListExtra("searchKeys", itemBeans);
         startActivity(mIntent);
         finish();
 
@@ -408,7 +412,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
             if (locationTV != null) {
                 String cityString = data.getStringExtra("city");
                 locationTV.setText(cityString);
-                curItem.locaion=cityString;
+                curItem.locaion = cityString;
             }
 
         }
@@ -447,15 +451,6 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
             case R.id.bt_identity_next_step:
                 submitSearch();
                 break;
-
-//            case R.id.newspaper_layout://报纸
-//                break;
-//            case R.id.outdoor_layout://户外
-//                break;
-//            case R.id.magazine_layout://杂志
-//                break;
-//            case R.id.net_layout://网络
-//                break;
             default:
                 break;
         }
@@ -474,8 +469,11 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         finish();
     }
 
+    String voicePathStirng;
+
     @Override
     public void RecondSuccess(final String voicePath) {
+        voicePathStirng = voicePath;
         final RelativeLayout voiceLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.media_layout, null);
         voiceLayout.setTag(voicePath);
         ImageView play = (ImageView) voiceLayout.findViewById(R.id.play);
@@ -490,6 +488,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
         voice_layout.addView(voiceLayout);
