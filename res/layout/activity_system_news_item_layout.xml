@@ -13,7 +13,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginTop="15dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        >
 
         <!-- 左 -->
         <ImageView
@@ -24,7 +25,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-
             android:background="@drawable/app_icon"/>
 
         <!-- 右 -->
@@ -34,7 +34,9 @@
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp">
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
 
             <TextView
                 android:id="@+id/tv_content"

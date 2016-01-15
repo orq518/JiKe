@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_bg">
+
+    <!-- 顶部 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <!-- 左 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                android:layout_marginLeft="15dp">
+
+                <ImageView
+                    android:id="@+id/im_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_alignParentRight="true"/>
+
+
+            </RelativeLayout>
+
+            <!-- 右 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1">
+
+                <!-- 名称 -->
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical|left"
+                    android:text=""
+                    android:textSize="16sp" />
+
+                <!--  类别,时间 -->
+                <RelativeLayout
+                    android:id="@+id/layout_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginTop="10dp">
+
+                    <!-- 类别 -->
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|left"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="@color/text_gray_bg"/>
+
+                    <!-- 时间 -->
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|right"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/text_gray_bg"/>
+
+                </RelativeLayout>
+
+                <!-- 地址 -->
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="@color/text_gray_bg"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/layout_count"
+                    android:singleLine="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray_text" />
+    </LinearLayout>
+
+</RelativeLayout>

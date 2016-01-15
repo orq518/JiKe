@@ -92,8 +92,11 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private double lon;
     /** 类别 **/
     private String[] categoryArray ={"电视","广播","报纸","户外","杂志","网络"};
+    /** 媒体代理证明上传文件 **/
+    private String mediacert;
     public static int SELECT_MEDIA = 1;
     public static int SELECT_ADDRESS= 2;
+    public static int SELECT_UP_PIC= 3;
 
     @Override
     public int setLayoutById() {
@@ -351,8 +354,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             // 证明
             case R.id.lay_prove_media:
                 intent = new Intent(mContext, MediaReoeaseUploadPicActivity.class);
-                intent.putExtra("title", "公司认证");
-                startActivity(intent);
+                startActivityForResult(intent, SELECT_UP_PIC);
                 break;
 
             // 语音
@@ -403,6 +405,10 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             lat = MarsBuddle.getDouble("lat");
             mAddress.setVisibility(View.VISIBLE);
             mAddress.setText(MarsMessage);
+        }else if(requestCode == SELECT_UP_PIC && resultCode == RESULT_OK && data != null){
+            // 地址
+            Bundle MarsBuddle = data.getExtras();
+            mediacert = MarsBuddle.getString("mediacert");
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -460,7 +466,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         rp.add("location", mAddress.getText().toString());
         rp.add("longitude", lat + "");
         rp.add("latitude", lon + "");
-        rp.add("mediacert", "");
+        rp.add("mediacert", mediacert);
         rp.add("token", TopADApplication.getSelf().getToken());
 
         postWithLoading(url, rp, false, new HttpCallback() {

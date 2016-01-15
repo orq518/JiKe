@@ -2,27 +2,31 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
+import android.graphics.Bitmap;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
 import com.topad.bean.GrabSingleListBean;
+import com.topad.bean.MediaReleaseBean;
+import com.topad.bean.MediaReleaseListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
 
@@ -30,13 +34,13 @@ import java.util.ArrayList;
 import java.util.logging.Handler;
 
 /**
- * ${todo}<我的抢单－侧栏入口>
+ * ${todo}<我的媒体发布列表－侧栏入口>
  *
  * @author lht
  * @data: on 15/12/7 14:41
  */
-public class MyNeedsActivity extends BaseActivity implements View.OnClickListener{
-    private static final String LTAG = MyNeedsActivity.class.getSimpleName();
+public class MyMediaReleaseListActivity extends BaseActivity implements View.OnClickListener{
+    private static final String LTAG = MyMediaReleaseListActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
     /** 顶部布局 **/
@@ -48,7 +52,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
     /** 适配器 **/
     private ListAdapter adapter;
     /** 数据源 **/
-    private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
+    private ArrayList<MediaReleaseBean> bankList = new ArrayList<MediaReleaseBean>();
     /** 请求页数 **/
     private int page = 1;
 
@@ -81,7 +85,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle("我的需求");
+        mTitleView.setTitle("我发布的媒体");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         // 设置listview可以加载、刷新
@@ -96,10 +100,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
-                intent.putExtra("state", "2");
-                intent.putExtra("data_details", bankList.get(position-1));
-                startActivity(intent);
+
             }
         });
 
@@ -175,41 +176,72 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             if (convertView == null) {
-                convertView = mInflater.inflate((R.layout.fargment_grab_single_item), null);
+                convertView = mInflater.inflate((R.layout.activity_media_release_details), null);
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
                 holder.name = (TextView) convertView .findViewById(R.id.tv_name);
-                holder.price = (TextView) convertView .findViewById(R.id.tv_price);
-                holder.state = (TextView) convertView .findViewById(R.id.tv_state);
-                holder.content = (TextView) convertView .findViewById(R.id.tv_content);
+                holder.type = (TextView) convertView .findViewById(R.id.tv_type);
                 holder.time = (TextView) convertView .findViewById(R.id.tv_time);
-                holder.countdown = (TextView) convertView .findViewById(R.id.tv_countdown);
+                holder.address = (TextView) convertView .findViewById(R.id.tv_address);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.name.setText(bankList.get(position).getTitle());
-            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
-            holder.price.setText(ssb.toString());
-            holder.state.setText(bankList.get(position).getStatus());
-            holder.content.setText(bankList.get(position).getDetail());
-            String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
-            holder.time.setText(sourceStrArray[0]);
-            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-            holder.countdown.setText(ssbs.toString());
+            if(!Utils.isEmpty(bankList.get(position).getMediacert())){
+                ImageLoader.getInstance().displayImage(bankList.get(position).getMediacert(), holder.icon, TopADApplication.getSelf().getImageLoaderOption(),
+                        new ImageLoadingListener(){
+                            @Override
+                            public void onLoadingStarted(String s, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String s, View view) {
+
+                            }
+                        });
+            }
+
+            if(!Utils.isEmpty(bankList.get(position).getMedianame())){
+                holder.name.setText(bankList.get(position).getMedianame());
+            }
+
+            if(!Utils.isEmpty(bankList.get(position).getType1())){
+                holder.type.setText(bankList.get(position).getType1());
+            }
+
+            if(!Utils.isEmpty(bankList.get(position).getAddtime())){
+                holder.time.setText(bankList.get(position).getAddtime());
+            }
+
+            if(!Utils.isEmpty(bankList.get(position).getLocation())){
+                holder.address.setText(bankList.get(position).getLocation());
+            }
+
+//            String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
+//            holder.time.setText(sourceStrArray[0]);
+////            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
+////            holder.countdown.setText(ssbs.toString());
             return convertView;
         }
 
         class ViewHolder {
             ImageView icon;
             TextView name;
-            TextView state;
-            TextView price;
-            TextView content;
+            TextView type;
             TextView time;
-            TextView countdown;
+            TextView address;
         }
     }
 
@@ -219,19 +251,17 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
     private void setData() {
         // 拼接url
         StringBuffer sb = new StringBuffer();
-        sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETLIST).append("?");
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_GETLIST).append("?");
         String url = sb.toString();
         RequestParams rp=new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("type1", "0"); // 当是我的数据默认为0
-        rp.add("type2", "0");// 当是我的数据默认为0
-        rp.add("isselfpost", "0"); // 是否是自己发布的
-        rp.add("isqd", "0"); // 我要抢单该值为1
         rp.add("page", page + "");
+        rp.add("token",TopADApplication.getSelf().getToken());
+
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                GrabSingleListBean bean = (GrabSingleListBean) t;
+                MediaReleaseListBean bean = (MediaReleaseListBean) t;
                 if (bean != null && bean.data.size()!= 0) {
                     for(int i = 0; i < bean.data.size(); i++){
                         bankList.add(bean.data.get(i));
@@ -253,7 +283,6 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                 ToastUtil.show(mContext, "status = " + status + "\n"
                         + "msg = " + msg);
             }
-        }, GrabSingleListBean.class);
-
+        }, MediaReleaseListBean.class);
     }
 }
