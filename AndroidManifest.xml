@@ -455,6 +455,11 @@
             android:name=".view.activity.SelectediaSecondListOutDoorActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+        <!-- 发布媒体上传证明 -->
+        <activity
+            android:name=".view.activity.MediaReoeaseUploadPicActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
 
     </application>
 

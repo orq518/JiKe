@@ -90,7 +90,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private double lat;
     /** lon **/
     private double lon;
-
+    /** 类别 **/
+    private String[] categoryArray ={"电视","广播","报纸","户外","杂志","网络"};
     public static int SELECT_MEDIA = 1;
     public static int SELECT_ADDRESS= 2;
 
@@ -349,9 +350,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
             // 证明
             case R.id.lay_prove_media:
-                intent = new Intent(mContext, UploadPicActivity.class);
+                intent = new Intent(mContext, MediaReoeaseUploadPicActivity.class);
                 intent.putExtra("title", "公司认证");
-                intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
 
@@ -400,7 +400,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             Bundle MarsBuddle = data.getExtras();
             String MarsMessage = MarsBuddle.getString("location");
             lon = MarsBuddle.getDouble("lon");
-            lat = MarsBuddle.getDouble("lon");
+            lat = MarsBuddle.getDouble("lat");
             mAddress.setVisibility(View.VISIBLE);
             mAddress.setText(MarsMessage);
         }
@@ -445,7 +445,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         String url = sb.toString();
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("type1", category); // 1-6
+        rp.add("type1", categoryArray[Integer.parseInt(category) - 1]); // 1-6
         rp.add("type2", mMedia.getText().toString()); // 传中文名
         rp.add("type3", "");
         rp.add("medianame", mediaName);
