@@ -287,7 +287,8 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
              * latitude : 116.465878
              * mediacert :
              */
-            SearchResultBean.DataEntity bean = searchResultList.get(position);
+             SearchResultBean.DataEntity bean = searchResultList.get(position);
+            final String mediaid = bean.getId();
             String addtime = bean.getAddtime();
             String medianame = bean.getMedianame();
             String location = bean.getLocation();
@@ -295,13 +296,16 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             String type2 = bean.getType2();
             String type3 = bean.getType3();
             String longitude = bean.getLongitude();
-            String latitude = bean.getLatitude();
-            String userid = bean.getUserid();
+            final String latitude = bean.getLatitude();
+            final String userid = bean.getUserid();
             String mediacert = bean.getMediacert();
             //左侧头像
             String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + mediacert;
-            ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
-            viewHolder.name.setText(medianame);
+            if(!Utils.isEmpty(picUrl)){
+                ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
+
+            }
+             viewHolder.name.setText(medianame);
             viewHolder.lanmu.setText(type2);
             viewHolder.type.setText(type1);
             viewHolder.time.setText(addtime);
@@ -309,11 +313,11 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             viewHolder.contactme.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if(Utils.isEmpty(voicePath)){
-//                        contactme(userid,);
-//                    }else{
-//                        uploadMedia(voicePath);
-//                    }
+                    if(Utils.isEmpty(voicePath)){
+                        contactme(userid,mediaid,"");
+                    }else{
+                        uploadMedia(userid,mediaid,voicePath);
+                    }
 
                 }
             });
@@ -330,7 +334,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
 
     }
 
-    public void uploadMedia(final String pathString) {
+    public void uploadMedia(final String userid, final String mediaid, final String pathString) {
 
         File file = new File(pathString);
         if (file != null) {
@@ -351,7 +355,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                             String status = respObj.getString("status");// 状态码
                             String msg = respObj.getString("msg");// 错误信息
                             String img = respObj.getString("img");// 图片名
-//                            contactme(userid,);
+                            contactme(userid,mediaid,img);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -402,6 +406,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
+                    Toast.makeText(mContext, base.getMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
 

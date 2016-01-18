@@ -20,6 +20,7 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.ActivityCollector;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * orq--kb2
@@ -52,11 +53,13 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     /**

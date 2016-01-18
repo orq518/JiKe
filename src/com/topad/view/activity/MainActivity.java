@@ -3,6 +3,7 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.topad.R;
 import com.topad.TopADApplication;
@@ -26,11 +31,12 @@ import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.TitleView;
+import com.umeng.message.PushAgent;
 
 /**
  * 主界面
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener, AMapLocationListener {
     private static final String LTAG = MainActivity.class.getSimpleName();
     // 上下文
     private Context mContext;
@@ -95,6 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(this).onAppStart();
     }
 
     @Override
@@ -189,7 +196,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     if (!Utils.isEmpty(nameString) && !Utils.isEmpty(headerpicUrl)) {
                         tv_name.setText(nameString);
                         ImageLoader.getInstance().displayImage(headerpicUrl, imageView_header, TopADApplication.getSelf().getImageLoaderOption());
-                    }else{
+                    } else {
                         getMyInfo();
                     }
                 } else {
@@ -205,6 +212,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //
 //        // Set the drawer toggle as the DrawerListener
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        initLocation();
     }
 
     @Override
@@ -225,6 +233,61 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.quit).setOnTouchListener(this);
         imageView_header = (CircleImageView) findViewById(R.id.header_im);
         tv_name = (TextView) findViewById(R.id.tv_name);
+    }
+
+    private LocationManagerProxy mLocationManagerProxy;
+
+    public void initLocation() {
+        mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+        //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
+        //在定位结束后，在合适的生命周期调用destroy()方法
+        //其中如果间隔时间为-1，则定位只定一次
+        mLocationManagerProxy.requestLocationData(
+                LocationProviderProxy.AMapNetwork, 5*60 * 1000, 15, this);
+        mLocationManagerProxy.setGpsEnable(false);
+    }
+
+    private void stopLocation() {
+        if (mLocationManagerProxy != null) {
+            mLocationManagerProxy.removeUpdates(this);
+            mLocationManagerProxy.destory();
+        }
+        mLocationManagerProxy = null;
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+        if (aMapLocation != null && aMapLocation.getAMapException().getErrorCode() == 0) {
+            //获取位置信息
+            Double geoLat = aMapLocation.getLatitude();
+            Double geoLng = aMapLocation.getLongitude();
+            String curAddress = aMapLocation.getAddress();
+            LogUtil.d("定位成功：" + curAddress);
+            getUploadMyLocation(curAddress,""+geoLng,""+geoLat);
+        }
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
     @Override
@@ -464,6 +527,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onBack() {
+        stopLocation();
         finish();
     }
 
@@ -685,7 +749,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
-                    myInfoBean=base.getData();
+                    myInfoBean = base.getData();
                     TopADApplication.getSelf().setMyInfo(base.getData());
                     String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
                     String nameString = myInfoBean.getNickname();
@@ -705,5 +769,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }, MyInfoBean.class);
 
     }
+    /**
+     * 获取我的个人信息
+     */
+    public void getUploadMyLocation(String location,String longitude,String latitude) {
 
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_UPDATE_LOCATION).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("location", location);
+        rp.add("longitude", longitude);
+        rp.add("latitude", latitude);
+        postWithoutLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                BaseBean base = (BaseBean) t;
+                if (base != null) {
+                    LogUtil.d("成功"+base.getMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, BaseBean.class);
+
+    }
 }

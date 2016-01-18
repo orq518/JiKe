@@ -23,6 +23,9 @@ dependencies {
     compile files('libs/android-support-v4.jar')
     compile files('libs/pinyin4android1.0.jar')
     compile files('libs/imageloader.jar')
+    compile files('libs/umeng-analytics-v5.6.4.jar')
+    compile files('libs/com.umeng.message.lib_v2.6.0.jar')
+    compile files('libs/AMap_Location_v2.3.0_20160112.jar')
 }
 
 android {

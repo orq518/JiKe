@@ -70,6 +70,12 @@ public class Constants {
     // 获取我发布媒体列表
     public static final String URL_MEDIA_GETLIST = "/media/getlist";
 
+    //上传我的位置
+    public static final String URL_UPDATE_LOCATION = "/user/updatepos";
+    //获取附近符合要求的人
+    public static final String URL_GET_USERS_NEARBY = "/need/getusers";
+
+
     /**
      * 测试环境
      */
