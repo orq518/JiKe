@@ -22,6 +22,8 @@ public class SharedPreferencesUtils {
     public static String KEY_TOKEN = "token";    //登录后服务端返回的token
     /** 存储数据userid字段汇总 **/
     public static String USER_ID = "userid";    //登录后服务端返回的userid
+    /** 存储数据userid字段汇总 **/
+    public static String USER_PHONR = "userphone";
 
     private static SharedPreferences sp = null;
     private static String curAccount;  //当前账户

@@ -8,7 +8,7 @@ import android.os.Environment;
 
 public class AudioRecorder {
     private static int SAMPLE_RATE_IN_HZ = 8000;
-
+    private static String MEDIA_TYPE = ".mp3";
     final MediaRecorder recorder = new MediaRecorder();
     final String path;
 
@@ -21,7 +21,7 @@ public class AudioRecorder {
             path = "/" + path;
         }
         if (!path.contains(".")) {
-            path += ".amr";
+            path += MEDIA_TYPE;
         }
         return Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/my" + System.currentTimeMillis()+path;
