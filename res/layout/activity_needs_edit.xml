@@ -19,8 +19,10 @@
         android:layout_below="@id/title"
         android:background="@color/app_bg"
         android:fillViewport="true">
-        <RelativeLayout android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
 
             <LinearLayout android:layout_width="fill_parent"
@@ -226,19 +228,19 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_need_details_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/btn_board_orange"
                     android:focusable="false"
+                    android:onClick="onClick"
                     android:paddingBottom="8dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:onClick="onClick"
                     android:paddingTop="8dp"
                     android:text="提交"
                     android:textColor="@color/white"
-                    android:layout_marginBottom="10dp"
                     android:textSize="@dimen/textsize_18"/>
 
             </LinearLayout>
