@@ -29,34 +29,19 @@ import com.topad.view.customviews.TitleView;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = LoginActivity.class.getSimpleName();
-    /**
-     * 上下文
-     **/
+    // 上下文
     private Context mContext;
-    /**
-     * 顶部布局
-     **/
+    // 顶部布局
     private TitleView mTitleView;
-    /**
-     * 用户名
-     **/
+    // 用户名
     private EditText mETUserName;
-    /**
-     * 密码
-     **/
+    // 密码
     private EditText mETPassword;
-    /**
-     * 登录
-     **/
+    // 登录
     private Button mBTLogin;
-
-    /**
-     * 用户名-手机号
-     **/
+    // 用户名-手机号
     private String mUserName;
-    /**
-     * 密码
-     **/
+    // 密码
     private String mPassword;
 
     @Override

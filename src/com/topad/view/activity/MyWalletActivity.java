@@ -1,10 +1,22 @@
 package com.topad.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.LoginBean;
+import com.topad.bean.MyWalletBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
+import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
 /**
@@ -15,15 +27,15 @@ import com.topad.view.customviews.TitleView;
  */
 public class MyWalletActivity extends BaseActivity implements View.OnClickListener{
     private static final String LTAG = MyWalletActivity.class.getSimpleName();
-    /** 上下文 **/
+    // 上下文
     private Context mContext;
-    /** 顶部布局 **/
+    // 顶部布局
     private TitleView mTitleView;
-    /** 余额 **/
+    // 余额
     private TextView mTVMoney;
-    /** 提现 **/
+    // 提现
     private Button mBTCash;
-    /** 充值 **/
+    // 充值
     private Button mBTRecharge;
 
     @Override
@@ -60,6 +72,8 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
         // 设置顶部标题布局
         mTitleView.setTitle("我的钱包");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+
+        getData();
     }
 
     /**
@@ -89,5 +103,37 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    /**
+     * 获取数据
+     */
+    private void getData() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_WALLET_GETMONEY).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                MyWalletBean bean = (MyWalletBean) t;
+                if (bean != null && !Utils.isEmpty(bean.getMoney())) {
+                    mTVMoney.setText("￥" + bean.getMoney());
+                }
+
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, "status = " + status + "\n"
+                        + "msg = " + msg);
+            }
+        }, MyWalletBean.class);
+
     }
 }

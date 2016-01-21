@@ -20,8 +20,14 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
 import com.topad.bean.AdDetailsBean;
 import com.topad.bean.AdServiceCaseListBean;
+import com.topad.bean.BaseBean;
+import com.topad.bean.BuyItBean;
+import com.topad.bean.MyWalletBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
@@ -199,7 +205,39 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
                 break;
             // 购买此产品
             case R.id.btn_buy:
+                // 拼接url
+                StringBuffer sb = new StringBuffer();
+                sb.append(Constants.getCurrUrl()).append(Constants.URL_BUY_IT).append("?");
+                String url = sb.toString();
+                RequestParams rp = new RequestParams();
+                rp.add("userid", TopADApplication.getSelf().getUserId());
+                rp.add("serviceid", mAdCaseListBean.data.get(0).getServiceid());
+                rp.add("userid2", mAdDetailsBean.getUserid());
+                rp.add("type1", mAdDetailsBean.getType1());
+                rp.add("type2", mAdDetailsBean.getType2());
+                rp.add("title", mAdDetailsBean.getServicename());
+                rp.add("detail", mAdDetailsBean.getIntro());
+                rp.add("budget", mAdDetailsBean.getPrice());
+                rp.add("token", TopADApplication.getSelf().getToken());
 
+                postWithLoading(url, rp, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                        BuyItBean bean = (BuyItBean) t;
+                        if (bean != null) {
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, BuyItBean.class);
                 break;
             default:
                 break;

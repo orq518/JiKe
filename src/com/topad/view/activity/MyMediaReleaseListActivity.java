@@ -30,7 +30,10 @@ import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Handler;
 
 /**
@@ -41,19 +44,19 @@ import java.util.logging.Handler;
  */
 public class MyMediaReleaseListActivity extends BaseActivity implements View.OnClickListener{
     private static final String LTAG = MyMediaReleaseListActivity.class.getSimpleName();
-    /** 上下文 **/
+    // 上下文
     private Context mContext;
-    /** 顶部布局 **/
+    // 顶部布局
     private TitleView mTitleView;
-    /** listView **/
+    // listView
     private MyListView mListView;
-    /** 只是用来模拟异步获取数据 **/
+    // 只是用来模拟异步获取数据
     private Handler handler;
-    /** 适配器 **/
+    // 适配器
     private ListAdapter adapter;
-    /** 数据源 **/
+    // 数据源
     private ArrayList<MediaReleaseBean> bankList = new ArrayList<MediaReleaseBean>();
-    /** 请求页数 **/
+    // 请求页数
     private int page = 1;
 
     @Override
@@ -222,17 +225,26 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
             }
 
             if(!Utils.isEmpty(bankList.get(position).getAddtime())){
-                holder.time.setText(bankList.get(position).getAddtime());
+                // 当前时间
+                SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String datestr= dataformat.format(new Date());
+
+                try {
+                    holder.time.setText(Utils.daysBetween(bankList.get(position).getAddtime(), datestr) + "天前");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             if(!Utils.isEmpty(bankList.get(position).getLocation())){
                 holder.address.setText(bankList.get(position).getLocation());
             }
+            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + TopADApplication.getSelf().getMyInfo().getImghead();
+            if(!Utils.isEmpty(headerpicUrl)){
+                ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon,
+                        TopADApplication.getSelf().getImageLoaderOption());
+            }
 
-//            String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
-//            holder.time.setText(sourceStrArray[0]);
-////            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-////            holder.countdown.setText(ssbs.toString());
             return convertView;
         }
 
