@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
@@ -50,6 +51,7 @@ public class TopADApplication extends Application {
     FragmentManager mFragmentManager;
     MyInfoBean.DataEntity myInfoBean;
     DisplayImageOptions options;
+    LocationBean locationBean;
     private PushAgent mPushAgent;
 
     @Override
@@ -273,5 +275,25 @@ public class TopADApplication extends Application {
      */
     public MyInfoBean.DataEntity getMyInfo() {
         return myInfoBean;
+    }
+
+
+
+    /**
+     * 保存我的位置信息
+     *
+     * @return
+     */
+    public void setLocation(LocationBean location) {
+        locationBean = location;
+    }
+
+    /**
+     * 获取位置
+     *
+     * @return
+     */
+    public LocationBean getLocation() {
+        return locationBean;
     }
 }

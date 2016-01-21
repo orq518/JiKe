@@ -22,6 +22,7 @@ import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
+import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
@@ -266,6 +267,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             String curAddress = aMapLocation.getAddress();
             LogUtil.d("定位成功：" + curAddress);
             getUploadMyLocation(curAddress,""+geoLng,""+geoLat);
+            LocationBean locationBean=new LocationBean();
+            locationBean.location=curAddress;
+            locationBean.longitude=geoLng;
+            locationBean.latitude=geoLat;
+            TopADApplication.getSelf().setLocation(locationBean);
         }
 
     }

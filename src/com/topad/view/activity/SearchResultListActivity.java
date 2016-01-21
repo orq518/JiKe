@@ -301,7 +301,8 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             String mediacert = bean.getMediacert();
             //左侧头像
             String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + mediacert;
-            if(!Utils.isEmpty(picUrl)){
+            LogUtil.d("picUrl:"+picUrl);
+            if(!Utils.isEmpty(mediacert)){
                 ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
 
             }

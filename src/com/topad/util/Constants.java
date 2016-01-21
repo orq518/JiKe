@@ -41,7 +41,7 @@ public class Constants {
     // 媒体搜索
     public static final String URL_MEDIA_SEARCH = "/media/search";
     // 下载图片拼接
-    public static final String IMAGE_URL_HEADER = "/userimg/";
+    public static final String IMAGE_URL_HEADER = "/serviceimg/";
     // 下载案例图片拼接
     public static final String CASE_IMAGE_URL_HEADER = "/serviceimg/";
     // 添加产品

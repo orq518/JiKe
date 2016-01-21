@@ -81,8 +81,6 @@
         </meta-data>
 
 
-        <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService"/>
         <!-- 监听通知点击或者忽略处理的广播 -->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
@@ -602,7 +600,11 @@
             android:name=".view.activity.MyMediaReleaseListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
-
+        <!-- 附近的需求 -->
+        <activity
+            android:name=".view.activity.SearchNearByPeopleActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
     </application>
 
 </manifest>
