@@ -33,17 +33,17 @@ import java.util.logging.Handler;
  */
 public class SystemNewsActivity extends BaseActivity implements View.OnClickListener{
     private static final String LTAG = SystemNewsActivity.class.getSimpleName();
-    /** 上下文 **/
+    // 上下文
     private Context mContext;
-    /** 顶部布局 **/
+    // 顶部布局
     private TitleView mTitleView;
-    /** listView **/
+    // listView
     private MyListView mListView;
-    /** 只是用来模拟异步获取数据 **/
+    // 只是用来模拟异步获取数据
     private Handler handler;
-    /** 适配器 **/
+    // 适配器
     private ListAdapter adapter;
-    /** 数据源 **/
+    // 数据源
     private ArrayList<SystemNewsBean> bankList = new ArrayList<SystemNewsBean>();
 
     private final int MSG_REFRESH = 1000;

@@ -7,9 +7,7 @@ public class Constants {
     public static final String T_CHANNEL = "HD_COMMON";
 
     public static String softVersionName;
-    /*********
-     * 接口
-     *********/
+    /********** 接口 *********/
     // 登录
     public static final String URL_LOGIN = "/user/login";
     // 注册
@@ -18,10 +16,8 @@ public class Constants {
     public static final String URL_GETCODE = "/user/getcode";
     // 重置密码
     public static final String URL_RESETPWD = "/user/resetpwd";
-
     // 个人资料-上传图片（头像、身份证、毕业证、名片、公司认证营业执照、媒体代理证明）
     public static final String UPLOAD_PHOTO = "/user/uploadphoto";
-
     // 个人资料-上传头像
     public static final String UPLOAD_HEAD = "/user/updatehead";
     // 获取个人资料
@@ -64,11 +60,14 @@ public class Constants {
     public static final String URL_MEDIA_ADD = "/media/add";
     // 请联系我
     public static final String URL_CONTACTME = "/media/contactme";
-
     // 获取需求列表（抢单列表，我的需求，我的抢单）
     public static final String URL_NEED_GETLIST = "/need/getlist";
     // 获取我发布媒体列表
     public static final String URL_MEDIA_GETLIST = "/media/getlist";
+    // 获取钱包金额
+    public static final String URL_WALLET_GETMONEY = "/wallet/getmoney";
+    // 购买产品
+    public static final String URL_BUY_IT = "/adservice/buyit";
 
     //上传我的位置
     public static final String URL_UPDATE_LOCATION = "/user/updatepos";
