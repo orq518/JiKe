@@ -372,18 +372,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
 
 
             if(!Utils.isEmpty(bankList.get(position).getImghead())){
-//                ImageManager.getInstance(mContext).getBitmap(bankList.get(position).getImghead(),
-//                        new ImageManager.ImageCallBack() {
-//                            @Override
-//                            public void loadImage(ImageView imageView, Bitmap bitmap) {
-//                                if (bitmap != null && imageView != null) {
-//                                    imageView.setImageBitmap(bitmap);
-//                                    imageView
-//                                            .setScaleType(ImageView.ScaleType.FIT_XY);
-//                                }
-//                            }
-//                        }, icon);
-                ImageLoader.getInstance().displayImage(bankList.get(position).getImghead(), icon, TopADApplication.getSelf().getImageLoaderOption(),
+                String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + bankList.get(position).getImghead();
+                ImageLoader.getInstance().displayImage(picUrl, icon, TopADApplication.getSelf().getImageLoaderOption(),
                         new ImageLoadingListener(){
                             @Override
                             public void onLoadingStarted(String s, View view) {

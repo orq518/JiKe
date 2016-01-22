@@ -351,7 +351,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             }
 
             if(!Utils.isEmpty(bankList.get(position).getImghead())){
-                ImageLoader.getInstance().displayImage(bankList.get(position).getImghead(), icon, TopADApplication.getSelf().getImageLoaderOption(),
+                String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + bankList.get(position).getImghead();
+                ImageLoader.getInstance().displayImage(picUrl, icon, TopADApplication.getSelf().getImageLoaderOption(),
                         new ImageLoadingListener(){
                             @Override
                             public void onLoadingStarted(String s, View view) {
