@@ -204,20 +204,12 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 登录页 -->
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
-            </intent-filter>
         </activity>
 
         <!-- 首页 -->
@@ -228,10 +220,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
-            <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -240,10 +228,6 @@
         </activity>
         <activity android:name=".view.activity.WebViewActivity"
                   android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.SearchActivity"
                   android:configChanges="orientation|keyboardHidden"
@@ -267,65 +251,37 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.ShareNeedsActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.NeedsListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.ShareNeedsEditActivity_Normal"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <!-- 广告服务－广告创意、营销策略、影视广告、动漫创作 -->
         <activity
             android:name=".view.activity.ADSListActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.OtherSearchListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <activity android:name=".amap.PoiKeywordSearchActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
 
@@ -333,77 +289,45 @@
         <activity
             android:name=".view.activity.ADSDetailsActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <!-- 广告服务案例－广告创意、营销策略、影视广告、动漫创作 -->
         <activity
             android:name=".view.activity.ADSCaseActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 我要抢单 -->
         <activity
             android:name=".view.activity.MyGrabSingleListActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 我要抢单 -->
         <activity
             android:name=".view.activity.MyGrabSingleActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 我要抢单详情页 -->
         <activity
             android:name=".view.activity.GrabSingleDetailsActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 我有媒体页 -->
         <activity
             android:name=".view.activity.MyMediaActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 媒体发布页 -->
         <activity
             android:name=".view.activity.MediaReleaseActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.SelectPicPopupWindow"
             android:theme="@style/MyDialogStyleBottom">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <!-- 注册页 -->
         <activity
@@ -412,10 +336,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 重置密码 -->
@@ -425,10 +345,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
         <!-- 图片查看 -->
         <activity
@@ -445,49 +361,29 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 城市选择 -->
         <activity
             android:name=".view.activity.CitySelectActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
-            </intent-filter>
         </activity>
 
         <!-- 我的钱包 -->
         <activity
             android:name=".view.activity.MyWalletActivity"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
-            </intent-filter>
         </activity>
 
         <!-- 系统消息 -->
         <activity
             android:name=".view.activity.SystemNewsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
-            </intent-filter>
         </activity>
 
         <!-- 申诉页 -->
         <activity
             android:name=".view.activity.AppealActivity"
             android:theme="@style/FullBleedTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
-            </intent-filter>
         </activity>
 
 
@@ -526,17 +422,12 @@
         <activity
             android:name=".view.activity.SelectMediaListActivity"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
-            </intent-filter>
         </activity>
         <!-- 媒体列表 -->
         <activity
             android:name=".view.activity.ShareNeedsEditActivity_Peixun"
             >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
@@ -546,7 +437,6 @@
             android:name=".view.activity.ShareNeedsEditActivity_Zhaopin"
             >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
@@ -555,7 +445,6 @@
             android:name=".view.activity.QiyeZhaopin3Activity"
         >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
