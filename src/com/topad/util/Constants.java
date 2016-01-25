@@ -37,7 +37,7 @@ public class Constants {
     // 媒体搜索
     public static final String URL_MEDIA_SEARCH = "/media/search";
     // 下载图片拼接
-    public static final String IMAGE_URL_HEADER = "/userimg/";
+    public static final String IMAGE_URL_HEADER = "/serviceimg/";
     // 下载案例图片拼接
     public static final String CASE_IMAGE_URL_HEADER = "/serviceimg/";
     // 添加产品
@@ -68,6 +68,12 @@ public class Constants {
     public static final String URL_WALLET_GETMONEY = "/wallet/getmoney";
     // 购买产品
     public static final String URL_BUY_IT = "/adservice/buyit";
+
+    //上传我的位置
+    public static final String URL_UPDATE_LOCATION = "/user/updatepos";
+    //获取附近符合要求的人
+    public static final String URL_GET_USERS_NEARBY = "/need/getusers";
+
 
     /**
      * 测试环境

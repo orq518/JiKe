@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:background="@drawable/btn_bg_white"
-                android:hint="按住说话"
+                android:hint="点击说话"
                 android:padding="@dimen/dimen_10"
                 android:textSize="@dimen/textsize_16"
                 />
