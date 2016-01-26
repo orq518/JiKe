@@ -5,14 +5,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.topad.R;
+import com.topad.bean.GrabSingleListBean;
+import com.topad.bean.SelectProjectBean;
 import com.topad.view.fragment.GrabSingleFragment;
 import com.topad.view.fragment.SelectProjectFragmnet;
 
@@ -31,7 +36,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
     /** 上下文 **/
     private Context mContext;
     /** 页卡内容 **/
-    private ViewPager viewPager;
+    public ViewPager viewPager;
     /** 动画图片 **/
     private ImageView imageView;
     /** 返回 **/
@@ -41,6 +46,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
     /** 甄选项目 **/
     private TextView tvSelectProject;
 
+
     /** Tab页面列表 **/
     private List<Fragment> fragments;
     /** 动画图片偏移量 **/
@@ -49,9 +55,33 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
     private int currIndex = 0;
     /** 动画图片宽度 **/
     private int bmpW;
-    private int selectedColor, unSelectedColor;
+    private static int selectedColor;
+    private static int unSelectedColor;
     /** 页卡总数 **/
     private static final int pageSize = 2;
+
+    // 我要抢单fragment索引值
+    public static final int HOME_TAB_INDEX_0 = 0;
+    // 甄选项fragment索引值
+    public static final int HOME_TAB_INDEX_1 = 1;
+    private static int mIndex = HOME_TAB_INDEX_0;
+    /** 我的抢单 **/
+    public GrabSingleFragment mGrabSingleFragment;
+    /** 甄选项 **/
+    public SelectProjectFragmnet mSelectProjectFragmnet;
+    public FragmentManager mFragmentManager;
+
+    public SelectProjectBean mSelectProjectBean;
+
+
+    public void setSelectProjectBean(SelectProjectBean mSelectProjectBean) {
+        this.mSelectProjectBean = mSelectProjectBean;
+
+    }
+
+    public SelectProjectBean getSelectProjectBean() {
+        return mSelectProjectBean;
+    }
 
     @Override
     public int setLayoutById() {
@@ -113,10 +143,16 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
      * 初始化Viewpager页
      */
     private void InitViewPager() {
+        mFragmentManager = getSupportFragmentManager();
+        mGrabSingleFragment = new GrabSingleFragment();
+        mSelectProjectFragmnet = new SelectProjectFragmnet();
         viewPager = (ViewPager) findViewById(R.id.vPager);
         fragments = new ArrayList<Fragment>();
-        fragments.add(new GrabSingleFragment());
-        fragments.add(new SelectProjectFragmnet());
+        fragments.add(mGrabSingleFragment);
+        fragments.add(mSelectProjectFragmnet);
+
+//        FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(this.getSupportFragmentManager(), viewPager,fragments);
+
         viewPager.setAdapter(new myPagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -125,7 +161,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
     /**
      * 头标点击监听
      */
-    private class MyOnClickListener implements View.OnClickListener {
+    public class MyOnClickListener implements View.OnClickListener {
         private int index = 0;
 
         public MyOnClickListener(int i) {
@@ -152,7 +188,7 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
     /**
      * 为选项卡绑定监听器
      */
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
 //		int two = one * 2;// 页卡1 -> 页卡3 偏移量
@@ -235,7 +271,6 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
-
 }
 
 

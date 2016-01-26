@@ -4,33 +4,33 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ScrollView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.AddProductBean;
+import com.topad.bean.BaseBean;
 import com.topad.bean.ChildBean;
+import com.topad.bean.GrabSingleListBean;
 import com.topad.bean.GroupBean;
+import com.topad.bean.SelectProjectBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
-import com.topad.view.activity.GrabSingleDetailsActivity;
+import com.topad.util.Utils;
+import com.topad.view.activity.MyGrabSingleActivity;
 import com.topad.view.adapter.SelectProjectEListAdapter;
 import com.topad.view.customviews.CustomExpandableListView;
-import com.topad.view.customviews.PTRListView;
-import com.topad.view.customviews.PullToRefreshView;
-import com.topad.view.customviews.TitleView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 /**
@@ -79,6 +79,15 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	private String type;
 	/** 钱类别 **/
 	private String moneyType;
+
+	/** 是否托管 0：全部（默认）1：已托管 2：未托管 **/
+	private String ispay = "0";
+	/** 托管类型 0：全部 1：100及以下 2：101-300 3：301-1000 4：1001-1w 5：1w+ **/
+	private String paytype = "0";
+	/** type1 **/
+	private String type1 = "";
+	/** type2 **/
+	private StringBuffer type2 = new StringBuffer("");
 
 	@Override
 	public String getFragmentName() {
@@ -142,7 +151,20 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 		adapter = new SelectProjectEListAdapter(mContext, groups, listView);
 		listView.setAdapter(adapter);
-		listView.setOnChildClickListener(adapter);
+		listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+				if(!"".equals(type2)){
+					type2.append("|" + groups.get(groupPosition).getChildItem(childPosition).getFullname());
+				}else{
+					type2.append(groups.get(groupPosition).getChildItem(childPosition).getFullname());
+				}
+
+				LogUtil.d("groups：" + groups.get(groupPosition).getTitle() + groups.get(groupPosition).getChildItem(childPosition).getFullname());
+				LogUtil.d("groupPosition：" + groupPosition + "    childPosition:" + childPosition);
+				return false;
+			}
+		});
 		listView.setGroupIndicator(null);
 
 		mScroll.smoothScrollTo(0,0);
@@ -247,6 +269,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 		switch (v.getId()) {
 			// 全部
             case R.id.btn_all:
+				ispay = "0";
 				mBTAll.setTextColor(getResources().getColor(R.color.hot));
 				mBTTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -254,6 +277,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 已托管
 			case R.id.btn_trusteeship:
+				ispay = "1";
 				mBTAll.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBTTrusteeship.setTextColor(getResources().getColor(R.color.hot));
 				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -261,6 +285,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 未托管
 			case R.id.btn_not_trusteeship:
+				ispay = "2";
 				mBTAll.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBTTrusteeship.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBTNotTrusteeship.setTextColor(getResources().getColor(R.color.hot));
@@ -268,6 +293,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 全部money
 			case R.id.btn_all_money:
+				paytype = "0";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.hot));
 				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -278,6 +304,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 全100元以下部
 			case R.id.btn_100:
+				paytype = "1";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT100.setTextColor(getResources().getColor(R.color.hot));
 				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -288,6 +315,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 101-300元
 			case R.id.btn_101_300:
+				paytype = "2";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT101300.setTextColor(getResources().getColor(R.color.hot));
@@ -298,6 +326,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 300-1000元
 			case R.id.btn_301_1000:
+				paytype = "3";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -308,6 +337,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 1000-1万元
 			case R.id.btn_1000_1w:
+				paytype = "4";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -318,6 +348,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 1万元及以上
 			case R.id.btn_1w:
+				paytype = "5";
 				mBTAllMoney.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT100.setTextColor(getResources().getColor(R.color.text_gray_bg));
 				mBT101300.setTextColor(getResources().getColor(R.color.text_gray_bg));
@@ -328,9 +359,33 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 			// 确定
 			case R.id.btn_submit:
+				SelectProjectBean bean = new SelectProjectBean();
+				bean.setIspay(ispay);
+				bean.setPaytype(paytype);
+				bean.setType1("");
+				bean.setType2(type2.toString());
+				bean.setPage("1");
+
+				MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+				activity.setSelectProjectBean(bean);
+				activity.viewPager.setCurrentItem(0);
 
 				break;
 
+		}
+	}
+
+	private Fragment recreateFragment(Fragment f) {
+		try {
+			MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+			Fragment.SavedState savedState = activity.mFragmentManager.saveFragmentInstanceState(f);
+			Fragment newInstance = f.getClass().newInstance();
+			newInstance.setInitialSavedState(savedState);
+			return newInstance;
+		}
+		catch (Exception e) // InstantiationException, IllegalAccessException
+		{
+			throw new RuntimeException("Cannot reinstantiate fragment " + f.getClass().getName(), e);
 		}
 	}
 }
