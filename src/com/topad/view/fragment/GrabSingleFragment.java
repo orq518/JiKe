@@ -24,6 +24,7 @@ import com.topad.bean.AdServiceBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
 import com.topad.bean.GrabSingleListBean;
+import com.topad.bean.SelectProjectBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
@@ -31,6 +32,7 @@ import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.activity.ADSDetailsActivity;
 import com.topad.view.activity.GrabSingleDetailsActivity;
+import com.topad.view.activity.MyGrabSingleActivity;
 import com.topad.view.customviews.PTRListView;
 import com.topad.view.customviews.PullToRefreshView;
 import com.topad.view.customviews.TitleView;
@@ -61,6 +63,8 @@ public class GrabSingleFragment extends BaseFragment{
 	private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
 	/** 请求页数 **/
 	private int page = 1;
+	/** 甄选项请求页数 **/
+	private int page2 = 0;
 
 	@Override
 	public String getFragmentName() {
@@ -130,12 +134,18 @@ public class GrabSingleFragment extends BaseFragment{
 			public void onRefresh() {
 				bankList.clear();
 				page = 1;
+				if(page2 != 0){
+					page2 = 1;
+				}
 				setData();
 			}
 
 			@Override
 			public void onLoadMore() {
 				page ++;
+				if(page2 != 0){
+					page2 ++;
+				}
 				setData();
 			}
 		});
@@ -229,17 +239,76 @@ public class GrabSingleFragment extends BaseFragment{
 	 * 设置数据
 	 */
 	private void setData() {
+		MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+		// 有筛选项
+		if(activity != null && activity.getSelectProjectBean() != null){
+			SelectProjectBean bean = activity.getSelectProjectBean();
+			if(page2 == 0){
+				page2 = Integer.parseInt(bean.getPage());
+			}
+			setSelectProjectData(bean.getIspay(), bean.getPaytype(), bean.getType1(), bean.getType2());
+		}
+		// 没有筛选项时
+		else{
+			// 拼接url
+			StringBuffer sb = new StringBuffer();
+			sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETLIST).append("?");
+			String url = sb.toString();
+			RequestParams rp=new RequestParams();
+			rp.add("userid", TopADApplication.getSelf().getUserId());
+			rp.add("type1", "0"); // 当是我的数据默认为0
+			rp.add("type2", "0");// 当是我的数据默认为0
+			rp.add("isselfpost", "0"); // 是否是自己发布的
+			rp.add("isqd", "0"); // 我要抢单该值为1
+			rp.add("page", page + "");
+			postWithLoading(url, rp, false, new HttpCallback() {
+				@Override
+				public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+					GrabSingleListBean bean = (GrabSingleListBean) t;
+					if (bean != null && bean.data.size()!= 0) {
+						for(int i = 0; i < bean.data.size(); i++){
+							bankList.add(bean.data.get(i));
+						}
+					}
+					mListView.stopRefresh();
+
+					if(bankList == null || bankList.size() == 0){
+						mListView.setPullLoadEnable(false);
+					}else{
+						mListView.setPullLoadEnable(true);
+					}
+				}
+
+				@Override
+				public void onFailure(BaseBean base) {
+					int status = base.getStatus();// 状态码
+					String msg = base.getMsg();// 错误信息
+					ToastUtil.show(mContext, "status = " + status + "\n"
+							+ "msg = " + msg);
+				}
+			}, GrabSingleListBean.class);
+		}
+
+
+	}
+
+
+	/**
+	 * 有筛选项使用
+	 */
+	private void setSelectProjectData(String ispay, String paytype, String type1, String type2) {
 		// 拼接url
 		StringBuffer sb = new StringBuffer();
-		sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETLIST).append("?");
+		sb.append(Constants.getCurrUrl()).append(Constants.URL_NEDD_SEARCH).append("?");
 		String url = sb.toString();
-		RequestParams rp=new RequestParams();
+		RequestParams rp = new RequestParams();
 		rp.add("userid", TopADApplication.getSelf().getUserId());
-		rp.add("type1", "0"); // 当是我的数据默认为0
-		rp.add("type2", "0");// 当是我的数据默认为0
-		rp.add("isselfpost", "0"); // 是否是自己发布的
-		rp.add("isqd", "0"); // 我要抢单该值为1
-		rp.add("page", page + "");
+		rp.add("ispay", ispay);
+		rp.add("paytype", paytype);
+		rp.add("type1", type1);
+		rp.add("type2", type2);
+		rp.add("page", page2 + "");
+
 		postWithLoading(url, rp, false, new HttpCallback() {
 			@Override
 			public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -256,6 +325,7 @@ public class GrabSingleFragment extends BaseFragment{
 				}else{
 					mListView.setPullLoadEnable(true);
 				}
+
 			}
 
 			@Override
