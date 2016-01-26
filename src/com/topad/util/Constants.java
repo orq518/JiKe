@@ -68,6 +68,8 @@ public class Constants {
     public static final String URL_WALLET_GETMONEY = "/wallet/getmoney";
     // 购买产品
     public static final String URL_BUY_IT = "/adservice/buyit";
+    // 甄选项目
+    public static final String URL_NEDD_SEARCH = "/need/search";
 
     /**
      * 测试环境
