@@ -105,7 +105,11 @@ public class ShareNeedsEditActivity_Zhaopin extends BaseActivity implements IRec
         mTitle.setRightImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShareNeedsEditActivity_Zhaopin.this, PoiKeywordSearchActivity.class);
+                Intent intent = new Intent(ShareNeedsEditActivity_Zhaopin.this, SearchNearByPeopleActivity.class);
+                intent.putExtra("type1",type1);
+                intent.putExtra("type2",type2);
+                intent.putExtra("type3",type3);
+
                 startActivity(intent);
             }
         }, R.drawable.bt_search);
