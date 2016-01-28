@@ -5,18 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.content.Context;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.topad.R;
-import com.topad.bean.GrabSingleListBean;
 import com.topad.bean.SelectProjectBean;
 import com.topad.view.fragment.GrabSingleFragment;
 import com.topad.view.fragment.SelectProjectFragmnet;
@@ -31,8 +27,8 @@ import java.util.List;
  * @author lht
  * @data: on 15/10/27 17:31
  */
-public class MyGrabsingleActivity extends BaseActivity implements View.OnClickListener {
-    private static final String LTAG = MyGrabsingleActivity.class.getSimpleName();
+public class MyGrabSingleActivity extends BaseActivity implements View.OnClickListener {
+    private static final String LTAG = MyGrabSingleActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
     /** 页卡内容 **/
