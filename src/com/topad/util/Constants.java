@@ -70,12 +70,12 @@ public class Constants {
     public static final String URL_BUY_IT = "/adservice/buyit";
     // 甄选项目
     public static final String URL_NEDD_SEARCH = "/need/search";
-
     //上传我的位置
     public static final String URL_UPDATE_LOCATION = "/user/updatepos";
     //获取附近符合要求的人
     public static final String URL_GET_USERS_NEARBY = "/need/getusers";
-
+    //查看需求详情
+    public static final String URL_NEED_GET_DETAIL = "/need/getdetail";
 
     /**
      * 测试环境

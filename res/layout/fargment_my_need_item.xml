@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 我要抢单列表item -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/gray_bg">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dark_gray_text"
+        android:layout_marginTop="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:text="北京市聚宝网深圳分公司"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text_bg"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_price_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="出价："
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:textColor="@color/text_bg"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="5dp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="￥12000"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@color/hot"
+                android:layout_toRightOf="@id/tv_price_tip"/>
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已托管"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/grab_single_state"
+                android:layout_marginRight="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="35dp"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:text="高价发标编辑捕鱼游戏一套完整成熟的概率数值控制代码～"
+            android:textSize="16sp"
+            android:textColor="@color/text_gray_bg"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <!-- 时间 -->
+        <TextView
+            android:id="@+id/tv_time"
+            android:background="@drawable/btn_board_white_square"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:drawableLeft="@drawable/pic_time"
+            android:text="2015-10-22"
+            android:textSize="16sp"
+            android:textColor="@color/text_bg"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center"/>
+
+        <!-- 抢单人数 -->
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:background="@drawable/btn_board_white_square"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:text="5人抢单"
+            android:textSize="16sp"
+            android:textColor="@color/text_bg"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -37,7 +37,7 @@
                 android:id="@+id/lay_select_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="15dp"
+                android:padding="14dp"
                 android:background="@color/white">
 
                 <TextView

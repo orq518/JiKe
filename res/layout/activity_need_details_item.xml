@@ -1,0 +1,134 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray_text"
+            android:layout_marginTop="0dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/tv_need_item_gs_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:src="@drawable/pic_success_logo" />
+
+            <Button
+                android:id="@+id/btn_agree"
+                style="@style/btn_bule2_borad_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:background="@drawable/btn_agree"
+                android:textColor="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"/>
+
+            <LinearLayout
+                android:id="@+id/tv_need_item_gs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:background="@color/white"
+                android:layout_toRightOf="@id/tv_need_item_gs_icon"
+                android:layout_toLeftOf="@id/btn_agree">
+
+                <!-- 公司名字 -->
+                <TextView
+                    android:id="@+id/tv_need_item_gs_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="xxx"
+                    android:gravity="center|left"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_bg"
+                    android:singleLine="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="0dp"
+                    android:background="@color/white">
+
+                    <!-- 状态 -->
+                    <TextView
+                        android:id="@+id/tv_need_item_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="想要抢单"
+                        android:gravity="center|left"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:textColor="@color/red_main_color"
+                        android:singleLine="true"/>
+
+                    <!-- 时间 -->
+                    <TextView
+                        android:id="@+id/tv_need_item_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="2016-01-11"
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_gray_bg"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray_text"
+            android:layout_marginTop="0dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -489,11 +489,19 @@
             android:name=".view.activity.MyMediaReleaseListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <!-- 附近的需求 -->
         <activity
             android:name=".view.activity.SearchNearByPeopleActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
+        <!-- 我的需求详情页 -->
+        <activity
+            android:name=".view.activity.MyNeedDetailsActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
     </application>
 
 </manifest>
