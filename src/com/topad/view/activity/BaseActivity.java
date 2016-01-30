@@ -108,6 +108,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
      * 处理返回事件
      */
     public void onBack() {
+        finish();
     }
 
 
