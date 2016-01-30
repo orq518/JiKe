@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.alipay.PayDemoActivity;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.LoginBean;
@@ -25,7 +27,7 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/12/7 13:58
  */
-public class MyWalletActivity extends BaseActivity implements View.OnClickListener{
+public class MyWalletActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MyWalletActivity.class.getSimpleName();
     // 上下文
     private Context mContext;
@@ -51,8 +53,10 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initViews() {
-        mTitleView = (TitleView) findViewById(R.id.title);;
-        mTVMoney = (TextView) findViewById(R.id.tv_money);;
+        mTitleView = (TitleView) findViewById(R.id.title);
+        ;
+        mTVMoney = (TextView) findViewById(R.id.tv_money);
+        ;
         mBTCash = (Button) findViewById(R.id.btn_cash);
         mBTRecharge = (Button) findViewById(R.id.btn_recharge);
 
@@ -98,7 +102,8 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
                 break;
             // 充值
             case R.id.btn_recharge:
-
+                Intent intent = new Intent(mContext, PayDemoActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
