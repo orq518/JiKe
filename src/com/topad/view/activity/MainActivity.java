@@ -2,7 +2,6 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -28,7 +27,6 @@ import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
-import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.TitleView;
@@ -522,7 +520,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.grab_single://我要抢单
-                intent = new Intent(MainActivity.this, MyGrabSingleActivity.class);
+                intent = new Intent(MainActivity.this, MyGrabsingleActivity.class);
                 startActivity(intent);
                 break;
 

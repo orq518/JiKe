@@ -4,23 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
-import com.topad.bean.AdServiceBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
 import com.topad.bean.GrabSingleListBean;
@@ -30,15 +25,14 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
-import com.topad.view.activity.ADSDetailsActivity;
 import com.topad.view.activity.GrabSingleDetailsActivity;
-import com.topad.view.activity.MyGrabSingleActivity;
-import com.topad.view.customviews.PTRListView;
-import com.topad.view.customviews.PullToRefreshView;
-import com.topad.view.customviews.TitleView;
+import com.topad.view.activity.MyGrabsingleActivity;
 import com.topad.view.customviews.mylist.MyListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Handler;
 
 /**
@@ -161,6 +155,13 @@ public class GrabSingleFragment extends BaseFragment{
 		}
 	}
 
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		setData();
+	}
+
 	/**
 	 * 请求数据
 	 */
@@ -219,8 +220,17 @@ public class GrabSingleFragment extends BaseFragment{
 			holder.content.setText(bankList.get(position).getDetail());
 			String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
 			holder.time.setText(sourceStrArray[0]);
-			SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-			holder.countdown.setText(ssbs.toString());
+
+			// 当前时间
+			SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String datestr= dataformat.format(new Date());
+
+			try {
+				holder.countdown.setText(Utils.daysBetween(bankList.get(position).getEnddate(), datestr) + "天前");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			return convertView;
 		}
 
@@ -238,8 +248,8 @@ public class GrabSingleFragment extends BaseFragment{
 	/**
 	 * 设置数据
 	 */
-	private void setData() {
-		MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+	public void setData() {
+		MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
 		// 有筛选项
 		if(activity != null && activity.getSelectProjectBean() != null){
 			SelectProjectBean bean = activity.getSelectProjectBean();
@@ -259,7 +269,7 @@ public class GrabSingleFragment extends BaseFragment{
 			rp.add("type1", "0"); // 当是我的数据默认为0
 			rp.add("type2", "0");// 当是我的数据默认为0
 			rp.add("isselfpost", "0"); // 是否是自己发布的
-			rp.add("isqd", "0"); // 我要抢单该值为1
+			rp.add("isqd", "1"); // 我要抢单该值为1
 			rp.add("page", page + "");
 			postWithLoading(url, rp, false, new HttpCallback() {
 				@Override

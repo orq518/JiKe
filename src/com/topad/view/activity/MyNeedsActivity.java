@@ -23,14 +23,18 @@ import com.topad.bean.GrabSingleListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Handler;
 
 /**
- * ${todo}<我的抢单－侧栏入口>
+ * ${todo}<我的需求－侧栏入口>
  *
  * @author lht
  * @data: on 15/12/7 14:41
@@ -96,8 +100,9 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
+                Intent intent = new Intent(mContext, MyNeedDetailsActivity.class);
                 intent.putExtra("state", "2");
+                intent.putExtra("needId", bankList.get(position-1).getId());
                 intent.putExtra("data_details", bankList.get(position-1));
                 startActivity(intent);
             }
@@ -175,7 +180,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             if (convertView == null) {
-                convertView = mInflater.inflate((R.layout.fargment_grab_single_item), null);
+                convertView = mInflater.inflate((R.layout.fargment_my_need_item), null);
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
                 holder.name = (TextView) convertView .findViewById(R.id.tv_name);
@@ -197,8 +202,17 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             holder.content.setText(bankList.get(position).getDetail());
             String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
-            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-            holder.countdown.setText(ssbs.toString());
+
+
+            // 当前时间
+            SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datestr= dataformat.format(new Date());
+
+            try {
+                holder.countdown.setText(Utils.daysBetween(bankList.get(position).getAdddate(), datestr) + "天前");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return convertView;
         }
 
@@ -225,7 +239,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("type1", "0"); // 当是我的数据默认为0
         rp.add("type2", "0");// 当是我的数据默认为0
-        rp.add("isselfpost", "0"); // 是否是自己发布的
+        rp.add("isselfpost", "1"); // 是否是自己发布的
         rp.add("isqd", "0"); // 我要抢单该值为1
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {

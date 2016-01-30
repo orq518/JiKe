@@ -78,7 +78,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
     /**
      * 搜索结果
      */
-    ArrayList<SearchResultBean.DataEntity> searchResultList = new ArrayList<>();
+    ArrayList<SearchResultBean.DataEntity> searchResultList = new ArrayList<SearchResultBean.DataEntity>();
     String voicePath;
     /**
      * view
