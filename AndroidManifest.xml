@@ -304,7 +304,7 @@
 
         <!-- 我要抢单 -->
         <activity
-            android:name=".view.activity.MyGrabSingleActivity"
+            android:name=".view.activity.MyGrabsingleActivity"
             android:theme="@style/AppTheme">
         </activity>
 
@@ -489,11 +489,23 @@
             android:name=".view.activity.MyMediaReleaseListActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <!-- 附近的需求 -->
         <activity
             android:name=".view.activity.SearchNearByPeopleActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
+        <!-- 我的需求详情页 -->
+        <activity
+            android:name=".view.activity.MyNeedDetailsActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

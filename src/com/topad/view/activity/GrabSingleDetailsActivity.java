@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ${todo}<我要抢单详情页>
+ * ${todo}<我的抢单详情页>
  *
  * @author lht
  * @data: on 15/10/28 16:32
