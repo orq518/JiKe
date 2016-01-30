@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +13,11 @@ import android.widget.ExpandableListView;
 import android.widget.ScrollView;
 
 import com.topad.R;
-import com.topad.TopADApplication;
-import com.topad.amap.ToastUtil;
-import com.topad.bean.AddProductBean;
-import com.topad.bean.BaseBean;
 import com.topad.bean.ChildBean;
-import com.topad.bean.GrabSingleListBean;
 import com.topad.bean.GroupBean;
 import com.topad.bean.SelectProjectBean;
-import com.topad.net.HttpCallback;
-import com.topad.net.http.RequestParams;
-import com.topad.util.Constants;
 import com.topad.util.LogUtil;
-import com.topad.util.Utils;
-import com.topad.view.activity.MyGrabSingleActivity;
+import com.topad.view.activity.MyGrabsingleActivity;
 import com.topad.view.adapter.SelectProjectEListAdapter;
 import com.topad.view.customviews.CustomExpandableListView;
 import java.util.ArrayList;
@@ -85,7 +74,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	/** 托管类型 0：全部 1：100及以下 2：101-300 3：301-1000 4：1001-1w 5：1w+ **/
 	private String paytype = "0";
 	/** type1 **/
-	private String type1 = "";
+	private String type1 = " ";
 	/** type2 **/
 	private StringBuffer type2 = new StringBuffer("");
 
@@ -362,14 +351,14 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 				SelectProjectBean bean = new SelectProjectBean();
 				bean.setIspay(ispay);
 				bean.setPaytype(paytype);
-				bean.setType1("");
+				bean.setType1(" ");
 				bean.setType2(type2.toString());
 				bean.setPage("1");
 
-				MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+				MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
 				activity.setSelectProjectBean(bean);
 				activity.viewPager.setCurrentItem(0);
-
+				activity.getSelectProjectData();
 				break;
 
 		}
@@ -377,7 +366,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 	private Fragment recreateFragment(Fragment f) {
 		try {
-			MyGrabSingleActivity activity = (MyGrabSingleActivity) getActivity();
+			MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
 			Fragment.SavedState savedState = activity.mFragmentManager.saveFragmentInstanceState(f);
 			Fragment newInstance = f.getClass().newInstance();
 			newInstance.setInitialSavedState(savedState);

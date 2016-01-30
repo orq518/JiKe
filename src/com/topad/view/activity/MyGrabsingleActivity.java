@@ -27,8 +27,8 @@ import java.util.List;
  * @author lht
  * @data: on 15/10/27 17:31
  */
-public class MyGrabSingleActivity extends BaseActivity implements View.OnClickListener {
-    private static final String LTAG = MyGrabSingleActivity.class.getSimpleName();
+public class MyGrabsingleActivity extends BaseActivity implements View.OnClickListener {
+    private static final String LTAG = MyGrabsingleActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
     /** 页卡内容 **/
@@ -69,6 +69,12 @@ public class MyGrabSingleActivity extends BaseActivity implements View.OnClickLi
 
     public SelectProjectBean mSelectProjectBean;
 
+    public void getSelectProjectData() {
+        if(mSelectProjectFragmnet != null){
+            mGrabSingleFragment.setData();
+        }
+
+    }
 
     public void setSelectProjectBean(SelectProjectBean mSelectProjectBean) {
         this.mSelectProjectBean = mSelectProjectBean;

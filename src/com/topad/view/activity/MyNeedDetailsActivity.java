@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
-import com.topad.bean.AdProductBean;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
-import com.topad.bean.GrabSingleListBean;
+import com.topad.bean.MyNeedBean;
+import com.topad.bean.MyNeedListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
@@ -29,7 +32,12 @@ import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
 
+import org.android.agoo.ut.UT;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -38,7 +46,7 @@ import java.util.HashMap;
  * @author lht
  * @data: on 15/10/28 16:32
  */
-public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickListener{
+public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MyNeedDetailsActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
@@ -84,10 +92,10 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private String state;
     /** 需求id **/
     private String needId;
-    /** 状态 **/
+    /** **/
     private GrabSingleBean grabSingleBean;
     /** 数据源 **/
-    private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
+    private ArrayList<MyNeedBean> bankList = new ArrayList<MyNeedBean>();
 
     @Override
     public int setLayoutById() {
@@ -147,40 +155,40 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         // 名字
-        if(!Utils.isEmpty(grabSingleBean.getTitle())){
+        if (!Utils.isEmpty(grabSingleBean.getTitle())) {
             mName.setText(grabSingleBean.getTitle());
         }
 
         // 价格
-        if(!Utils.isEmpty(grabSingleBean.getBudget())){
+        if (!Utils.isEmpty(grabSingleBean.getBudget())) {
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + grabSingleBean.getBudget());
             mMoney.setText(ssb.toString());
         }
 
         // 介绍
-        if(!Utils.isEmpty(grabSingleBean.getDetail())){
+        if (!Utils.isEmpty(grabSingleBean.getDetail())) {
             mContent.setText(grabSingleBean.getDetail());
         }
 
         // 地址
-        if(!Utils.isEmpty(grabSingleBean.getAddress())){
+        if (!Utils.isEmpty(grabSingleBean.getAddress())) {
             mAddress.setText(grabSingleBean.getAddress());
         }
 
         // 类别
-        if(!Utils.isEmpty(grabSingleBean.getType1())
-                && !Utils.isEmpty(grabSingleBean.getType2())){
+        if (!Utils.isEmpty(grabSingleBean.getType1())
+                && !Utils.isEmpty(grabSingleBean.getType2())) {
             SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
             mTVType.setText(ssb.toString());
         }
 
         // 时间
-        if(!Utils.isEmpty(grabSingleBean.getAdddate())){
+        if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
             String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
             mTVTime.setText(sourceStrArray[0]);
         }
 
-        if("1".equals(state)){// 项目完成
+        if ("1".equals(state)) {// 项目完成
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.GONE);
@@ -188,21 +196,21 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
 
-        }else if("2".equals(state)){// 项目进行中
+        } else if ("2".equals(state)) {// 项目进行中
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.VISIBLE);
             mLYTrust.setVisibility(View.GONE);
             mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
-        }else if("3".equals(state)){// 已托管
+        } else if ("3".equals(state)) {// 已托管
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.VISIBLE);
             mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
-        }else if("4".equals(state)){// 未托管
+        } else if ("4".equals(state)) {// 未托管
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.VISIBLE);
@@ -221,7 +229,28 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             // 项目完成
             case R.id.btn_finish:
-                finish();
+                // 拼接url
+                StringBuffer sb = new StringBuffer();
+                sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_ENDPRJ).append("?");
+                String url = sb.toString();
+                RequestParams rp = new RequestParams();
+                rp.add("needid", needId);
+                rp.add("userid", grabSingleBean.getUserid());
+                rp.add("token", TopADApplication.getSelf().getToken());
+                postWithLoading(url, rp, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, BaseBean.class);
                 break;
 
             // 项目款托管
@@ -230,6 +259,28 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
             // 项目取消
             case R.id.btn_project_cancel:
+                // 拼接url
+                StringBuffer sbcancel = new StringBuffer();
+                sbcancel.append(Constants.getCurrUrl()).append(Constants.URL_NEED_DELPROJECT).append("?");
+                String urlcancel = sbcancel.toString();
+                RequestParams rpcancel = new RequestParams();
+                rpcancel.add("needid", needId);
+                rpcancel.add("userid", grabSingleBean.getUserid());
+                rpcancel.add("token", TopADApplication.getSelf().getToken());
+                postWithLoading(urlcancel, rpcancel, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, BaseBean.class);
                 break;
 
             default:
@@ -281,26 +332,83 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 convertView = mInflater.inflate((R.layout.activity_need_details_item), null);
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.tv_need_item_gs_icon);
-                holder.name = (TextView) convertView .findViewById(R.id.tv_need_item_gs_name);
-                holder.state = (TextView) convertView .findViewById(R.id.tv_need_item_state);
-                holder.time = (TextView) convertView .findViewById(R.id.tv_need_item_state);
-                holder.agree = (Button) convertView .findViewById(R.id.btn_agree);
+                holder.name = (TextView) convertView.findViewById(R.id.tv_need_item_gs_name);
+                holder.state = (TextView) convertView.findViewById(R.id.tv_need_item_state);
+                holder.time = (TextView) convertView.findViewById(R.id.tv_need_item_state);
+                holder.agree = (Button) convertView.findViewById(R.id.btn_agree);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-//            holder.name.setText(bankList.get(position).getTitle());
-//            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
-//
-//            holder.state.setText(bankList.get(position).getStatus());
-//
-//            String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
-//            holder.time.setText(sourceStrArray[0]);
-//
-//            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-//            holder.time.setText(ssbs.toString());
+            if (!Utils.isEmpty(bankList.get(position).getImghead())) {
+                String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + bankList.get(position).getImghead();
+                ImageLoader.getInstance().displayImage(picUrl, holder.icon, TopADApplication.getSelf().getImageLoaderOption(),
+                        new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String s, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String s, View view) {
+
+                            }
+                        });
+            }
+
+            // 公司名
+            holder.name.setText(bankList.get(position).getCompanyname());
+
+            // 时间
+            Date date = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            try {
+                date = sdf.parse(bankList.get(position).getAdddate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            holder.time.setText(Utils.getTimeFormatText(date));
+
+            // 同意
+            holder.agree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 拼接url
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_START).append("?");
+                    String url = sb.toString();
+                    RequestParams rp = new RequestParams();
+                    rp.add("needid", needId);
+                    rp.add("userid1", grabSingleBean.getUserid());
+                    rp.add("userid2", grabSingleBean.getUserid2());
+                    rp.add("token", TopADApplication.getSelf().getToken());
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            mProjectTrust.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+                            ToastUtil.show(mContext, "status = " + status + "\n"
+                                    + "msg = " + msg);
+                        }
+                    }, BaseBean.class);
+                }
+            });
             return convertView;
         }
 
@@ -314,19 +422,24 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     *  获取数据
+     * 获取数据
      */
-    public void getData(){
+    public void getData() {
         // 拼接url
         StringBuffer sb = new StringBuffer();
-        sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GET_DETAIL).append("?");
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_GET_REQUEST_LIST).append("?");
         String url = sb.toString();
-        RequestParams rp=new RequestParams();
+        RequestParams rp = new RequestParams();
         rp.add("needid", needId);
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-
+                MyNeedListBean bean = (MyNeedListBean) t;
+                if (bean != null && bean.data.size() != 0) {
+                    for (int i = 0; i < bean.data.size(); i++) {
+                        bankList.add(bean.data.get(i));
+                    }
+                }
             }
 
             @Override
@@ -336,6 +449,6 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(mContext, "status = " + status + "\n"
                         + "msg = " + msg);
             }
-        }, GrabSingleListBean.class);
+        }, MyNeedListBean.class);
     }
 }

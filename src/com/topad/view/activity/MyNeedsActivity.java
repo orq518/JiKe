@@ -239,7 +239,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("type1", "0"); // 当是我的数据默认为0
         rp.add("type2", "0");// 当是我的数据默认为0
-        rp.add("isselfpost", "0"); // 是否是自己发布的
+        rp.add("isselfpost", "1"); // 是否是自己发布的
         rp.add("isqd", "0"); // 我要抢单该值为1
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {

@@ -14,8 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
 import com.topad.bean.AdServiceBean;
+import com.topad.bean.BaseBean;
+import com.topad.bean.LoginBean;
 import com.topad.bean.SystemNewsBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
+import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.PTRListView;
 import com.topad.view.customviews.PullToRefreshView;
@@ -227,6 +236,34 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
      * 设置数据--测试
      */
     private void setData() {
+//        // 拼接url
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(Constants.getCurrUrl()).append(Constants.URL_USER_GETMSG).append("?");
+//        String url = sb.toString();
+//        RequestParams rp = new RequestParams();
+//        rp.add("userid", TopADApplication.getSelf().getUserId());
+//        rp.add("lastmsgid", "0");
+//
+//        postWithLoading(url, rp, false, new HttpCallback() {
+//            @Override
+//            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+//                LoginBean login = (LoginBean) t;
+//                if (login != null) {
+//
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(BaseBean base) {
+//                int status = base.getStatus();// 状态码
+//                String msg = base.getMsg();// 错误信息
+//                ToastUtil.show(mContext, "status = " + status + "\n"
+//                        + "msg = " + msg);
+//            }
+//        }, LoginBean.class);
+
         SystemNewsBean bModel0 = new SystemNewsBean();
         bModel0.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
         bModel0.time = "1小时前";

@@ -70,12 +70,24 @@ public class Constants {
     public static final String URL_BUY_IT = "/adservice/buyit";
     // 甄选项目
     public static final String URL_NEDD_SEARCH = "/need/search";
-    //上传我的位置
+    // 上传我的位置
     public static final String URL_UPDATE_LOCATION = "/user/updatepos";
-    //获取附近符合要求的人
+    // 获取附近符合要求的人
     public static final String URL_GET_USERS_NEARBY = "/need/getusers";
-    //查看需求详情
+    // 查看需求详情
     public static final String URL_NEED_GET_DETAIL = "/need/getdetail";
+    // 返回抢单列表
+    public static final String URL_GET_REQUEST_LIST = "/need/getrequestlist";
+    // 开始项目
+    public static final String URL_NEED_START = "/need/start";
+    // 项目取消
+    public static final String URL_NEED_DELPROJECT = "/need/delproject";
+    // 项目完成
+    public static final String URL_NEED_ENDPRJ = "/need/endprj";
+
+
+    // 系统消息
+    public static final String URL_USER_GETMSG = "/user/getmsg";
 
     /**
      * 测试环境
