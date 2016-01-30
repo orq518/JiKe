@@ -101,7 +101,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent intent = new Intent(mContext, MyNeedDetailsActivity.class);
-                intent.putExtra("state", "2");
+                intent.putExtra("state", bankList.get(position-1).getStatus());
                 intent.putExtra("needId", bankList.get(position-1).getId());
                 intent.putExtra("data_details", bankList.get(position-1));
                 startActivity(intent);

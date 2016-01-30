@@ -88,7 +88,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private ListView mListview;
 
 
-    /** 状态 1－项目完成，2-项目进行中 ，3-已托管 ，4－未托管 */
+    /** 状态 0 - 未开始 1－项目进行中，2-项目完成  */
     private String state;
     /** 需求id **/
     private String needId;
@@ -143,7 +143,6 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             grabSingleBean = (GrabSingleBean) intent.getSerializableExtra("data_details");
             state = intent.getStringExtra("state");
             needId = intent.getStringExtra("needId");
-
         }
 
         showView();
@@ -187,36 +186,29 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
             mTVTime.setText(sourceStrArray[0]);
         }
-
-        if ("1".equals(state)) {// 项目完成
-            mLYProductFinish.setVisibility(View.VISIBLE);
-            mFinish.setVisibility(View.GONE);
-            mLYTrust.setVisibility(View.GONE);
-            mProjectTrust.setVisibility(View.GONE);
-            mProjectCancel.setVisibility(View.GONE);
-            mListview.setVisibility(View.GONE);
-
-        } else if ("2".equals(state)) {// 项目进行中
-            mLYProductFinish.setVisibility(View.VISIBLE);
-            mFinish.setVisibility(View.VISIBLE);
-            mLYTrust.setVisibility(View.GONE);
-            mProjectTrust.setVisibility(View.GONE);
-            mProjectCancel.setVisibility(View.GONE);
-            mListview.setVisibility(View.GONE);
-        } else if ("3".equals(state)) {// 已托管
-            mLYProductFinish.setVisibility(View.GONE);
-            mFinish.setVisibility(View.GONE);
-            mLYTrust.setVisibility(View.VISIBLE);
-            mProjectTrust.setVisibility(View.GONE);
-            mProjectCancel.setVisibility(View.VISIBLE);
-            mListview.setVisibility(View.VISIBLE);
-        } else if ("4".equals(state)) {// 未托管
+        // 0 - 未开始 1－项目进行中，2-项目完成
+        if ("0".equals(state)) {//  未开始
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.VISIBLE);
             mProjectTrust.setVisibility(View.VISIBLE);
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
+        }else if ("1".equals(state)) {// 项目进行中
+            mLYProductFinish.setVisibility(View.VISIBLE);
+            mFinish.setVisibility(View.VISIBLE);
+            mLYTrust.setVisibility(View.GONE);
+            mProjectTrust.setVisibility(View.GONE);
+            mProjectCancel.setVisibility(View.GONE);
+            mListview.setVisibility(View.GONE);
+        } else if ("2".equals(state)) {// 项目完成
+            mLYProductFinish.setVisibility(View.VISIBLE);
+            mFinish.setVisibility(View.VISIBLE);
+            mLYTrust.setVisibility(View.GONE);
+            mProjectTrust.setVisibility(View.GONE);
+            mProjectCancel.setVisibility(View.GONE);
+            mListview.setVisibility(View.GONE);
+
         }
 
         getData();
@@ -440,6 +432,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                         bankList.add(bean.data.get(i));
                     }
                 }
+
             }
 
             @Override

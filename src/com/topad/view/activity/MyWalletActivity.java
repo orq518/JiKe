@@ -94,12 +94,23 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             // 提现
             case R.id.btn_cash:
-
+                Intent intentcash = new Intent(mContext, WithDrawCashActivity.class);
+                intentcash.putExtra("money", mTVMoney + "");
+                intentcash.putExtra("aliaccount", "");
+                startActivity(intentcash);
                 break;
+
             // 充值
             case R.id.btn_recharge:
-
+                Intent intentrecharge = new Intent(mContext, RechargeActivity.class);
+                intentrecharge.putExtra("money", "");
+                intentrecharge.putExtra("seller_id", "");
+                intentrecharge.putExtra("out_trade_no", "");
+                intentrecharge.putExtra("subject", "");
+                intentrecharge.putExtra("body", "");
+                startActivity(intentrecharge);
                 break;
+
             default:
                 break;
         }
