@@ -502,8 +502,20 @@
         <activity
             android:name=".view.activity.MyNeedDetailsActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        </activity>
+
+        <!-- 充值页 -->
+        <activity
+            android:name=".view.activity.RechargeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
+        <!-- 提现页 -->
+        <activity
+            android:name=".view.activity.WithDrawCashActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

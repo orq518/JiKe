@@ -84,8 +84,10 @@ public class Constants {
     public static final String URL_NEED_DELPROJECT = "/need/delproject";
     // 项目完成
     public static final String URL_NEED_ENDPRJ = "/need/endprj";
-
-
+    // 充值
+    public static final String URL_ALI_RETUREN = "/pay/alireturen";
+    // 提现
+    public static final String URL_GET_MONEY = "/pay/getmoney";
     // 系统消息
     public static final String URL_USER_GETMSG = "/user/getmsg";
 
