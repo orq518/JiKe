@@ -13,6 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.alipay.AliPayInterface;
+import com.topad.alipay.AliPayUtil;
+import com.topad.alipay.PayResult;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
@@ -23,25 +27,39 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/7/31 16:22
  */
-public class RechargeActivity extends BaseActivity implements View.OnClickListener {
+public class RechargeActivity extends BaseActivity implements View.OnClickListener,AliPayInterface {
     private static final String LTAG = RechargeActivity.class.getSimpleName();
-    /** 上下文对象 **/
+    /**
+     * 上下文对象
+     **/
     private Context mContext;
-    /** title布局 **/
+    /**
+     * title布局
+     **/
     private TitleView mTitle;
-    /** 金额 **/
+    /**
+     * 金额
+     **/
     private EditText mEtMoney;
-    /** 取消 **/
+    /**
+     * 取消
+     **/
     private ImageView mIvClose;
-    /** 下一步 **/
+    /**
+     * 下一步
+     **/
     private Button mBtNext;
 
-    /** 充值金额 **/
+    /**
+     * 充值金额
+     **/
     private String mMoney;
+    String subject, body;
+
     @Override
     public int setLayoutById() {
         mContext = this;
-        return  R.layout.activity_recharge;
+        return R.layout.activity_recharge;
     }
 
     @Override
@@ -51,7 +69,8 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initViews() {
-
+        subject=getIntent().getStringExtra("subject");
+        body=getIntent().getStringExtra("body");
         mTitle = (TitleView) findViewById(R.id.title);
         mEtMoney = (EditText) findViewById(R.id.et_recharge_money);
         mIvClose = (ImageView) findViewById(R.id.iv_clear);
@@ -135,7 +154,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
             mMoney = intent.getStringExtra("money");
 
         }
-        if(!Utils.isEmpty(mMoney)){
+        if (!Utils.isEmpty(mMoney)) {
             mEtMoney.setText(mMoney);
         }
 
@@ -143,33 +162,40 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     /**
      * 点击事件
+     *
      * @param view
      */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             // 清除
-            case R.id.iv_clear:{
+            case R.id.iv_clear: {
                 mEtMoney.setText("");
             }
             break;
             // 下一步
             case R.id.bt_recharge_next_step:
-                if (Utils.isEmpty(mMoney)){
+                if (Utils.isEmpty(mMoney)) {
                     Utils.showToast(this, "充值金额不能为空");
                     return;
                 }
-                if (Float.parseFloat(mMoney) < 1){
-                    Utils.showToast(this, "充值金额最低1元");
+                if (Float.parseFloat(mMoney) < 0.01) {
+                    Utils.showToast(this, "充值金额最低0.01元");
                     return;
                 }
-                if (Double.parseDouble(mMoney) >= 1000000000){
+                if (Double.parseDouble(mMoney) >= 1000000000) {
                     Utils.showToast(this, "超出充值限额，请重新输入金额");
                     return;
                 }
-
+                AliPayUtil aliPayUtil=new AliPayUtil(this);
+                aliPayUtil.aliPay(RechargeActivity.this,subject,body,mMoney);
                 break;
         }
+    }
+
+    @Override
+    public void payResult(PayResult payResult) {
+
     }
 
     /**
@@ -198,6 +224,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     /**
      * 去除EditText的空格
+     *
      * @param et
      * @return
      */

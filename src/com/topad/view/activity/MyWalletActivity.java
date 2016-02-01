@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.alipay.AliPayUtil;
 import com.topad.alipay.PayDemoActivity;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
@@ -100,18 +101,15 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             case R.id.btn_cash:
                 Intent intentcash = new Intent(mContext, WithDrawCashActivity.class);
                 intentcash.putExtra("money", mTVMoney + "");
-                intentcash.putExtra("aliaccount", "");
+                intentcash.putExtra("aliaccount", AliPayUtil.SELLER);
                 startActivity(intentcash);
                 break;
 
             // 充值
             case R.id.btn_recharge:
                 Intent intentrecharge = new Intent(mContext, RechargeActivity.class);
-                intentrecharge.putExtra("money", "");
-                intentrecharge.putExtra("seller_id", "");
-                intentrecharge.putExtra("out_trade_no", "");
-                intentrecharge.putExtra("subject", "");
-                intentrecharge.putExtra("body", "");
+                intentrecharge.putExtra("subject", "钱包充值");
+                intentrecharge.putExtra("body", TopADApplication.getSelf().getUserId()+"|1|0");
                 startActivity(intentrecharge);
                 break;
 
