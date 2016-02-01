@@ -231,6 +231,7 @@
         <activity android:name=".view.activity.WebViewActivity"
                   android:theme="@style/AppTheme">
         </activity>
+
         <activity android:name=".view.activity.SearchActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
@@ -240,6 +241,7 @@
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".view.activity.OutDoorSearchListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
@@ -249,31 +251,37 @@
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".view.activity.OutDoorSearchSecondListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity android:name=".view.activity.ShareNeedsActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity android:name=".view.activity.NeedsListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity android:name=".view.activity.ShareNeedsEditActivity_Normal"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
                   android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
+
         <!-- 广告服务－广告创意、营销策略、影视广告、动漫创作 -->
         <activity
             android:name=".view.activity.ADSListActivity"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity android:name=".view.activity.OtherSearchListActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"
@@ -292,6 +300,7 @@
             android:name=".view.activity.ADSDetailsActivity"
             android:theme="@style/AppTheme">
         </activity>
+
         <!-- 广告服务案例－广告创意、营销策略、影视广告、动漫创作 -->
         <activity
             android:name=".view.activity.ADSCaseActivity"
@@ -327,10 +336,12 @@
             android:name=".view.activity.MediaReleaseActivity"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity
             android:name=".view.activity.SelectPicPopupWindow"
             android:theme="@style/MyDialogStyleBottom">
         </activity>
+
         <!-- 注册页 -->
         <activity
             android:name=".view.activity.RegisterActivity"
@@ -348,6 +359,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
         </activity>
+
         <!-- 图片查看 -->
         <activity
             android:name=".view.activity.PicLookActivity"
@@ -356,6 +368,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom">
         </activity>
+
         <!-- 定位页面 -->
         <activity
             android:name=".view.activity.LocationMapActivity"
@@ -372,9 +385,7 @@
         </activity>
 
         <!-- 我的钱包 -->
-        <activity
-            android:name=".view.activity.MyWalletActivity"
-            >
+        <activity android:name=".view.activity.MyWalletActivity">
         </activity>
 
         <!-- 系统消息 -->
@@ -388,68 +399,61 @@
             android:theme="@style/FullBleedTheme">
         </activity>
 
-
         <activity
             android:name=".view.activity.CompleteInforActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity
             android:name=".view.activity.IdentityAutherActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity
             android:name=".view.activity.UploadPicActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity
             android:name=".view.activity.MyNeedsActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity
             android:name=".view.activity.MyShareMediaListActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
+
         <activity
             android:name=".view.activity.PersonalProfileActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-        >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 
         <!-- 媒体列表 -->
-        <activity
-            android:name=".view.activity.SelectMediaListActivity"
-            >
+        <activity android:name=".view.activity.SelectMediaListActivity">
         </activity>
+
         <!-- 媒体列表 -->
-        <activity
-            android:name=".view.activity.ShareNeedsEditActivity_Peixun"
-            >
+        <activity android:name=".view.activity.ShareNeedsEditActivity_Peixun">
             <intent-filter>
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
 
         <!-- 媒体列表 -->
-        <activity
-            android:name=".view.activity.ShareNeedsEditActivity_Zhaopin"
-            >
+        <activity android:name=".view.activity.ShareNeedsEditActivity_Zhaopin">
             <intent-filter>
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
+
         <!-- 媒体列表 -->
-        <activity
-            android:name=".view.activity.QiyeZhaopin3Activity"
-        >
+        <activity android:name=".view.activity.QiyeZhaopin3Activity">
             <intent-filter>
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE" />
             </intent-filter>
         </activity>
+
         <!-- 添加产品 -->
         <activity
             android:name=".view.activity.AddProductActivity"

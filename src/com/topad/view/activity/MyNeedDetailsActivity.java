@@ -22,6 +22,7 @@ import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
+import com.topad.bean.MyInfoBean;
 import com.topad.bean.MyNeedBean;
 import com.topad.bean.MyNeedListBean;
 import com.topad.net.HttpCallback;
@@ -52,12 +53,12 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private Context mContext;
     /** 顶部布局 **/
     private TitleView mTitleView;
-    /** 案例 **/
-    private MyGridView mGridView;
     /** 名称 **/
     private TextView mName;
     /** 价钱 **/
     private TextView mMoney;
+    /** 是否托管 **/
+    private TextView mTVState;
     /** 内容 **/
     private TextView mContent;
     /** 地址 **/
@@ -69,6 +70,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
     /** 项目已完成，进行中布局 **/
     private LinearLayout mLYProductFinish;
+    /** 公司头像 **/
+    private ImageView mTVGSIcon;
     /** 公司名 **/
     private TextView mTVGSName;
     /** 项目状态 **/
@@ -114,12 +117,14 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
         mName = (TextView) findViewById(R.id.tv_name);
         mMoney = (TextView) findViewById(R.id.tv_price);
+        mTVState = (TextView) findViewById(R.id.tv_state);
         mContent = (TextView) findViewById(R.id.tv_content);
         mAddress = (TextView) findViewById(R.id.tv_address);
         mTVType = (TextView) findViewById(R.id.tv_type);
         mTVTime = (TextView) findViewById(R.id.tv_time);
 
         mLYProductFinish = (LinearLayout) findViewById(R.id.ly_product_finish);
+        mTVGSIcon = (ImageView) findViewById(R.id.iv_gs_icon);
         mTVGSName = (TextView) findViewById(R.id.tv_gs_name);
         mTVProgectState = (TextView) findViewById(R.id.tv_progect_state);
         mTVProgectTime = (TextView) findViewById(R.id.tv_progect_time);
@@ -174,18 +179,6 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mAddress.setText(grabSingleBean.getAddress());
         }
 
-        // 类别
-        if (!Utils.isEmpty(grabSingleBean.getType1())
-                && !Utils.isEmpty(grabSingleBean.getType2())) {
-            SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
-            mTVType.setText(ssb.toString());
-        }
-
-        // 时间
-        if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
-            String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
-            mTVTime.setText(sourceStrArray[0]);
-        }
         // 0 - 未开始 1－项目进行中，2-项目完成
         if ("0".equals(state)) {//  未开始
             mLYProductFinish.setVisibility(View.GONE);
@@ -194,6 +187,9 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mProjectTrust.setVisibility(View.VISIBLE);
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
+            mTVState.setVisibility(View.GONE);
+            getData();
+            mListview.setAdapter(new ListAdapter());
         }else if ("1".equals(state)) {// 项目进行中
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.VISIBLE);
@@ -201,18 +197,44 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
+            mTVState.setVisibility(View.VISIBLE);
+            // 类别
+            if (!Utils.isEmpty(grabSingleBean.getType1())
+                    && !Utils.isEmpty(grabSingleBean.getType2())) {
+                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                mTVTime.setText(ssb.toString());
+            }
+            // 时间
+            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
+                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+                mTVType.setText(sourceStrArray[0]);
+                mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
+            }
+            getInfoData();
+
         } else if ("2".equals(state)) {// 项目完成
             mLYProductFinish.setVisibility(View.VISIBLE);
-            mFinish.setVisibility(View.VISIBLE);
+            mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.GONE);
             mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
-
+            mTVState.setVisibility(View.VISIBLE);
+            // 类别
+            if (!Utils.isEmpty(grabSingleBean.getType1())
+                    && !Utils.isEmpty(grabSingleBean.getType2())) {
+                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                mTVTime.setText(ssb.toString());
+            }
+            // 时间
+            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
+                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+                mTVType.setText(sourceStrArray[0]);
+                mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
+            }
+            getInfoData();
         }
 
-        getData();
-        mListview.setAdapter(new ListAdapter());
     }
 
     @Override
@@ -232,7 +254,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                        finish();
+                        mFinish.setVisibility(View.GONE);
+
                     }
 
                     @Override
@@ -389,6 +412,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                             mProjectTrust.setVisibility(View.GONE);
+                            mTVState.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -414,7 +438,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     * 获取数据
+     * 获取抢单列表数据
      */
     public void getData() {
         // 拼接url
@@ -422,7 +446,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         sb.append(Constants.getCurrUrl()).append(Constants.URL_GET_REQUEST_LIST).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
-        rp.add("needid", needId);
+//        rp.add("needid", needId);
+        rp.add("needid", "5");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -444,4 +469,78 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             }
         }, MyNeedListBean.class);
     }
+
+
+    /**
+     * 获取个人数据
+     */
+    public void getInfoData() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.GETINFO).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", grabSingleBean.getUserid2());
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                MyInfoBean base = (MyInfoBean) t;
+                if (base != null) {
+
+                    // 公司头像
+                    if (!Utils.isEmpty(base.getData().getImghead())) {
+                        String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + base.getData().getImghead();
+                        ImageLoader.getInstance().displayImage(picUrl, mTVGSIcon, TopADApplication.getSelf().getImageLoaderOption(),
+                                new ImageLoadingListener() {
+                                    @Override
+                                    public void onLoadingStarted(String s, View view) {
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                                    }
+
+                                    @Override
+                                    public void onLoadingCancelled(String s, View view) {
+
+                                    }
+                                });
+                    }
+
+
+                    // 公司名
+                    if(!Utils.isEmpty(base.getData().getCompanyname())){
+                        mTVGSName.setText(base.getData().getCompanyname());
+                    }
+
+                    // 0 - 未开始 1－项目进行中，2-项目完成
+                    if ("2".equals(state)) {
+                        mTVProgectState.setText("项目已完成");
+                    }else if("1".equals(state)){
+                        mTVProgectState.setText("项目进行中");
+                    }
+
+                    // 时间
+                    if(!Utils.isEmpty(base.getData().getAdddate())){
+                        String[] sourceStrArray = base.getData().getAdddate().split(" ");
+                        mTVProgectTime.setText(sourceStrArray[0]);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, MyInfoBean.class);
+    }
+
 }

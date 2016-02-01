@@ -50,7 +50,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
     /** 下一步 **/
     private Button mBtNext;
 
-    /** 充值金额 **/
+    /** 余额 **/
     private String mMoney;
     /** 支付宝账户 **/
     private String mAliaccount;
@@ -172,11 +172,11 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
 
             // 下一步
             case R.id.bt_next_step:
-                if (Utils.isEmpty(mMoney)){
+                if (Utils.isEmpty(mEtMoney.getText().toString())){
                     Utils.showToast(this, "提现金额不能为空");
                     return;
                 }
-                if (Float.parseFloat(mMoney) < 1){
+                if (Float.parseFloat(mEtMoney.getText().toString()) < 1){
                     Utils.showToast(this, "提现金额最低1元");
                     return;
                 }
@@ -197,7 +197,6 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                         if (login != null) {
                             Toast.makeText(mContext, "提现成功", Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
