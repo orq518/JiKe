@@ -175,4 +175,28 @@ public class MyNeedBean implements Serializable {
     public void setAdddate(String adddate) {
         this.adddate = adddate;
     }
+
+    @Override
+    public String toString() {
+        return "MyNeedBean{" +
+                "needid='" + needid + '\'' +
+                ", id='" + id + '\'' +
+                ", userid='" + userid + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", companyname='" + companyname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", address='" + address + '\'' +
+                ", job1='" + job1 + '\'' +
+                ", job2='" + job2 + '\'' +
+                ", intro='" + intro + '\'' +
+                ", imghead='" + imghead + '\'' +
+                ", imgcard1='" + imgcard1 + '\'' +
+                ", imgcard2='" + imgcard2 + '\'' +
+                ", imgdiploma='" + imgdiploma + '\'' +
+                ", imgnamecard='" + imgnamecard + '\'' +
+                ", imglicense='" + imglicense + '\'' +
+                ", adddate='" + adddate + '\'' +
+                '}';
+    }
 }
