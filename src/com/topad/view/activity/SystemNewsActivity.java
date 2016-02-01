@@ -93,6 +93,8 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
         setData();
 
         showView();
+
+        getMessage();
     }
 
     /**
@@ -288,5 +290,33 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
         bModel4.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
         bModel4.time = "1小时前";
         bankList.add(bModel4);
+    }
+
+    public void getMessage() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_USER_GETMSG).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("lastmsgid", "");//最后一个消息的ID
+
+
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                BaseBean base = (BaseBean) t;
+                if (base != null) {}
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+                ToastUtil.show(mContext, msg);
+            }
+        }, BaseBean.class);
+
+
     }
 }
