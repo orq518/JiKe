@@ -91,6 +91,8 @@ public class Constants {
     // 系统消息
     public static final String URL_USER_GETMSG = "/user/getmsg";
 
+
+    public static String ALIAS_TYPE="topad";
     /**
      * 测试环境
      */

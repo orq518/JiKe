@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
@@ -250,13 +252,39 @@ public class TopADApplication extends Application {
         return userId;
     }
 
+    public void bindUmeng() {
+        if (TextUtils.isEmpty(userId)) {
+            userId = (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.USER_ID, "");
+        }
+        //绑定友盟账号
+        try {
+            if (!mPushAgent.isRegistered()) {
+                LogUtil.d("未注册，不能添加友盟ALIAS");
+                return;
+            }
+            new AddAliasTask(userId, Constants.ALIAS_TYPE).execute();
+        } catch (Exception e) {
+
+        }
+    }
+
     /**
      * 退出登录
      */
     public void logout() {
         token = null;
+        String mUserId = (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.USER_ID, "");
+        if (!Utils.isEmpty(mUserId)) {
+            //绑定友盟账号
+            try {
+                new RemoveAliasTask(mUserId, Constants.ALIAS_TYPE).execute();
+            } catch (Exception e) {
+
+            }
+        }
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_TOKEN, "");
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_ID, "");
+
     }
 
     /**
@@ -278,7 +306,6 @@ public class TopADApplication extends Application {
     }
 
 
-
     /**
      * 保存我的位置信息
      *
@@ -295,5 +322,65 @@ public class TopADApplication extends Application {
      */
     public LocationBean getLocation() {
         return locationBean;
+    }
+
+    class AddAliasTask extends AsyncTask<Void, Void, Boolean> {
+
+        String alias;
+        String aliasType;
+
+        public AddAliasTask(String aliasString, String aliasTypeString) {
+            // TODO Auto-generated constructor stub
+            this.alias = aliasString;
+            this.aliasType = aliasTypeString;
+        }
+
+        protected Boolean doInBackground(Void... params) {
+            try {
+                if (!Utils.isEmpty(alias)) {
+                    mPushAgent.removeAlias(alias, aliasType);
+                }
+
+                return mPushAgent.addAlias(alias, aliasType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (Boolean.TRUE.equals(result))
+                LogUtil.d("alias was set successfully.");
+        }
+
+    }
+
+    class RemoveAliasTask extends AsyncTask<Void, Void, Boolean> {
+
+        String alias;
+        String aliasType;
+
+        public RemoveAliasTask(String aliasString, String aliasTypeString) {
+            // TODO Auto-generated constructor stub
+            this.alias = aliasString;
+            this.aliasType = aliasTypeString;
+        }
+
+        protected Boolean doInBackground(Void... params) {
+            try {
+                return mPushAgent.removeAlias(alias, aliasType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (Boolean.TRUE.equals(result))
+                LogUtil.d("alias was set successfully.");
+        }
+
     }
 }

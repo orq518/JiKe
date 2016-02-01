@@ -394,7 +394,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
     }
 
     /**
-     * 设置数据--测试
+     * 设置数据
      */
     private void setData() {
         // 拼接url

@@ -4,20 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.topad.R;
-import com.topad.TopADApplication;
 import com.topad.alipay.AliPayInterface;
 import com.topad.alipay.AliPayUtil;
 import com.topad.alipay.PayResult;
-import com.topad.util.LogUtil;
+import com.topad.alipay.PayResultDetail;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -69,8 +76,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initViews() {
-        subject=getIntent().getStringExtra("subject");
-        body=getIntent().getStringExtra("body");
+
         mTitle = (TitleView) findViewById(R.id.title);
         mEtMoney = (EditText) findViewById(R.id.et_recharge_money);
         mIvClose = (ImageView) findViewById(R.id.iv_clear);
@@ -151,11 +157,8 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            mMoney = intent.getStringExtra("money");
-
-        }
-        if (!Utils.isEmpty(mMoney)) {
-            mEtMoney.setText(mMoney);
+            subject=getIntent().getStringExtra("subject");
+            body=getIntent().getStringExtra("body");
         }
 
     }
@@ -179,7 +182,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                     Utils.showToast(this, "充值金额不能为空");
                     return;
                 }
-                if (Float.parseFloat(mMoney) < 0.01) {
+                if (Float.parseFloat(mMoney) < 0) {
                     Utils.showToast(this, "充值金额最低0.01元");
                     return;
                 }
@@ -189,12 +192,71 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                 }
                 AliPayUtil aliPayUtil=new AliPayUtil(this);
                 aliPayUtil.aliPay(RechargeActivity.this,subject,body,mMoney);
+
                 break;
         }
     }
 
     @Override
     public void payResult(PayResult payResult) {
+        /**
+         * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+         * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+         * docType=1) 建议商户依赖异步通知
+         */
+        String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+        Log.d("ouou", "返回结果：" + resultInfo);
+        String resultStatus = payResult.getResultStatus();
+
+        // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+        if (TextUtils.equals(resultStatus, "9000")) {
+            Toast.makeText(mContext, "支付成功",
+                    Toast.LENGTH_SHORT).show();
+            finish();
+//            PayResultDetail resultDetail=new PayResultDetail(resultInfo);
+//            // 拼接url
+//            StringBuffer sb = new StringBuffer();
+//            sb.append(Constants.getCurrUrl()).append(Constants.URL_ALI_RETUREN).append("?");
+//            String url = sb.toString();
+//            RequestParams rp = new RequestParams();
+//            rp.add("seller_id", resultDetail.getseller_id());
+//            rp.add("out_trade_no", resultDetail.getout_trade_no());
+//            rp.add("total_fee", resultDetail.gettotal_fee());
+//            rp.add("subject", resultDetail.getsubject());
+//            rp.add("body", resultDetail.getbody());
+//
+//            postWithLoading(url, rp, false, new HttpCallback() {
+//                @Override
+//                public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+//                    BaseBean login = (BaseBean) t;
+//                    if (login != null) {
+//                        Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(BaseBean base) {
+//                    int status = base.getStatus();// 状态码
+//                    String msg = base.getMsg();// 错误信息
+//                    ToastUtil.show(mContext, "status = " + status + "\n"
+//                            + "msg = " + msg);
+//                }
+//            }, BaseBean.class);
+        } else {
+            // 判断resultStatus 为非"9000"则代表可能支付失败
+            // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+            if (TextUtils.equals(resultStatus, "8000")) {
+                Toast.makeText(mContext, "支付结果确认中",
+                        Toast.LENGTH_SHORT).show();
+
+            } else {
+                // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                Toast.makeText(mContext, "支付失败",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        }
 
     }
 

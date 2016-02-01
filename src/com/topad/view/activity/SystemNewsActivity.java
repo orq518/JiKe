@@ -40,7 +40,7 @@ import java.util.logging.Handler;
  * @author lht
  * @data: on 15/12/7 14:41
  */
-public class SystemNewsActivity extends BaseActivity implements View.OnClickListener{
+public class SystemNewsActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = SystemNewsActivity.class.getSimpleName();
     // 上下文
     private Context mContext;
@@ -53,7 +53,7 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
     // 适配器
     private ListAdapter adapter;
     // 数据源
-    private ArrayList<SystemNewsBean> bankList = new ArrayList<SystemNewsBean>();
+    private ArrayList<SystemNewsBean.DataEntity> bankList = new ArrayList<SystemNewsBean.DataEntity>();
 
     private final int MSG_REFRESH = 1000;
     private final int MSG_LOADMORE = 2000;
@@ -84,7 +84,8 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initViews() {
-        mTitleView = (TitleView) findViewById(R.id.title);;
+        mTitleView = (TitleView) findViewById(R.id.title);
+        ;
         mListView = (MyListView) findViewById(R.id.listview);
     }
 
@@ -94,7 +95,7 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
 
         showView();
 
-        getMessage();
+        getMessage(0);
     }
 
     /**
@@ -128,31 +129,12 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onRefresh() {
-                // 模拟刷新数据，1s之后停止刷新
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mListView.stopRefresh();
-                        Toast.makeText(SystemNewsActivity.this, "refresh",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_REFRESH);
-                    }
-                }, 1000);
+                getMessage(0);
             }
 
             @Override
             public void onLoadMore() {
-                mHandler.postDelayed(new Runnable() {
-                    // 模拟加载数据，1s之后停止加载
-                    @Override
-                    public void run() {
-                        mListView.stopLoadMore();
-                        Toast.makeText(SystemNewsActivity.this, "loadMore",
-                                Toast.LENGTH_SHORT).show();
-                        mHandler.sendEmptyMessage(MSG_LOADMORE);
-                    }
-                }, 1000);
+                getMessage(1);
             }
         });
     }
@@ -214,21 +196,24 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
                 convertView = mInflater.inflate((R.layout.activity_system_news_item_layout), null);
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
-                holder.content = (TextView) convertView .findViewById(R.id.tv_content);
-                holder.time = (TextView) convertView .findViewById(R.id.tv_time);
+                holder.content = (TextView) convertView.findViewById(R.id.tv_content);
+                holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+                holder.time = (TextView) convertView.findViewById(R.id.tv_time);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
-            holder.content.setText(bankList.get(position).content);
-            holder.time.setText(bankList.get(position).time);
+            SystemNewsBean.DataEntity entity=bankList.get(position);
+            holder.tv_title.setText(entity.getTitle());
+            holder.content.setText(entity.getBody());
+            holder.time.setText(entity.getAddtime());
             return convertView;
         }
 
         class ViewHolder {
             ImageView icon;
+            TextView tv_title;
             TextView content;
             TextView time;
         }
@@ -238,84 +223,59 @@ public class SystemNewsActivity extends BaseActivity implements View.OnClickList
      * 设置数据--测试
      */
     private void setData() {
-//        // 拼接url
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(Constants.getCurrUrl()).append(Constants.URL_USER_GETMSG).append("?");
-//        String url = sb.toString();
-//        RequestParams rp = new RequestParams();
-//        rp.add("userid", TopADApplication.getSelf().getUserId());
-//        rp.add("lastmsgid", "0");
-//
-//        postWithLoading(url, rp, false, new HttpCallback() {
-//            @Override
-//            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-//                LoginBean login = (LoginBean) t;
-//                if (login != null) {
-//
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(BaseBean base) {
-//                int status = base.getStatus();// 状态码
-//                String msg = base.getMsg();// 错误信息
-//                ToastUtil.show(mContext, "status = " + status + "\n"
-//                        + "msg = " + msg);
-//            }
-//        }, LoginBean.class);
 
-        SystemNewsBean bModel0 = new SystemNewsBean();
-        bModel0.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
-        bModel0.time = "1小时前";
-        bankList.add(bModel0);
-
-        SystemNewsBean bModel1 = new SystemNewsBean();
-        bModel1.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
-        bModel1.time = "1小时前";
-        bankList.add(bModel1);
-
-        SystemNewsBean bModel2 = new SystemNewsBean();
-        bModel2.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
-        bModel2.time = "1小时前";
-        bankList.add(bModel2);
-
-        SystemNewsBean bModel3 = new SystemNewsBean();
-        bModel3.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
-        bModel3.time = "1小时前";
-        bankList.add(bModel3);
-
-        SystemNewsBean bModel4 = new SystemNewsBean();
-        bModel4.content = "名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视";
-        bModel4.time = "1小时前";
-        bankList.add(bModel4);
     }
 
-    public void getMessage() {
+    public void getMessage(final int type) {
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_USER_GETMSG).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
-        rp.add("lastmsgid", "");//最后一个消息的ID
+        if (type == 0) {
+            rp.add("lastmsgid", "0");//最后一个消息的ID
+        }else{
+            if(bankList!=null&&bankList.size()>0){
+                rp.add("lastmsgid", bankList.get(bankList.size()-1).getId());//最后一个消息的ID
+            }
+
+        }
+
 
 
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                BaseBean base = (BaseBean) t;
-                if (base != null) {}
+                if(type==0) {
+                    mListView.stopRefresh();
+                }else{
+                    mListView.stopLoadMore();
+                }
+
+                SystemNewsBean base = (SystemNewsBean) t;
+                if (base != null) {
+                    if(type==0) {
+                        bankList.clear();
+                    }
+                    bankList.addAll(base.getData());
+                    adapter.notifyDataSetChanged();
+
+                }
             }
 
             @Override
             public void onFailure(BaseBean base) {
+                if(type==0) {
+                    mListView.stopRefresh();
+                }else{
+                    mListView.stopLoadMore();
+                }
                 int status = base.getStatus();// 状态码
                 String msg = base.getMsg();// 错误信息
                 ToastUtil.show(mContext, msg);
             }
-        }, BaseBean.class);
+        }, SystemNewsBean.class);
 
 
     }

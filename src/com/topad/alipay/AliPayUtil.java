@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.topad.R;
 import com.topad.amap.ToastUtil;
+import com.topad.util.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -61,32 +62,32 @@ public class AliPayUtil {
                     PayResult payResult = new PayResult((String) msg.obj);
 
                     aliPayInterface.payResult(payResult);//回调返回结果
-                    /**
-                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
-                     * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
-                     * docType=1) 建议商户依赖异步通知
-                     */
-                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                    Log.d("ouou", "返回结果：" + resultInfo);
-                    String resultStatus = payResult.getResultStatus();
-                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(mContext, "支付成功",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 判断resultStatus 为非"9000"则代表可能支付失败
-                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
-                        if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(mContext, "支付结果确认中",
-                                    Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(mContext, "支付失败",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
+//                    /**
+//                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+//                     * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+//                     * docType=1) 建议商户依赖异步通知
+//                     */
+//                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+//                    Log.d("ouou", "返回结果：" + resultInfo);
+//                    String resultStatus = payResult.getResultStatus();
+//                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+//                    if (TextUtils.equals(resultStatus, "9000")) {
+//                        Toast.makeText(mContext, "支付成功",
+//                                Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // 判断resultStatus 为非"9000"则代表可能支付失败
+//                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+//                        if (TextUtils.equals(resultStatus, "8000")) {
+//                            Toast.makeText(mContext, "支付结果确认中",
+//                                    Toast.LENGTH_SHORT).show();
+//
+//                        } else {
+//                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+//                            Toast.makeText(mContext, "支付失败",
+//                                    Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
                     break;
                 }
                 case SDK_CHECK_FLAG: {
@@ -179,7 +180,7 @@ public class AliPayUtil {
                 PayTask alipay = new PayTask(mContext);
                 // 调用支付接口，获取支付结果
                 String result = alipay.pay(payInfo, true);
-
+                LogUtil.d("支付返回结果："+result);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = result;

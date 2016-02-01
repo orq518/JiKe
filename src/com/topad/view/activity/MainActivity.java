@@ -212,6 +212,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //        // Set the drawer toggle as the DrawerListener
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
         initLocation();
+        TopADApplication.getSelf().bindUmeng();
     }
 
     @Override
@@ -243,7 +244,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //在定位结束后，在合适的生命周期调用destroy()方法
         //其中如果间隔时间为-1，则定位只定一次
         mLocationManagerProxy.requestLocationData(
-                LocationProviderProxy.AMapNetwork, 5*60 * 1000, 15, this);
+                LocationProviderProxy.AMapNetwork, 15*60 * 1000, 15, this);
         mLocationManagerProxy.setGpsEnable(false);
     }
 
