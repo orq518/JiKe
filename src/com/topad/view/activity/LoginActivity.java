@@ -203,6 +203,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             if (!Utils.isEmpty(login.getUserid())) {
                                 SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, login.getUserid());
                             }
+                            TopADApplication.getSelf().bindUmeng();//绑定友盟
                             // 本地存储mobienumber
                             SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PHONR, mUserName);
 

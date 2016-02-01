@@ -2,6 +2,7 @@ package com.topad.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.renderscript.BaseObj;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class IdentityAutherActivity extends BaseActivity implements View.OnClick
      * 顶部布局
      **/
     private TitleView mTitleView;
-    TextView shenfenzheng,biyezheng,mingpian;
+    TextView shenfenzheng,biyezheng,mingpian,baozhengjin;
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -48,9 +49,11 @@ public class IdentityAutherActivity extends BaseActivity implements View.OnClick
         shenfenzheng=(TextView) findViewById(R.id.shenfenzheng);
         biyezheng=(TextView) findViewById(R.id.biyezheng);
         mingpian=(TextView) findViewById(R.id.mingpian);
+        baozhengjin=(TextView) findViewById(R.id.mingpian);
         shenfenzheng.setOnClickListener(this);
         biyezheng.setOnClickListener(this);
         mingpian.setOnClickListener(this);
+        baozhengjin.setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +90,10 @@ public class IdentityAutherActivity extends BaseActivity implements View.OnClick
         super.onClick(v);
         Intent  mIntent=new Intent(mContext,UploadPicActivity.class);
         switch (v.getId()) {
+            case R.id.baozhengjin://保证金
+                  mIntent=new Intent(mContext,Baozhengjin.class);
+
+                break;
             case R.id.shenfenzheng://
                 mIntent.putExtra("title","上传身份证");
                 mIntent.putExtra("type",0);

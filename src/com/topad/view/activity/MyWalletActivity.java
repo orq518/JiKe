@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.alipay.AliPayUtil;
 import com.topad.alipay.PayDemoActivity;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
@@ -99,19 +100,16 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             // 提现
             case R.id.btn_cash:
                 Intent intentcash = new Intent(mContext, WithDrawCashActivity.class);
-                intentcash.putExtra("money", mTVMoney + "");// 余额
-                intentcash.putExtra("aliaccount", "");// 支付宝账户
+                intentcash.putExtra("money", mTVMoney + "");
+                intentcash.putExtra("aliaccount", AliPayUtil.SELLER);
                 startActivity(intentcash);
                 break;
 
             // 充值
             case R.id.btn_recharge:
                 Intent intentrecharge = new Intent(mContext, RechargeActivity.class);
-                intentrecharge.putExtra("seller_id", "");// 支付宝返回用户ID
-                intentrecharge.putExtra("out_trade_no", "");// 订单号
-                intentrecharge.putExtra("total_fee", "");// 金额
-                intentrecharge.putExtra("subject", "");// 传入支付的项目名称
-                intentrecharge.putExtra("body", "");// 传入系统的userid |支付类型|其它参数
+                intentrecharge.putExtra("subject", "钱包充值");
+                intentrecharge.putExtra("body", TopADApplication.getSelf().getUserId()+"|1|0");
                 startActivity(intentrecharge);
                 break;
 

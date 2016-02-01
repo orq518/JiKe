@@ -25,6 +25,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:visibility="gone"
             android:background="@drawable/app_icon"/>
 
         <!-- 右 -->
@@ -37,15 +38,22 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
-
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="title"
+                android:textSize="18sp"/>
             <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
+                android:layout_marginTop="5dp"
                 android:text="名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视"
                 android:textSize="16sp"
-                android:layout_weight="3"/>
+                />
 
             <TextView
                 android:id="@+id/tv_time"
@@ -57,8 +65,7 @@
                 android:textColor="@color/text_gray_bg"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/tv_name"
-                android:layout_alignParentBottom="true"
-                android:layout_weight="1"/>
+                android:layout_alignParentBottom="true"/>
 
         </LinearLayout>
 

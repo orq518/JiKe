@@ -1,0 +1,36 @@
+<!-- 登录页 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+    <!-- 顶部标题 -->
+    <com.topad.view.customviews.TitleView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="15dp"/>
+
+
+    <!-- 登录 -->
+    <Button
+        android:id="@+id/join_bt"
+        style="@style/btn_bule2_borad_style"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:focusable="false"
+        android:text="现在加入"
+        android:textColor="@color/white"/>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:layout_above="@id/join_bt"
+                  android:layout_below="@id/title"
+                  android:background="@color/white"
+                  android:orientation="vertical">
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/icon_ensure"/>
+
+    </LinearLayout>
+</RelativeLayout>

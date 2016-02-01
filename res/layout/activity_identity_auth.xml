@@ -68,7 +68,22 @@
             android:text="名片照"
             android:textSize="16dp"
             android:visibility="visible"/>
-
+        <TextView
+            android:id="@+id/baozhengjin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:drawableRight="@drawable/arrow"
+            android:gravity="left|center"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:padding="10dp"
+            android:text="客户保障"
+            android:textSize="16dp"
+            android:visibility="visible"/>
     </LinearLayout>
 
 

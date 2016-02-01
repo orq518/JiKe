@@ -1039,6 +1039,9 @@ public class Utils {
      * @throws ParseException
      */
     public static int daysBetween(String smdate,String bdate) throws ParseException {
+        if (Utils.isEmpty(smdate)){
+            return 0;
+        }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.setTime(sdf.parse(smdate));
