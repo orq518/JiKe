@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.topad.R;
 import com.topad.bean.SelectProjectBean;
-import com.topad.view.fragment.GrabSingleFragment;
+import com.topad.view.fragment.MyWantGrabSingleFragment;
 import com.topad.view.fragment.SelectProjectFragmnet;
 
 
@@ -27,8 +27,8 @@ import java.util.List;
  * @author lht
  * @data: on 15/10/27 17:31
  */
-public class MyGrabsingleActivity extends BaseActivity implements View.OnClickListener {
-    private static final String LTAG = MyGrabsingleActivity.class.getSimpleName();
+public class MyWantGrabsingleActivity extends BaseActivity implements View.OnClickListener {
+    private static final String LTAG = MyWantGrabsingleActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
     /** 页卡内容 **/
@@ -62,7 +62,7 @@ public class MyGrabsingleActivity extends BaseActivity implements View.OnClickLi
     public static final int HOME_TAB_INDEX_1 = 1;
     private static int mIndex = HOME_TAB_INDEX_0;
     /** 我的抢单 **/
-    public GrabSingleFragment mGrabSingleFragment;
+    public MyWantGrabSingleFragment mGrabSingleFragment;
     /** 甄选项 **/
     public SelectProjectFragmnet mSelectProjectFragmnet;
     public FragmentManager mFragmentManager;
@@ -146,7 +146,7 @@ public class MyGrabsingleActivity extends BaseActivity implements View.OnClickLi
      */
     private void InitViewPager() {
         mFragmentManager = getSupportFragmentManager();
-        mGrabSingleFragment = new GrabSingleFragment();
+        mGrabSingleFragment = new MyWantGrabSingleFragment();
         mSelectProjectFragmnet = new SelectProjectFragmnet();
         viewPager = (ViewPager) findViewById(R.id.vPager);
         fragments = new ArrayList<Fragment>();

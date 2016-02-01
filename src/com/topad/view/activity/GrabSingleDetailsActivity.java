@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * ${todo}<我的抢单详情页>
- *
+ *      state－0我要提交，1抢单成功，2未选择抢单人，3项目已取消，4已选择其他
  * @author lht
  * @data: on 15/10/28 16:32
  */
@@ -144,35 +144,35 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
         mTitleView.setTitle("项目详情");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
-        if("1".equals(state)){// 我要提交
+        if("0".equals(state)){// 我要提交
             mLYDetails.setVisibility(View.VISIBLE);
             mLYSuccess.setVisibility(View.GONE);
             mLYAppeal.setVisibility(View.GONE);
             mLYNotSelect.setVisibility(View.GONE);
             mLYCancel.setVisibility(View.GONE);
             mLYOther.setVisibility(View.GONE);
-        }else if("2".equals(state)){// 抢单成功
+        }else if("1".equals(state)){// 抢单成功
             mLYDetails.setVisibility(View.GONE);
             mLYSuccess.setVisibility(View.VISIBLE);
             mLYAppeal.setVisibility(View.VISIBLE);
             mLYNotSelect.setVisibility(View.GONE);
             mLYCancel.setVisibility(View.GONE);
             mLYOther.setVisibility(View.GONE);
-        }else if("3".equals(state)){// 未选择抢单人
+        }else if("2".equals(state)){// 未选择抢单人
             mLYDetails.setVisibility(View.GONE);
             mLYSuccess.setVisibility(View.GONE);
             mLYAppeal.setVisibility(View.GONE);
             mLYNotSelect.setVisibility(View.VISIBLE);
             mLYCancel.setVisibility(View.GONE);
             mLYOther.setVisibility(View.GONE);
-        }else if("4".equals(state)){// 项目已取消
+        }else if("3".equals(state)){// 项目已取消
             mLYDetails.setVisibility(View.GONE);
             mLYSuccess.setVisibility(View.GONE);
             mLYAppeal.setVisibility(View.GONE);
             mLYNotSelect.setVisibility(View.GONE);
             mLYCancel.setVisibility(View.VISIBLE);
             mLYOther.setVisibility(View.GONE);
-        }else if("5".equals(state)){// 已选择其他
+        }else if("4".equals(state)){// 已选择其他
             mLYDetails.setVisibility(View.GONE);
             mLYSuccess.setVisibility(View.GONE);
             mLYAppeal.setVisibility(View.GONE);
@@ -295,30 +295,66 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
     private ArrayList<HashMap<String,String>> setData() {
         list = new ArrayList<HashMap<String,String>>();
 
-        HashMap<String, String> map =  new HashMap<String,String>();
-        map.put("icon", String.valueOf(R.drawable.shiming_normal));
-        map.put("name", "实名认证");
-        list.add(map);
+        // 实名认证
+        if(!Utils.isEmpty(grabSingleBean.getNeedTName())){
+            HashMap<String, String> map =  new HashMap<String,String>();
+            map.put("icon", String.valueOf(R.drawable.shiming_normal));
+            if("0".equals(grabSingleBean.getNeedTName())){
+                map.put("icon", String.valueOf(R.drawable.shiming));
+            }else{
+                map.put("icon", String.valueOf(R.drawable.shiming_normal));
+            }
+            map.put("name", "实名认证");
+            list.add(map);
+        }
 
-        HashMap<String, String> map2 =  new HashMap<String,String>();
-        map2.put("icon", String.valueOf(R.drawable.shoujirenzheng_normal));
-        map2.put("name", "手机认证");
-        list.add(map2);
+        // 手机认证
+        if(!Utils.isEmpty(grabSingleBean.getNeedSafemoney())){
+            HashMap<String, String> map2 =  new HashMap<String,String>();
+            if("0".equals(grabSingleBean.getNeedSafemoney())){
+                map2.put("icon", String.valueOf(R.drawable.shoujirenzheng));
+            }else{
+                map2.put("icon", String.valueOf(R.drawable.shoujirenzheng_normal));
+            }
+            map2.put("name", "保证金");
+            list.add(map2);
+        }
 
-        HashMap<String, String> map3 =  new HashMap<String,String>();
-        map3.put("icon", String.valueOf(R.drawable.baozhengwancheng));
-        map3.put("name", "保证完成");
-        list.add(map3);
+        // 保证完成
+        if(!Utils.isEmpty(grabSingleBean.getNeedFinish())){
+            HashMap<String, String> map3 =  new HashMap<String,String>();
+            if("0".equals(grabSingleBean.getNeedFinish())){
+                map3.put("icon", String.valueOf(R.drawable.baozhengwancheng));
+            }else{
+                map3.put("icon", String.valueOf(R.drawable.baozhengwancheng_normal));
+            }
+            map3.put("name", "保证完成");
+            list.add(map3);
+        }
 
-        HashMap<String, String> map4 =  new HashMap<String,String>();
-        map4.put("icon", String.valueOf(R.drawable.yuanchuang));
-        map4.put("name", "保证原创");
-        list.add(map4);
+        // 保证原创
+        if(!Utils.isEmpty(grabSingleBean.getNeedSelf())){
+            HashMap<String, String> map4 =  new HashMap<String,String>();
+            if("0".equals(grabSingleBean.getNeedSelf())){
+                map4.put("icon", String.valueOf(R.drawable.yuanchuang));
+            }else{
+                map4.put("icon", String.valueOf(R.drawable.yuanchuang_normal));
+            }
+            map4.put("name", "保证原创");
+            list.add(map4);
+        }
 
-        HashMap<String, String> map5 =  new HashMap<String,String>();
-        map5.put("icon", String.valueOf(R.drawable.weihu_normal));
-        map5.put("name", "保证维护");
-        list.add(map5);
+        // 保证维护
+        if(!Utils.isEmpty(grabSingleBean.getNeedRepair())){
+            HashMap<String, String> map5 =  new HashMap<String,String>();
+            if("0".equals(grabSingleBean.getNeedRepair())){
+                map5.put("icon", String.valueOf(R.drawable.weihu));
+            }else{
+                map5.put("icon", String.valueOf(R.drawable.weihu_normal));
+            }
+            map5.put("name", "保证维护");
+            list.add(map5);
+        }
 
         return list;
     }

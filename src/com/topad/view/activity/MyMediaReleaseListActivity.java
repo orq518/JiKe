@@ -192,30 +192,6 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            if(!Utils.isEmpty(bankList.get(position).getMediacert())){
-                ImageLoader.getInstance().displayImage(bankList.get(position).getMediacert(), holder.icon, TopADApplication.getSelf().getImageLoaderOption(),
-                        new ImageLoadingListener(){
-                            @Override
-                            public void onLoadingStarted(String s, View view) {
-
-                            }
-
-                            @Override
-                            public void onLoadingFailed(String s, View view, FailReason failReason) {
-
-                            }
-
-                            @Override
-                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            }
-
-                            @Override
-                            public void onLoadingCancelled(String s, View view) {
-
-                            }
-                        });
-            }
-
             if(!Utils.isEmpty(bankList.get(position).getMedianame())){
                 holder.name.setText(bankList.get(position).getMedianame());
             }
@@ -225,12 +201,12 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
             }
 
             if(!Utils.isEmpty(bankList.get(position).getAddtime())){
-                // 当前时间
-                SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String datestr= dataformat.format(new Date());
-
+                // 时间
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 try {
-                    holder.time.setText(Utils.daysBetween(bankList.get(position).getAddtime(), datestr) + "天前");
+                    date = sdf.parse(bankList.get(position).getAddtime());
+                    holder.time.setText(Utils.getTimeFormatText(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -239,6 +215,7 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
             if(!Utils.isEmpty(bankList.get(position).getLocation())){
                 holder.address.setText(bankList.get(position).getLocation());
             }
+
             String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + TopADApplication.getSelf().getMyInfo().getImghead();
             if(!Utils.isEmpty(headerpicUrl)){
                 ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon,
@@ -277,6 +254,7 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
                 if (bean != null && bean.data.size()!= 0) {
                     for(int i = 0; i < bean.data.size(); i++){
                         bankList.add(bean.data.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                 }
                 mListView.stopRefresh();

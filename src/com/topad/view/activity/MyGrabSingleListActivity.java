@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -95,7 +94,18 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
-                intent.putExtra("state", "2");
+                String state = "0";
+                if("1".equals(bankList.get(position-1).getStatus())){
+                    state = "2";// 2未选择抢单人
+                }else if("3".equals(bankList.get(position-1).getStatus())){
+                    state = "3";// 3项目已取消
+                }else if("1".equals(bankList.get(position-1).getStatus()) && TopADApplication.getSelf().getUserId().equals(bankList.get(position-1).getUserid2())){
+                    state = "1";// 1抢单成功
+                }else if("1".equals(bankList.get(position-1).getStatus()) && !TopADApplication.getSelf().getUserId().equals(bankList.get(position-1).getUserid2())){
+                    state = "4";// 4已选择其他
+                }
+
+                intent.putExtra("state", state);
                 intent.putExtra("data_details", bankList.get(position-1));
                 startActivity(intent);
             }
@@ -233,6 +243,7 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
                 if (bean != null && bean.data.size()!= 0) {
                     for(int i = 0; i < bean.data.size(); i++){
                         bankList.add(bean.data.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                 }
                 mListView.stopRefresh();

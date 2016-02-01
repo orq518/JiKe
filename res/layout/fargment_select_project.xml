@@ -28,18 +28,19 @@
                     android:id="@+id/btn_all"
                     style="@style/btn_white_borad_style"
                     android:layout_weight="1"
-                    android:focusable="false"
                     android:text="全部"
                     android:textColor="@color/hot"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp"/>
+                    android:paddingRight="20dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
                 <!-- 已托管 -->
                 <Button
                     android:id="@+id/btn_trusteeship"
                     style="@style/btn_white_borad_style"
                     android:layout_weight="1"
-                    android:focusable="false"
+                    android:focusable="true"
                     android:text="已托管"
                     android:textColor="@color/text_gray_bg"
                     android:paddingLeft="20dp"
@@ -50,7 +51,7 @@
                     android:id="@+id/btn_not_trusteeship"
                     style="@style/btn_white_borad_style"
                     android:layout_weight="1"
-                    android:focusable="false"
+                    android:focusable="true"
                     android:text="未托管"
                     android:textColor="@color/text_gray_bg"
                     android:paddingLeft="20dp"
@@ -136,7 +137,9 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_bg"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
             <View
                 android:layout_width="match_parent"

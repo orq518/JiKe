@@ -425,8 +425,26 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            mLYProductFinish.setVisibility(View.VISIBLE);
+                            mFinish.setVisibility(View.VISIBLE);
+                            mLYTrust.setVisibility(View.GONE);
                             mProjectTrust.setVisibility(View.GONE);
+                            mProjectCancel.setVisibility(View.GONE);
+                            mListview.setVisibility(View.GONE);
                             mTVState.setVisibility(View.VISIBLE);
+                            // 类别
+                            if (!Utils.isEmpty(grabSingleBean.getType1())
+                                    && !Utils.isEmpty(grabSingleBean.getType2())) {
+                                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                                mTVTime.setText(ssb.toString());
+                            }
+                            // 时间
+                            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
+                                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+                                mTVType.setText(sourceStrArray[0]);
+                                mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
+                            }
+                            getInfoData();
                         }
 
                         @Override
