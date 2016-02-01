@@ -204,15 +204,16 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
 
-
-            // 当前时间
-            SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String datestr= dataformat.format(new Date());
-
-            try {
-                holder.countdown.setText(Utils.daysBetween(bankList.get(position).getAdddate(), datestr) + "天前");
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(!Utils.isEmpty(bankList.get(position).getAdddate())){
+                // 时间
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try {
+                    date = sdf.parse(bankList.get(position).getAdddate());
+                    holder.countdown.setText(Utils.getTimeFormatText(date));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             return convertView;
         }
@@ -250,6 +251,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                 if (bean != null && bean.data.size()!= 0) {
                     for(int i = 0; i < bean.data.size(); i++){
                         bankList.add(bean.data.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                 }
                 mListView.stopRefresh();

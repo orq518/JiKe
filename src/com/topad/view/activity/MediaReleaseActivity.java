@@ -81,19 +81,19 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private TextView mAddress;
 
     /** 类别 **/
-    private String category;
+    private String category = " ";
     /** 媒体名称 **/
-    private String mediaName;
+    private String mediaName = " ";
     /** 栏目名称 **/
-    private String subName;
+    private String subName = " ";
     /** lat **/
-    private double lat;
+    private double lat = 0;
     /** lon **/
-    private double lon;
+    private double lon = 0;
     /** 类别 **/
     private String[] categoryArray ={"电视","广播","报纸","户外","杂志","网络"};
     /** 媒体代理证明上传文件 **/
-    private String mediacert;
+    private String mediacert = " ";
     public static int SELECT_MEDIA = 1;
     public static int SELECT_ADDRESS= 2;
     public static int SELECT_UP_PIC= 3;
@@ -177,7 +177,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mLayProveMedia.setOnClickListener(this);
         mETAdd.setOnClickListener(this);
         mBTSubmit.setOnClickListener(this);
-        mBTSubmit.setOnClickListener(this);
+        mBTAdd.setOnClickListener(this);
         mIVVoice.setOnClickListener(this);
         mIVKeyboard.setOnClickListener(this);
         mRecord.setOnClickListener(this);
@@ -453,19 +453,19 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("type1", categoryArray[Integer.parseInt(category) - 1]); // 1-6
         rp.add("type2", mMedia.getText().toString()); // 传中文名
-        rp.add("type3", "");
+        rp.add("type3", " ");
         rp.add("medianame", mediaName);
         if(!Utils.isEmpty(category)){
             if(category.equals("1") || category.equals("2")){
                 rp.add("subname", subName);
             }else{
-                rp.add("subname", "");
+                rp.add("subname", " ");
             }
         }
 
         rp.add("location", mAddress.getText().toString());
-        rp.add("longitude", lat + "");
-        rp.add("latitude", lon + "");
+        rp.add("longitude", lat + " ");
+        rp.add("latitude", lon + " ");
         rp.add("mediacert", mediacert);
         rp.add("token", TopADApplication.getSelf().getToken());
 

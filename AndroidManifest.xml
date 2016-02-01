@@ -182,7 +182,7 @@
 
         <!-- 我要抢单 -->
         <activity
-            android:name=".view.activity.MyGrabsingleActivity"
+            android:name=".view.activity.MyWantGrabsingleActivity"
             android:theme="@style/AppTheme">
         </activity>
 

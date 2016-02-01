@@ -17,7 +17,7 @@ import com.topad.bean.ChildBean;
 import com.topad.bean.GroupBean;
 import com.topad.bean.SelectProjectBean;
 import com.topad.util.LogUtil;
-import com.topad.view.activity.MyGrabsingleActivity;
+import com.topad.view.activity.MyWantGrabsingleActivity;
 import com.topad.view.adapter.SelectProjectEListAdapter;
 import com.topad.view.customviews.CustomExpandableListView;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	/** type1 **/
 	private String type1 = " ";
 	/** type2 **/
-	private StringBuffer type2 = new StringBuffer("");
+	private StringBuffer type2 = new StringBuffer(" ");
 
 	@Override
 	public String getFragmentName() {
@@ -355,7 +355,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 				bean.setType2(type2.toString());
 				bean.setPage("1");
 
-				MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
+				MyWantGrabsingleActivity activity = (MyWantGrabsingleActivity) getActivity();
 				activity.setSelectProjectBean(bean);
 				activity.viewPager.setCurrentItem(0);
 				activity.getSelectProjectData();
@@ -366,7 +366,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 	private Fragment recreateFragment(Fragment f) {
 		try {
-			MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
+			MyWantGrabsingleActivity activity = (MyWantGrabsingleActivity) getActivity();
 			Fragment.SavedState savedState = activity.mFragmentManager.saveFragmentInstanceState(f);
 			Fragment newInstance = f.getClass().newInstance();
 			newInstance.setInitialSavedState(savedState);

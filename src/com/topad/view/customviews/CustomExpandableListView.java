@@ -2,6 +2,7 @@ package com.topad.view.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 
 /**
@@ -26,4 +27,5 @@ public class CustomExpandableListView extends ExpandableListView {
 
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
 }

@@ -521,7 +521,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.grab_single://我要抢单
-                intent = new Intent(MainActivity.this, MyGrabsingleActivity.class);
+                intent = new Intent(MainActivity.this, MyWantGrabsingleActivity.class);
                 startActivity(intent);
                 break;
 

@@ -26,14 +26,13 @@ import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.activity.GrabSingleDetailsActivity;
-import com.topad.view.activity.MyGrabsingleActivity;
+import com.topad.view.activity.MyWantGrabsingleActivity;
 import com.topad.view.customviews.mylist.MyListView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Handler;
 
 /**
  * ${todo}<我要抢单>
@@ -41,16 +40,14 @@ import java.util.logging.Handler;
  * @author lht
  * @data: on 15/10/28 18:32
  */
-public class GrabSingleFragment extends BaseFragment{
-	private static final String LTAG = GrabSingleFragment.class.getSimpleName();
+public class MyWantGrabSingleFragment extends BaseFragment{
+	private static final String LTAG = MyWantGrabSingleFragment.class.getSimpleName();
 	/** 上下文 **/
 	private Context mContext;
 	/** 根view布局 **/
 	private View mRootView;
 	/** listView **/
 	private MyListView mListView;
-	/** 只是用来模拟异步获取数据 **/
-	private Handler handler;
 	/** 适配器 **/
 	private ListAdapter adapter;
 	/** 数据源 **/
@@ -115,7 +112,7 @@ public class GrabSingleFragment extends BaseFragment{
 			public void onItemClick(AdapterView<?> parent, View view,
 									int position, long id) {
 				Intent intent = new Intent(mContext, GrabSingleDetailsActivity.class);
-				intent.putExtra("state", "1");
+				intent.putExtra("state", "0");// 0我要提交
 				intent.putExtra("data_details", bankList.get(position-1));
 				startActivity(intent);
 			}
@@ -223,10 +220,10 @@ public class GrabSingleFragment extends BaseFragment{
 
 			// 当前时间
 			SimpleDateFormat dataformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String datestr= dataformat.format(new Date());
+			String datestr = dataformat.format(new Date());
 
 			try {
-				holder.countdown.setText(Utils.daysBetween(bankList.get(position).getEnddate(), datestr) + "天前");
+				holder.countdown.setText(Utils.daysBetween(bankList.get(position).getAdddate(), datestr) + "天前");
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -249,7 +246,7 @@ public class GrabSingleFragment extends BaseFragment{
 	 * 设置数据
 	 */
 	public void setData() {
-		MyGrabsingleActivity activity = (MyGrabsingleActivity) getActivity();
+		MyWantGrabsingleActivity activity = (MyWantGrabsingleActivity) getActivity();
 		// 有筛选项
 		if(activity != null && activity.getSelectProjectBean() != null){
 			SelectProjectBean bean = activity.getSelectProjectBean();
@@ -278,6 +275,7 @@ public class GrabSingleFragment extends BaseFragment{
 					if (bean != null && bean.data.size()!= 0) {
 						for(int i = 0; i < bean.data.size(); i++){
 							bankList.add(bean.data.get(i));
+							adapter.notifyDataSetChanged();
 						}
 					}
 					mListView.stopRefresh();
@@ -326,6 +324,7 @@ public class GrabSingleFragment extends BaseFragment{
 				if (bean != null && bean.data.size()!= 0) {
 					for(int i = 0; i < bean.data.size(); i++){
 						bankList.add(bean.data.get(i));
+						adapter.notifyDataSetChanged();
 					}
 				}
 				mListView.stopRefresh();

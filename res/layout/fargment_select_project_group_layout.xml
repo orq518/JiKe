@@ -14,7 +14,9 @@
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:layout_alignParentLeft="true"></TextView>
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"></TextView>
 
 
     <ImageView
@@ -24,7 +26,9 @@
         android:src="@drawable/select_project_up"
         android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="22dp"/>
+        android:layout_marginRight="22dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <CheckBox
         android:id="@+id/chbGroup"
@@ -39,31 +43,5 @@
         android:layout_marginRight="20dp"
         android:visibility="gone"
         android:button="@null"/>
-
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="20dp">-->
-
-        <!--&lt;!&ndash;<CheckBox&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/chbGroup"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:clickable="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:focusable="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_marginTop="5dp"/>&ndash;&gt;-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/icon"-->
-            <!--android:layout_width="17dp"-->
-            <!--android:layout_height="17dp"-->
-            <!--android:src="@drawable/select_project_up"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="20dp"/>-->
-
-    <!--</LinearLayout>-->
 
 </RelativeLayout>
