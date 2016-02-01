@@ -244,7 +244,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //在定位结束后，在合适的生命周期调用destroy()方法
         //其中如果间隔时间为-1，则定位只定一次
         mLocationManagerProxy.requestLocationData(
-                LocationProviderProxy.AMapNetwork, 15*60 * 1000, 15, this);
+                LocationProviderProxy.AMapNetwork, 15 * 60 * 1000, 15, this);
         mLocationManagerProxy.setGpsEnable(false);
     }
 
@@ -265,11 +265,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             Double geoLng = aMapLocation.getLongitude();
             String curAddress = aMapLocation.getAddress();
             LogUtil.d("定位成功：" + curAddress);
-            getUploadMyLocation(curAddress,""+geoLng,""+geoLat);
-            LocationBean locationBean=new LocationBean();
-            locationBean.location=curAddress;
-            locationBean.longitude=geoLng;
-            locationBean.latitude=geoLat;
+            getUploadMyLocation(curAddress, "" + geoLng, "" + geoLat);
+            LocationBean locationBean = new LocationBean();
+            locationBean.location = curAddress;
+            locationBean.longitude = geoLng;
+            locationBean.latitude = geoLat;
             TopADApplication.getSelf().setLocation(locationBean);
         }
 
@@ -774,10 +774,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }, MyInfoBean.class);
 
     }
+
     /**
      * 获取我的个人信息
      */
-    public void getUploadMyLocation(String location,String longitude,String latitude) {
+    public void getUploadMyLocation(String location, String longitude, String latitude) {
 
         // 拼接url
         StringBuffer sb = new StringBuffer();
@@ -788,12 +789,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         rp.add("location", location);
         rp.add("longitude", longitude);
         rp.add("latitude", latitude);
+
+        rp.add("devicetoken", TopADApplication.getSelf().getDeviceToken());
+        rp.add("clienttype", "0");
+
         postWithoutLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
-                    LogUtil.d("成功"+base.getMsg());
+                    LogUtil.d("成功" + base.getMsg());
                 }
             }
 

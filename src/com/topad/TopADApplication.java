@@ -217,6 +217,15 @@ public class TopADApplication extends Application {
         }
     }
 
+    String device_token;
+
+    public String getDeviceToken() {
+        if(Utils.isEmpty(device_token)){
+            device_token = UmengRegistrar.getRegistrationId(context);
+        }
+        return device_token;
+    }
+
     /**
      * 判断是否登录状态
      */
