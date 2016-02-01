@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.alipay.AliPayInterface;
+import com.topad.alipay.AliPayUtil;
+import com.topad.alipay.PayResult;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
@@ -51,7 +57,7 @@ import java.util.HashMap;
  * @author lht
  * @data: on 15/10/28 16:32
  */
-public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickListener ,AliPayInterface {
     private static final String LTAG = MyNeedDetailsActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
@@ -281,9 +287,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
             // 项目款托管
             case R.id.btn_project_trust:
-                // 成功后
-                mProjectTrust.setVisibility(View.GONE);
-                mTVState.setVisibility(View.VISIBLE);
+                AliPayUtil aliPayUtil=new AliPayUtil(MyNeedDetailsActivity.this);
+                aliPayUtil.aliPay(MyNeedDetailsActivity.this,"项目款托管",TopADApplication.getSelf().getUserId()+"|3|"+grabSingleBean.getId(),grabSingleBean.getBudget());
                 break;
 
             // 项目取消
@@ -314,6 +319,42 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void payResult(PayResult payResult) {
+
+
+        /**
+         * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+         * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+         * docType=1) 建议商户依赖异步通知
+         */
+        String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+        Log.d("ouou", "返回结果：" + resultInfo);
+        String resultStatus = payResult.getResultStatus();
+
+        // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+        if (TextUtils.equals(resultStatus, "9000")) {
+            Toast.makeText(mContext, "支付成功",
+                    Toast.LENGTH_SHORT).show();
+            // 成功后
+            mProjectTrust.setVisibility(View.GONE);
+            mTVState.setVisibility(View.VISIBLE);
+        } else {
+            // 判断resultStatus 为非"9000"则代表可能支付失败
+            // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+            if (TextUtils.equals(resultStatus, "8000")) {
+                Toast.makeText(mContext, "支付结果确认中",
+                        Toast.LENGTH_SHORT).show();
+
+            } else {
+                // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                Toast.makeText(mContext, "支付失败",
+                        Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
 

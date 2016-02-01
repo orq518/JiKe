@@ -410,7 +410,11 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-
+        <!-- 充值页 -->
+        <activity
+            android:name=".view.activity.Baozhengjin"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
 
 
         <meta-data

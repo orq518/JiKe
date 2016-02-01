@@ -212,6 +212,12 @@ public class ShareNeedsEditActivity_Zhaopin extends BaseActivity implements IRec
      * 提交需求
      */
     public void sumitNeeds() {
+        if (Utils.isEmpty(et_title.getText().toString()) ||
+                Utils.isEmpty(et_detail.getText().toString())
+                || Utils.isEmpty(et_money.getText().toString()) || Utils.isEmpty(data_pic.getText().toString())) {
+            ToastUtil.show(this, "请输入完整的信息");
+            return;
+        }
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_ADD).append("?");
@@ -225,17 +231,17 @@ public class ShareNeedsEditActivity_Zhaopin extends BaseActivity implements IRec
         rp.add("type3", type3);//
         rp.add("title", et_title.getText().toString());//标题
         rp.add("detail", et_detail.getText().toString());//详情
-        rp.add("recordfilename", "");// recordfilename 录音文件名
-        rp.add("photolist", "");//photolist      图片文件名
+        rp.add("recordfilename", " ");// recordfilename 录音文件名
+        rp.add("photolist", " ");//photolist      图片文件名
         rp.add("budget", et_money.getText().toString());//budget 预算金额
-        rp.add("ispay", "");//ispay  是否托管  0未托管，1已托管
+        rp.add("ispay", " ");//ispay  是否托管  0未托管，1已托管
         rp.add("enddate", data_pic.getText().toString());//enddate 项目结束时间 默认为7天后
-        rp.add("needTName", "");//needTName 需要实名认证 1或0
-        rp.add("needSafemoney", "");//needSafemoney 需要保证经
-        rp.add("needFinis", "");//needFinis    保证完成
-        rp.add("needSelf", "");//needSelf 保证原创
-        rp.add("needRepair", "");//needRepair  保证维护
-        rp.add("address", "");//培训地点
+        rp.add("needTName", " ");//needTName 需要实名认证 1或0
+        rp.add("needSafemoney", " ");//needSafemoney 需要保证经
+        rp.add("needFinis", " ");//needFinis    保证完成
+        rp.add("needSelf", " ");//needSelf 保证原创
+        rp.add("needRepair", " ");//needRepair  保证维护
+        rp.add("address", TopADApplication.getSelf().getLocation().location);//培训地点
         if(xinshui_checked.isChecked()){
             rp.add("discuss", "1");//薪金面议  0或者1
         }else{

@@ -36,6 +36,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.UmengRegistrar;
 import com.umeng.message.entity.UMessage;
 
 /**
@@ -84,6 +85,8 @@ public class TopADApplication extends Application {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDebugMode(true);
         mPushAgent.enable();
+        String device_token = UmengRegistrar.getRegistrationId(context);
+        LogUtil.d("##device_token:" + device_token);
         UmengMessageHandler messageHandler = new UmengMessageHandler() {
             /**
              * 参考集成文档的1.6.3

@@ -59,6 +59,7 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
     TextView data_pic, shimingrenzheng, shoujirenzheng, baozhengwancheng, baozhengyuanchuang, baozhengweihu;
     EditText et_title, et_detail, et_money;
     TextView tv_submit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +105,9 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShareNeedsEditActivity_Normal.this, SearchNearByPeopleActivity.class);
-                intent.putExtra("type1",type1);
-                intent.putExtra("type2",type2);
-                intent.putExtra("type3","");
+                intent.putExtra("type1", type1);
+                intent.putExtra("type2", type2);
+                intent.putExtra("type3", "");
 
                 startActivity(intent);
             }
@@ -147,9 +148,9 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
         et_title = (EditText) findViewById(R.id.et_title);
         et_detail = (EditText) findViewById(R.id.et_detail);
         et_money = (EditText) findViewById(R.id.et_money);
-        tv_submit= (TextView) findViewById(R.id.tv_submit);
+        tv_submit = (TextView) findViewById(R.id.tv_submit);
         tv_submit.setOnClickListener(this);
-        data_pic=(TextView) findViewById(R.id.data_pic);
+        data_pic = (TextView) findViewById(R.id.data_pic);
     }
 
     @Override
@@ -301,6 +302,13 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
     public void sumitNeeds() {
 //        TextView data_pic,shimingrenzheng,shoujirenzheng,baozhengwancheng,baozhengyuanchuang,baozhengweihu;
 //        EditText ,,et_money;
+
+        if (Utils.isEmpty(et_title.getText().toString()) ||
+                Utils.isEmpty(et_detail.getText().toString())
+                || Utils.isEmpty(et_money.getText().toString()) || Utils.isEmpty(data_pic.getText().toString())) {
+            ToastUtil.show(this, "请输入完整的信息");
+            return;
+        }
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_ADD).append("?");
@@ -311,21 +319,21 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
         rp.add("needtype", "1");//1：普通需求   2：培训需求   3：招聘需求
         rp.add("type1", type1);//
         rp.add("type2", type2);//
-        rp.add("type3", "");//
+        rp.add("type3", " ");//
         rp.add("title", et_title.getText().toString());//标题
         rp.add("detail", et_detail.getText().toString());//详情
-        rp.add("recordfilename", "");// recordfilename 录音文件名
+        rp.add("recordfilename", " ");// recordfilename 录音文件名
         rp.add("photolist", "");//photolist      图片文件名
         rp.add("budget", et_money.getText().toString());//budget 预算金额
-        rp.add("ispay", "");//ispay  是否托管  0未托管，1已托管
+        rp.add("ispay", " ");//ispay  是否托管  0未托管，1已托管
         rp.add("enddate", data_pic.getText().toString());//enddate 项目结束时间 默认为7天后
         rp.add("needTName", shimingrenzheng.getTag().toString());//needTName 需要实名认证 1或0
         rp.add("needSafemoney", shoujirenzheng.getTag().toString());//needSafemoney 需要保证经
         rp.add("needFinis", baozhengwancheng.getTag().toString());//needFinis    保证完成
         rp.add("needSelf", baozhengyuanchuang.getTag().toString());//needSelf 保证原创
         rp.add("needRepair", baozhengweihu.getTag().toString());//needRepair  保证维护
-        rp.add("address", "");//培训地点
-        rp.add("discuss", "");//薪金面议  0或者1
+        rp.add("address", TopADApplication.getSelf().getLocation().location);//培训地点
+        rp.add("discuss", " ");//薪金面议  0或者1
 
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
