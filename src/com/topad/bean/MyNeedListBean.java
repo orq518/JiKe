@@ -20,4 +20,13 @@ public class MyNeedListBean implements Serializable {
     protected String msg;
     /** data **/
     public ArrayList<MyNeedBean> data = new ArrayList<MyNeedBean>();
+
+    @Override
+    public String toString() {
+        return "MyNeedListBean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
