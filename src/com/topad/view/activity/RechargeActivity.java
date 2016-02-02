@@ -34,7 +34,7 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/7/31 16:22
  */
-public class RechargeActivity extends BaseActivity implements View.OnClickListener,AliPayInterface {
+public class RechargeActivity extends BaseActivity implements View.OnClickListener, AliPayInterface {
     private static final String LTAG = RechargeActivity.class.getSimpleName();
     /**
      * 上下文对象
@@ -152,13 +152,17 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
         setNextBtnState(false);
     }
 
+    float minmoney , maxmoney;
+
     @Override
     public void initData() {
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            subject=getIntent().getStringExtra("subject");
-            body=getIntent().getStringExtra("body");
+            subject = getIntent().getStringExtra("subject");
+            body = getIntent().getStringExtra("body");
+            maxmoney=getIntent().getFloatExtra("maxmoney",1000000);
+            minmoney=getIntent().getFloatExtra("minmoney",0.01f);
         }
 
     }
@@ -182,16 +186,16 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                     Utils.showToast(this, "充值金额不能为空");
                     return;
                 }
-                if (Float.parseFloat(mMoney) < 0) {
-                    Utils.showToast(this, "充值金额最低0.01元");
+                if (Float.parseFloat(mMoney) < minmoney) {
+                    Utils.showToast(this, "充值金额最低"+minmoney+"元");
                     return;
                 }
-                if (Double.parseDouble(mMoney) >= 1000000000) {
+                if (Double.parseDouble(mMoney) >maxmoney) {
                     Utils.showToast(this, "超出充值限额，请重新输入金额");
                     return;
                 }
-                AliPayUtil aliPayUtil=new AliPayUtil(this);
-                aliPayUtil.aliPay(RechargeActivity.this,subject,body,mMoney);
+                AliPayUtil aliPayUtil = new AliPayUtil(this);
+                aliPayUtil.aliPay(RechargeActivity.this, subject, body, mMoney);
 
                 break;
         }

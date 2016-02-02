@@ -56,7 +56,7 @@ public class Baozhengjin extends BaseActivity implements View.OnClickListener {
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle("身份认证");
+        mTitleView.setTitle("客户保障-保证完成");
         mTitleView.setLeftVisiable(true);
         mTitleView.setRightVisiable(false);
         mTitleView.setLeftClickListener(new TitleRightOnClickListener());
@@ -81,6 +81,9 @@ public class Baozhengjin extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.join_bt:
                 Intent intentrecharge = new Intent(mContext, RechargeActivity.class);
+                intentrecharge.putExtra("subject", "交纳保证金");
+                intentrecharge.putExtra("maxmoney", 100000.0f);
+                intentrecharge.putExtra("minmoney", 1000.0f);
                 intentrecharge.putExtra("subject", "交纳保证金");
                 intentrecharge.putExtra("body", TopADApplication.getSelf().getUserId()+"|2|0");
                 startActivity(intentrecharge);

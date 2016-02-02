@@ -24,13 +24,93 @@
         android:focusable="false"
         android:text="现在加入"
         android:textColor="@color/white"/>
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                  android:layout_above="@id/join_bt"
-                  android:layout_below="@id/title"
-                  android:background="@color/white"
-                  android:orientation="vertical">
-        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:src="@drawable/icon_ensure"/>
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_above="@id/join_bt"
+                android:layout_below="@id/title">
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@color/white"
+                      android:orientation="vertical"
+                      android:padding="15dp">
+            <RelativeLayout android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/icon_im"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="@drawable/icon_ensure"/>
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/icon_im"
+                    android:text="保证完成"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/icon_im"
+                    android:text="服务商向客户承诺：保证完成、保证质量并修改到满意为止。"
+                    android:textColor="@color/text_gray_bg"
+                    android:textSize="16sp"/>
 
-    </LinearLayout>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent" android:layout_height="1dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务介绍"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/icon_im"
+                android:text="服务商签署《闪单保证完成服务协议》，承诺保证完成，保证质量并修改到满意为止。客户和服务商就需求等内容签订协议。如交易过程中出现问题，客户有权在指定期限内发起维权并申请赔付，若维权成功，客户可获双倍付（闪单将扣除服务商保证金先行赔付给客户，同时服务商需将交易款项退回客户）。"
+                android:textColor="@color/text_gray_bg"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="保障期限"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/icon_im"
+                android:text="依据《闪单赔付标准》进行赔付。"
+                android:textColor="@color/text_gray_bg"
+                android:textSize="16sp"/>
+            <View android:layout_width="fill_parent" android:layout_height="1dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@color/gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="保证金额度"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/icon_im"
+                android:text="最低1000元（根据所提供项目、能力等级不同，最高可达10万元）\n1.保证金额度将直接展示在前台页面，保证金越高越能赢得客户的信赖。\n2.缴纳保证金后，可成为闪单的派单资格单位。\n3.保证金将冻结在您的账户中，如客户申请维权判定成立，将用保证金先行赔付。\n4.若您申请退出,未使用完的保证金将全数退还给您。"
+                android:textColor="@color/text_gray_bg"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
