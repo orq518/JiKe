@@ -199,6 +199,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                                     b.putString("service_id", serviceId);
                                     b.putString("data_img_license", bankList.get(position - 1).getImglicense());
                                     b.putString("data_address", bankList.get(position - 1).getAddress());
+                                    b.putString("data_img", bankList.get(position - 1).getImghead());
                                     msg.setData(b);
                                     msg.what = MSG_CASE_LIST;
                                     mHandler.sendMessage(msg);
