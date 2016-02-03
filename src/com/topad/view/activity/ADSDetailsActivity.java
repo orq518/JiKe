@@ -29,6 +29,7 @@ import com.topad.bean.MyWalletBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
@@ -50,6 +51,8 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     private TitleView mTitleView;
     /** ScrollView **/
     private ScrollView mScrollView;
+    /** 图片 **/
+    private ImageView mAdsIcon;
     /** 名称 **/
     private TextView mName;
     /** 价钱 **/
@@ -83,6 +86,8 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     private String mImgLicense;
     /** 地址 **/
     private String address;
+    /** 图片 **/
+    private String img;
     /** 案例图片数据元 **/
     private List<String> imgs = new ArrayList<String>();
 
@@ -101,7 +106,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
         mScrollView = (ScrollView) findViewById(R.id.scroll_view);
-
+        mAdsIcon = (ImageView) findViewById(R.id.ads_icon);
         mName = (TextView) findViewById(R.id.tv_name);
         mMoney = (TextView) findViewById(R.id.tv_money);
         mCount = (TextView) findViewById(R.id.tv_count);
@@ -131,8 +136,36 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
             mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
             mImgLicense = intent.getStringExtra("data_img_license");
             address = intent.getStringExtra("data_address");
-
+            img  = intent.getStringExtra("data_img");
         }
+        // 图片
+        if(!Utils.isEmpty(img)){
+            String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + img;
+            LogUtil.d("TAO", "11111111"+picUrl);
+            ImageLoader.getInstance().displayImage(picUrl, mAdsIcon, TopADApplication.getSelf().getImageLoaderOption(),
+                    new ImageLoadingListener(){
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
+        }
+
+
         // 名称
         if(!Utils.isEmpty(mAdDetailsBean.getServicename())){
             mName.setText(mAdDetailsBean.getServicename());
@@ -224,10 +257,11 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                         BuyItBean bean = (BuyItBean) t;
-                        if (bean != null) {
-
+                        if (bean != null && !Utils.isEmpty(bean.getNeedid())) {
+                            Intent intent = new Intent(ADSDetailsActivity.this, MyNeedsActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
-
                     }
 
                     @Override

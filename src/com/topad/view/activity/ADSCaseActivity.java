@@ -91,17 +91,6 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void displayImage(String imageURL, ImageView imageView) {
-//        ImageManager.getInstance(mContext).getBitmap(imageURL,
-//                new ImageManager.ImageCallBack() {
-//                    @Override
-//                    public void loadImage(ImageView imageView, Bitmap bitmap) {
-//                        if (bitmap != null && imageView != null) {
-//                            imageView.setImageBitmap(bitmap);
-//                            imageView
-//                                    .setScaleType(ImageView.ScaleType.FIT_XY);
-//                        }
-//                    }
-//                }, imageView);
         ImageLoader.getInstance().displayImage(imageURL, imageView, TopADApplication.getSelf().getImageLoaderOption(),
                 new ImageLoadingListener(){
                     @Override
