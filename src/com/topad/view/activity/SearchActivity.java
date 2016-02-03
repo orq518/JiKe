@@ -180,6 +180,10 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                             Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        if (Utils.isEmpty(curItem.type)) {
+                            Toast.makeText(mContext, "请输入类型", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if (!Utils.isEmpty(curItem.name) && !Utils.isEmpty(curItem.type)) {
                             SearchItemBean bean = new SearchItemBean();
                             bean.locaion = curItem.locaion;
@@ -220,6 +224,8 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                             locationTV.setText("选择城市");
                             curItem.name = "";
                             curItem.type = "";
+                        }else{
+                                Toast.makeText(mContext, "信息不完整", Toast.LENGTH_SHORT).show();
                         }
 
                         break;
@@ -267,7 +273,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voicePathStirng=null;
+                voicePathStirng = null;
                 RecordTools recordTools = new RecordTools(mContext, SearchActivity.this);
                 recordTools.showVoiceDialog();
             }
