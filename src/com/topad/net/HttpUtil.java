@@ -1,6 +1,7 @@
 package com.topad.net;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.topad.R;
@@ -17,6 +18,7 @@ import com.topad.util.LogUtil;
 import com.topad.util.P2PAesCryptos;
 import com.topad.util.RSATools;
 import com.topad.util.Utils;
+import com.topad.view.activity.LoginActivity;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
@@ -205,6 +207,20 @@ public class HttpUtil {
                         if (status == 10000) {
                             loadingDialogCallback.closeDialog();
                             callback.onModel(status, msg, model);
+                        }else if (status == 10001) {//token有误
+                            loadingDialogCallback.closeDialog();
+
+                            String finalRespErrorMsg = msg;
+                            if (Utils.isEmpty(msg)) {
+                                finalRespErrorMsg = "未知错误";
+                            }
+                            final String finalRespErrorMsg1 = finalRespErrorMsg;
+                            final BaseBean b = new BaseBean();
+                            b.setStatus(status);
+                            b.setMsg(finalRespErrorMsg1);
+                            callback.onFailure(b);
+                            Utils.showToast(ctx, msg);
+                            ctx.startActivity(new Intent(ctx, LoginActivity.class));
                         }
                         // 失败
                         else {

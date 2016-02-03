@@ -55,9 +55,7 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
-        ;
         mTVMoney = (TextView) findViewById(R.id.tv_money);
-        ;
         mBTCash = (Button) findViewById(R.id.btn_cash);
         mBTRecharge = (Button) findViewById(R.id.btn_recharge);
 
