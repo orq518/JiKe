@@ -41,7 +41,8 @@
             android:focusable="false"
             android:drawableLeft="@drawable/adsd_button_call"
             android:text="联系服务商"
-            android:paddingLeft="20dp"/>
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
 
         <!-- 购买此产品 -->
         <Button
@@ -51,7 +52,8 @@
             android:focusable="false"
             android:drawableLeft="@drawable/adsd_button_buy"
             android:text="购买此产品"
-            android:paddingLeft="20dp"/>
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
 
     </LinearLayout>
 
@@ -98,7 +100,7 @@
                             android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="15dp"
-                            android:background="@drawable/stay_tuned_icon"
+                            android:src="@drawable/stay_tuned_icon"
                             android:layout_alignParentRight="true"/>
 
                         <ImageView
