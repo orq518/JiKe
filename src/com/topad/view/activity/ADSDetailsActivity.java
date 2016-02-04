@@ -3,6 +3,7 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -141,7 +142,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         // 图片
         if(!Utils.isEmpty(img)){
             String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + img;
-            LogUtil.d("TAO", "11111111"+picUrl);
+            LogUtil.d("tao", "11111111"+picUrl);
             ImageLoader.getInstance().displayImage(picUrl, mAdsIcon, TopADApplication.getSelf().getImageLoaderOption(),
                     new ImageLoadingListener(){
                         @Override
@@ -234,7 +235,9 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
                 break;
             // 联系服务商
             case R.id.btn_call:
-
+                //用intent启动拨打电话
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mAdCaseListBean.data.get(0).get));
+                startActivity(intent);
                 break;
             // 购买此产品
             case R.id.btn_buy:
