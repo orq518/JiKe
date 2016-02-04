@@ -3,7 +3,7 @@ package com.topad.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
+import android.net.Uri;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -89,6 +89,11 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     private String address;
     /** 图片 **/
     private String img;
+    /** 电话 **/
+    private String mobile;
+    /** serviceid **/
+    private String serviceid;
+
     /** 案例图片数据元 **/
     private List<String> imgs = new ArrayList<String>();
 
@@ -138,11 +143,14 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
             mImgLicense = intent.getStringExtra("data_img_license");
             address = intent.getStringExtra("data_address");
             img  = intent.getStringExtra("data_img");
+            mobile  = intent.getStringExtra("data_mobile");
+            serviceid  = intent.getStringExtra("data_serviceid");
+
         }
         // 图片
         if(!Utils.isEmpty(img)){
             String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + img;
-            LogUtil.d("TAO", "11111111"+picUrl);
+            LogUtil.d("tao", "11111111"+picUrl);
             ImageLoader.getInstance().displayImage(picUrl, mAdsIcon, TopADApplication.getSelf().getImageLoaderOption(),
                     new ImageLoadingListener(){
                         @Override
@@ -233,47 +241,56 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
             case R.id.btn_collect:
 
                 break;
+
             // 联系服务商
             case R.id.btn_call:
-
+                //用intent启动拨打电话
+                if(!Utils.isEmpty(mobile)){
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mobile));
+                    startActivity(intent);
+                }
                 break;
+
             // 购买此产品
             case R.id.btn_buy:
-                // 拼接url
-                StringBuffer sb = new StringBuffer();
-                sb.append(Constants.getCurrUrl()).append(Constants.URL_BUY_IT).append("?");
-                String url = sb.toString();
-                RequestParams rp = new RequestParams();
-                rp.add("userid", TopADApplication.getSelf().getUserId());
-                rp.add("serviceid", mAdCaseListBean.data.get(0).getServiceid());
-                rp.add("userid2", mAdDetailsBean.getUserid());
-                rp.add("type1", mAdDetailsBean.getType1());
-                rp.add("type2", mAdDetailsBean.getType2());
-                rp.add("title", mAdDetailsBean.getServicename());
-                rp.add("detail", mAdDetailsBean.getIntro());
-                rp.add("budget", mAdDetailsBean.getPrice());
-                rp.add("token", TopADApplication.getSelf().getToken());
+                if(!Utils.isEmpty(serviceid)){
+                    // 拼接url
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_BUY_IT).append("?");
+                    String url = sb.toString();
+                    RequestParams rp = new RequestParams();
+                    rp.add("userid", TopADApplication.getSelf().getUserId());
+                    rp.add("serviceid", serviceid);
+                    rp.add("userid2", mAdDetailsBean.getUserid());
+                    rp.add("type1", mAdDetailsBean.getType1());
+                    rp.add("type2", mAdDetailsBean.getType2());
+                    rp.add("title", mAdDetailsBean.getServicename());
+                    rp.add("detail", mAdDetailsBean.getIntro());
+                    rp.add("budget", mAdDetailsBean.getPrice());
+                    rp.add("token", TopADApplication.getSelf().getToken());
 
-                postWithLoading(url, rp, false, new HttpCallback() {
-                    @Override
-                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                        BuyItBean bean = (BuyItBean) t;
-                        if (bean != null && !Utils.isEmpty(bean.getNeedid())) {
-                            Intent intent = new Intent(ADSDetailsActivity.this, MyNeedsActivity.class);
-                            startActivity(intent);
-                            finish();
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            BuyItBean bean = (BuyItBean) t;
+                            if (bean != null && !Utils.isEmpty(bean.getNeedid())) {
+                                Intent intent = new Intent(ADSDetailsActivity.this, MyNeedsActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(BaseBean base) {
-                        int status = base.getStatus();// 状态码
-                        String msg = base.getMsg();// 错误信息
-                        ToastUtil.show(mContext, "status = " + status + "\n"
-                                + "msg = " + msg);
-                    }
-                }, BuyItBean.class);
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+                            ToastUtil.show(mContext, "status = " + status + "\n"
+                                    + "msg = " + msg);
+                        }
+                    }, BuyItBean.class);
+                }
                 break;
+
             default:
                 break;
         }
@@ -295,14 +312,6 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
     class MyAdapter extends BaseAdapter {
         //上下文对象
         private Context context;
-//        //图片数组
-//        private Integer[] imgs = {
-//                R.drawable.product0, R.drawable.product1, R.drawable.product2,
-//                R.drawable.product3, R.drawable.product0, R.drawable.product0,
-//                R.drawable.product0, R.drawable.product0, R.drawable.product0,
-//                R.drawable.product0, R.drawable.product0, R.drawable.product0,
-//                R.drawable.product0, R.drawable.product0, R.drawable.product0
-//        };
 
         MyAdapter(Context context) {
             this.context = context;

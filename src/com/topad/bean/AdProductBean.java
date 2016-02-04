@@ -39,6 +39,8 @@ public class AdProductBean implements Serializable {
     /**  **/
     public String isdelete;
     /**  **/
+    public String mobile;
+    /**  **/
     public String nickname;
     /**  **/
     public String companyname;
@@ -244,5 +246,13 @@ public class AdProductBean implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
