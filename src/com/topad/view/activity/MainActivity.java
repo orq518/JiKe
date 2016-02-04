@@ -776,7 +776,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     /**
-     * 获取我的个人信息
+     * 上传个人地址
      */
     public void getUploadMyLocation(String location, String longitude, String latitude) {
 
