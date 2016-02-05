@@ -35,7 +35,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/pic_success_logo" />
+                android:src="@drawable/stay_tuned_icon" />
 
             <Button
                 android:id="@+id/btn_agree"

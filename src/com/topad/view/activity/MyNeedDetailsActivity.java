@@ -39,6 +39,7 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
+import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
@@ -81,7 +82,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     /** 项目已完成，进行中布局 **/
     private LinearLayout mLYProductFinish;
     /** 公司头像 **/
-    private ImageView mTVGSIcon;
+    private CircleImageView mTVGSIcon;
     /** 公司名 **/
     private TextView mTVGSName;
     /** 项目状态 **/
@@ -134,7 +135,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         mTVTime = (TextView) findViewById(R.id.tv_time);
 
         mLYProductFinish = (LinearLayout) findViewById(R.id.ly_product_finish);
-        mTVGSIcon = (ImageView) findViewById(R.id.iv_gs_icon);
+        mTVGSIcon = (CircleImageView) findViewById(R.id.iv_gs_icon);
         mTVGSName = (TextView) findViewById(R.id.tv_gs_name);
         mTVProgectState = (TextView) findViewById(R.id.tv_progect_state);
         mTVProgectTime = (TextView) findViewById(R.id.tv_progect_time);
@@ -396,7 +397,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             if (convertView == null) {
                 convertView = mInflater.inflate((R.layout.activity_need_details_item), null);
@@ -436,6 +437,14 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                             }
                         });
             }
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MyNeedDetailsActivity.this, DetailsActivity.class);
+                    intent.putExtra("data_details", bankList.get(position - 1));
+                    startActivity(intent);
+                }
+            });
 
             // 公司名
             holder.name.setText(bankList.get(position).getCompanyname());
@@ -520,7 +529,6 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         String url = sb.toString();
         RequestParams rp = new RequestParams();
         rp.add("needid", needId);
-//        rp.add("needid", "5");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -571,7 +579,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                MyInfoBean base = (MyInfoBean) t;
+                final MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
 
                     // 公司头像
@@ -619,6 +627,35 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                         mTVProgectTime.setText(sourceStrArray[0]);
                     }
 
+                    mTVGSIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            MyNeedBean myNeedBean = new MyNeedBean();
+                            myNeedBean.setAdddate(base.getData().getAdddate());
+                            myNeedBean.setAddress(base.getData().getAddress());
+                            myNeedBean.setBirthday(base.getData().getBirthday());
+                            myNeedBean.setCompanyname(base.getData().getCompanyname());
+                            myNeedBean.setId(base.getData().getId());
+                            myNeedBean.setImgcard1(base.getData().getImgcard1());
+                            myNeedBean.setImgcard2(base.getData().getImgcard2());
+                            myNeedBean.setImgdiploma(base.getData().getImgdiploma());
+                            myNeedBean.setImghead(base.getData().getImghead());
+                            myNeedBean.setImglicense(base.getData().getImglicense());
+                            myNeedBean.setImgnamecard(base.getData().getImgnamecard());
+                            myNeedBean.setImghead(base.getData().getImghead());
+                            myNeedBean.setIntro(base.getData().getIntro());
+                            myNeedBean.setJob1(base.getData().getJob1());
+                            myNeedBean.setJob2(base.getData().getJob2());
+                            myNeedBean.setNeedid(needId);
+                            myNeedBean.setNickname(base.getData().getNickname());
+                            myNeedBean.setSex(base.getData().getSex());
+                            myNeedBean.setUserid(base.getData().getUserid());
+
+                            Intent intent = new Intent(MyNeedDetailsActivity.this, DetailsActivity.class);
+                            intent.putExtra("data_details", myNeedBean);
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 

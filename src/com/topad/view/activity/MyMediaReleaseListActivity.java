@@ -218,9 +218,31 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
 
             String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + TopADApplication.getSelf().getMyInfo().getImghead();
             if(!Utils.isEmpty(headerpicUrl)){
-                ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon,
-                        TopADApplication.getSelf().getImageLoaderOption());
+                ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon, TopADApplication.getSelf().getImageLoaderOption(),
+                        new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String s, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String s, View view) {
+
+                            }
+                        });
             }
+
+            ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon, TopADApplication.getSelf().getImageLoaderOption());
+
 
             return convertView;
         }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.topad.R;
 import com.topad.bean.AdDetailsBean;
 import com.topad.bean.GrabSingleBean;
+import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
@@ -230,8 +231,9 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
             // 申诉
             case R.id.ly_appeal:
-                Intent intent = new Intent(mContext, AppealActivity.class);
-                startActivity(intent);
+                //跳转到html5 页面
+                WebViewActivity.LaunchSelf(mContext, Constants.URL_SHEN_SU, "");
+
                 break;
             default:
                 break;

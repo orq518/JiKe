@@ -199,7 +199,12 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             holder.name.setText(bankList.get(position).getTitle());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
             holder.price.setText(ssb.toString());
-            holder.state.setText(bankList.get(position).getStatus());
+            if("1".equals(bankList.get(position).getIspay())){
+                holder.state.setVisibility(View.GONE);
+            }else{
+                holder.state.setVisibility(View.VISIBLE);
+            }
+
             holder.content.setText(bankList.get(position).getDetail());
             String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
