@@ -92,6 +92,8 @@ public class Constants {
     public static final String URL_USER_GETMSG = "/user/getmsg";
     // 是否有新消息
     public static final String URL_CHECK_MSG = "/user/checkmsg";
+    // 申诉
+    public static final String URL_SHEN_SU = "http://www.uput.cn/case/topad/shensu.html";
 
     public static String ALIAS_TYPE="topad";
     /**

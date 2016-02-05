@@ -83,13 +83,15 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                     final String imgLicense = b.getString("data_img_license");
                     final String address = b.getString("data_address");
                     final String img = b.getString("data_img");
+                    final String mobile = b.getString("data_mobile");
+                    final String serviceid = b.getString("data_serviceid");
+
                     // 获取产品案例列表信息
                     StringBuffer sb = new StringBuffer();
                     sb.append(Constants.getCurrUrl()).append(Constants.URL_CASE_LIST).append("?");
                     String url = sb.toString();
                     RequestParams rp=new RequestParams();
                     rp.add("serviceid", serviceId);
-//                    rp.add("serviceid", "6");
 
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
@@ -102,6 +104,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                                 intent.putExtra("data_img_license", imgLicense);
                                 intent.putExtra("data_address", address);
                                 intent.putExtra("data_img", img);
+                                intent.putExtra("data_mobile", mobile);
+                                intent.putExtra("data_serviceid", serviceid);
                                 startActivity(intent);
                             }
                         }
@@ -181,7 +185,6 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                 String url = sb.toString();
                 RequestParams rp=new RequestParams();
                 rp.add("serviceid", serviceId);
-//                rp.add("serviceid", "6");
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -201,6 +204,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                                     b.putString("data_img_license", bankList.get(position - 1).getImglicense());
                                     b.putString("data_address", bankList.get(position - 1).getAddress());
                                     b.putString("data_img", bankList.get(position - 1).getImghead());
+                                    b.putString("data_mobile", bankList.get(position - 1).getMobile());
+                                    b.putString("data_serviceid", bankList.get(position - 1).getServiceid());
                                     msg.setData(b);
                                     msg.what = MSG_CASE_LIST;
                                     mHandler.sendMessage(msg);

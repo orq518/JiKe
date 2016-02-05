@@ -1,0 +1,249 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bule"
+                android:orientation="vertical">
+
+    <!-- 顶部标题 -->
+    <com.topad.view.customviews.TitleView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="15dp"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:background="@color/app_bg"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- 头像 -->
+                <com.topad.view.customviews.CircleImageView
+                    android:id="@+id/im_details_icon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/stay_tuned_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:gravity="center">
+
+                <!-- 名字 -->
+                <TextView
+                    android:id="@+id/tv_details_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
+                    android:gravity="center|left"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_bg"
+                    android:drawableRight="@drawable/icon_man"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray_text"
+                    android:layout_marginTop="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- 生日 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="生日"
+                        android:layout_weight="2"
+                        android:gravity="center|right"
+                        android:background="#f2f2f2"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+
+                    <!-- 生日 -->
+                    <TextView
+                        android:id="@+id/tv_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- 地址 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="地址"
+                        android:layout_weight="2"
+                        android:gravity="center|right"
+                        android:background="#f2f2f2"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+
+                    <!-- 地址 -->
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- 职业 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="职业"
+                        android:layout_weight="2"
+                        android:gravity="center|right"
+                        android:background="#f2f2f2"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+
+                    <!-- 职业 -->
+                    <TextView
+                        android:id="@+id/tv_occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- 个人简介 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:text="个人简介"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:background="#f2f2f2"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+
+                    <!-- 个人简介 -->
+                    <TextView
+                        android:id="@+id/tv_personal"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:layout_marginLeft="15dp"
+                        android:gravity="left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.topad.view.customviews.MyGridView
+                android:id="@+id/gv_in"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:columnWidth="90dp"
+                android:numColumns="4"
+                android:verticalSpacing="10dp"
+                android:layout_marginTop="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
