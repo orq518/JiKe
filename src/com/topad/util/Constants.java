@@ -90,7 +90,8 @@ public class Constants {
     public static final String URL_GET_MONEY = "/pay/getmoney";
     // 系统消息
     public static final String URL_USER_GETMSG = "/user/getmsg";
-
+    // 申诉
+    public static final String URL_SHEN_SU = "http://www.uput.cn/case/topad/shensu.html";
 
     public static String ALIAS_TYPE="topad";
     /**

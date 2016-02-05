@@ -230,7 +230,7 @@
                     android:paddingBottom="20dp"
                     android:background="@color/white">
 
-                    <ImageView
+                    <com.topad.view.customviews.CircleImageView
                         android:id="@+id/iv_gs_icon"
                         android:layout_width="50dp"
                         android:layout_height="50dp"

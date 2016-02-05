@@ -39,6 +39,7 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
+import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
@@ -81,7 +82,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     /** 项目已完成，进行中布局 **/
     private LinearLayout mLYProductFinish;
     /** 公司头像 **/
-    private ImageView mTVGSIcon;
+    private CircleImageView mTVGSIcon;
     /** 公司名 **/
     private TextView mTVGSName;
     /** 项目状态 **/
@@ -134,7 +135,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         mTVTime = (TextView) findViewById(R.id.tv_time);
 
         mLYProductFinish = (LinearLayout) findViewById(R.id.ly_product_finish);
-        mTVGSIcon = (ImageView) findViewById(R.id.iv_gs_icon);
+        mTVGSIcon = (CircleImageView) findViewById(R.id.iv_gs_icon);
         mTVGSName = (TextView) findViewById(R.id.tv_gs_name);
         mTVProgectState = (TextView) findViewById(R.id.tv_progect_state);
         mTVProgectTime = (TextView) findViewById(R.id.tv_progect_time);
