@@ -270,7 +270,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/xtxx"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -293,10 +293,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:text="系统消息"
+                    android:layout_toRightOf="@id/im_xtxx"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_18"/>
+                <TextView
+                    android:id="@+id/left_tv_red"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_alignRight="@id/tv_back"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/tv_xtxx"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:background="@drawable/gesture_lock_pattern_node_pressed"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/quit"

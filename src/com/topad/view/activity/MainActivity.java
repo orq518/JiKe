@@ -21,6 +21,7 @@ import com.topad.R;
 import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
+import com.topad.bean.CheckMSGBean;
 import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
@@ -96,7 +97,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     CircleImageView imageView_header;//头像
     TextView tv_name;//名字
     MyInfoBean.DataEntity myInfoBean;
-
+    TextView left_tv_red;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +147,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         // 设置顶部布局
         mTitle.setTitle(getString(R.string.main_title));
         mTitle.setLeftVisiable(true);
-        mTitle.setLeftIcon(R.drawable.left_media);
+        mTitle.setLeftIcon(R.drawable.leftmenu);
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
         mMyMedia.setOnClickListener(this);
         mReleaseDemand.setOnClickListener(this);
@@ -178,7 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.left_media, R.string.app_name, R.string.app_name) {
+                R.drawable.leftmenu, R.string.app_name, R.string.app_name) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -213,6 +214,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
         initLocation();
         TopADApplication.getSelf().bindUmeng();
+        checkNewMessage();
     }
 
     @Override
@@ -221,6 +223,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void initLeftMenu() {
+        left_tv_red= (TextView) findViewById(R.id.left_tv_red);
         findViewById(R.id.csmm).setOnTouchListener(this);
         findViewById(R.id.wszl).setOnTouchListener(this);
         findViewById(R.id.gsrz).setOnTouchListener(this);
@@ -714,6 +717,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.xtxx://系统消息
                 intent = new Intent(MainActivity.this, SystemNewsActivity.class);
                 startActivity(intent);
+                left_tv_red.setVisibility(View.GONE);
                 break;
 
             case R.id.quit://注销
@@ -809,6 +813,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ToastUtil.show(mContext, msg);
             }
         }, BaseBean.class);
+
+    }
+
+    /**
+     * 检查是否有新消息
+     */
+    public void checkNewMessage() {
+
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_CHECK_MSG).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        postWithoutLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                CheckMSGBean base = (CheckMSGBean) t;
+                if (base != null) {
+
+                    String newmsg = base.newmsg;
+                    if (!Utils.isEmpty(newmsg)) {
+                        int num = Integer.parseInt(newmsg);
+
+                        if (num > 0) {
+                            mTitle.setLeftRedVisiable(true);
+                            left_tv_red.setVisibility(View.VISIBLE);
+                        }else{
+                            mTitle.setLeftRedVisiable(false);
+                            left_tv_red.setVisibility(View.GONE);
+                        }
+
+                    }
+                    LogUtil.d("成功" + base.getMsg());
+//                    {"status":10000,"msg":"ok","newmsg":0}
+                }
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+            }
+        }, CheckMSGBean.class);
 
     }
 }
