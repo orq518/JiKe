@@ -387,6 +387,13 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 
+        <!-- 查看详情页 -->
+        <activity
+            android:name=".view.activity.DetailsActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -415,7 +422,6 @@
             android:name=".view.activity.Baozhengjin"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
-
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
