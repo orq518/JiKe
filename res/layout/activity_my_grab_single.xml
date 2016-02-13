@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="@color/bule"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="0dp">
 
         <TextView
             android:id="@+id/tv_back"

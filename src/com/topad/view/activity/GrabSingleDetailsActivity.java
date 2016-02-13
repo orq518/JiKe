@@ -142,7 +142,7 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
     public void showView() {
         // 设置title
-        mTitleView.setTitle("项目详情");
+        mTitleView.setTitle("需求详情");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         if("0".equals(state)){// 我要提交

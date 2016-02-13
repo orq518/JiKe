@@ -214,7 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
-                    android:text="具体需求"
+                    android:text="具体要求"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="10dp"/>
@@ -229,7 +229,9 @@
                     android:horizontalSpacing="10dp"
                     android:stretchMode="columnWidth"
                     android:gravity="center"
-                    android:layout_below="@id/tv_need"/>
+                    android:layout_below="@id/tv_need"
+                    android:cacheColorHint="#00000000"
+                    android:listSelector="#00000000"/>
 
                 <TextView
                     android:id="@+id/tv_need_details"
@@ -240,7 +242,8 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/gv_in" />
+                    android:layout_below="@id/gv_in"
+                    android:visibility="gone"/>
 
 
                 <TextView
@@ -252,7 +255,8 @@
                     android:textSize="16sp"
                     android:textColor="@color/text_gray_bg"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@id/tv_need_details"/>
+                    android:layout_below="@id/tv_need_details"
+                    android:visibility="gone"/>
 
                 <!-- 提交 -->
                 <Button
