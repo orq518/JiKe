@@ -22,7 +22,7 @@ import com.topad.view.activity.LoginActivity;
  * 标题栏
  */
 public class TitleView extends RelativeLayout {
-    private TextView mTitle;
+    private TextView mTitle,tv_red;
     private ImageView mLeft;
     private TextView mRigh;
     private ImageView mRightImage;
@@ -60,6 +60,7 @@ public class TitleView extends RelativeLayout {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         this.addView(v, layoutParams);
         mTitle = (TextView) v.findViewById(R.id.tv_title);
+        tv_red = (TextView) v.findViewById(R.id.tv_red);
         mLeft = (ImageView) v.findViewById(R.id.tv_back);
         mRigh = (TextView) v.findViewById(R.id.bt_right);
         mRightImage = (ImageView) v.findViewById(R.id.mRightImage);
@@ -86,6 +87,9 @@ public class TitleView extends RelativeLayout {
 
     public void setLeftVisiable(boolean visible) {
         mLeft.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+    public void setLeftRedVisiable(boolean visible) {
+        tv_red.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setRightVisiable(boolean visible) {

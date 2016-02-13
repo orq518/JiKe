@@ -42,7 +42,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     int[] wenancehua_ic = new int[]{R.drawable.write_huodong, R.drawable.write_ruanwen, R.drawable.write_gongwen, R.drawable.write_etranslat, R.drawable.write_wangdian, R.drawable.write_pinpai};
     String[] guanggaojiance = new String[]{"客户广告投放监测报告", "竞品广告投放分析报告", " 行业广告投放分析报告", "单一媒体广告投放分析报告", "全媒体广告投放分析报告", "媒体价值分析报告"};
     int[] guanggaojiance_ic = new int[]{R.drawable.jiance_kehu, R.drawable.jiance_jingpin, R.drawable.jiance_hangye, R.drawable.jiance_danyi, R.drawable.jiance_quanmeiti, R.drawable.jiance_jiazhi};
-    String[] zhuanjiapeixun = new String[]{"找创意专家", "找媒体经营专家", "找企业管理专家", "找营销策划专家", "找广告界学术专家", "找广告主培训专家", "互联网培训专家"};
+    String[] zhuanjiapeixun = new String[]{"创意专家", "媒体经营专家", "企业管理专家", "营销策划专家", "广告界学术专家", "广告主培训专家", "互联网培训专家"};
     int[] zhuanjiapeixun_ic = new int[]{R.drawable.teach_chuangyi, R.drawable.teach_meiti, R.drawable.teach_qiye, R.drawable.teach_yingxiao, R.drawable.teach_xueshu, R.drawable.teach_guanggaozhu, R.drawable.teach_web};
     String[] gusnlixicun = new String[]{"制定企业发展战略", "企业经营诊断", "股权激励策略", "企业上市/融资战略规划", "项目商业计划书撰写", "各类行业研究报告"};
     int[] gusnlixicun_ic = new int[]{R.drawable.guanli_fazhancl, R.drawable.guanli_zhenduan, R.drawable.guanli_guquanjl, R.drawable.guanli_rongzi, R.drawable.guanli_fazhancl, R.drawable.guanli_hangyeyj};
