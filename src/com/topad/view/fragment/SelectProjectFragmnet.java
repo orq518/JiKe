@@ -17,6 +17,7 @@ import com.topad.bean.ChildBean;
 import com.topad.bean.GroupBean;
 import com.topad.bean.SelectProjectBean;
 import com.topad.util.LogUtil;
+import com.topad.util.Utils;
 import com.topad.view.activity.MyWantGrabsingleActivity;
 import com.topad.view.adapter.SelectProjectEListAdapter;
 import com.topad.view.customviews.CustomExpandableListView;
@@ -76,7 +77,7 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 	/** type1 **/
 	private String type1 = " ";
 	/** type2 **/
-	private StringBuffer type2 = new StringBuffer(" ");
+	public static StringBuffer type2 = new StringBuffer("");
 
 	@Override
 	public String getFragmentName() {
@@ -140,20 +141,31 @@ public class SelectProjectFragmnet extends BaseFragment implements  View.OnClick
 
 		adapter = new SelectProjectEListAdapter(mContext, groups, listView);
 		listView.setAdapter(adapter);
-		listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				if(!"".equals(type2)){
-					type2.append("|" + groups.get(groupPosition).getChildItem(childPosition).getFullname());
-				}else{
-					type2.append(groups.get(groupPosition).getChildItem(childPosition).getFullname());
-				}
 
-				LogUtil.d("groups：" + groups.get(groupPosition).getTitle() + groups.get(groupPosition).getChildItem(childPosition).getFullname());
-				LogUtil.d("groupPosition：" + groupPosition + "    childPosition:" + childPosition);
-				return false;
-			}
-		});
+//		listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//			@Override
+//			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//				// 没有被选中过，添加到type2中
+//				if(!groups.get(groupPosition).getChildItem(childPosition).getChecked()){
+//					groups.get(groupPosition).getChildItem(childPosition).setChecked(true);
+//					if(Utils.isEmpty(type2.toString())){
+//						type2.append("|" + groups.get(groupPosition).getChildItem(childPosition).getFullname());
+//					}else{
+//						type2.append(groups.get(groupPosition).getChildItem(childPosition).getFullname());
+//					}
+//				}
+//				// 原来已经被选中，再次选中时，从type2中删除
+//				else{
+//					groups.get(groupPosition).getChildItem(childPosition).setChecked(false);
+//					String str = type2.toString().replace(groups.get(groupPosition).getChildItem(childPosition).getFullname(),"");
+//					type2 = new StringBuffer(str);
+//				}
+//
+//				LogUtil.d("groups：" + groups.get(groupPosition).getTitle() + groups.get(groupPosition).getChildItem(childPosition).getFullname());
+//				LogUtil.d("groupPosition：" + groupPosition + "    childPosition:" + childPosition);
+//				return false;
+//			}
+//		});
 		listView.setGroupIndicator(null);
 
 		mScroll.smoothScrollTo(0,0);

@@ -94,17 +94,13 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 	}
 
 	private void initView() {
-
 		mListView = (MyListView) mRootView.findViewById(R.id.listview);
-
-		initData();
 
 		// 设置listview可以加载、刷新
 		mListView.setPullLoadEnable(true);
 		mListView.setPullRefreshEnable(true);
 		// 设置适配器
 		adapter = new ListAdapter();
-		mListView.setAdapter(adapter);
 
 		// listview单击
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -156,7 +152,8 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 	@Override
 	public void onResume() {
 		super.onResume();
-		setData();
+		initData();
+		mListView.setAdapter(adapter);
 	}
 
 	/**
@@ -213,9 +210,19 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 			holder.name.setText(bankList.get(position).getTitle());
 			SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
 			holder.price.setText(ssb.toString());
-			holder.state.setText(bankList.get(position).getStatus());
+
+			// 托管
+			holder.state.setVisibility(View.GONE);
+			if (!Utils.isEmpty(bankList.get(position).getIspay())){
+				if("0".equals(bankList.get(position).getIspay())){
+					holder.state.setVisibility(View.VISIBLE);
+				}else{
+					holder.state.setVisibility(View.GONE);
+				}
+			}
+
 			holder.content.setText(bankList.get(position).getDetail());
-			String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
+			String[] sourceStrArray = bankList.get(position).getEnddate().split(" ");
 			holder.time.setText(sourceStrArray[0]);
 
 			// 当前时间
@@ -223,7 +230,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 			String datestr = dataformat.format(new Date());
 
 			try {
-				holder.countdown.setText(Utils.daysBetween(bankList.get(position).getAdddate(), datestr) + "天前");
+				holder.countdown.setText("还有" + Utils.daysBetween(bankList.get(position).getAdddate(), datestr) + "天到期");
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -273,6 +280,10 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 				public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
 					GrabSingleListBean bean = (GrabSingleListBean) t;
 					if (bean != null && bean.data.size()!= 0) {
+
+						if(bankList != null && bankList.size() > 0){
+							bankList.clear();
+						}
 						for(int i = 0; i < bean.data.size(); i++){
 							bankList.add(bean.data.get(i));
 							adapter.notifyDataSetChanged();
@@ -296,10 +307,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 				}
 			}, GrabSingleListBean.class);
 		}
-
-
 	}
-
 
 	/**
 	 * 有筛选项使用
@@ -315,6 +323,8 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 		rp.add("paytype", paytype);
 		rp.add("type1", type1);
 		rp.add("type2", type2);
+//		rp.add("type1", " ");
+//		rp.add("type2", "广告创意|创意文案");
 		rp.add("page", page2 + "");
 
 		postWithLoading(url, rp, false, new HttpCallback() {
@@ -331,6 +341,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 
 				if(bankList == null || bankList.size() == 0){
 					mListView.setPullLoadEnable(false);
+					ToastUtil.show(mContext, "没有您想要的结果");
 				}else{
 					mListView.setPullLoadEnable(true);
 				}

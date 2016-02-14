@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.topad.R;
 import com.topad.bean.ChildBean;
 import com.topad.bean.GroupBean;
+import com.topad.util.Utils;
 import com.topad.view.customviews.CustomExpandableListView;
+import com.topad.view.fragment.SelectProjectFragmnet;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class SelectProjectEListAdapter extends BaseExpandableListAdapter impleme
     private ArrayList<GroupBean> groups;
     private CustomExpandableListView listView;
 
-    public SelectProjectEListAdapter(Context context, ArrayList<GroupBean> groups,CustomExpandableListView listView ) {
+    public SelectProjectEListAdapter(Context context, ArrayList<GroupBean> groups, CustomExpandableListView listView) {
         this.context = context;
         this.groups = groups;
         this.listView = listView;
@@ -178,6 +180,25 @@ public class SelectProjectEListAdapter extends BaseExpandableListAdapter impleme
         }
 
         groups.get(groupPosition).setChecked(childrenAllIsChecked);
+
+        // 原来已经被选中，再次选中时，从type2中删除
+        if(!Utils.isEmpty(SelectProjectFragmnet.type2.toString())
+                && SelectProjectFragmnet.type2.toString().indexOf(groups.get(groupPosition).getChildItem(childPosition).getFullname()) != -1){
+            String str = SelectProjectFragmnet.type2.toString().replace(groups.get(groupPosition).getChildItem(childPosition).getFullname(),"");
+            if(!Utils.isEmpty(SelectProjectFragmnet.type2.toString())){
+                SelectProjectFragmnet.type2.delete(0, SelectProjectFragmnet.type2.length()-1);
+            }
+
+            SelectProjectFragmnet.type2 = new StringBuffer(str);
+        }
+        // 没有被选中过，添加到type2中
+        else{
+            if(!Utils.isEmpty(SelectProjectFragmnet.type2.toString())){
+                SelectProjectFragmnet.type2.append("|" + groups.get(groupPosition).getChildItem(childPosition).getFullname());
+            }else{
+                SelectProjectFragmnet.type2.append(groups.get(groupPosition).getChildItem(childPosition).getFullname());
+            }
+        }
 
         // 注意，一定要通知 ExpandableListView 資料已經改變，ExpandableListView 會重新產生畫面
         notifyDataSetChanged();
