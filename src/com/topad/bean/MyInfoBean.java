@@ -6,7 +6,7 @@ import java.util.List;
  * The author 欧瑞强 on 2016/1/8.
  * todo
  */
-public class MyInfoBean extends BaseBean{
+public class MyInfoBean extends BaseBean {
 
 
     /**
@@ -65,6 +65,15 @@ public class MyInfoBean extends BaseBean{
         private String address;
         private String imgcard1;
         private String imgcard2;
+        private String mobile;
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
 
         public void setBirthday(String birthday) {
             this.birthday = birthday;

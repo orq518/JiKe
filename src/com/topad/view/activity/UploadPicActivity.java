@@ -90,42 +90,44 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
 
         switch (type) {
             case 0:
-                if (myInfoBean != null) {
-                    if (!Utils.isEmpty(myInfoBean.getImgcard1())) {
-                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard1();
-                        getPic(headerpicUrl, pic_1);
-                    }
-                    if (!Utils.isEmpty(myInfoBean.getImgcard2())) {
-                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard2();
-                        getPic(headerpicUrl, pic_2);
-                    }
-                }
+//                if (myInfoBean != null) {
+//                    if (!Utils.isEmpty(myInfoBean.getImgcard1())) {
+//                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard1();
+//                        getPic(headerpicUrl, pic_1);
+//                    }
+//                    if (!Utils.isEmpty(myInfoBean.getImgcard2())) {
+//                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard2();
+//                        getPic(headerpicUrl, pic_2);
+//                    }
+//                }
 
                 break;
             case 1:
-                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgdiploma())) {
-                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgdiploma();
-                    getPic(headerpicUrl, pic_1);
-                } else {
-                    pic_1.setImageResource(R.drawable.upload_biyezheng);
-                }
+//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgdiploma())) {
+//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgdiploma();
+//                    getPic(headerpicUrl, pic_1);
+//                } else {
+//                    pic_1.setImageResource(R.drawable.upload_biyezheng);
+//                }
+                pic_1.setImageResource(R.drawable.upload_biyezheng);
                 break;
             case 2:
-                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgnamecard())) {
-                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgnamecard();
-                    getPic(headerpicUrl, pic_1);
-                } else {
-                    pic_1.setImageResource(R.drawable.upload_mingpian);
-                }
-
+//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgnamecard())) {
+//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgnamecard();
+//                    getPic(headerpicUrl, pic_1);
+//                } else {
+//                    pic_1.setImageResource(R.drawable.upload_mingpian);
+//                }
+                pic_1.setImageResource(R.drawable.upload_mingpian);
                 break;
             case 3:
-                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
-                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
-                    getPic(headerpicUrl, pic_1);
-                } else {
-                    pic_1.setImageResource(R.drawable.uploadback);
-                }
+//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
+//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
+//                    getPic(headerpicUrl, pic_1);
+//                } else {
+//                    pic_1.setImageResource(R.drawable.uploadback);
+//                }
+                pic_1.setImageResource(R.drawable.uploadback);
                 break;
         }
         int width = Utils.getScreenWidth(this);
