@@ -426,6 +426,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
                 if(bankList == null || bankList.size() == 0){
                     mListView.setPullLoadEnable(false);
+                    ToastUtil.show(mContext, "没有您想要的结果");
                 }else{
                     mListView.setPullLoadEnable(true);
                 }
