@@ -201,7 +201,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mTVState.setVisibility(View.GONE);
             // 托管
             if (!Utils.isEmpty(grabSingleBean.getIspay())){
-                if("0".equals(grabSingleBean.getIspay())){
+                if("1".equals(grabSingleBean.getIspay())){
                     mProjectTrust.setVisibility(View.VISIBLE);
                 }else{
                     mProjectTrust.setVisibility(View.GONE);
