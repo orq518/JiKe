@@ -335,7 +335,6 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(Constants.BROADCAST_ACTION_MEDIA_CLASS);
                 registerReceiver(broadcastReceiver, filter);
-
                 break;
 
             // 地址-- 定位进入地图

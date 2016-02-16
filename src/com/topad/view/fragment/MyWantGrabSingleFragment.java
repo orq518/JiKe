@@ -214,7 +214,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 			// 托管
 			holder.state.setVisibility(View.GONE);
 			if (!Utils.isEmpty(bankList.get(position).getIspay())){
-				if("0".equals(bankList.get(position).getIspay())){
+				if("1".equals(bankList.get(position).getIspay())){
 					holder.state.setVisibility(View.VISIBLE);
 				}else{
 					holder.state.setVisibility(View.GONE);
@@ -323,13 +323,16 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 		rp.add("paytype", paytype);
 		rp.add("type1", type1);
 		rp.add("type2", type2);
-//		rp.add("type1", " ");
-//		rp.add("type2", "广告创意|创意文案");
 		rp.add("page", page2 + "");
 
 		postWithLoading(url, rp, false, new HttpCallback() {
 			@Override
 			public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+				if(bankList != null && bankList.size() > 0){
+					bankList.clear();
+					adapter.notifyDataSetChanged();
+				}
+
 				GrabSingleListBean bean = (GrabSingleListBean) t;
 				if (bean != null && bean.data.size()!= 0) {
 					for(int i = 0; i < bean.data.size(); i++){
@@ -339,7 +342,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 				}
 				mListView.stopRefresh();
 
-				if(bankList == null || bankList.size() == 0){
+				if(bean.data == null || bean.data.size() == 0){
 					mListView.setPullLoadEnable(false);
 					ToastUtil.show(mContext, "没有您想要的结果");
 				}else{

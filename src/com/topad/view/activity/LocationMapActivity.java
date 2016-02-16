@@ -13,11 +13,21 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.topad.R;
+import com.topad.amap.AMapUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -27,7 +37,7 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/11/4 15:02
  */
-public class LocationMapActivity extends Activity implements LocationSource, AMapLocationListener {
+public class LocationMapActivity extends Activity implements AMap.OnCameraChangeListener, GeocodeSearch.OnGeocodeSearchListener {
     private static final String LTAG = LocationMapActivity.class.getSimpleName();
     /** 上下文 **/
     private Context mContext;
@@ -36,14 +46,15 @@ public class LocationMapActivity extends Activity implements LocationSource, AMa
 
     private AMap aMap;
     private MapView mapView;
-    private OnLocationChangedListener mListener;
-    private LocationManagerProxy mAMapLocationManager;
     /** 定位地址 **/
     private String location;
     /** lat **/
     private double lat;
     /** lon **/
     private double lon;
+    private GeocodeSearch geocoderSearch;
+    private LatLonPoint latLonPoint;
+    private Marker regeoMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +67,11 @@ public class LocationMapActivity extends Activity implements LocationSource, AMa
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         mapView = (MapView) findViewById(R.id.map);
+        aMap = mapView.getMap();
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         init();
+
+        aMap.setOnCameraChangeListener(this);
     }
 
     /**
@@ -65,27 +79,9 @@ public class LocationMapActivity extends Activity implements LocationSource, AMa
      */
     private void init() {
         if (aMap == null) {
-            aMap = mapView.getMap();
-            setUpMap();
         }
-    }
-
-    /**
-     * 设置一些amap的属性
-     */
-    private void setUpMap() {
-        // 自定义系统定位小蓝点
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker));// 设置小蓝点的图标
-        myLocationStyle.strokeColor(Color.BLACK);// 设置圆形的边框颜色
-        myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));// 设置圆形的填充颜色
-        // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
-        myLocationStyle.strokeWidth(1.0f);// 设置圆形的边框粗细
-        aMap.setMyLocationStyle(myLocationStyle);
-        aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        // aMap.setMyLocationType()
+        geocoderSearch = new GeocodeSearch(this);
+        geocoderSearch.setOnGeocodeSearchListener(this);
     }
 
     /**
@@ -104,7 +100,6 @@ public class LocationMapActivity extends Activity implements LocationSource, AMa
     protected void onPause() {
         super.onPause();
         mapView.onPause();
-        deactivate();
     }
 
     /**
@@ -125,70 +120,37 @@ public class LocationMapActivity extends Activity implements LocationSource, AMa
         mapView.onDestroy();
     }
 
-    /**
-     * 此方法已经废弃
-     */
     @Override
-    public void onLocationChanged(Location location) {
+    public void onCameraChange(CameraPosition cameraPosition) {
+        LatLng target = cameraPosition.target;
+        lat = target.latitude;
+        lon = target.longitude;
+        latLonPoint = new LatLonPoint(target.latitude, target.longitude);
+
+        //latLonPoint参数表示一个Latlng，第二参数表示范围多少米，GeocodeSearch.AMAP表示是国测局坐标系还是GPS原生坐标系
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
+        geocoderSearch.getFromLocationAsyn(query);
+
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onCameraChangeFinish(CameraPosition cameraPosition) {
+
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    /**
-     * 定位成功后回调函数
-     */
-    @Override
-    public void onLocationChanged(AMapLocation aLocation) {
-        if (mListener != null && aLocation != null) {
-            mListener.onLocationChanged(aLocation);// 显示系统小蓝点
-            if(!Utils.isEmpty(aLocation.getPoiName())){
-                location = aLocation.getPoiName();
-                lat = aLocation.getLatitude();
-                lon = aLocation.getLongitude();
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        if (i == 0) {
+            if (regeocodeResult != null && regeocodeResult.getRegeocodeAddress() != null && regeocodeResult.getRegeocodeAddress().getFormatAddress() != null) {
+                location = regeocodeResult.getRegeocodeAddress().getFormatAddress() + "附近";
+//                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(AMapUtil.convertToLatLng(latLonPoint), 11));
             }
         }
     }
 
-    /**
-     * 激活定位
-     */
     @Override
-    public void activate(OnLocationChangedListener listener) {
-        mListener = listener;
-        if (mAMapLocationManager == null) {
-            mAMapLocationManager = LocationManagerProxy.getInstance(this);
-			/*
-			 * mAMapLocManager.setGpsEnable(false);
-			 * 1.0.2版本新增方法，设置true表示混合定位中包含gps定位，false表示纯网络定位，默认是true Location
-			 * API定位采用GPS和网络混合定位方式
-			 * ，第一个参数是定位provider，第二个参数时间最短是2000毫秒，第三个参数距离间隔单位是米，第四个参数是定位监听者
-			 */
-            mAMapLocationManager.requestLocationData(
-                    LocationProviderProxy.AMapNetwork, 2000, 10, this);
-        }
-    }
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
 
-    /**
-     * 停止定位
-     */
-    @Override
-    public void deactivate() {
-        mListener = null;
-        if (mAMapLocationManager != null) {
-            mAMapLocationManager.removeUpdates(this);
-            mAMapLocationManager.destroy();
-        }
-        mAMapLocationManager = null;
     }
 
     /**
