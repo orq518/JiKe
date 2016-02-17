@@ -197,16 +197,17 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.VISIBLE);
-
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
-            mTVState.setVisibility(View.GONE);
+
             // 托管
             if (!Utils.isEmpty(grabSingleBean.getIspay())){
-                if("1".equals(grabSingleBean.getIspay())){
+                if("0".equals(grabSingleBean.getIspay())){
                     mProjectTrust.setVisibility(View.VISIBLE);
+                    mTVState.setVisibility(View.GONE);
                 }else{
                     mProjectTrust.setVisibility(View.GONE);
+                    mTVState.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -226,8 +227,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVTime.setText(ssb.toString());
             }
             // 时间
-            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
-                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+            if (!Utils.isEmpty(grabSingleBean.getEnddate())) {
+                String[] sourceStrArray = grabSingleBean.getEnddate().split(" ");
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
@@ -247,8 +248,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVTime.setText(ssb.toString());
             }
             // 时间
-            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
-                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+            if (!Utils.isEmpty(grabSingleBean.getEnddate())) {
+                String[] sourceStrArray = grabSingleBean.getEnddate().split(" ");
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
@@ -327,8 +328,6 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void payResult(PayResult payResult) {
-
-
         /**
          * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
          * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
@@ -549,8 +548,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVType.setText(spanStrContent.toString());
 
                 // 时间
-                if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
-                    String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+                if (!Utils.isEmpty(grabSingleBean.getEnddate())) {
+                    String[] sourceStrArray = grabSingleBean.getEnddate().split(" ");
                     mTVTime.setText(sourceStrArray[0]);
                     mTVTime.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
                 }

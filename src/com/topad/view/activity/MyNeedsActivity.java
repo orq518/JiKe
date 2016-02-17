@@ -206,10 +206,10 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             }
 
             holder.content.setText(bankList.get(position).getDetail());
-            String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
+            String[] sourceStrArray = bankList.get(position).getEnddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
 
-            if(!Utils.isEmpty(bankList.get(position).getAdddate())){
+            if(!Utils.isEmpty(bankList.get(position).getEnddate())){
                 // 时间
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

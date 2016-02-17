@@ -285,6 +285,9 @@ public class TopADApplication extends Application {
      */
     public void logout() {
         token = null;
+        userId = null;
+        myInfoBean = null;
+
         String mUserId = (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.USER_ID, "");
         if (!Utils.isEmpty(mUserId)) {
             //绑定友盟账号
@@ -296,6 +299,7 @@ public class TopADApplication extends Application {
         }
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_TOKEN, "");
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_ID, "");
+        SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_PHONR, "");
 
     }
 
