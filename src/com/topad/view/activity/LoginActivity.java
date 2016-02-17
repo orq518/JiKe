@@ -179,7 +179,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             // 登录
             case R.id.btn_login:
-                SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, "");//清空token
+                TopADApplication.getSelf().logout();
                 // 拼接url
                 StringBuffer sb = new StringBuffer();
                 sb.append(Constants.getCurrUrl()).append(Constants.URL_LOGIN).append("?");
