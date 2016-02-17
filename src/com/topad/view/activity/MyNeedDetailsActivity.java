@@ -166,12 +166,14 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
     public void showView() {
         // 设置title
-        mTitleView.setTitle("项目详情");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-
         // 名字
         if (!Utils.isEmpty(grabSingleBean.getTitle())) {
-            mName.setText(grabSingleBean.getTitle());
+            mTitleView.setTitle(grabSingleBean.getTitle());
+        }
+        // 名字
+        if (!Utils.isEmpty(grabSingleBean.getCompanyname())) {
+            mName.setText(grabSingleBean.getCompanyname());
         }
 
         // 价格

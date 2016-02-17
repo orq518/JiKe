@@ -28,6 +28,7 @@ import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
 import com.topad.view.customviews.TitleView;
@@ -98,6 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     TextView tv_name;//名字
     MyInfoBean.DataEntity myInfoBean;
     TextView left_tv_red;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +225,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void initLeftMenu() {
-        left_tv_red= (TextView) findViewById(R.id.left_tv_red);
+        left_tv_red = (TextView) findViewById(R.id.left_tv_red);
         findViewById(R.id.csmm).setOnTouchListener(this);
         findViewById(R.id.wszl).setOnTouchListener(this);
         findViewById(R.id.gsrz).setOnTouchListener(this);
@@ -760,6 +762,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (base != null) {
                     myInfoBean = base.getData();
                     TopADApplication.getSelf().setMyInfo(base.getData());
+                    if (!Utils.isEmpty(myInfoBean.getMobile())) {
+                        SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PHONR, myInfoBean.getMobile());
+                    }
                     String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
                     String nameString = myInfoBean.getNickname();
                     if (!Utils.isEmpty(nameString) && !Utils.isEmpty(headerpicUrl)) {
@@ -840,7 +845,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         if (num > 0) {
                             mTitle.setLeftRedVisiable(true);
                             left_tv_red.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             mTitle.setLeftRedVisiable(false);
                             left_tv_red.setVisibility(View.GONE);
                         }
