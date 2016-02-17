@@ -98,7 +98,7 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             // 提现
             case R.id.btn_cash:
                 Intent intentcash = new Intent(mContext, WithDrawCashActivity.class);
-                intentcash.putExtra("money", mTVMoney + "");
+                intentcash.putExtra("money", mTVMoney.getText().toString() + "");
                 intentcash.putExtra("aliaccount", AliPayUtil.SELLER);
                 startActivity(intentcash);
                 break;
