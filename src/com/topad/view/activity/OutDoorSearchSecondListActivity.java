@@ -110,7 +110,7 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
         // 设置顶部布局
-        mTitle.setTitle(getString(R.string.main_title));
+        mTitle.setTitle(getString(R.string.app_name));
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
         listview = (ListView) findViewById(R.id.listview);
         adapter = new ListViewAdapter(this);

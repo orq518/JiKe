@@ -149,6 +149,6 @@ public class Constants {
     public static final String BROADCAST_ACTION_LOGOUT = "broadcast_action_logout"; //登出
     public static final String BROADCAST_ACTION_CLEAR_TOKEN = "broadcast_action_clear_token";   //清除token
     public static final String BROADCAST_ACTION_SUCCEED_LOGIN_INDEX = "broadcast_action_succeed_login_index";   //登录成功后跳转的tabindex
-
+    public static final String BROADCAST_ACTION_UPDATA_MYINFO = "BROADCAST_ACTION_UPDATA_MYINFO";   //更新首页我的信息
 
 }

@@ -1,8 +1,11 @@
 package com.topad.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -55,12 +58,12 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initViews() {
-        myIntro= getIntent().getStringExtra("myintro");
+        myIntro = getIntent().getStringExtra("myintro");
         mTitleView = (TitleView) findViewById(R.id.title);
         et_personal_profile = (EditText) findViewById(R.id.et_personal_profile);
         mBTLogin = (Button) findViewById(R.id.btn_ok);
         mBTLogin.setOnClickListener(this);
-        if(!Utils.isEmpty(myIntro)){
+        if (!Utils.isEmpty(myIntro)) {
             et_personal_profile.setText(myIntro);
         }
     }
@@ -89,11 +92,17 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onClick(View v) {
-            finish();
+            goBack();
         }
 
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            goBack();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -128,7 +137,8 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ToastUtil.show(mContext, ((BaseBean) t).getMsg());
-                finish();
+                goBack();
+
             }
 
             @Override
@@ -138,6 +148,13 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
                 ToastUtil.show(mContext, msg);
             }
         }, MyInfoBean.class);
+    }
+
+    public void goBack() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        finish();
+
     }
 
     /**
@@ -151,17 +168,6 @@ public class PersonalProfileActivity extends BaseActivity implements View.OnClic
         return s.replaceAll(" ", "");
     }
 
-    /**
-     * 设置下一步按钮
-     *
-     * @param flag
-     */
-    private void setNextBtnState(boolean flag) {
-        if (mBTLogin == null)
-            return;
-        mBTLogin.setEnabled(flag);
-        mBTLogin.setClickable(flag);
-    }
 
     @Override
     protected void onDestroy() {

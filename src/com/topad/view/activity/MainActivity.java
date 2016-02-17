@@ -1,7 +1,9 @@
 package com.topad.view.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -147,7 +149,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mWebsiteSuggestion = (LinearLayout) findViewById(R.id.website_suggestion_layout);
 
         // 设置顶部布局
-        mTitle.setTitle(getString(R.string.main_title));
+        mTitle.setTitle(getString(R.string.app_name));
         mTitle.setLeftVisiable(true);
         mTitle.setLeftIcon(R.drawable.leftmenu);
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
@@ -217,6 +219,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initLocation();
         TopADApplication.getSelf().bindUmeng();
         checkNewMessage();
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.BROADCAST_ACTION_UPDATA_MYINFO);
+        registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -864,4 +871,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }, CheckMSGBean.class);
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+        }
+
+    }
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (Constants.BROADCAST_ACTION_UPDATA_MYINFO.equals(action)) {
+                getMyInfo();
+//                myInfoBean = TopADApplication.getSelf().getMyInfo();
+//                String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
+//                String nameString = myInfoBean.getNickname();
+//                if (!Utils.isEmpty(nameString) && !Utils.isEmpty(headerpicUrl)) {
+//                    tv_name.setText(nameString);
+//                    ImageLoader.getInstance().displayImage(headerpicUrl, imageView_header, TopADApplication.getSelf().getImageLoaderOption());
+//                }
+            }
+        }
+    };
 }
