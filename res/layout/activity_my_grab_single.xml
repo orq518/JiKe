@@ -6,12 +6,84 @@
               android:orientation="vertical">
 
     <!-- 顶部标题 -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="wrap_content"
         android:background="@color/bule"
         android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/bule"
+            android:layout_marginTop="0dp">
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_grab_single"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center|right"-->
+                <!--android:text="我要抢单"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="18sp"-->
+                <!--android:paddingRight="20dp"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_select_project"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center|left"-->
+                <!--android:text="甄选项目"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="18sp"-->
+                <!--android:paddingLeft="20dp"/>-->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:paddingLeft="20dp"/>
+            <TextView
+                android:id="@+id/tv_grab_single"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:text="我要抢单"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:paddingRight="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_select_project"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="甄选项目"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:paddingLeft="20dp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:paddingRight="20dp"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_back"
@@ -24,52 +96,15 @@
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
-            android:paddingRight="2dp"
+            android:paddingRight="0dp"
             android:text="     "
             android:textColor="@color/dark_gray"
             android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/tv_grab_single"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:text="我要抢单"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:id="@+id/tv_select_project"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:text="甄选项目"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:layout_marginRight="15dp"/>
-
-        <TextView
-            android:id="@+id/tv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/title_height"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:drawableLeft="@drawable/left_back_selector"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:text="     "
-            android:textColor="@color/dark_gray"
-            android:textSize="15sp"
-            android:visibility="invisible"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ly_bottom_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

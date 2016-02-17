@@ -20,7 +20,7 @@
         android:layout_toRightOf="@id/left_ic"
         android:text="机场"
         android:textColor="@color/black"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
     <ImageView
         android:id="@+id/right_ic"
         android:layout_width="wrap_content"
@@ -37,5 +37,5 @@
         android:layout_toLeftOf="@+id/right_ic"
         android:text="进站通道"
         android:textColor="@color/tab_text_default"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 </RelativeLayout>

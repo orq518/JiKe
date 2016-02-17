@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.topad.R;
 import com.topad.bean.SelectProjectBean;
+import com.topad.util.Utils;
 import com.topad.view.fragment.MyWantGrabSingleFragment;
 import com.topad.view.fragment.SelectProjectFragmnet;
 
@@ -33,6 +35,8 @@ public class MyWantGrabsingleActivity extends BaseActivity implements View.OnCli
     private Context mContext;
     /** 页卡内容 **/
     public ViewPager viewPager;
+    /** 动画线 **/
+    private LinearLayout mLYLine;
     /** 动画图片 **/
     private ImageView imageView;
     /** 返回 **/
@@ -114,12 +118,19 @@ public class MyWantGrabsingleActivity extends BaseActivity implements View.OnCli
      * 初始化动画，这个就是页卡滑动时，下面的横线也滑动的效果，在这里需要计算一些数据
      */
     private void InitImageView() {
+        mLYLine = (LinearLayout) findViewById(R.id.ly_bottom_line);
+        mLYLine.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*3)/13,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*4)/15,0);
+
         imageView = (ImageView) findViewById(R.id.iv_bottom_line);
+
+        LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams)imageView.getLayoutParams();
+        lp1.width=(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/5;
+
         bmpW = imageView.getLayoutParams().width;// 获取图片宽度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / pageSize - bmpW) / 4;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
+        offset = (screenW / pageSize - bmpW) * 3 / 11;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         imageView.setImageMatrix(matrix);// 设置动画初始位置
@@ -135,6 +146,10 @@ public class MyWantGrabsingleActivity extends BaseActivity implements View.OnCli
 
         tvGrabSingle.setTextColor(selectedColor);
         tvSelectProject.setTextColor(unSelectedColor);
+
+        tvGrabSingle.setPadding(0,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/11,0);
+        tvSelectProject.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/11,0,0,0);
+
 
         mBack.setOnClickListener(this);
         tvGrabSingle.setOnClickListener(new MyOnClickListener(0));

@@ -37,7 +37,8 @@
                 android:id="@+id/lay_select_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="14dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:background="@color/white">
 
                 <TextView
@@ -47,7 +48,7 @@
                     android:layout_centerVertical="true"
                     android:text="选择媒体类别"
                     android:textColor="@color/text_bg"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/tv_select_media_newspaper"
@@ -78,7 +79,7 @@
             <EditText
                 android:id="@+id/et_media_name"
                 android:layout_width="fill_parent"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:background="@drawable/btn_board_gray"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -93,7 +94,7 @@
             <EditText
                 android:id="@+id/et_column"
                 android:layout_width="fill_parent"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:background="@drawable/btn_board_gray"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -116,7 +117,8 @@
                 android:id="@+id/lay_address_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="14dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:background="@color/white">
 
                 <TextView
@@ -126,7 +128,7 @@
                     android:layout_centerVertical="true"
                     android:text="选择媒体所在地"
                     android:textColor="@color/text_bg"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/tv_select_media_address"
@@ -158,7 +160,8 @@
                 android:id="@+id/lay_prove_media"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:padding="14dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:background="@color/white">
 
                 <TextView
@@ -168,7 +171,7 @@
                     android:layout_centerVertical="true"
                     android:text="媒体代理证明/经管证明"
                     android:textColor="@color/text_bg"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
