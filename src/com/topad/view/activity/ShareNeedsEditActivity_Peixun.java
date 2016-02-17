@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -197,6 +198,8 @@ public class ShareNeedsEditActivity_Peixun extends BaseActivity implements IReco
                 recordTools.showVoiceDialog();
                 break;
             case R.id.data_pic:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 PickDatePopwindow datePick = new PickDatePopwindow(ShareNeedsEditActivity_Peixun.this);
                 datePick.registeDatePick(this);
                 datePick.showAtLocation(mainlayout,
