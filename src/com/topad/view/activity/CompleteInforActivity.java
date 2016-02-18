@@ -308,8 +308,10 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
-                    isChanged=true;
+                    isChanged = true;
+                    goBack();
                 }
+
             }
 
             @Override
@@ -466,7 +468,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                                             if (image != null) {
                                                 add_head_pic.setImageBitmap(image);
                                             }
-                                            isChanged=true;
+                                            isChanged = true;
 
                                             ToastUtil.show(mContext, base.getMsg());
                                         }
@@ -535,6 +537,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -542,14 +545,17 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         }
         return super.onKeyDown(keyCode, event);
     }
+
     boolean isChanged;
+
     public void goBack() {
         finish();
-        if(isChanged) {
+        if (isChanged) {
             updataMyInfo();
         }
 
     }
+
     public void updataMyInfo() {//更新首页头像等个人信息
         Intent intent = new Intent(Constants.BROADCAST_ACTION_UPDATA_MYINFO);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

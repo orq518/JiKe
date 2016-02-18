@@ -37,7 +37,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
     /** title布局 **/
     private TitleView mTitle;
     /** 账户名 **/
-    private TextView mTVName;
+    private EditText mTVName;
     /** 余额 **/
     private TextView mTVTip;
     /** 超额 **/
@@ -70,7 +70,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
     public void initViews() {
 
         mTitle = (TitleView) findViewById(R.id.title);
-        mTVName = (TextView) findViewById(R.id.tv_name);
+        mTVName = (EditText) findViewById(R.id.tv_name);
         mEtMoney = (EditText) findViewById(R.id.et_cash_money);
         mTVTip = (TextView) findViewById(R.id.tv_tip);
         mTVAll = (TextView) findViewById(R.id.tv_all);
@@ -151,11 +151,11 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
         }
 
         if(!Utils.isEmpty(mMoney)){
-            mTVTip.setText("零钱余额￥" + mMoney + "，");
+            mTVTip.setText("零钱余额" + mMoney + "");
         }
-        if(!Utils.isEmpty(mAliaccount)){
-            mTVName.setText(mAliaccount);
-        }
+//        if(!Utils.isEmpty(mAliaccount)){
+//            mTVName.setText(mAliaccount);
+//        }
     }
 
     /**
@@ -180,6 +180,10 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                     Utils.showToast(this, "提现金额最低1元");
                     return;
                 }
+                if (Utils.isEmpty( mTVName.getText().toString())){
+                    Utils.showToast(this, "请输入支付宝账号");
+                    return;
+                }
 
                 // 拼接url
                 StringBuffer sb = new StringBuffer();
@@ -188,7 +192,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                 RequestParams rp = new RequestParams();
                 rp.add("userid", TopADApplication.getSelf().getUserId());
                 rp.add("getmoney", mEtMoney.getText().toString());
-                rp.add("aliaccount", mAliaccount);
+                rp.add("aliaccount", mTVName.getText().toString());
 
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override

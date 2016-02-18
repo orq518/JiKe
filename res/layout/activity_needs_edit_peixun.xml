@@ -22,7 +22,7 @@
         <RelativeLayout
             android:id="@+id/mainlayout"
             android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
+            android:layout_height="fill_parent">
 
 
             <LinearLayout android:layout_width="fill_parent"
@@ -40,10 +40,11 @@
                 <EditText
                     android:id="@+id/et_title"
                     android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:background="@drawable/btn_board_gray"
-                          android:hint=""
-                          android:padding="@dimen/dimen_10"/>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_board_gray"
+                    android:hint=""
+                    android:padding="@dimen/dimen_10"
+                    android:singleLine="true"/>
 
 
                 <RelativeLayout android:layout_width="fill_parent"
@@ -82,12 +83,12 @@
                     <EditText
                         android:id="@+id/et_detail"
                         android:layout_width="fill_parent"
-                              android:layout_height="150dp"
-                              android:background="@drawable/btn_board_gray"
-                              android:gravity="top|left"
-                              android:hint=""
-                              android:textSize="@dimen/textsize_18"
-                              android:padding="@dimen/dimen_10"/>
+                        android:layout_height="150dp"
+                        android:background="@drawable/btn_board_gray"
+                        android:gravity="top|left"
+                        android:hint=""
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/textsize_18"/>
                     <GridView
                         android:id="@+id/add_detail_gridview"
                         android:layout_width="wrap_content"
@@ -109,9 +110,9 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_board_gray"
                         android:hint="输入预算金额"
-                        android:textSize="@dimen/textsize_18"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/dimen_10"/>
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/textsize_18"/>
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_alignParentRight="true"
@@ -125,11 +126,11 @@
                     android:id="@+id/et_address"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/btn_board_gray"
                     android:hint="输入培训地点"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/textsize_18"
-                    android:padding="@dimen/dimen_10"/>
+                    android:padding="@dimen/dimen_10"
+                    android:textSize="@dimen/textsize_18"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:paddingBottom="@dimen/dimen_10"
                           android:paddingTop="@dimen/dimen_10"
@@ -160,12 +161,12 @@
                     android:layout_marginTop="30dp"
                     android:background="@drawable/btn_board_orange"
                     android:focusable="false"
+                    android:onClick="onClick"
                     android:paddingBottom="8dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:paddingTop="8dp"
                     android:text="提交"
-                    android:onClick="onClick"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_18"/>
 

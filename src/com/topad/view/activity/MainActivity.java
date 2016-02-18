@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
+import com.topad.util.ActivityCollector;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
@@ -197,71 +200,71 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mIntellectualProperty.setOnClickListener(this);
         mWebsiteSuggestion.setOnClickListener(this);
 
-        LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams)mLYTv.getLayoutParams();
-        lp1.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) mLYTv.getLayoutParams();
+        lp1.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams)mLYBc.getLayoutParams();
-        lp2.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams) mLYBc.getLayoutParams();
+        lp2.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp3 = (LinearLayout.LayoutParams)mLYNp.getLayoutParams();
-        lp3.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp3 = (LinearLayout.LayoutParams) mLYNp.getLayoutParams();
+        lp3.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp4 = (LinearLayout.LayoutParams)mLYOd.getLayoutParams();
-        lp4.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp4 = (LinearLayout.LayoutParams) mLYOd.getLayoutParams();
+        lp4.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp5 = (LinearLayout.LayoutParams)mLYMz.getLayoutParams();
-        lp5.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp5 = (LinearLayout.LayoutParams) mLYMz.getLayoutParams();
+        lp5.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp6 = (LinearLayout.LayoutParams)mLYNet.getLayoutParams();
-        lp6.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+        LinearLayout.LayoutParams lp6 = (LinearLayout.LayoutParams) mLYNet.getLayoutParams();
+        lp6.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
-        LinearLayout.LayoutParams lp7 = (LinearLayout.LayoutParams)mAdvertisingCreativEe.getLayoutParams();
-        lp7.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp7 = (LinearLayout.LayoutParams) mAdvertisingCreativEe.getLayoutParams();
+        lp7.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp8 = (LinearLayout.LayoutParams)mMarketingStrategy.getLayoutParams();
-        lp8.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp8 = (LinearLayout.LayoutParams) mMarketingStrategy.getLayoutParams();
+        lp8.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp9 = (LinearLayout.LayoutParams)mTVC.getLayoutParams();
-        lp9.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp9 = (LinearLayout.LayoutParams) mTVC.getLayoutParams();
+        lp9.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp10 = (LinearLayout.LayoutParams)mAnimeCreate.getLayoutParams();
-        lp10.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp10 = (LinearLayout.LayoutParams) mAnimeCreate.getLayoutParams();
+        lp10.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp11 = (LinearLayout.LayoutParams)mViDesign.getLayoutParams();
-        lp11.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp11 = (LinearLayout.LayoutParams) mViDesign.getLayoutParams();
+        lp11.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp12 = (LinearLayout.LayoutParams)mLogoDesign.getLayoutParams();
-        lp12.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp12 = (LinearLayout.LayoutParams) mLogoDesign.getLayoutParams();
+        lp12.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp13 = (LinearLayout.LayoutParams)mAppUiDesign.getLayoutParams();
-        lp13.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp13 = (LinearLayout.LayoutParams) mAppUiDesign.getLayoutParams();
+        lp13.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp14 = (LinearLayout.LayoutParams)mProductDesign.getLayoutParams();
-        lp14.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp14 = (LinearLayout.LayoutParams) mProductDesign.getLayoutParams();
+        lp14.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp15 = (LinearLayout.LayoutParams)mDackingDesign.getLayoutParams();
-        lp15.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp15 = (LinearLayout.LayoutParams) mDackingDesign.getLayoutParams();
+        lp15.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp16 = (LinearLayout.LayoutParams)mRenovationDesign.getLayoutParams();
-        lp16.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+        LinearLayout.LayoutParams lp16 = (LinearLayout.LayoutParams) mRenovationDesign.getLayoutParams();
+        lp16.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
-        LinearLayout.LayoutParams lp17 = (LinearLayout.LayoutParams)mLegalServices.getLayoutParams();
-        lp17.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp17 = (LinearLayout.LayoutParams) mLegalServices.getLayoutParams();
+        lp17.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp18 = (LinearLayout.LayoutParams)mIntellectualProperty.getLayoutParams();
-        lp18.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp18 = (LinearLayout.LayoutParams) mIntellectualProperty.getLayoutParams();
+        lp18.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp19 = (LinearLayout.LayoutParams)mWebsiteSuggestion.getLayoutParams();
-        lp19.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+        LinearLayout.LayoutParams lp19 = (LinearLayout.LayoutParams) mWebsiteSuggestion.getLayoutParams();
+        lp19.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
-        LinearLayout.LayoutParams lp20 = (LinearLayout.LayoutParams)mMyMedia.getLayoutParams();
-        lp20.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
+        LinearLayout.LayoutParams lp20 = (LinearLayout.LayoutParams) mMyMedia.getLayoutParams();
+        lp20.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
 
-        LinearLayout.LayoutParams lp21 = (LinearLayout.LayoutParams)mReleaseDemand.getLayoutParams();
-        lp21.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
+        LinearLayout.LayoutParams lp21 = (LinearLayout.LayoutParams) mReleaseDemand.getLayoutParams();
+        lp21.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
 
-        LinearLayout.LayoutParams lp22 = (LinearLayout.LayoutParams)mGrabSingle.getLayoutParams();
-        lp22.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
+        LinearLayout.LayoutParams lp22 = (LinearLayout.LayoutParams) mGrabSingle.getLayoutParams();
+        lp22.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
 
         left_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         // Set the list's click listener
@@ -822,6 +825,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
         }
+        mDrawerLayout.closeDrawer(left_drawer);
     }
 
     /**
@@ -835,6 +839,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
+
+    long mBackTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+        }
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (System.currentTimeMillis() - mBackTime < 1500) {
+                ActivityCollector.finishAll();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onBack();
+                    }
+                }, 1000);
+            } else {
+                mBackTime = System.currentTimeMillis();
+                Utils.showToast(this, "再按一次离开" + getResources().getString(R.string.app_name));
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    Handler mHandler = new Handler() {
+    };
 
     /**
      * 获取我的个人信息
@@ -956,6 +987,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }, CheckMSGBean.class);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -965,6 +997,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
     }
+
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {

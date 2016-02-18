@@ -165,6 +165,9 @@ public class ShareNeedsEditActivity_Peixun extends BaseActivity implements IReco
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ToastUtil.show(mContext, ((BaseBean) t).getMsg());
+                Intent intent = new Intent(mContext, MyNeedsActivity.class);
+                intent.putExtra("toMainpage",true);
+                startActivity(intent);
                 finish();
             }
 

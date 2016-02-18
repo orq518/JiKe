@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * ${todo}<上传照片>
  *
@@ -40,15 +41,20 @@ import java.util.Map;
  */
 public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MediaReoeaseUploadPicActivity.class.getSimpleName();
-    /** 上下文 **/
+    /**
+     * 上下文
+     **/
     private Activity mContext;
-    /** 顶部布局 **/
+    /**
+     * 顶部布局
+     **/
     private TitleView mTitleView;
     private ImageView pic_1, pic_2;
     private Button btn_save;
     private String pathString1, pathString2;
     private String img_name1, img_name2;
     private MyInfoBean.DataEntity myInfoBean;
+    String picurl;
 
     @Override
     public int setLayoutById() {
@@ -64,6 +70,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     @Override
     public void initViews() {
         Intent intent = getIntent();
+        picurl = intent.getStringExtra("picurl");
         mTitleView = (TitleView) findViewById(R.id.title);
         pic_1 = (ImageView) findViewById(R.id.pic_1);
         pic_2 = (ImageView) findViewById(R.id.pic_2);
@@ -82,7 +89,13 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
 //        } else {
 //            pic_1.setImageResource(R.drawable.uploadback);
 //        }
-        pic_1.setImageResource(R.drawable.uploadback);
+        if (!Utils.isEmpty(picurl)) {
+            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + picurl;
+            getPic(headerpicUrl, pic_1);
+        } else {
+            pic_1.setImageResource(R.drawable.uploadback);
+        }
+
 
         int width = Utils.getScreenWidth(this);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) pic_1.getLayoutParams();
@@ -93,7 +106,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
 
     public void getPic(String imageURL, ImageView imageView) {
         ImageLoader.getInstance().displayImage(imageURL, imageView, TopADApplication.getSelf().getImageLoaderOption(),
-                new ImageLoadingListener(){
+                new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
 
@@ -260,8 +273,8 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
-                    Intent intent = new Intent(MediaReoeaseUploadPicActivity.this, MediaReleaseActivity.class );
-                    intent.putExtra( "mediacert", img_name1);
+                    Intent intent = new Intent(MediaReoeaseUploadPicActivity.this, MediaReleaseActivity.class);
+                    intent.putExtra("mediacert", img_name1);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

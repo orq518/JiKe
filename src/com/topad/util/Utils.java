@@ -63,7 +63,7 @@ public class Utils {
      */
     public static boolean isEmpty(String txt) {
         boolean flag = false;
-        if (txt == null || "".equals(txt))
+        if (txt == null || "".equals(txt.trim()))
             flag = true;
         return flag;
     }
