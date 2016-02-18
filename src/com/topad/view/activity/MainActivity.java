@@ -51,6 +51,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private ImageView mReleaseDemand;
     // 我要抢单
     private ImageView mGrabSingle;
+    // 电视
+    private LinearLayout mLYTv;
+    // 广播
+    private LinearLayout mLYBc;
+    // 报纸
+    private LinearLayout mLYNp;
+    // 户外
+    private LinearLayout mLYOd;
+    // 杂志
+    private LinearLayout mLYMz;
+    // 网络
+    private LinearLayout mLYNet;
     // 广告创意
     private LinearLayout mAdvertisingCreativEe;
     // 营销策略
@@ -126,6 +138,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mMyMedia = (ImageView) findViewById(R.id.my_media);
         mReleaseDemand = (ImageView) findViewById(R.id.release_demand);
         mGrabSingle = (ImageView) findViewById(R.id.grab_single);
+
+        mLYTv = (LinearLayout) findViewById(R.id.tv_layout);
+        mLYBc = (LinearLayout) findViewById(R.id.broadcast_layout);
+        mLYNp = (LinearLayout) findViewById(R.id.newspaper_layout);
+        mLYOd = (LinearLayout) findViewById(R.id.outdoor_layout);
+        mLYMz = (LinearLayout) findViewById(R.id.magazine_layout);
+        mLYNet = (LinearLayout) findViewById(R.id.net_layout);
         mAdvertisingCreativEe = (LinearLayout) findViewById(R.id.advertising_creative_layout);
         mMarketingStrategy = (LinearLayout) findViewById(R.id.marketing_strategy_layout);
         mTVC = (LinearLayout) findViewById(R.id.tvc_layout);
@@ -177,6 +196,72 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mLegalServices.setOnClickListener(this);
         mIntellectualProperty.setOnClickListener(this);
         mWebsiteSuggestion.setOnClickListener(this);
+
+        LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams)mLYTv.getLayoutParams();
+        lp1.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams)mLYBc.getLayoutParams();
+        lp2.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp3 = (LinearLayout.LayoutParams)mLYNp.getLayoutParams();
+        lp3.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp4 = (LinearLayout.LayoutParams)mLYOd.getLayoutParams();
+        lp4.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp5 = (LinearLayout.LayoutParams)mLYMz.getLayoutParams();
+        lp5.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp6 = (LinearLayout.LayoutParams)mLYNet.getLayoutParams();
+        lp6.height=(Utils.getScreenWidth(MainActivity.this)*1)/7;
+
+        LinearLayout.LayoutParams lp7 = (LinearLayout.LayoutParams)mAdvertisingCreativEe.getLayoutParams();
+        lp7.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp8 = (LinearLayout.LayoutParams)mMarketingStrategy.getLayoutParams();
+        lp8.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp9 = (LinearLayout.LayoutParams)mTVC.getLayoutParams();
+        lp9.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp10 = (LinearLayout.LayoutParams)mAnimeCreate.getLayoutParams();
+        lp10.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp11 = (LinearLayout.LayoutParams)mViDesign.getLayoutParams();
+        lp11.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp12 = (LinearLayout.LayoutParams)mLogoDesign.getLayoutParams();
+        lp12.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp13 = (LinearLayout.LayoutParams)mAppUiDesign.getLayoutParams();
+        lp13.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp14 = (LinearLayout.LayoutParams)mProductDesign.getLayoutParams();
+        lp14.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp15 = (LinearLayout.LayoutParams)mDackingDesign.getLayoutParams();
+        lp15.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp16 = (LinearLayout.LayoutParams)mRenovationDesign.getLayoutParams();
+        lp16.height=(Utils.getScreenWidth(MainActivity.this)*1)/4;
+
+        LinearLayout.LayoutParams lp17 = (LinearLayout.LayoutParams)mLegalServices.getLayoutParams();
+        lp17.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp18 = (LinearLayout.LayoutParams)mIntellectualProperty.getLayoutParams();
+        lp18.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp19 = (LinearLayout.LayoutParams)mWebsiteSuggestion.getLayoutParams();
+        lp19.height=(Utils.getScreenWidth(MainActivity.this)*1)/5;
+
+        LinearLayout.LayoutParams lp20 = (LinearLayout.LayoutParams)mMyMedia.getLayoutParams();
+        lp20.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
+
+        LinearLayout.LayoutParams lp21 = (LinearLayout.LayoutParams)mReleaseDemand.getLayoutParams();
+        lp21.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
+
+        LinearLayout.LayoutParams lp22 = (LinearLayout.LayoutParams)mGrabSingle.getLayoutParams();
+        lp22.height=(Utils.getScreenWidth(MainActivity.this)*1)/8;
 
         left_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         // Set the list's click listener
