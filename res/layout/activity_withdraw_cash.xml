@@ -154,7 +154,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/dimen_5"
                             android:layout_marginBottom="@dimen/dimen_5"
-                            android:text="全部体现"
+                            android:text=""
                             android:visibility="gone"
                             android:textColor="#576b95"
                             android:textSize="16sp"/>
