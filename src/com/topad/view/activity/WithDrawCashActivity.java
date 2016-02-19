@@ -46,10 +46,11 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
     private EditText mEtMoney;
     /** 全部 **/
     private TextView mTVAll;
-
     /** 下一步 **/
     private Button mBtNext;
 
+    /** 提现金额 **/
+    private String mWDMoney;
     /** 余额 **/
     private String mMoney;
     /** 支付宝账户 **/
@@ -90,7 +91,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                 // TODO Auto-generated method stub
                 String data = getData(mEtMoney);
                 if (!Utils.isEmpty(data)) {
-                    mMoney = data;
+                    mWDMoney = data;
                 }
                 // 显示小数点后两位
                 String temp = arg0.toString();
@@ -115,7 +116,7 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                                       int arg3) {
                 String money = getData(mEtMoney);
                 if (!Utils.isEmpty(money) && money.length() > 0) {
-                    if (Double.parseDouble(money) >= 1000) {
+                    if (Double.parseDouble(money) > Double.parseDouble(mMoney)) {
                         mTVTip.setVisibility(View.GONE);
                         mTVAll.setVisibility(View.GONE);
                         mTVChao.setVisibility(View.VISIBLE);
@@ -182,6 +183,10 @@ public class WithDrawCashActivity extends BaseActivity implements View.OnClickLi
                 }
                 if (Utils.isEmpty( mTVName.getText().toString())){
                     Utils.showToast(this, "请输入支付宝账号");
+                    return;
+                }
+                if (Float.parseFloat(mEtMoney.getText().toString()) > Float.parseFloat(mMoney)){
+                    Utils.showToast(this, "提现金额大于零钱");
                     return;
                 }
 

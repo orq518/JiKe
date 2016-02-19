@@ -81,7 +81,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                     String url = sb.toString();
                     RequestParams rp=new RequestParams();
                     rp.add("serviceid", serviceId);
-//                    rp.add("serviceid", "6");
 
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
@@ -140,6 +139,15 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
      */
     @Override
     public void initData() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(bankList != null && bankList.size()>0){
+            bankList.clear();
+        }
+
         setData();
 
         // 设置listview可以加载、刷新
@@ -148,7 +156,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         // 设置适配器
         adapter = new ListAdapter(mContext);
         mListView.setAdapter(adapter);
-
         // listview单击
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -162,7 +169,6 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                 String url = sb.toString();
                 RequestParams rp=new RequestParams();
                 rp.add("serviceid", serviceId);
-//                rp.add("serviceid", "6");
                 postWithLoading(url, rp, false, new HttpCallback() {
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -253,9 +259,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             Intent intent = new Intent(MyShareMediaListActivity.this, AddProductActivity.class);
             intent.putExtra("from", "2");
             startActivity(intent);
-
         }
-
     }
 
     /**
@@ -292,7 +296,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             swipeLayout.addSwipeListener(new SimpleSwipeListener() {
                 @Override
                 public void onOpen(SwipeLayout layout) {
-                    Toast.makeText(mContext, "Open", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Open", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -301,8 +305,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
                 @Override
                 public void onDoubleClick(SwipeLayout layout,
                                           boolean surface) {
-                    Toast.makeText(mContext, "DoubleClick",
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "DoubleClick",
+//                            Toast.LENGTH_SHORT).show();
                 }
             });
 

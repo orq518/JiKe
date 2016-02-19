@@ -170,8 +170,8 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent(Constants.BROADCAST_ACTION_PRODUCT_CLASS);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra( "media_class", arrayTV[type] + "-" + tempArray[position]);
-                    intent.putExtra( "type1", type + "");
-                    intent.putExtra( "type2", position + "");
+                    intent.putExtra( "type1", arrayTV[type]);
+                    intent.putExtra( "type2", tempArray[position]);
                     sendBroadcast(intent);
                     finish();
                 }else {

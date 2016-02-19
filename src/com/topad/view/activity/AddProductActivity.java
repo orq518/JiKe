@@ -146,20 +146,26 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         if ("1".equals(from)) {
             if (!Utils.isEmpty(mAdDetailsBean.getServicename())) {
                 mETName.setText(mAdDetailsBean.getServicename());
+                servicename = mAdDetailsBean.getServicename();
             }
 
             if (!Utils.isEmpty(mAdDetailsBean.getPrice())) {
                 mETOffer.setText(mAdDetailsBean.getPrice());
+                price = mAdDetailsBean.getPrice();
             }
 
             if (!Utils.isEmpty(mAdDetailsBean.getIntro())) {
                 mETDetails.setText(mAdDetailsBean.getIntro());
+                intro = mAdDetailsBean.getIntro();
             }
 
             if (!Utils.isEmpty(mAdDetailsBean.getType1()) &&
                     !Utils.isEmpty(mAdDetailsBean.getType2())) {
                 mTVClass.setText(mAdDetailsBean.getType1() + "-" + mAdDetailsBean.getType2());
                 mTVClass.setVisibility(View.VISIBLE);
+
+                type1 = mAdDetailsBean.getType1();
+                type2 = mAdDetailsBean.getType2();
             }
 
             for(int i=0; i<mAdCaseListBean.data.size(); i++){
@@ -312,9 +318,9 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CaseType meidaType = (CaseType) adapter.getItem(position);
-                if (meidaType.type.equals("1")) {//图片
+                if (meidaType.type.equals("1")) { // 图片
 
-                } else if (meidaType.type.equals("2")) {//添加案例
+                } else if (meidaType.type.equals("2")) { // 添加案例
                     Intent intent = new Intent(mContext, AddCaseActivity.class);
                     startActivityForResult(intent, CASE);
                 }
@@ -325,8 +331,10 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 CaseType meidaType = (CaseType) adapter.getItem(position);
-                meidaType.isShowDeleteed = true;
-                adapter.notifyDataSetChanged();
+                if (meidaType.type.equals("2")) { // 添加案例
+                    meidaType.isShowDeleteed = true;
+                    adapter.notifyDataSetChanged();
+                }
                 return true;
             }
         });
@@ -472,10 +480,11 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                     AddProductBean bean = (AddProductBean) t;
-                    if (bean != null && !Utils.isEmpty(bean.getServiceid())
-                            && caseList != null && caseList.size() > 1) {
-                        addCase(bean.getServiceid());
+                    if (bean != null && !Utils.isEmpty(mAdDetailsBean.getId())
+                            && caseList != null && caseList.size() > 0) {
+                        addCase(mAdDetailsBean.getId());
                     }
+                    finish();
                 }
 
                 @Override
@@ -509,9 +518,10 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                     AddProductBean bean = (AddProductBean) t;
                     if (bean != null && !Utils.isEmpty(bean.getServiceid())
-                            && caseList != null && caseList.size() > 1) {
+                            && caseList != null && caseList.size() > 0) {
                         addCase(bean.getServiceid());
                     }
+                    finish();
                 }
 
                 @Override
@@ -560,9 +570,10 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                     AddCaseBean bean = (AddCaseBean) t;
-                    if (bean != null && !Utils.isEmpty(bean.getCaseid())) {
-                        finish();
-                    }
+//                    if (bean != null && !Utils.isEmpty(bean.getCaseid())) {
+//                        finish();
+//                    }
+                    finish();
                 }
 
                 @Override
@@ -575,6 +586,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 }
             }, AddCaseBean.class, true);
         }
+        finish();
     }
 
 
@@ -638,18 +650,6 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             if (caseType.type.equals("1")) { // 图片
                 if(caseType.image == null){
                     String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + caseType.picPath;
-
-//                    ImageManager.getInstance(mContext).getBitmap(picUrl,
-//                            new ImageManager.ImageCallBack() {
-//                                @Override
-//                                public void loadImage(ImageView imageView, Bitmap bitmap) {
-//                                    if (bitmap != null && imageView != null) {
-//                                        imageView.setImageBitmap(bitmap);
-//                                        imageView
-//                                                .setScaleType(ImageView.ScaleType.FIT_XY);
-//                                    }
-//                                }
-//                            }, viewHolder.play);
                     ImageLoader.getInstance().displayImage(picUrl, viewHolder.play, TopADApplication.getSelf().getImageLoaderOption(),
                             new ImageLoadingListener(){
                                 @Override
