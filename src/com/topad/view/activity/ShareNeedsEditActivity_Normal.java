@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -177,57 +178,73 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        int color=0;
         switch (v.getId()) {
             case R.id.shimingrenzheng:
                 Drawable topDrawable;
                 if (shimingrenzheng.getTag().toString().equals("1")) {
                     topDrawable = getResources().getDrawable(R.drawable.shiming_normal);
                     shimingrenzheng.setTag("0");
+                    color=getResources().getColor(R.color.black);
                 } else {
+                    color=getResources().getColor(R.color.dark_gray_text);
                     shimingrenzheng.setTag("1");
                     topDrawable = getResources().getDrawable(R.drawable.shiming);
                 }
+                shimingrenzheng.setTextColor(color);
                 shimingrenzheng.setCompoundDrawablesRelativeWithIntrinsicBounds(null, topDrawable, null, null);
                 break;
             case R.id.shoujirenzheng:
                 if (shoujirenzheng.getTag().toString().equals("1")) {
                     topDrawable = getResources().getDrawable(R.drawable.shoujirenzheng_normal);
                     shoujirenzheng.setTag("0");
+                    color=getResources().getColor(R.color.black);
                 } else {
+                    color=getResources().getColor(R.color.dark_gray_text);
                     shoujirenzheng.setTag("1");
                     topDrawable = getResources().getDrawable(R.drawable.shoujirenzheng);
 //                    topDrawable.setBounds(0, topDrawable.getMinimumWidth(), topDrawable.getMinimumWidth(), 0);
                 }
+                shoujirenzheng.setTextColor(color);
                 shoujirenzheng.setCompoundDrawablesRelativeWithIntrinsicBounds(null, topDrawable, null, null);
                 break;
             case R.id.baozhengwancheng:
                 if (baozhengwancheng.getTag().toString().equals("1")) {
                     topDrawable = getResources().getDrawable(R.drawable.baozhengwancheng_normal);
                     baozhengwancheng.setTag("0");
+                    color=getResources().getColor(R.color.black);
                 } else {
+                    color=getResources().getColor(R.color.dark_gray_text);
                     baozhengwancheng.setTag("1");
                     topDrawable = getResources().getDrawable(R.drawable.baozhengwancheng);
                 }
+                baozhengwancheng.setTextColor(color);
                 baozhengwancheng.setCompoundDrawablesRelativeWithIntrinsicBounds(null, topDrawable, null, null);
                 break;
             case R.id.baozhengyuanchuang:
                 if (baozhengyuanchuang.getTag().toString().equals("1")) {
                     topDrawable = getResources().getDrawable(R.drawable.yuanchuang_normal);
                     baozhengyuanchuang.setTag("0");
+                    color=getResources().getColor(R.color.black);
                 } else {
+                    color=getResources().getColor(R.color.dark_gray_text);
                     baozhengyuanchuang.setTag("1");
                     topDrawable = getResources().getDrawable(R.drawable.yuanchuang);
                 }
+                baozhengyuanchuang.setTextColor(color);
                 baozhengyuanchuang.setCompoundDrawablesRelativeWithIntrinsicBounds(null, topDrawable, null, null);
                 break;
             case R.id.baozhengweihu:
                 if (baozhengweihu.getTag().toString().equals("1")) {
                     topDrawable = getResources().getDrawable(R.drawable.weihu_normal);
                     baozhengweihu.setTag("0");
+                    color=getResources().getColor(R.color.black);
                 } else {
+                    color=getResources().getColor(R.color.dark_gray_text);
                     baozhengweihu.setTag("1");
                     topDrawable = getResources().getDrawable(R.drawable.weihu);
                 }
+                baozhengweihu.setTextColor(color);
                 baozhengweihu.setCompoundDrawablesRelativeWithIntrinsicBounds(null, topDrawable, null, null);
                 break;
             case R.id.carame:
@@ -241,6 +258,8 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
                 recordTools.showVoiceDialog();
                 break;
             case R.id.data_pic:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 PickDatePopwindow datePick = new PickDatePopwindow(ShareNeedsEditActivity_Normal.this);
                 datePick.registeDatePick(this);
                 datePick.showAtLocation(bottom_layout,
@@ -339,6 +358,9 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ToastUtil.show(mContext, ((BaseBean) t).getMsg());
+                Intent intent = new Intent(mContext, MyNeedsActivity.class);
+                intent.putExtra("toMainpage",true);
+                startActivity(intent);
                 finish();
             }
 

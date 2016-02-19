@@ -86,48 +86,50 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
         pic_1.setOnClickListener(this);
         pic_2.setOnClickListener(this);
         btn_save.setOnClickListener(this);
+        btn_save.setEnabled(false);
+        btn_save.setClickable(false);
         myInfoBean = TopADApplication.getSelf().getMyInfo();
 
         switch (type) {
             case 0:
-//                if (myInfoBean != null) {
-//                    if (!Utils.isEmpty(myInfoBean.getImgcard1())) {
-//                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard1();
-//                        getPic(headerpicUrl, pic_1);
-//                    }
-//                    if (!Utils.isEmpty(myInfoBean.getImgcard2())) {
-//                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard2();
-//                        getPic(headerpicUrl, pic_2);
-//                    }
-//                }
+                if (myInfoBean != null) {
+                    if (!Utils.isEmpty(myInfoBean.getImgcard1())) {
+                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard1();
+                        getPic(headerpicUrl, pic_1);
+                    }
+                    if (!Utils.isEmpty(myInfoBean.getImgcard2())) {
+                        String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgcard2();
+                        getPic(headerpicUrl, pic_2);
+                    }
+                }
 
                 break;
             case 1:
-//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgdiploma())) {
-//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgdiploma();
-//                    getPic(headerpicUrl, pic_1);
-//                } else {
-//                    pic_1.setImageResource(R.drawable.upload_biyezheng);
-//                }
                 pic_1.setImageResource(R.drawable.upload_biyezheng);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgdiploma())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgdiploma();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.upload_biyezheng);
+                }
                 break;
             case 2:
-//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgnamecard())) {
-//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgnamecard();
-//                    getPic(headerpicUrl, pic_1);
-//                } else {
-//                    pic_1.setImageResource(R.drawable.upload_mingpian);
-//                }
                 pic_1.setImageResource(R.drawable.upload_mingpian);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImgnamecard())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImgnamecard();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.upload_mingpian);
+                }
                 break;
             case 3:
-//                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
-//                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
-//                    getPic(headerpicUrl, pic_1);
-//                } else {
-//                    pic_1.setImageResource(R.drawable.uploadback);
-//                }
                 pic_1.setImageResource(R.drawable.uploadback);
+                if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
+                    String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
+                    getPic(headerpicUrl, pic_1);
+                } else {
+                    pic_1.setImageResource(R.drawable.uploadback);
+                }
                 break;
         }
         int width = Utils.getScreenWidth(this);
@@ -156,7 +158,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
 //                    }
 //                }, imageView);
         ImageLoader.getInstance().displayImage(imageURL, imageView, TopADApplication.getSelf().getImageLoaderOption(),
-                new ImageLoadingListener(){
+                new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
 
@@ -272,8 +274,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                                 if (type == 0) {
                                     if (Utils.isEmpty(img_name2) && !Utils.isEmpty(pathString2)) {
                                         uploadPic(pathString2);
-                                    }
-                                    if (!Utils.isEmpty(img_name1) && !Utils.isEmpty(img_name2)) {
+                                    } else if (!Utils.isEmpty(img_name1) && !Utils.isEmpty(img_name2)) {
                                         submit();
                                     } else {
                                         Toast.makeText(mContext, "身份证上传失败", Toast.LENGTH_SHORT).show();
@@ -297,7 +298,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
 
 //
                     } else {//上传失败  服务器报错
-                        Toast.makeText(mContext, "图片上传失败", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "图片上传失败", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -385,6 +386,9 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                             break;
                     }
                     ToastUtil.show(mContext, base.getMsg());
+                    btn_save.setEnabled(false);
+                    btn_save.setClickable(false);
+                    finish();
                 }
             }
 
@@ -415,7 +419,10 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                             pic_1.setImageBitmap(image);
                         }
                     }
+                    btn_save.setEnabled(true);
+                    btn_save.setClickable(true);
                 }
+
                 break;
             case PICKPHOTO_2:
                 if (data != null) {
@@ -429,7 +436,10 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                             pic_2.setImageBitmap(image);
                         }
                     }
+                    btn_save.setEnabled(true);
+                    btn_save.setClickable(true);
                 }
+
                 break;
             default:
                 break;

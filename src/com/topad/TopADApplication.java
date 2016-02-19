@@ -67,7 +67,7 @@ public class TopADApplication extends Application {
                 .cacheOnDisk(false)
                 .showImageForEmptyUri(R.drawable.stay_tuned_icon)
                 .showImageOnFail(R.drawable.stay_tuned_icon)
-                .showImageOnLoading(R.drawable.stay_tuned_icon)
+//                .showImageOnLoading(R.drawable.stay_tuned_icon)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .displayer(new SimpleBitmapDisplayer()).build();
         initImageLoader(this);

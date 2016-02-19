@@ -104,7 +104,7 @@
                 <EditText
                     android:id="@+id/et_product_name"
                     android:layout_width="fill_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/btn_board_gray"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -119,11 +119,12 @@
                 <EditText
                     android:id="@+id/et_product_offer"
                     android:layout_width="fill_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/btn_board_gray"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
+                    android:inputType="numberDecimal"
                     android:hint="输入产品报价（元）"
                     android:textColorHint="@color/text_gray_bg"
                     android:textSize="14sp"

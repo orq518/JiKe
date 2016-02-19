@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.text.SpannableStringBuilder;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,22 +40,37 @@ import java.util.logging.Handler;
  * @author lht
  * @data: on 15/12/7 14:41
  */
-public class MyNeedsActivity extends BaseActivity implements View.OnClickListener{
+public class MyNeedsActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MyNeedsActivity.class.getSimpleName();
-    /** 上下文 **/
+    /**
+     * 上下文
+     **/
     private Context mContext;
-    /** 顶部布局 **/
+    /**
+     * 顶部布局
+     **/
     private TitleView mTitleView;
-    /** listView **/
+    /**
+     * listView
+     **/
     private MyListView mListView;
-    /** 只是用来模拟异步获取数据 **/
+    /**
+     * 只是用来模拟异步获取数据
+     **/
     private Handler handler;
-    /** 适配器 **/
+    /**
+     * 适配器
+     **/
     private ListAdapter adapter;
-    /** 数据源 **/
+    /**
+     * 数据源
+     **/
     private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
-    /** 请求页数 **/
+    /**
+     * 请求页数
+     **/
     private int page = 1;
+    boolean toMainpage;
 
     @Override
     public int setLayoutById() {
@@ -69,12 +85,14 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initViews() {
-        mTitleView = (TitleView) findViewById(R.id.title);;
+        mTitleView = (TitleView) findViewById(R.id.title);
+        ;
         mListView = (MyListView) findViewById(R.id.listview);
     }
 
     @Override
     public void initData() {
+        toMainpage = getIntent().getBooleanExtra("toMainpage", false);
         setData();
 
         showView();
@@ -102,9 +120,9 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                                     int position, long id) {
                 Intent intent = new Intent(mContext, MyNeedDetailsActivity.class);
 //                intent.putExtra("state", "0");
-                intent.putExtra("state", bankList.get(position-1).getStatus());
-                intent.putExtra("needId", bankList.get(position-1).getId());
-                intent.putExtra("data_details", bankList.get(position-1));
+                intent.putExtra("state", bankList.get(position - 1).getStatus());
+                intent.putExtra("needId", bankList.get(position - 1).getId());
+                intent.putExtra("data_details", bankList.get(position - 1));
                 startActivity(intent);
             }
         });
@@ -121,12 +139,18 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onLoadMore() {
-                page ++;
+                page++;
                 setData();
             }
         });
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            onBack();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     /**
      * 顶部布局--按钮事件监听
      */
@@ -134,11 +158,18 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onClick(View v) {
-            finish();
+            onBack();
         }
     }
 
-
+    @Override
+    public void onBack() {
+        if(toMainpage){
+            Intent intent = new Intent(mContext, MainActivity.class);
+            startActivity(intent);
+        }
+        finish();
+    }
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -184,24 +215,24 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                 convertView = mInflater.inflate((R.layout.fargment_my_need_item), null);
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
-                holder.name = (TextView) convertView .findViewById(R.id.tv_name);
-                holder.price = (TextView) convertView .findViewById(R.id.tv_price);
-                holder.state = (TextView) convertView .findViewById(R.id.tv_state);
-                holder.content = (TextView) convertView .findViewById(R.id.tv_content);
-                holder.time = (TextView) convertView .findViewById(R.id.tv_time);
-                holder.countdown = (TextView) convertView .findViewById(R.id.tv_countdown);
+                holder.name = (TextView) convertView.findViewById(R.id.tv_name);
+                holder.price = (TextView) convertView.findViewById(R.id.tv_price);
+                holder.state = (TextView) convertView.findViewById(R.id.tv_state);
+                holder.content = (TextView) convertView.findViewById(R.id.tv_content);
+                holder.time = (TextView) convertView.findViewById(R.id.tv_time);
+                holder.countdown = (TextView) convertView.findViewById(R.id.tv_countdown);
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.name.setText(bankList.get(position).getTitle());
+            holder.name.setText(bankList.get(position).getCompanyname());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
             holder.price.setText(ssb.toString());
-            if("0".equals(bankList.get(position).getIspay())){
+            if ("0".equals(bankList.get(position).getIspay())) {
                 holder.state.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.state.setVisibility(View.VISIBLE);
             }
 
@@ -209,7 +240,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             String[] sourceStrArray = bankList.get(position).getEnddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
 
-            if(!Utils.isEmpty(bankList.get(position).getEnddate())){
+            if (!Utils.isEmpty(bankList.get(position).getEnddate())) {
                 // 时间
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -242,7 +273,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETLIST).append("?");
         String url = sb.toString();
-        RequestParams rp=new RequestParams();
+        RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("type1", "0"); // 当是我的数据默认为0
         rp.add("type2", "0");// 当是我的数据默认为0
@@ -253,17 +284,17 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 GrabSingleListBean bean = (GrabSingleListBean) t;
-                if (bean != null && bean.data.size()!= 0) {
-                    for(int i = 0; i < bean.data.size(); i++){
+                if (bean != null && bean.data.size() != 0) {
+                    for (int i = 0; i < bean.data.size(); i++) {
                         bankList.add(bean.data.get(i));
                         adapter.notifyDataSetChanged();
                     }
                 }
                 mListView.stopRefresh();
 
-                if(bankList == null || bankList.size() == 0){
+                if (bankList == null || bankList.size() == 0) {
                     mListView.setPullLoadEnable(false);
-                }else{
+                } else {
                     mListView.setPullLoadEnable(true);
                 }
             }

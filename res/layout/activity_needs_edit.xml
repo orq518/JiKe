@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_board_gray"
                     android:hint=""
+                    android:singleLine="true"
                     android:padding="@dimen/dimen_10"/>
 
 

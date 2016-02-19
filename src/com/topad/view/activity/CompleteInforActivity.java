@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -67,7 +69,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
     LinearLayout mainlayout;
     TextView tv_bithday;
-    TextView gerenjianjie, xuanzezhiye, shenfenyanzheng;
+    TextView gerenjianjie, gerenjianjie_detail, xuanzezhiye, shenfenyanzheng;
     CircleImageView add_head_pic;
     EditText et_realname, et_address;
     RadioButton sex1, sex2;
@@ -78,6 +80,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         mContext = this;
         return R.layout.activity_complete_infor;
     }
+
+    boolean isToRefresh = true;
 
     @Override
     public View setLayoutByView() {
@@ -99,15 +103,26 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         tv_bithday.setOnClickListener(this);
         mBTLogin.setOnClickListener(this);
         gerenjianjie = (TextView) findViewById(R.id.gerenjianjie);
+        gerenjianjie_detail = (TextView) findViewById(R.id.gerenjianjie_detail);
         xuanzezhiye = (TextView) findViewById(R.id.xuanzezhiye);
         shenfenyanzheng = (TextView) findViewById(R.id.shenfenyanzheng);
         gerenjianjie.setOnClickListener(this);
+        gerenjianjie_detail.setOnClickListener(this);
         xuanzezhiye.setOnClickListener(this);
         shenfenyanzheng.setOnClickListener(this);
         myInfoBean = TopADApplication.getSelf().getMyInfo();
-        if (myInfoBean != null) {
-            mHandler.sendEmptyMessageDelayed(0, 500);
-        } else {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (myInfoBean != null) {
+//            mHandler.sendEmptyMessageDelayed(0, 500);
+//        } else {
+//            getMyInfo();
+//        }
+        if (isToRefresh) {
             getMyInfo();
         }
 
@@ -150,6 +165,9 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImghead();
                 getHeaderPic(headerpicUrl);
             }
+            if (!Utils.isEmpty(myInfoBean.getIntro())) {
+                gerenjianjie_detail.setText(myInfoBean.getIntro());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,7 +203,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onClick(View v) {
-            finish();
+            goBack();
         }
 
     }
@@ -207,7 +225,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
                     myInfoBean = base.getData();
-
+                    TopADApplication.getSelf().setMyInfo(myInfoBean);
                     initViewData();
 //                    String status = respObj.getString("status");// 状态码
 //                    String msg = respObj.getString("msg");// 错误信息
@@ -240,7 +258,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 //                    }
 //                }, add_head_pic);
         ImageLoader.getInstance().displayImage(imageURL, add_head_pic, TopADApplication.getSelf().getImageLoaderOption(),
-                new ImageLoadingListener(){
+                new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
 
@@ -290,7 +308,10 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
+                    isChanged = true;
+                    goBack();
                 }
+
             }
 
             @Override
@@ -309,11 +330,14 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         Intent intent;
         switch (v.getId()) {
             case R.id.add_head_pic://上传头像
+                isToRefresh = false;
                 Intent intent1 = new Intent(mContext,
                         SelectPicPopupWindow.class);
                 startActivityForResult(intent1, PICKPHOTO);
                 break;
             case R.id.gerenjianjie://个人简介
+            case R.id.gerenjianjie_detail://个人简介
+
                 intent = new Intent(mContext, PersonalProfileActivity.class);
                 intent.putExtra("myintro", myInfoBean.getIntro());
                 startActivity(intent);
@@ -389,6 +413,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
         switch (requestCode) {
             case PICKPHOTO:
+                isToRefresh = false;
                 if (data != null) {
                     LogUtil.d("ouou", "#####path:" + data.getStringExtra("path"));
                     String picPath = data.getStringExtra("path");
@@ -443,6 +468,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                                             if (image != null) {
                                                 add_head_pic.setImageBitmap(image);
                                             }
+                                            isChanged = true;
+
                                             ToastUtil.show(mContext, base.getMsg());
                                         }
                                     }
@@ -509,6 +536,30 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         }
 
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            goBack();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    boolean isChanged;
+
+    public void goBack() {
+        finish();
+        if (isChanged) {
+            updataMyInfo();
+        }
+
+    }
+
+    public void updataMyInfo() {//更新首页头像等个人信息
+        Intent intent = new Intent(Constants.BROADCAST_ACTION_UPDATA_MYINFO);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        sendBroadcast(intent);
     }
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
