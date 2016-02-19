@@ -219,16 +219,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         lp6.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
         LinearLayout.LayoutParams lp7 = (LinearLayout.LayoutParams) mAdvertisingCreativEe.getLayoutParams();
-        lp7.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp7.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 - 20;
 
         LinearLayout.LayoutParams lp8 = (LinearLayout.LayoutParams) mMarketingStrategy.getLayoutParams();
-        lp8.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp8.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 - 20;
 
         LinearLayout.LayoutParams lp9 = (LinearLayout.LayoutParams) mTVC.getLayoutParams();
-        lp9.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp9.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 - 20;
 
         LinearLayout.LayoutParams lp10 = (LinearLayout.LayoutParams) mAnimeCreate.getLayoutParams();
-        lp10.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp10.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 - 20;
 
         LinearLayout.LayoutParams lp11 = (LinearLayout.LayoutParams) mViDesign.getLayoutParams();
         lp11.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
@@ -258,13 +258,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         lp19.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
 
         LinearLayout.LayoutParams lp20 = (LinearLayout.LayoutParams) mMyMedia.getLayoutParams();
-        lp20.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
+        lp20.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
         LinearLayout.LayoutParams lp21 = (LinearLayout.LayoutParams) mReleaseDemand.getLayoutParams();
-        lp21.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
+        lp21.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
         LinearLayout.LayoutParams lp22 = (LinearLayout.LayoutParams) mGrabSingle.getLayoutParams();
-        lp22.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 8;
+        lp22.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
 
         left_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         // Set the list's click listener

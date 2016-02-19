@@ -40,6 +40,8 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
     private Button mBTCash;
     // 充值
     private Button mBTRecharge;
+    // 余额
+    private String money;
 
     @Override
     public int setLayoutById() {
@@ -98,7 +100,7 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             // 提现
             case R.id.btn_cash:
                 Intent intentcash = new Intent(mContext, WithDrawCashActivity.class);
-                intentcash.putExtra("money", mTVMoney.getText().toString() + "");
+                intentcash.putExtra("money", money);
                 intentcash.putExtra("aliaccount", AliPayUtil.SELLER);
                 startActivity(intentcash);
                 break;
@@ -133,6 +135,7 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
                 MyWalletBean bean = (MyWalletBean) t;
                 if (bean != null && !Utils.isEmpty(bean.getMoney())) {
                     mTVMoney.setText("￥" + bean.getMoney());
+                    money = bean.getMoney();
                 }
 
             }
