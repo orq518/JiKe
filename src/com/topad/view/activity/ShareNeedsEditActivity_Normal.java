@@ -259,7 +259,7 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
                 break;
             case R.id.data_pic:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                imm.hideSoftInputFromWindow(data_pic.getWindowToken(), 0); //强制隐藏键盘
                 PickDatePopwindow datePick = new PickDatePopwindow(ShareNeedsEditActivity_Normal.this);
                 datePick.registeDatePick(this);
                 datePick.showAtLocation(bottom_layout,
