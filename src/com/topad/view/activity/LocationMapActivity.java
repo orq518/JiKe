@@ -8,17 +8,20 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
@@ -27,7 +30,9 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.topad.R;
-import com.topad.amap.AMapUtil;
+import com.topad.TopADApplication;
+import com.topad.bean.LocationBean;
+import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -37,24 +42,26 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/11/4 15:02
  */
-public class LocationMapActivity extends Activity implements AMap.OnCameraChangeListener, GeocodeSearch.OnGeocodeSearchListener {
+public class LocationMapActivity extends Activity implements AMapLocationListener,
+        AMap.OnCameraChangeListener, GeocodeSearch.OnGeocodeSearchListener{
     private static final String LTAG = LocationMapActivity.class.getSimpleName();
-    /** 上下文 **/
+    // 上下文
     private Context mContext;
-    /** 顶部布局 **/
+    // 顶部布局
     private TitleView mTitleView;
 
     private AMap aMap;
     private MapView mapView;
-    /** 定位地址 **/
+    // 定位地址
     private String location;
-    /** lat **/
+    // lat
     private double lat;
-    /** lon **/
+    // lon
     private double lon;
     private GeocodeSearch geocoderSearch;
     private LatLonPoint latLonPoint;
-    private Marker regeoMarker;
+    private LocationManagerProxy mLocationManagerProxy;
+    private LocationSource.OnLocationChangedListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +85,23 @@ public class LocationMapActivity extends Activity implements AMap.OnCameraChange
      * 初始化AMap对象
      */
     private void init() {
-        if (aMap == null) {
-        }
         geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
+
+        if(TopADApplication.getSelf().getLocation()!= null){
+            lat = TopADApplication.getSelf().getLocation().latitude;
+            lon = TopADApplication.getSelf().getLocation().longitude;
+            location = TopADApplication.getSelf().getLocation().location;
+
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            LatLng latlng = new LatLng(lat, lon);
+            builder.include(latlng);
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder.build(), 10);
+            aMap.moveCamera(cameraUpdate);
+        }
+
+        initLocation();
     }
 
     /**
@@ -128,7 +148,7 @@ public class LocationMapActivity extends Activity implements AMap.OnCameraChange
         latLonPoint = new LatLonPoint(target.latitude, target.longitude);
 
         //latLonPoint参数表示一个Latlng，第二参数表示范围多少米，GeocodeSearch.AMAP表示是国测局坐标系还是GPS原生坐标系
-        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
 
     }
@@ -153,6 +173,67 @@ public class LocationMapActivity extends Activity implements AMap.OnCameraChange
 
     }
 
+    public void initLocation() {
+        mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+        //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
+        //在定位结束后，在合适的生命周期调用destroy()方法
+        //其中如果间隔时间为-1，则定位只定一次
+        mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 15 * 60 * 1000, 15, this);
+        mLocationManagerProxy.setGpsEnable(false);
+    }
+
+    private void stopLocation() {
+        if (mLocationManagerProxy != null) {
+            mLocationManagerProxy.removeUpdates(this);
+            mLocationManagerProxy.destory();
+        }
+        mLocationManagerProxy = null;
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null && aMapLocation.getAMapException().getErrorCode() == 0) {
+            //获取位置信息
+            Double geoLat = aMapLocation.getLatitude();
+            Double geoLng = aMapLocation.getLongitude();
+            String curAddress = aMapLocation.getAddress();
+            LogUtil.d("定位成功：" + curAddress);
+
+            mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+            lat = geoLat;
+            lon = geoLng;
+            location = curAddress;
+
+            aMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,lon)),4000,null);
+            LocationBean locationBean = new LocationBean();
+            locationBean.location = curAddress;
+            locationBean.longitude = geoLng;
+            locationBean.latitude = geoLat;
+            TopADApplication.getSelf().setLocation(locationBean);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
     /**
      * 顶部布局--左按钮事件监听
      */
@@ -174,11 +255,12 @@ public class LocationMapActivity extends Activity implements AMap.OnCameraChange
     }
 
     public void onBack() {
-        if(!Utils.isEmpty(location)){
-            Intent intent = new Intent(LocationMapActivity.this, MediaReleaseActivity.class );
-            intent.putExtra( "location", location);
-            intent.putExtra( "lat", lat);
-            intent.putExtra( "lon", lon);
+        stopLocation();
+        if (!Utils.isEmpty(location)) {
+            Intent intent = new Intent(LocationMapActivity.this, MediaReleaseActivity.class);
+            intent.putExtra("location", location);
+            intent.putExtra("lat", lat);
+            intent.putExtra("lon", lon);
             setResult(RESULT_OK, intent);
         }
         finish();

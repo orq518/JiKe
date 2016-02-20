@@ -42,33 +42,19 @@ import java.util.logging.Handler;
  */
 public class MyNeedsActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MyNeedsActivity.class.getSimpleName();
-    /**
-     * 上下文
-     **/
+    // 上下文
     private Context mContext;
-    /**
-     * 顶部布局
-     **/
+    // 顶部布局
     private TitleView mTitleView;
-    /**
-     * listView
-     **/
+    // listView
     private MyListView mListView;
-    /**
-     * 只是用来模拟异步获取数据
-     **/
+    // 只是用来模拟异步获取数据
     private Handler handler;
-    /**
-     * 适配器
-     **/
+    // 适配器
     private ListAdapter adapter;
-    /**
-     * 数据源
-     **/
+    // 数据源
     private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
-    /**
-     * 请求页数
-     **/
+    // 请求页数
     private int page = 1;
     boolean toMainpage;
 
@@ -86,16 +72,30 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
-        ;
         mListView = (MyListView) findViewById(R.id.listview);
     }
 
     @Override
     public void initData() {
         toMainpage = getIntent().getBooleanExtra("toMainpage", false);
-        setData();
 
         showView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (bankList != null || bankList.size() > 0) {
+            bankList.clear();
+        }
+
+        setData();
+
+        // 设置适配器
+        adapter = new ListAdapter();
+        mListView.setAdapter(adapter);
+
     }
 
     /**
@@ -109,9 +109,6 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         // 设置listview可以加载、刷新
         mListView.setPullLoadEnable(true);
         mListView.setPullRefreshEnable(true);
-        // 设置适配器
-        adapter = new ListAdapter();
-        mListView.setAdapter(adapter);
 
         // listview单击
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -144,6 +141,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             }
         });
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {

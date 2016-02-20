@@ -20,28 +20,6 @@
             android:background="@color/bule"
             android:layout_marginTop="0dp">
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv_grab_single"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center|right"-->
-                <!--android:text="我要抢单"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="18sp"-->
-                <!--android:paddingRight="20dp"/>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_select_project"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center|left"-->
-                <!--android:text="甄选项目"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="18sp"-->
-                <!--android:paddingLeft="20dp"/>-->
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -51,6 +29,7 @@
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:paddingLeft="20dp"/>
+
             <TextView
                 android:id="@+id/tv_grab_single"
                 android:layout_width="fill_parent"

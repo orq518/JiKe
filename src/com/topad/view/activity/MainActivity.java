@@ -48,9 +48,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Context mContext;
     // title布局
     private TitleView mTitle;
-    // 我有媒体\
+    // 我有媒体
     private ImageView mMyMedia;
-    // 发布需求\
+    // 发布需求
     private ImageView mReleaseDemand;
     // 我要抢单
     private ImageView mGrabSingle;
@@ -201,22 +201,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mWebsiteSuggestion.setOnClickListener(this);
 
         LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) mLYTv.getLayoutParams();
-        lp1.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp1.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams) mLYBc.getLayoutParams();
-        lp2.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp2.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp3 = (LinearLayout.LayoutParams) mLYNp.getLayoutParams();
-        lp3.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp3.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp4 = (LinearLayout.LayoutParams) mLYOd.getLayoutParams();
-        lp4.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp4.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp5 = (LinearLayout.LayoutParams) mLYMz.getLayoutParams();
-        lp5.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp5.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp6 = (LinearLayout.LayoutParams) mLYNet.getLayoutParams();
-        lp6.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp6.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 6;
 
         LinearLayout.LayoutParams lp7 = (LinearLayout.LayoutParams) mAdvertisingCreativEe.getLayoutParams();
         lp7.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 - 20;
@@ -249,22 +249,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         lp16.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 4;
 
         LinearLayout.LayoutParams lp17 = (LinearLayout.LayoutParams) mLegalServices.getLayoutParams();
-        lp17.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp17.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 + 20;
 
         LinearLayout.LayoutParams lp18 = (LinearLayout.LayoutParams) mIntellectualProperty.getLayoutParams();
-        lp18.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp18.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 + 20;
 
         LinearLayout.LayoutParams lp19 = (LinearLayout.LayoutParams) mWebsiteSuggestion.getLayoutParams();
-        lp19.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5;
+        lp19.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 5 + 20;
 
         LinearLayout.LayoutParams lp20 = (LinearLayout.LayoutParams) mMyMedia.getLayoutParams();
-        lp20.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp20.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7 + 10;
 
         LinearLayout.LayoutParams lp21 = (LinearLayout.LayoutParams) mReleaseDemand.getLayoutParams();
-        lp21.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp21.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7 + 10;
 
         LinearLayout.LayoutParams lp22 = (LinearLayout.LayoutParams) mGrabSingle.getLayoutParams();
-        lp22.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7;
+        lp22.height = (Utils.getScreenWidth(MainActivity.this) * 1) / 7 + 10;
 
         left_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         // Set the list's click listener

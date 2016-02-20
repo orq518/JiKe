@@ -16,8 +16,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
 import com.topad.bean.AdDetailsBean;
+import com.topad.bean.BaseBean;
 import com.topad.bean.GrabSingleBean;
+import com.topad.bean.GrabSingleListBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
@@ -43,6 +49,8 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
     private MyGridView mGridView;
     /** 名称 **/
     private TextView mName;
+    /** 状态 **/
+    private TextView mTVState;
     /** 价钱 **/
     private TextView mMoney;
     /** 内容 **/
@@ -78,7 +86,7 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
     /** 状态 **/
     private String state;
-    /** 状态 **/
+    /** 数据元 **/
     private GrabSingleBean grabSingleBean;
 
     @Override
@@ -97,6 +105,7 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
         mTitleView = (TitleView) findViewById(R.id.title);
 
         mName = (TextView) findViewById(R.id.tv_name);
+        mTVState = (TextView) findViewById(R.id.tv_state);
         mMoney = (TextView) findViewById(R.id.tv_price);
         mContent = (TextView) findViewById(R.id.tv_content);
         mAddress = (TextView) findViewById(R.id.tv_address);
@@ -124,8 +133,6 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
         mSubmit.setOnClickListener(this);
         mLYAppeal.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -142,8 +149,14 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
     public void showView() {
         // 设置title
-        mTitleView.setTitle("需求详情");
+        mTitleView.setTitle(grabSingleBean.getTitle());
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+
+        if("1".equals(grabSingleBean.getIspay())){
+            mTVState.setVisibility(View.VISIBLE);
+        }else{
+            mTVState.setVisibility(View.GONE);
+        }
 
         if("0".equals(state)){// 我要提交
             mLYDetails.setVisibility(View.VISIBLE);
@@ -184,7 +197,7 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
 
         // 名字
         if(!Utils.isEmpty(grabSingleBean.getTitle())){
-            mName.setText(grabSingleBean.getTitle());
+            mName.setText(grabSingleBean.getCompanyname());
         }
 
         // 价格
@@ -226,7 +239,32 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
         switch (v.getId()) {
             // 提交
             case R.id.btn_submit:
-                finish();
+                // 拼接url
+                StringBuffer sb = new StringBuffer();
+                sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_GETIT).append("?");
+                String url = sb.toString();
+                RequestParams rp=new RequestParams();
+                rp.add("needid", grabSingleBean.getId());
+                rp.add("userid", TopADApplication.getSelf().getUserId());
+                rp.add("token", TopADApplication.getSelf().getToken());
+                postWithLoading(url, rp, false, new HttpCallback() {
+                    @Override
+                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                        BaseBean bean = (BaseBean) t;
+                        if (bean != null ) {
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(BaseBean base) {
+                        int status = base.getStatus();// 状态码
+                        String msg = base.getMsg();// 错误信息
+                        ToastUtil.show(mContext, "status = " + status + "\n"
+                                + "msg = " + msg);
+                    }
+                }, BaseBean.class);
+
                 break;
 
             // 申诉
