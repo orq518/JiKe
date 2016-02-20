@@ -125,115 +125,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         add_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //添加新的搜素条件
-                if (search_selected_layout.getChildCount() >= 3) {
-                    Toast.makeText(mContext, "您的搜索条件不能超过3个", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                switch (searchType) {
-                    case 0://电视
-                    case 1://广播
-                        EditText tv_type = (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
-                        EditText tv_program_name = (EditText) outdoor_search_layout.findViewById(R.id.tv_program_name);
-                        TextView media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
-                        curItem.type = media_type1.getText().toString();
-                        curItem.name = tv_type.getText().toString();
-                        curItem.lanmu_name = tv_program_name.getText().toString();
-//                        curItem.type = tv_program_name.getText().toString();
-//                        curItem.type = tv_type.getText().toString();
-                        if (Utils.isEmpty(curItem.type)) {
-                            Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (Utils.isEmpty(curItem.lanmu_name)) {
-                            Toast.makeText(mContext, "请输入栏目名称", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (!Utils.isEmpty(curItem.name) && !Utils.isEmpty(curItem.type)) {
-                            SearchItemBean bean = new SearchItemBean();
-                            bean.locaion = curItem.locaion;
-                            bean.name = curItem.name;
-                            bean.type = curItem.type;
-                            bean.voice = curItem.voice;
-                            itemBeans.add(bean);
-
-                            refreshSelectedData();
-                            tv_type.setText("");
-                            tv_program_name.setText("");
-                            curItem.name = "";
-                            curItem.type = "";
-                            curItem.lanmu_name = "";
-                            media_type1.setText("--");
-                        }
-
-
-                        break;
-                    case 2://报纸
-                    case 4://杂志
-                    case 5://网络
-                        media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
-                        curItem.type = media_type1.getText().toString();
-                        EditText et_name = (EditText) outdoor_search_layout.findViewById(R.id.et_name);
-                        curItem.name = et_name.getText().toString();
-                        if (Utils.isEmpty(curItem.name)) {
-                            Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (Utils.isEmpty(curItem.type)) {
-                            Toast.makeText(mContext, "请输入类型", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (!Utils.isEmpty(curItem.name) && !Utils.isEmpty(curItem.type)) {
-                            SearchItemBean bean = new SearchItemBean();
-                            bean.locaion = curItem.locaion;
-                            bean.name = curItem.name;
-                            bean.type = curItem.type;
-                            bean.voice = curItem.voice;
-                            itemBeans.add(bean);
-
-                            refreshSelectedData();
-
-                            TextView city = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
-//                            TextView media_name = (TextView) outdoor_search_layout.findViewById(R.id.media_name);
-                            TextView media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
-                            media_type.setText("");
-                            et_name.setText("");
-                            curItem.name = "";
-                            curItem.type = "";
-                        }
-
-
-                        break;
-                    case 3://户外
-                        if (!Utils.isEmpty(curItem.name) && !Utils.isEmpty(curItem.type)) {
-                            SearchItemBean bean = new SearchItemBean();
-                            bean.locaion = curItem.locaion;
-                            bean.name = curItem.name;
-                            bean.type = curItem.type;
-                            bean.voice = curItem.voice;
-                            itemBeans.add(bean);
-
-                            refreshSelectedData();
-
-//                            locationTV = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
-                            TextView media_name = (TextView) outdoor_search_layout.findViewById(R.id.media_name);
-                            TextView media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
-                            media_name.setText("媒体名称");
-                            media_type.setText("媒体类型");
-                            locationTV.setText("选择城市");
-                            curItem.name = "";
-                            curItem.type = "";
-                        }else{
-                                Toast.makeText(mContext, "信息不完整", Toast.LENGTH_SHORT).show();
-                        }
-
-                        break;
-
-                }
-                layout_keyboard.setVisibility(View.VISIBLE);
-                layout_voice.setVisibility(View.VISIBLE);
-                layout_keyboard.setVisibility(View.GONE);
+                addNewSearch();
             }
         });
         search_selected_layout = (LinearLayout) findViewById(R.id.search_selected_layout);
@@ -286,10 +178,154 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
     }
 
+    public void addNewSearch() {
+        //添加新的搜素条件
+        if (search_selected_layout.getChildCount() >= 3) {
+            Toast.makeText(mContext, "您的搜索条件不能超过3个", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (searchType) {
+            case 0://电视
+            case 1://广播
+                EditText tv_type = (EditText) outdoor_search_layout.findViewById(R.id.tv_name);
+                EditText tv_program_name = (EditText) outdoor_search_layout.findViewById(R.id.tv_program_name);
+                TextView media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                curItem.type = media_type1.getText().toString();
+                curItem.name = tv_type.getText().toString();
+                curItem.lanmu_name = tv_program_name.getText().toString();
+//                        curItem.type = tv_program_name.getText().toString();
+//                        curItem.type = tv_type.getText().toString();
+
+
+                if (Utils.isEmpty(curItem.type)) {
+                    Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                        if (Utils.isEmpty(curItem.lanmu_name)) {
+//                            Toast.makeText(mContext, "请输入栏目名称", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+                if (!Utils.isEmpty(curItem.type) && !curItem.type.equals("--")) {
+                    SearchItemBean bean = new SearchItemBean();
+                    bean.locaion = curItem.locaion;
+                    bean.name = curItem.name;
+                    bean.type = curItem.type;
+                    bean.voice = curItem.voice;
+                    if (Utils.isEmpty(bean.locaion)) {
+                        bean.locaion = " ";
+                    }
+                    if (Utils.isEmpty(bean.name)) {
+                        bean.name = " ";
+                    }
+                    if (Utils.isEmpty(bean.lanmu_name)) {
+                        bean.lanmu_name = " ";
+                    }
+                    itemBeans.add(bean);
+
+                    refreshSelectedData();
+                    tv_type.setText("");
+                    tv_program_name.setText("");
+                    curItem.name = "";
+                    curItem.type = "";
+                    curItem.lanmu_name = "";
+                    media_type1.setText("--");
+                } else {
+                    Toast.makeText(mContext, "类别为空", Toast.LENGTH_SHORT).show();
+                }
+
+
+                break;
+            case 2://报纸
+            case 4://杂志
+            case 5://网络
+                media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                curItem.type = media_type1.getText().toString();
+                EditText et_name = (EditText) outdoor_search_layout.findViewById(R.id.et_name);
+                curItem.name = et_name.getText().toString();
+//                        if (Utils.isEmpty(curItem.name)) {
+//                            Toast.makeText(mContext, "请输入名称", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+                if (Utils.isEmpty(curItem.type) || curItem.type.equals("--")) {
+                    Toast.makeText(mContext, "请输入类型", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!Utils.isEmpty(curItem.type) && !curItem.type.equals("--")) {
+                    SearchItemBean bean = new SearchItemBean();
+                    bean.locaion = curItem.locaion;
+                    bean.name = curItem.name;
+                    bean.type = curItem.type;
+                    bean.voice = curItem.voice;
+
+                    if (Utils.isEmpty(bean.locaion)) {
+                        bean.locaion = " ";
+                    }
+                    if (Utils.isEmpty(bean.name)) {
+                        bean.name = " ";
+                    }
+
+
+                    itemBeans.add(bean);
+
+                    refreshSelectedData();
+
+                    TextView city = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
+//                            TextView media_name = (TextView) outdoor_search_layout.findViewById(R.id.media_name);
+                    TextView media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                    media_type.setText("");
+                    et_name.setText("");
+                    curItem.name = "";
+                    curItem.type = "";
+                }
+
+
+                break;
+            case 3://户外
+                if (!Utils.isEmpty(curItem.type) && !curItem.type.equals("--")) {
+                    SearchItemBean bean = new SearchItemBean();
+                    bean.locaion = curItem.locaion;
+                    bean.name = curItem.name;
+                    bean.type = curItem.type;
+                    bean.voice = curItem.voice;
+                    if (Utils.isEmpty(bean.locaion)) {
+                        bean.locaion = " ";
+                    }
+                    if (Utils.isEmpty(bean.name)) {
+                        bean.name = " ";
+                    }
+                    itemBeans.add(bean);
+
+                    refreshSelectedData();
+
+//                            locationTV = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
+                    TextView media_name = (TextView) outdoor_search_layout.findViewById(R.id.media_name);
+                    TextView media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                    media_name.setText("媒体名称");
+                    media_type.setText("媒体类型");
+                    locationTV.setText("选择城市");
+                    curItem.name = "";
+                    curItem.type = "";
+                } else {
+                    Toast.makeText(mContext, "信息不完整", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+        }
+        layout_keyboard.setVisibility(View.VISIBLE);
+        layout_voice.setVisibility(View.VISIBLE);
+        layout_keyboard.setVisibility(View.GONE);
+    }
+
     /**
      * 提交搜索
      */
     public void submitSearch() {
+
+
+            addNewSearch();//判断一下输入界面是否有未添加的搜索条件
+
         if (itemBeans.size() <= 0) {
             ToastUtil.show(mContext, "搜索条件为空");
             return;
