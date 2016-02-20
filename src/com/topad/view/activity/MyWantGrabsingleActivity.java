@@ -119,18 +119,18 @@ public class MyWantGrabsingleActivity extends BaseActivity implements View.OnCli
      */
     private void InitImageView() {
         mLYLine = (LinearLayout) findViewById(R.id.ly_bottom_line);
-        mLYLine.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*3)/13,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*4)/15,0);
+        mLYLine.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*5)/18,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*3)/18,0);
 
         imageView = (ImageView) findViewById(R.id.iv_bottom_line);
 
         LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams)imageView.getLayoutParams();
-        lp1.width=(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/5;
+        lp1.width=(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/6;
 
         bmpW = imageView.getLayoutParams().width;// 获取图片宽度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenW = dm.widthPixels;// 获取分辨率宽度
-        offset = (screenW / pageSize - bmpW) * 3 / 11;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
+        offset = (screenW / pageSize - bmpW) * 2 / 11;// 计算偏移量--(屏幕宽度/页卡总数-图片实际宽度)/3 = 偏移量
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         imageView.setImageMatrix(matrix);// 设置动画初始位置
@@ -147,8 +147,8 @@ public class MyWantGrabsingleActivity extends BaseActivity implements View.OnCli
         tvGrabSingle.setTextColor(selectedColor);
         tvSelectProject.setTextColor(unSelectedColor);
 
-        tvGrabSingle.setPadding(0,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/11,0);
-        tvSelectProject.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/11,0,0,0);
+        tvGrabSingle.setPadding(0,0,(Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/20,0);
+        tvSelectProject.setPadding((Utils.getScreenWidth(MyWantGrabsingleActivity.this)*1)/20,0,0,0);
 
 
         mBack.setOnClickListener(this);

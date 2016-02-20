@@ -130,6 +130,14 @@
                     android:textColor="@color/text_bg"
                     android:textSize="16sp"/>
 
+                <ImageView
+                    android:id="@+id/im_address_media"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow"/>
+
                 <TextView
                     android:id="@+id/tv_select_media_address"
                     android:layout_width="wrap_content"
@@ -137,17 +145,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/tv_address_media"
+                    android:layout_toLeftOf="@id/im_address_media"
                     android:text="三元桥东"
+                    android:singleLine="true"
                     android:textColor="@color/text_gray_bg"
                     android:textSize="16sp"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow"/>
             </RelativeLayout>
 
             <View

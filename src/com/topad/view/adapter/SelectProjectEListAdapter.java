@@ -112,14 +112,26 @@ public class SelectProjectEListAdapter extends BaseExpandableListAdapter impleme
         }
 
         public void onClick(View v) {
+            SelectProjectFragmnet.type2 = new StringBuffer("");
             for(int i = 0; i < groups.size(); i++){
                 groups.get(i).toggle();
 
                 // 將 Children 的 isChecked 全面設成跟 Group 一樣
                 int childrenCount = groups.get(i).getChildrenCount();
                 boolean groupIsChecked = groups.get(i).getChecked();
-                for (int j = 0; j < childrenCount; j++)
+                for (int j = 0; j < childrenCount; j++){
                     groups.get(i).getChildItem(j).setChecked(groupIsChecked);
+                }
+
+                if(groupIsChecked){
+                    for (int j = 0; j < childrenCount; j++){
+                        if(!Utils.isEmpty(SelectProjectFragmnet.type2.toString())){
+                            SelectProjectFragmnet.type2.append("|" + groups.get(i).getChildItem(j).getFullname());
+                        }else{
+                            SelectProjectFragmnet.type2.append(groups.get(i).getChildItem(j).getFullname());
+                        }
+                    }
+                }
 
                 // 注意，一定要通知 ExpandableListView 資料已經改變，ExpandableListView 會重新產生畫面
                 notifyDataSetChanged();

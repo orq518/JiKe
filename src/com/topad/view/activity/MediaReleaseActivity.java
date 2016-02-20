@@ -481,6 +481,10 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                     }else{
                         mMedia.setText("");
                         mAddress.setText("");
+                        mETMediaName.setText("");
+                        mETDetails.setText("");
+                        mETColumn.setText("");
+
                         mediaName = "";
                         subName = "";
                         lat = 0.0;

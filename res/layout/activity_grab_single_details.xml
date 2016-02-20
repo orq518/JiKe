@@ -104,18 +104,20 @@
 
                         <TextView
                             android:id="@+id/tv_state"
-                            android:layout_width="wrap_content"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="已托管"
                             android:textSize="16sp"
                             android:textColor="@color/white"
                             android:background="@drawable/grab_single_state"
+                            android:drawableRight="@drawable/icon_tg"
                             android:layout_marginRight="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
                             android:paddingLeft="5dp"
-                            android:paddingRight="35dp"
+                            android:paddingRight="0dp"
                             android:layout_alignParentRight="true"
+                            android:gravity="center"
                             android:visibility="gone"/>
 
                     </RelativeLayout>
