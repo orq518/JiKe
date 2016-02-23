@@ -260,8 +260,8 @@ public class GrabSingleDetailsActivity extends BaseActivity implements View.OnCl
                     public void onFailure(BaseBean base) {
                         int status = base.getStatus();// 状态码
                         String msg = base.getMsg();// 错误信息
-                        ToastUtil.show(mContext, "status = " + status + "\n"
-                                + "msg = " + msg);
+//                        ToastUtil.show(mContext, "status = " + status + "\n"
+//                                + "msg = " + msg);
                     }
                 }, BaseBean.class);
 

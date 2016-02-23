@@ -114,8 +114,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                         public void onFailure(BaseBean base) {
                             int status = base.getStatus();// 状态码
                             String msg = base.getMsg();// 错误信息
-                            ToastUtil.show(mContext, "status = " + status + "\n"
-                                    + "msg = " + msg);
+//                            ToastUtil.show(mContext, "status = " + status + "\n"
+//                                    + "msg = " + msg);
                         }
                     }, AdServiceCaseListBean.class);
                     break;
@@ -219,8 +219,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                     public void onFailure(BaseBean base) {
                         int status = base.getStatus();// 状态码
                         String msg = base.getMsg();// 错误信息
-                        ToastUtil.show(mContext, "status = " + status + "\n"
-                                + "msg = " + msg);
+//                        ToastUtil.show(mContext, "status = " + status + "\n"
+//                                + "msg = " + msg);
                     }
                 }, AdServiceDetailsBean.class);
             }
@@ -301,7 +301,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             swipeLayout.addSwipeListener(new SimpleSwipeListener() {
                 @Override
                 public void onOpen(SwipeLayout layout) {
-                    Toast.makeText(mContext, "Open", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Open", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -310,8 +310,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public void onDoubleClick(SwipeLayout layout,
                                                   boolean surface) {
-                            Toast.makeText(mContext, "DoubleClick",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, "DoubleClick",
+//                                    Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -436,8 +436,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             public void onFailure(BaseBean base) {
                 int status = base.getStatus();// 状态码
                 String msg = base.getMsg();// 错误信息
-                ToastUtil.show(mContext, "status = " + status + "\n"
-                        + "msg = " + msg);
+//                ToastUtil.show(mContext, "status = " + status + "\n"
+//                        + "msg = " + msg);
             }
         }, AdServiceBean.class);
 

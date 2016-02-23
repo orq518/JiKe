@@ -96,6 +96,8 @@ public class Constants {
     public static final String URL_SHEN_SU = "http://www.uput.cn/case/topad/shensu.html";
     // 我要抢单
     public static final String URL_NEED_GETIT = "/need/getit";
+    // 删除媒体
+    public static final String URL_MEDIA_DELMEDIA = "/media/delmedia";
 
     public static String ALIAS_TYPE="topad";
     /**

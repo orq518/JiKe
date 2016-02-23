@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -28,7 +29,10 @@ import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
+import com.topad.view.customviews.mylist.BaseSwipeAdapter;
 import com.topad.view.customviews.mylist.MyListView;
+import com.topad.view.customviews.mylist.SimpleSwipeListener;
+import com.topad.view.customviews.mylist.SwipeLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -150,54 +154,102 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
         }
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseSwipeAdapter {
         private LayoutInflater mInflater;
-
+        private ImageView icon;
+        private TextView name;
+        private TextView type;
+        private TextView time;
+        private TextView address;
         public ListAdapter() {
             mInflater = LayoutInflater.from(mContext);
         }
 
+
+        // SwipeLayout的布局id
         @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return bankList.size();
+        public int getSwipeLayoutResourceId(int position) {
+            return R.id.swipe;
         }
 
         @Override
-        public Object getItem(int arg0) {
-            // TODO Auto-generated method stub
-            return bankList.get(arg0);
+        public View generateView(final int position, ViewGroup parent) {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.activity_media_release_details, parent, false);
+            final SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(getSwipeLayoutResourceId(position));
+
+            // 当隐藏的删除menu被打开的时候的回调函数
+            swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+                @Override
+                public void onOpen(SwipeLayout layout) {
+//                    Toast.makeText(mContext, "Open", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // 双击的回调函数
+            swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+                @Override
+                public void onDoubleClick(SwipeLayout layout,
+                                          boolean surface) {
+//                            Toast.makeText(mContext, "DoubleClick",
+//                                    Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // 添加删除布局的点击事件
+            v.findViewById(R.id.ll_menu).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+//                    Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
+                    // 点击完成之后，关闭删除menu
+                    // 拼接url
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_DELMEDIA).append("?");
+                    String url = sb.toString();
+                    RequestParams rp=new RequestParams();
+                    rp.add("userid", TopADApplication.getSelf().getUserId());
+                    rp.add("mediaid", bankList.get(position).getId());
+                    rp.add("token", TopADApplication.getSelf().getToken());
+
+                    postWithLoading(url, rp, false, new HttpCallback() {
+                        @Override
+                        public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                            if(bankList.size() > 0){
+                                swipeLayout.close();
+                                bankList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(BaseBean base) {
+                            int status = base.getStatus();// 状态码
+                            String msg = base.getMsg();// 错误信息
+//                            ToastUtil.show(mContext, "status = " + status + "\n"
+//                                    + "msg = " + msg);
+                        }
+                    }, BaseBean.class);
+                }
+            });
+
+            return v;
         }
 
+        // 对控件的填值操作独立出来了，我们可以在这个方法里面进行item的数据赋值
         @Override
-        public long getItemId(int arg0) {
-            // TODO Auto-generated method stub
-            return arg0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if (convertView == null) {
-                convertView = mInflater.inflate((R.layout.activity_media_release_details), null);
-                holder = new ViewHolder();
-                holder.icon = (ImageView) convertView.findViewById(R.id.im_icon);
-                holder.name = (TextView) convertView .findViewById(R.id.tv_name);
-                holder.type = (TextView) convertView .findViewById(R.id.tv_type);
-                holder.time = (TextView) convertView .findViewById(R.id.tv_time);
-                holder.address = (TextView) convertView .findViewById(R.id.tv_address);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
+        public void fillValues(int position, View convertView) {
+            icon = (ImageView) convertView.findViewById(R.id.im_icon);
+            name = (TextView) convertView .findViewById(R.id.tv_name);
+            type = (TextView) convertView .findViewById(R.id.tv_type);
+            time = (TextView) convertView .findViewById(R.id.tv_time);
+            address = (TextView) convertView .findViewById(R.id.tv_address);
 
             if(!Utils.isEmpty(bankList.get(position).getMedianame())){
-                holder.name.setText(bankList.get(position).getMedianame());
+                name.setText(bankList.get(position).getMedianame());
             }
 
             if(!Utils.isEmpty(bankList.get(position).getType1())){
-                holder.type.setText(bankList.get(position).getType1());
+                type.setText(bankList.get(position).getType1());
             }
 
             if(!Utils.isEmpty(bankList.get(position).getAddtime())){
@@ -206,19 +258,19 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 try {
                     date = sdf.parse(bankList.get(position).getAddtime());
-                    holder.time.setText(Utils.getTimeFormatText(date));
+                    time.setText(Utils.getTimeFormatText(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
 
             if(!Utils.isEmpty(bankList.get(position).getLocation())){
-                holder.address.setText(bankList.get(position).getLocation());
+                address.setText(bankList.get(position).getLocation());
             }
 
             String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + TopADApplication.getSelf().getMyInfo().getImghead();
             if(!Utils.isEmpty(headerpicUrl)){
-                ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon, TopADApplication.getSelf().getImageLoaderOption(),
+                ImageLoader.getInstance().displayImage(headerpicUrl, icon, TopADApplication.getSelf().getImageLoaderOption(),
                         new ImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String s, View view) {
@@ -241,19 +293,25 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
                         });
             }
 
-            ImageLoader.getInstance().displayImage(headerpicUrl, holder.icon, TopADApplication.getSelf().getImageLoaderOption());
+            ImageLoader.getInstance().displayImage(headerpicUrl, icon, TopADApplication.getSelf().getImageLoaderOption());
 
-
-            return convertView;
         }
 
-        class ViewHolder {
-            ImageView icon;
-            TextView name;
-            TextView type;
-            TextView time;
-            TextView address;
+        @Override
+        public int getCount() {
+            return bankList.size();
         }
+
+        @Override
+        public Object getItem(int position) {
+            return bankList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
     }
 
     /**
