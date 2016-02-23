@@ -179,6 +179,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         if(!Utils.isEmpty(mAdDetailsBean.getServicename())){
             mName.setText(mAdDetailsBean.getServicename());
         }
+
         // 价钱
         if(!Utils.isEmpty(mAdDetailsBean.getPrice())){
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  mAdDetailsBean.getPrice() + "/单品");

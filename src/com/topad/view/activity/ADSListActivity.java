@@ -276,6 +276,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         private ImageView authIcon;
         private ImageView icon;
         private TextView name;
+        private TextView mClass;
         private TextView money;
         private TextView count;
         private TextView praise;
@@ -340,11 +341,17 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             authIcon = (ImageView) convertView.findViewById(R.id.ads_auth_icon);
             icon = (ImageView) convertView.findViewById(R.id.ads_icon);
             name = (TextView) convertView.findViewById(R.id.tv_name);
+            mClass = (TextView) convertView.findViewById(R.id.tv_class);
+
             money = (TextView) convertView.findViewById(R.id.tv_money);
             count = (TextView) convertView.findViewById(R.id.tv_count);
             companyName = (TextView) convertView.findViewById(R.id.tv_companyName);
 
             name.setText(bankList.get(position).getServicename());
+
+            mClass.setText(bankList.get(position).getType1() + "-" + bankList.get(position).getType2());
+
+
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
             money.setText(ssb.toString());
             SpannableStringBuilder ssb2 = new SpannableStringBuilder("已出售：" +  bankList.get(position).getSalecount() + "笔");
