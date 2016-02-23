@@ -97,6 +97,16 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|left"
+                        android:text="class"
+                        android:textSize="16sp"
+                        android:layout_below="@id/tv_name"
+                        android:textColor="@color/text_gray_bg"/>
+
+                    <TextView
                         android:id="@+id/tv_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -105,7 +115,7 @@
                         android:textSize="16sp"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/hot"
-                        android:layout_below="@id/tv_name"/>
+                        android:layout_below="@id/tv_class"/>
 
                     <RelativeLayout
                         android:id="@+id/layout_count"
