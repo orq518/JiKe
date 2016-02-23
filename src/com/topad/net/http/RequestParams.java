@@ -299,6 +299,9 @@ public class RequestParams {
      * @param value the value string for the new param.
      */
     public void add(String key, String value) {
+        if(value!=null&&value.equals(" ")){
+            value="";
+        }
         if (key != null && value != null) {
             Object params = urlParamsWithObjects.get(key);
             if (params == null) {
