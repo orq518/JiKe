@@ -283,8 +283,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     public void onFailure(BaseBean base) {
                         int status = base.getStatus();// 状态码
                         String msg = base.getMsg();// 错误信息
-                        ToastUtil.show(mContext, "status = " + status + "\n"
-                                + "msg = " + msg);
+//                        ToastUtil.show(mContext, "status = " + status + "\n"
+//                                + "msg = " + msg);
                     }
                 }, BaseBean.class);
                 break;
@@ -442,7 +442,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MyNeedDetailsActivity.this, DetailsActivity.class);
-                    intent.putExtra("data_details", bankList.get(position - 1));
+                    intent.putExtra("data_details", bankList.get(position));
                     startActivity(intent);
                 }
             });
@@ -486,12 +486,13 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                             // 类别
                             if (!Utils.isEmpty(grabSingleBean.getType1())
                                     && !Utils.isEmpty(grabSingleBean.getType2())) {
-                                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                                SpannableStringBuilder ssb = new SpannableStringBuilder(grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
                                 mTVTime.setText(ssb.toString());
+                                mTVTime.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                             }
                             // 时间
-                            if (!Utils.isEmpty(grabSingleBean.getAdddate())) {
-                                String[] sourceStrArray = grabSingleBean.getAdddate().split(" ");
+                            if (!Utils.isEmpty(grabSingleBean.getEnddate())) {
+                                String[] sourceStrArray = grabSingleBean.getEnddate().split(" ");
                                 mTVType.setText(sourceStrArray[0]);
                                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
                             }
