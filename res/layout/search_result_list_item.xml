@@ -22,18 +22,7 @@
         android:singleLine="true"
         android:textColor="@color/text_bg"
         android:textSize="18sp"/>
-    <TextView
-        android:id="@+id/lanmu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/dimen_15"
-        android:layout_alignParentRight="true"
-        android:text="经济半小时"
-        android:layout_marginRight="10dp"
-        android:singleLine="true"
-        android:textColor="@color/text_bg"
-        android:textSize="18sp"/>
+
     <TextView
         android:id="@+id/type"
         android:layout_width="wrap_content"
@@ -44,8 +33,21 @@
         android:layout_below="@id/name"
         android:text="电视台"
         android:singleLine="true"
-        android:textColor="@color/text_bg"
+        android:textColor="@color/text_gray_bg"
         android:textSize="18sp"/>
+    <!--<TextView
+        android:id="@+id/lanmu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:text="经济半小时"
+        android:layout_toRightOf="@id/type"
+        android:layout_below="@id/name"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:textColor="@color/text_bg"
+        android:textSize="18sp"/>-->
     <TextView
         android:id="@+id/time"
         android:layout_below="@id/name"
@@ -71,7 +73,7 @@
         android:drawableLeft="@drawable/outdoor_location"
         android:drawablePadding="5dp"
         android:layout_toRightOf="@id/left_ic"
-        android:textColor="@color/text_bg"
+        android:textColor="@color/text_gray_bg"
         android:textSize="18sp"/>
     <Button
         android:id="@+id/contactme"

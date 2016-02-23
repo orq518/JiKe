@@ -48,7 +48,15 @@ public class SearchResultBean extends BaseBean{
         private String longitude;
         private String latitude;
         private String mediacert;
+        private String imghead;
 
+        public void setImghead(String imghead) {
+            this.imghead = imghead;
+        }
+
+        public String getImghead() {
+            return imghead;
+        }
         public void setId(String id) {
             this.id = id;
         }

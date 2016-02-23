@@ -38,7 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Handler;
@@ -158,7 +161,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
     public void initData() {
 
         // 设置listview可以加载、刷新
-        mListView.setPullLoadEnable(false);
+        mListView.setPullLoadEnable(true);
         mListView.setPullRefreshEnable(true);
         // 设置适配器
         adapter = new ListViewAdapter(mContext);
@@ -263,7 +266,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                 viewHolder = new ViewHolder();
                 viewHolder.left_ic = (ImageView) convertView.findViewById(R.id.left_ic);
                 viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-                viewHolder.lanmu = (TextView) convertView.findViewById(R.id.lanmu);
+//                viewHolder.lanmu = (TextView) convertView.findViewById(R.id.lanmu);
                 viewHolder.type = (TextView) convertView.findViewById(R.id.type);
                 viewHolder.time = (TextView) convertView.findViewById(R.id.time);
                 viewHolder.location = (TextView) convertView.findViewById(R.id.location);
@@ -298,18 +301,26 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             String longitude = bean.getLongitude();
             final String latitude = bean.getLatitude();
             final String userid = bean.getUserid();
-            String mediacert = bean.getMediacert();
+            String imageHead = bean.getImghead();
             //左侧头像
-            String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + mediacert;
+            String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + imageHead;
             LogUtil.d("picUrl:"+picUrl);
-            if(!Utils.isEmpty(mediacert)){
+            if(!Utils.isEmpty(imageHead)){
                 ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
 
             }
              viewHolder.name.setText(medianame);
-            viewHolder.lanmu.setText(type2);
-            viewHolder.type.setText(type1);
-            viewHolder.time.setText(addtime);
+//            viewHolder.lanmu.setText(type2);
+            viewHolder.type.setText(type1+"-"+type2);
+            Date date = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            try {
+                date = sdf.parse(addtime);
+                viewHolder.time.setText(Utils.getTimeFormatText(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             viewHolder.location.setText(location);
             viewHolder.contactme.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -395,9 +406,9 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         sb.append(Constants.getCurrUrl()).append(Constants.URL_CONTACTME).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
-        rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("userid2", TopADApplication.getSelf().getUserId());
         rp.add("token", TopADApplication.getSelf().getToken());
-        rp.add("userid2", userid);
+        rp.add("userid", userid);
         rp.add("mediaid", mediaid);
         rp.add("recfile", recfile);
         String phoneNumber = (String) SharedPreferencesUtils.get(mContext, SharedPreferencesUtils.USER_PHONR, "");
@@ -492,21 +503,22 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
 
             }
         }
+        //A531F3B9-205A-A44A-34B4-4BB73A72FA87
+//          A531F3B9-205A-A44A-34B4-4BB73A72FA87
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 SearchResultBean base = (SearchResultBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
+                    curPage++;
                     if (refreshType == 0) {
-                        curPage = 1;
                         mListView.stopRefresh();
                         searchResultList.clear();
                         searchResultList.addAll(base.getData());
                     } else {
                         searchResultList.addAll(base.getData());
                         mListView.stopLoadMore();
-                        curPage++;
                     }
                     adapter.notifyDataSetChanged();
                 }
