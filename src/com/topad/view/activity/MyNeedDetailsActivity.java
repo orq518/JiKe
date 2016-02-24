@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -110,6 +113,23 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private GrabSingleBean grabSingleBean;
     /** 数据源 **/
     private ArrayList<MyNeedBean> bankList = new ArrayList<MyNeedBean>();
+
+    /** 获取个人信息 **/
+    private static final int GET_USERINFE = 0;
+
+    /** 获取个人信息 **/
+    private Handler updateHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                // 获取个人信息
+                case GET_USERINFE:
+                    Bundle b = msg.getData();
+                    String userid = b.getString("userid");
+                    getInfoData(userid);
+                    break;
+            }
+        };
+    };
 
     @Override
     public int setLayoutById() {
@@ -496,7 +516,13 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                                 mTVType.setText(sourceStrArray[0]);
                                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
                             }
-                            getInfoData(bankList.get(position).getUserid());
+
+                            Message msg = new Message();
+                            msg.what = GET_USERINFE;
+                            Bundle b = new Bundle();
+                            b.putString("userid", bankList.get(position).getUserid());
+                            msg.setData(b);
+                            updateHandler.sendMessage(msg);
                         }
 
                         @Override
