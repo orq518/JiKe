@@ -243,7 +243,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 try {
-                    date = sdf.parse(bankList.get(position).getAdddate());
+                    date = sdf.parse(bankList.get(position).getEnddate());
                     holder.countdown.setText(Utils.getTimeFormatText(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
