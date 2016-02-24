@@ -243,7 +243,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             // 类别
             if (!Utils.isEmpty(grabSingleBean.getType1())
                     && !Utils.isEmpty(grabSingleBean.getType2())) {
-                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                SpannableStringBuilder ssb = new SpannableStringBuilder(grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
                 mTVTime.setText(ssb.toString());
             }
             // 时间
@@ -296,7 +296,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                         mFinish.setVisibility(View.GONE);
-                        mTVProgectState.setText("项目已完成。");
+                        mTVProgectState.setText("项目已完成");
                     }
 
                     @Override
@@ -529,8 +529,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                         public void onFailure(BaseBean base) {
                             int status = base.getStatus();// 状态码
                             String msg = base.getMsg();// 错误信息
-                            ToastUtil.show(mContext, "status = " + status + "\n"
-                                    + "msg = " + msg);
+//                            ToastUtil.show(mContext, "status = " + status + "\n"
+//                                    + "msg = " + msg);
                         }
                     }, BaseBean.class);
                 }
@@ -644,7 +644,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
                     // 0 - 未开始 1－项目进行中，2-项目完成
                     if ("2".equals(state)) {
-                        mTVProgectState.setText("项目已完成。");
+                        mTVProgectState.setText("项目已完成");
                     }else if("1".equals(state)){
                         mTVProgectState.setText("项目进行中...");
                     }
