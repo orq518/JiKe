@@ -458,8 +458,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            holder.time.setText(Utils.getTimeFormatText(date));
-
+//            holder.time.setText(Utils.getTimeFormatText(date));
+            holder.time.setVisibility(View.INVISIBLE);
             // 同意
             holder.agree.setOnClickListener(new View.OnClickListener() {
                 @Override
