@@ -360,9 +360,10 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
         if(mAdCaseListBean != null && mAdCaseListBean.data.size()>0){
             if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getImgs())){
                 String[] aa = mAdCaseListBean.data.get(0).getImgs().split("\\|");
-                for(int i = 0; i < aa.length; i++){
-                    imgs.add(0, aa[i]);
-                }
+                imgs.add(0, aa[0]);
+//                for(int i = 0; i < aa.length; i++){
+//                    imgs.add(0, aa[i]);
+//                }
             }
         }
     }
