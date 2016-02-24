@@ -238,12 +238,12 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             String[] sourceStrArray = bankList.get(position).getEnddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
 
-            if (!Utils.isEmpty(bankList.get(position).getEnddate())) {
+            if (!Utils.isEmpty(bankList.get(position).getAdddate())) {
                 // 时间
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 try {
-                    date = sdf.parse(bankList.get(position).getEnddate());
+                    date = sdf.parse(bankList.get(position).getAdddate());
                     holder.countdown.setText(Utils.getTimeFormatText(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
