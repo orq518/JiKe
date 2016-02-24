@@ -232,7 +232,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
-            getInfoData();
+            getInfoData(grabSingleBean.getUserid2());
         } else if ("2".equals(state)) {// 项目完成
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
@@ -253,7 +253,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
-            getInfoData();
+            getInfoData(grabSingleBean.getUserid2());
         }
 
     }
@@ -471,7 +471,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     RequestParams rp = new RequestParams();
                     rp.add("needid", needId);
                     rp.add("userid1", grabSingleBean.getUserid());
-                    rp.add("userid2", grabSingleBean.getUserid2());
+                    rp.add("userid2", bankList.get(position).getUserid());
                     rp.add("token", TopADApplication.getSelf().getToken());
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
@@ -496,7 +496,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                                 mTVType.setText(sourceStrArray[0]);
                                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
                             }
-                            getInfoData();
+                            getInfoData(bankList.get(position).getUserid());
                         }
 
                         @Override
@@ -571,13 +571,13 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     /**
      * 获取个人数据
      */
-    public void getInfoData() {
+    public void getInfoData(String userid) {
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.GETINFO).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
-        rp.add("userid", grabSingleBean.getUserid2());
+        rp.add("userid", userid);
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
