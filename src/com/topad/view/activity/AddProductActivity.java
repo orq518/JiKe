@@ -556,9 +556,9 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             StringBuffer img = new StringBuffer();
             for (int j = 0; j < caseList.get(i).getImgs().size(); j++) {
                 if (j >= 1 && j < caseList.get(i).getImgs().size()) {
-                    img.append("|" + caseList.get(i).getImgs().get(i));
+                    img.append("|" + caseList.get(i).getImgs().get(j));
                 } else {
-                    img.append(caseList.get(i).getImgs().get(i));
+                    img.append(caseList.get(i).getImgs().get(j));
                 }
 
             }

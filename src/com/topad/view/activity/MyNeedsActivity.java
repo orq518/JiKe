@@ -238,7 +238,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             String[] sourceStrArray = bankList.get(position).getEnddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
 
-            if (!Utils.isEmpty(bankList.get(position).getEnddate())) {
+            if (!Utils.isEmpty(bankList.get(position).getAdddate())) {
                 // 时间
                 Date date = null;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

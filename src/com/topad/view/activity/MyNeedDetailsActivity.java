@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -110,6 +113,23 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private GrabSingleBean grabSingleBean;
     /** 数据源 **/
     private ArrayList<MyNeedBean> bankList = new ArrayList<MyNeedBean>();
+
+    /** 获取个人信息 **/
+    private static final int GET_USERINFE = 0;
+
+    /** 获取个人信息 **/
+    private Handler updateHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                // 获取个人信息
+                case GET_USERINFE:
+                    Bundle b = msg.getData();
+                    String userid = b.getString("userid");
+                    getInfoData(userid);
+                    break;
+            }
+        };
+    };
 
     @Override
     public int setLayoutById() {
@@ -223,7 +243,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             // 类别
             if (!Utils.isEmpty(grabSingleBean.getType1())
                     && !Utils.isEmpty(grabSingleBean.getType2())) {
-                SpannableStringBuilder ssb = new SpannableStringBuilder("类型：" + grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
+                SpannableStringBuilder ssb = new SpannableStringBuilder(grabSingleBean.getType1() + "-" + grabSingleBean.getType2());
                 mTVTime.setText(ssb.toString());
             }
             // 时间
@@ -232,7 +252,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
-            getInfoData();
+            getInfoData(grabSingleBean.getUserid2());
         } else if ("2".equals(state)) {// 项目完成
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
@@ -253,7 +273,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                 mTVType.setText(sourceStrArray[0]);
                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
             }
-            getInfoData();
+            getInfoData(grabSingleBean.getUserid2());
         }
 
     }
@@ -276,7 +296,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                         mFinish.setVisibility(View.GONE);
-                        mTVProgectState.setText("项目已完成。");
+                        mTVProgectState.setText("项目已完成");
                     }
 
                     @Override
@@ -471,7 +491,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     RequestParams rp = new RequestParams();
                     rp.add("needid", needId);
                     rp.add("userid1", grabSingleBean.getUserid());
-                    rp.add("userid2", grabSingleBean.getUserid2());
+                    rp.add("userid2", bankList.get(position).getUserid());
                     rp.add("token", TopADApplication.getSelf().getToken());
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
@@ -496,15 +516,21 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                                 mTVType.setText(sourceStrArray[0]);
                                 mTVType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pic_time), null, null, null);
                             }
-                            getInfoData();
+
+                            Message msg = new Message();
+                            msg.what = GET_USERINFE;
+                            Bundle b = new Bundle();
+                            b.putString("userid", bankList.get(position).getUserid());
+                            msg.setData(b);
+                            updateHandler.sendMessage(msg);
                         }
 
                         @Override
                         public void onFailure(BaseBean base) {
                             int status = base.getStatus();// 状态码
                             String msg = base.getMsg();// 错误信息
-                            ToastUtil.show(mContext, "status = " + status + "\n"
-                                    + "msg = " + msg);
+//                            ToastUtil.show(mContext, "status = " + status + "\n"
+//                                    + "msg = " + msg);
                         }
                     }, BaseBean.class);
                 }
@@ -571,13 +597,13 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     /**
      * 获取个人数据
      */
-    public void getInfoData() {
+    public void getInfoData(String userid) {
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.GETINFO).append("?");
         String url = sb.toString();
         RequestParams rp = new RequestParams();
-        rp.add("userid", grabSingleBean.getUserid2());
+        rp.add("userid", userid);
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
@@ -618,7 +644,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
 
                     // 0 - 未开始 1－项目进行中，2-项目完成
                     if ("2".equals(state)) {
-                        mTVProgectState.setText("项目已完成。");
+                        mTVProgectState.setText("项目已完成");
                     }else if("1".equals(state)){
                         mTVProgectState.setText("项目进行中...");
                     }
