@@ -227,6 +227,7 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(ADSDetailsActivity.this, ADSCaseActivity.class);
                 intent.putExtra("data_case", mAdCaseListBean);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -358,12 +359,11 @@ public class ADSDetailsActivity extends BaseActivity implements OnClickListener 
      */
     private void setData() {
         if(mAdCaseListBean != null && mAdCaseListBean.data.size()>0){
-            if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getImgs())){
-                String[] aa = mAdCaseListBean.data.get(0).getImgs().split("\\|");
-                imgs.add(0, aa[0]);
-//                for(int i = 0; i < aa.length; i++){
-//                    imgs.add(0, aa[i]);
-//                }
+            for(int i=0; i<mAdCaseListBean.data.size(); i++){
+                if(!Utils.isEmpty(mAdCaseListBean.data.get(i).getImgs())){
+                    String[] aa = mAdCaseListBean.data.get(i).getImgs().split("\\|");
+                    imgs.add(aa[0]);
+                }
             }
         }
     }
