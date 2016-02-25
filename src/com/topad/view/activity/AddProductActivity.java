@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -95,6 +97,22 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
 
     /** 来源 1-编辑，2-添加 **/
     private String from;
+
+    /** 添加案例 **/
+    private static final int AD_CASE = 0;
+    /** 添加案例 **/
+    private Handler updateHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                // 添加案例
+                case AD_CASE:
+                    Bundle b = msg.getData();
+                    String serviceid = b.getString("serviceid");
+                    addCase(serviceid);
+                    break;
+            }
+        };
+    };
 
     @Override
     public int setLayoutById() {
@@ -331,7 +349,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 CaseType meidaType = (CaseType) adapter.getItem(position);
-                if (meidaType.type.equals("2")) { // 添加案例
+                if (meidaType.type.equals("1")) { // 添加案例
                     meidaType.isShowDeleteed = true;
                     adapter.notifyDataSetChanged();
                 }
@@ -469,6 +487,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             String url = sb.toString();
             RequestParams rp = new RequestParams();
             rp.add("userid", TopADApplication.getSelf().getUserId());
+            rp.add("serviceid", mAdDetailsBean.getId());
             rp.add("type1", type1);
             rp.add("type2", type2);
             rp.add("servicename", servicename);
@@ -479,10 +498,16 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             postWithLoading(url, rp, false, new HttpCallback() {
                 @Override
                 public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                    AddProductBean bean = (AddProductBean) t;
+                    BaseBean bean = (BaseBean) t;
                     if (bean != null && !Utils.isEmpty(mAdDetailsBean.getId())
                             && caseList != null && caseList.size() > 0) {
-                        addCase(mAdDetailsBean.getId());
+                        Message msg = new Message();
+                        msg.what = AD_CASE;
+                        Bundle b = new Bundle();
+                        b.putString("serviceid", mAdDetailsBean.getId());
+                        msg.setData(b);
+                        updateHandler.sendMessage(msg);
+
                     }
                     finish();
                 }
@@ -495,7 +520,7 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                     LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
                     ToastUtil.show(mContext, msg);
                 }
-            }, AddProductBean.class, true);
+            }, BaseBean.class, true);
 
         }
         // 添加
@@ -519,7 +544,12 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                     AddProductBean bean = (AddProductBean) t;
                     if (bean != null && !Utils.isEmpty(bean.getServiceid())
                             && caseList != null && caseList.size() > 0) {
-                        addCase(bean.getServiceid());
+                        Message msg = new Message();
+                        msg.what = AD_CASE;
+                        Bundle b = new Bundle();
+                        b.putString("serviceid", bean.getServiceid());
+                        msg.setData(b);
+                        updateHandler.sendMessage(msg);
                     }
                     finish();
                 }
