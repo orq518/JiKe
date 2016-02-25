@@ -275,7 +275,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         private TextView count;
         private TextView praise;
         private TextView companyName;
-
+        private TextView type;
         // 构造函数
         public ListAdapter(Context mContext) {
             this.mContext = mContext;
@@ -360,7 +360,9 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             money = (TextView) convertView.findViewById(R.id.tv_money);
             count = (TextView) convertView.findViewById(R.id.tv_count);
             companyName = (TextView) convertView.findViewById(R.id.tv_companyName);
+            type= (TextView) convertView.findViewById(R.id.tv_class);
 
+            type.setText(bankList.get(position).getType1()+"-"+bankList.get(position).getType2());
             name.setText(bankList.get(position).getServicename());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
             money.setText(ssb.toString());
