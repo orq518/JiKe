@@ -41,6 +41,9 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
 
     /** 编辑-产品案例数据元 **/
     private AdServiceCaseListBean mAdCaseListBean;
+    /** 案例位置 **/
+    private int position;
+
     /** 数据 **/
     private ArrayList<String> imageUrlList = new ArrayList<String>();
 
@@ -69,6 +72,7 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         if (intent != null) {
             mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
+            position = intent.getIntExtra("position", 0);
         }
 
         showView();
@@ -84,8 +88,8 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
 
         mBannerView.setImageResources(setData(), null, this);
         // 内容
-        if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getIntro())){
-            mContent.setText(mAdCaseListBean.data.get(0).getIntro());
+        if(!Utils.isEmpty(mAdCaseListBean.data.get(position).getIntro())){
+            mContent.setText(mAdCaseListBean.data.get(position).getIntro());
         }
     }
 
@@ -133,8 +137,8 @@ public class ADSCaseActivity extends BaseActivity implements View.OnClickListene
 
     public ArrayList<String> setData(){
         if(mAdCaseListBean != null && mAdCaseListBean.data.size()>0){
-            if(!Utils.isEmpty(mAdCaseListBean.data.get(0).getImgs())){
-                String[] aa = mAdCaseListBean.data.get(0).getImgs().split("\\|");
+            if(!Utils.isEmpty(mAdCaseListBean.data.get(position).getImgs())){
+                String[] aa = mAdCaseListBean.data.get(position).getImgs().split("\\|");
                 for(int i = 0; i < aa.length; i++){
                     imageUrlList.add(0, Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + aa[i]);
                 }
