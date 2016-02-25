@@ -440,8 +440,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
             public void onFailure(BaseBean base) {
                 int status = base.getStatus();// 状态码
                 String msg = base.getMsg();// 错误信息
-                ToastUtil.show(mContext, "status = " + status + "\n"
-                        + "msg = " + msg);
+//                ToastUtil.show(mContext, "status = " + status + "\n"
+//                        + "msg = " + msg);
             }
         }, AdServiceBean.class);
 
