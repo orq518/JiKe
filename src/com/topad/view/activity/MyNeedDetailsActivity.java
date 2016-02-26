@@ -503,6 +503,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                             mProjectCancel.setVisibility(View.GONE);
                             mListview.setVisibility(View.GONE);
                             mTVState.setVisibility(View.VISIBLE);
+                            state="1";
                             // 类别
                             if (!Utils.isEmpty(grabSingleBean.getType1())
                                     && !Utils.isEmpty(grabSingleBean.getType2())) {
