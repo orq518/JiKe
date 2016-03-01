@@ -50,7 +50,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     int[] wangzhanruanjian_ic = new int[]{R.drawable.web_design, R.drawable.web_app, R.drawable.web_weihu, R.drawable.web_weixin, R.drawable.web_zulin, R.drawable.web_ruanjian, R.drawable.web_erci};
     String[] gongguanfuwu = new String[]{"公关活动策划", "危机公关处理", "网络舆情监测", "事件营销方案策划", "公关培训服务"};
     int[] gongguanfuwu_ic = new int[]{R.drawable.web_design, R.drawable.web_app, R.drawable.web_weihu, R.drawable.web_weixin, R.drawable.web_zulin, R.drawable.web_ruanjian, R.drawable.web_erci};
-    String[] qiyezhaopin = new String[]{"广告公司类", "广告主类", "电视媒体类", "广播媒体类", "报纸/杂志类", "户外媒体类", "互联网媒体类", "营销策划类", "技术人才", "大学生实习", "兼职类"};
+    String[] qiyezhaopin = new String[]{"广告公司类", "广告主类", "电视媒体类", "广播媒体类", "报纸/杂志类", "户外媒体类", "互联网媒体类", "营销策划类", "技术人才", "大学生实习"};
     int[] qiyezhaopin_ic = new int[]{R.drawable.zhaopin_adc, R.drawable.zhaopin_ad2, R.drawable.zhaopin_tv, R.drawable.zhaopin_radio, R.drawable.zhaopin_baokan,
             R.drawable.zhaopin_outdoor, R.drawable.zhaopin_web, R.drawable.zhaopin_yx, R.drawable.zhaopin_it, R.drawable.zhaopin_students, R.drawable.zhaopin_jianzhi};
     String[] qitafuwu = new String[]{"品牌起名/公司起名", "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询服务"};
@@ -173,6 +173,15 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     intent.putExtra( "type1", arrayTV[type]);
                     intent.putExtra( "type2", tempArray[position]);
                     sendBroadcast(intent);
+                    finish();
+                } else if("3".equals(from)){
+                    Intent intent = new Intent(NeedsListActivity.this, QiyeZhaopin3Activity.class);
+                    intent.putExtra("from","3");
+                    intent.putExtra("type",position);
+                    intent.putExtra("title",tempArray[position]);
+                    intent.putExtra("type1",tempArray[position]);
+                    intent.putExtra("type2",tempArray[position]);
+                    startActivity(intent);
                     finish();
                 }else {
                     switch (type) {

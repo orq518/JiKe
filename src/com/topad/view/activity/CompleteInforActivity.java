@@ -348,10 +348,12 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.xuanzezhiye://选择职业
-                intent = new Intent(mContext, ShareNeedsActivity.class);
-                intent.putExtra("from", "1");
+                isToRefresh = false;
+                intent = new Intent(mContext, NeedsListActivity.class);
+                intent.putExtra("from", "3");
+                intent.putExtra("title", "选择职业");
+                intent.putExtra("type", 10);
                 startActivity(intent);
-
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(Constants.BROADCAST_ACTION_GETZHIYE);
                 registerReceiver(broadcastReceiver, filter);
