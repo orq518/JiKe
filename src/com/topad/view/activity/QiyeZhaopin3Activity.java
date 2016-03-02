@@ -75,8 +75,11 @@ public class QiyeZhaopin3Activity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initViews() {
-        type1=getIntent().getStringExtra("type1");
-        type2=getIntent().getStringExtra("type2");
+
+
+        from = getIntent().getStringExtra("from");
+        type1 = getIntent().getStringExtra("type1");
+        type2 = getIntent().getStringExtra("type2");
         mTintManager = new SystemBarTintManager(this);
         mTintManager.setStatusBarTintEnabled(true);
         mTintManager.setNavigationBarTintEnabled(true);
@@ -128,11 +131,17 @@ public class QiyeZhaopin3Activity extends BaseActivity implements View.OnClickLi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (from != null && from.equals("3")) {
+                    getMyInfo(titleString,tempArray[position]);
+                    return;
+                }
                 Intent intent = new Intent(QiyeZhaopin3Activity.this, ShareNeedsEditActivity_Zhaopin.class);
-                intent.putExtra("type1",type1);
-                intent.putExtra("type2",type2);
-                intent.putExtra("type3",tempArray[position]);
+                intent.putExtra("type1", type1);
+                intent.putExtra("type2", type2);
+                intent.putExtra("type3", tempArray[position]);
                 startActivity(intent);
+
+
             }
         });
     }
@@ -140,7 +149,7 @@ public class QiyeZhaopin3Activity extends BaseActivity implements View.OnClickLi
     /**
      * 更新职业
      */
-    public void getMyInfo(String job1, String job2) {
+    public void getMyInfo(final String job1, final String job2) {
 
         // 拼接url
         StringBuffer sb = new StringBuffer();
@@ -157,6 +166,11 @@ public class QiyeZhaopin3Activity extends BaseActivity implements View.OnClickLi
                 MyInfoBean base = (MyInfoBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
+                    Intent intent = new Intent(Constants.BROADCAST_ACTION_GETZHIYE);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("zhiye", job1 + "-" + job2);
+                    sendBroadcast(intent);
+                    finish();
                     finish();
                 }
             }
