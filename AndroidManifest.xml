@@ -393,6 +393,11 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 
+        <!-- 提示公司认证 -->
+        <activity
+            android:name=".view.activity.IsCompanyActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
