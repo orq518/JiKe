@@ -153,16 +153,17 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
     }
 
     float minmoney , maxmoney;
-
+    String baozhengjin;
     @Override
     public void initData() {
         // 接收数据
         Intent intent = getIntent();
         if (intent != null) {
-            subject = getIntent().getStringExtra("subject");
-            body = getIntent().getStringExtra("body");
-            maxmoney=getIntent().getFloatExtra("maxmoney",1000000);
-            minmoney=getIntent().getFloatExtra("minmoney",0.01f);
+            baozhengjin=intent.getStringExtra("from");
+            subject = intent.getStringExtra("subject");
+            body = intent.getStringExtra("body");
+            maxmoney=intent.getFloatExtra("maxmoney",1000000);
+            minmoney=intent.getFloatExtra("minmoney",0.01f);
         }
 
     }
@@ -216,6 +217,11 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
         if (TextUtils.equals(resultStatus, "9000")) {
             Toast.makeText(mContext, "支付成功",
                     Toast.LENGTH_SHORT).show();
+            if(!Utils.isEmpty(baozhengjin)){
+                Intent  intent = new Intent(mContext, MyWalletActivity.class);
+                intent.putExtra("from", "baozhengjin");
+                startActivity(intent);
+            }
             finish();
 //            PayResultDetail resultDetail=new PayResultDetail(resultInfo);
 //            // 拼接url

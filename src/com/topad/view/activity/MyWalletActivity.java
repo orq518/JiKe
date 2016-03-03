@@ -1,7 +1,9 @@
 package com.topad.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.topad.bean.LoginBean;
 import com.topad.bean.MyWalletBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
+import com.topad.util.ActivityCollector;
 import com.topad.util.Constants;
 import com.topad.util.Md5;
 import com.topad.util.SharedPreferencesUtils;
@@ -53,9 +56,10 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
     public View setLayoutByView() {
         return null;
     }
-
+String baozhengjin;
     @Override
     public void initViews() {
+        baozhengjin=getIntent().getStringExtra("from");
         mTitleView = (TitleView) findViewById(R.id.title);
         mTVMoney = (TextView) findViewById(R.id.tv_money);
         mBTCash = (Button) findViewById(R.id.btn_cash);
@@ -77,7 +81,12 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
         // 设置顶部标题布局
         mTitleView.setTitle("我的钱包");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+        getData();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         getData();
     }
 
@@ -88,11 +97,18 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public void onClick(View v) {
-            finish();
+            goBack();
         }
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            goBack();
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -116,6 +132,13 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    public void goBack(){
+        if(!Utils.isEmpty(baozhengjin)){
+            startActivity(new Intent(mContext, MainActivity.class));
+        }
+        finish();
     }
 
     /**

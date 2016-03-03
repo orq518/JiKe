@@ -81,6 +81,7 @@ public class Baozhengjin extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.join_bt:
                 Intent intentrecharge = new Intent(mContext, RechargeActivity.class);
+                intentrecharge.putExtra("from", "baozhengjin");
                 intentrecharge.putExtra("subject", "交纳保证金");
                 intentrecharge.putExtra("maxmoney", 100000.0f);
                 intentrecharge.putExtra("minmoney", 1000.0f);
