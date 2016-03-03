@@ -274,7 +274,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
                     ToastUtil.show(mContext, base.getMsg());
                     Intent intent;
                     if("1".equals(isCompany)){
-                        intent = new Intent(MediaReoeaseUploadPicActivity.this, MyMediaActivity.class);
+                        intent = new Intent(MediaReoeaseUploadPicActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }else{
