@@ -845,9 +845,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-
-        }
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             if (System.currentTimeMillis() - mBackTime < 1500) {
                 ActivityCollector.finishAll();
                 mHandler.postDelayed(new Runnable() {
