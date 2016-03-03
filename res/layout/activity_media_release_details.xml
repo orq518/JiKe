@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:gravity="center_vertical|left"
-                        android:text=""
+                        android:text="111"
                         android:textSize="16sp" />
 
                     <!--  类别,时间 -->
@@ -95,7 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical|left"
-                            android:text=""
+                            android:text="111"
                             android:textSize="16sp"
                             android:layout_alignParentLeft="true"
                             android:textColor="@color/text_gray_bg"/>
@@ -119,22 +119,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
-                        android:text=""
+                        android:text="1111"
                         android:textSize="16sp"
                         android:textColor="@color/text_gray_bg"
                         android:layout_marginTop="10dp"
                         android:layout_below="@id/layout_count"
-                        android:singleLine="true"/>
+                        android:drawableLeft="@drawable/outdoor_location"
+                        android:singleLine="true"
+                        android:drawablePadding="5dp"/>
 
                 </RelativeLayout>
 
             </LinearLayout>
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0.5dp"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:background="@color/dark_gray_text" />-->
         </LinearLayout>
 
     </com.topad.view.customviews.mylist.SwipeLayout>

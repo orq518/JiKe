@@ -252,16 +252,30 @@ public class MyMediaReleaseListActivity extends BaseActivity implements View.OnC
                 type.setText(bankList.get(position).getType1());
             }
 
-            if(!Utils.isEmpty(bankList.get(position).getAddtime())){
-                // 时间
-                Date date = null;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                try {
-                    date = sdf.parse(bankList.get(position).getAddtime());
-                    time.setText(Utils.getTimeFormatText(date));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            // 等待审核
+            if("0".equals(bankList.get(position).getIspublic())){
+                time.setTextColor(getResources().getColor(R.color.text_gray_bg));
+                time.setText("等待审核");
+            }
+            // 通过审核
+            else if("1".equals(bankList.get(position).getIspublic())){
+                if(!Utils.isEmpty(bankList.get(position).getAddtime())){
+                    // 时间
+                    Date date = null;
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    try {
+                        date = sdf.parse(bankList.get(position).getAddtime());
+                        time.setText(Utils.getTimeFormatText(date));
+                        time.setTextColor(getResources().getColor(R.color.text_gray_bg));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }
+            // 审核失败
+            else if("-1".equals(bankList.get(position).getIspublic())){
+                time.setText("审核失败");
+                time.setTextColor(getResources().getColor(R.color.red_main_color));
             }
 
             if(!Utils.isEmpty(bankList.get(position).getLocation())){
