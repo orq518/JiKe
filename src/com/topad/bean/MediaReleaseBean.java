@@ -25,6 +25,15 @@ public class MediaReleaseBean implements Serializable {
     public String latitude;
     public String mediacert;
     public String addtime;
+    public String ispublic;
+
+    public String getIspublic() {
+        return ispublic;
+    }
+
+    public void setIspublic(String ispublic) {
+        this.ispublic = ispublic;
+    }
 
     public String getId() {
         return id;
