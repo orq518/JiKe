@@ -26,6 +26,7 @@ import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.CheckMSGBean;
+import com.topad.bean.IsCompanyBean;
 import com.topad.bean.LocationBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
@@ -611,8 +612,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.my_media://我有媒体
-                intent = new Intent(MainActivity.this, MyMediaActivity.class);
-                startActivity(intent);
+                isCompany();// 判断是否为公司，如果不是公司，则打开提示界面
                 break;
 
             case R.id.release_demand://发布需求
@@ -1014,4 +1014,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     };
+
+    /**
+     * 判断是否为公司
+     *
+     * @return
+     */
+    public void isCompany() {
+        // 拼接url
+        StringBuffer sb = new StringBuffer();
+        sb.append(Constants.getCurrUrl()).append(Constants.URL_USER_IS_COMPANY).append("?");
+        String url = sb.toString();
+        RequestParams rp = new RequestParams();
+        rp.add("userid", TopADApplication.getSelf().getUserId());
+        postWithLoading(url, rp, false, new HttpCallback() {
+            @Override
+            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                IsCompanyBean bean = (IsCompanyBean) t;
+                if (bean != null) {
+                    Intent intent;
+                    if ("1".equals(bean.getIscompany())) {
+                        intent = new Intent(MainActivity.this, MyMediaActivity.class);
+                        startActivity(intent);
+                    }else{
+                        intent = new Intent(MainActivity.this, IsCompanyActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(BaseBean base) {
+                int status = base.getStatus();// 状态码
+                String msg = base.getMsg();// 错误信息
+
+                LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+//                ToastUtil.show(mContext, msg);
+            }
+        }, IsCompanyBean.class, true);
+    }
 }

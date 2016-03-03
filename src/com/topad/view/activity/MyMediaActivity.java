@@ -13,7 +13,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.IsCompanyBean;
+import com.topad.bean.ReleaseMediaBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
 import com.topad.util.LogUtil;
+import com.topad.util.Utils;
 import com.topad.view.customviews.MyGridView;
 import com.topad.view.customviews.TitleView;
 import java.util.ArrayList;
@@ -75,10 +84,8 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initData() {
-
         mTitleView.setTitle("我有媒体");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-
     }
 
     /**

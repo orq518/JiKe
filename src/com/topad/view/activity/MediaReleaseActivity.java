@@ -45,6 +45,10 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private Context mContext;
     /** 顶部布局 **/
     private TitleView mTitleView;
+    /** 媒体布局 **/
+    private LinearLayout mLayMedia;
+    /** 继续发布 **/
+    private LinearLayout mLayAdd;
     /** 选择媒体类别 **/
     private RelativeLayout mLaySelectMedia;
     /** 地址 **/
@@ -73,6 +77,9 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     private Button mBTSubmit;
     /** 提交并继续 **/
     private Button mBTAdd;
+    /** 关闭 **/
+    private Button mBTClose;
+
     /** 录音 **/
     private Button mRecord;
     /** 媒体 **/
@@ -119,6 +126,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
         // 顶部标题布局
         mTitleView = (TitleView) findViewById(R.id.title);
+        mLayMedia = (LinearLayout) findViewById(R.id.ly_media);
+        mLayAdd = (LinearLayout) findViewById(R.id.media_add);
         mLaySelectMedia = (RelativeLayout) findViewById(R.id.lay_select_media);
         mLayAddressMedia = (RelativeLayout) findViewById(R.id.lay_address_media);
         mLayProveMedia = (RelativeLayout) findViewById(R.id.lay_prove_media);
@@ -133,7 +142,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mIVVoice = (ImageView) findViewById(R.id.ic_voice);
         mIVKeyboard = (ImageView) findViewById(R.id.ic_keyboard);
         mBTSubmit = (Button) findViewById(R.id.bt_submit_release);
-        mBTAdd = (Button) findViewById(R.id.bt_add);
+        mBTAdd = (Button) findViewById(R.id.bt_goon);
+        mBTClose = (Button) findViewById(R.id.bt_close);
         mRecord = (Button) findViewById(R.id.record_bt);
         mMedia = (TextView) findViewById(R.id.tv_select_media_newspaper);
         mAddress = (TextView) findViewById(R.id.tv_select_media_address);
@@ -178,6 +188,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         mETAdd.setOnClickListener(this);
         mBTSubmit.setOnClickListener(this);
         mBTAdd.setOnClickListener(this);
+        mBTClose.setOnClickListener(this);
         mIVVoice.setOnClickListener(this);
         mIVKeyboard.setOnClickListener(this);
         mRecord.setOnClickListener(this);
@@ -378,14 +389,32 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
             // 提交
             case R.id.bt_submit_release:
-                submit("0");
+                submit();
                 break;
 
             // 提交并继续
-            case R.id.bt_add:
-                submit("1");
+            case R.id.bt_goon:
+                mLayMedia.setVisibility(View.VISIBLE);
+                mLayAdd.setVisibility(View.GONE);
+                mMedia.setText("");
+                mAddress.setText("");
+                mETMediaName.setText("");
+                mETDetails.setText("");
+                mETColumn.setText("");
+
+                mediaName = "";
+                subName = "";
+                lat = 0.0;
+                lon = 0.0;
+                mMedia.setText("");
                 break;
 
+            // 关闭
+            case R.id.bt_close:
+                intent = new Intent(MediaReleaseActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                break;
             default:
                 break;
         }
@@ -446,7 +475,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
      *
      * @return
      */
-    public void submit(final String type) {
+    public void submit() {
         // 拼接url
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_MEDIA_ADD).append("?");
@@ -476,21 +505,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ReleaseMediaBean bean = (ReleaseMediaBean) t;
                 if (bean != null) {
-                    if("0".equals(type)){
-                        finish();
-                    }else{
-                        mMedia.setText("");
-                        mAddress.setText("");
-                        mETMediaName.setText("");
-                        mETDetails.setText("");
-                        mETColumn.setText("");
-
-                        mediaName = "";
-                        subName = "";
-                        lat = 0.0;
-                        lon = 0.0;
-                        mMedia.setText("");
-                    }
+                    mLayMedia.setVisibility(View.GONE);
+                    mLayAdd.setVisibility(View.VISIBLE);
                 }
             }
 

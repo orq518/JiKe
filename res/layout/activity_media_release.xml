@@ -27,306 +27,368 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray"
-                android:layout_marginTop="15dp"/>
-
-            <RelativeLayout
-                android:id="@+id/lay_select_media"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tv_select_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="选择媒体类别"
-                    android:textColor="@color/text_bg"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/tv_select_media_newspaper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/tv_select_media"
-                    android:text="日报"
-                    android:textColor="@color/text_gray_bg"
-                    android:textSize="16sp"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray"/>
-
-            <!-- 媒体名-->
-            <EditText
-                android:id="@+id/et_media_name"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:hint="电视台名称：例如 CCTV1"
-                android:textColorHint="@color/text_gray_bg"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:visibility="visible"/>
-
-            <!-- 栏目(电视、广播)-->
-            <EditText
-                android:id="@+id/et_column"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/btn_board_gray"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:hint="具体栏目：中国新闻"
-                android:textColorHint="@color/text_gray_bg"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:visibility="visible"/>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray"
-                android:layout_marginTop="15dp"/>
-
-            <!-- 地址 -->
-            <RelativeLayout
-                android:id="@+id/lay_address_media"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tv_address_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="选择媒体所在地"
-                    android:textColor="@color/text_bg"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:id="@+id/im_address_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow"/>
-
-                <TextView
-                    android:id="@+id/tv_select_media_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/tv_address_media"
-                    android:layout_toLeftOf="@id/im_address_media"
-                    android:text="三元桥东"
-                    android:singleLine="true"
-                    android:textColor="@color/text_gray_bg"
-                    android:textSize="16sp"
-                    android:visibility="visible"/>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray"/>
-
-            <!-- 证明 -->
-            <RelativeLayout
-                android:id="@+id/lay_prove_media"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tv_prove_media"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="媒体代理证明/经管证明"
-                    android:textColor="@color/text_bg"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray"/>
-
-            <!-- 描述 －键盘 -->
+            <!-- 发布媒体 -->
             <LinearLayout
-                android:id="@+id/layout_keyboard"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:id="@+id/ly_media"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/ic_keyboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:src="@drawable/keyboard_change_bg"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="15dp"/>
 
-                <Button
-                    android:id="@+id/record_bt"
+                <RelativeLayout
+                    android:id="@+id/lay_select_media"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:background="@drawable/btn_bg_white"
-                    android:hint="按住说话"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_gray_bg"
-                    />
+                    android:layout_height="50dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/white">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_select_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="选择媒体类别"
+                        android:textColor="@color/text_bg"
+                        android:textSize="16sp"/>
 
-            <!-- 描述－语音 -->
-            <LinearLayout
-                android:id="@+id/layout_voice"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tv_select_media_newspaper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/tv_select_media"
+                        android:text="日报"
+                        android:textColor="@color/text_gray_bg"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/ic_voice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:src="@drawable/voice_change_bg"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow"/>
+                </RelativeLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray"/>
+
+                <!-- 媒体名-->
                 <EditText
-                    android:id="@+id/et_details"
+                    android:id="@+id/et_media_name"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="@dimen/dimen_10"
                     android:background="@drawable/btn_board_gray"
-                    android:hint="请输入详细描述"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="电视台名称：例如 CCTV1"
                     android:textColorHint="@color/text_gray_bg"
                     android:textSize="14sp"
-                    />
+                    android:singleLine="true"
+                    android:visibility="visible"/>
+
+                <!-- 栏目(电视、广播)-->
+                <EditText
+                    android:id="@+id/et_column"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_board_gray"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="具体栏目：中国新闻"
+                    android:textColorHint="@color/text_gray_bg"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:visibility="visible"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="15dp"/>
+
+                <!-- 地址 -->
+                <RelativeLayout
+                    android:id="@+id/lay_address_media"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_address_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="选择媒体所在地"
+                        android:textColor="@color/text_bg"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:id="@+id/im_address_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow"/>
+
+                    <TextView
+                        android:id="@+id/tv_select_media_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/tv_address_media"
+                        android:layout_toLeftOf="@id/im_address_media"
+                        android:text="三元桥东"
+                        android:singleLine="true"
+                        android:textColor="@color/text_gray_bg"
+                        android:textSize="16sp"
+                        android:visibility="visible"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray"/>
+
+                <!-- 证明 -->
+                <RelativeLayout
+                    android:id="@+id/lay_prove_media"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_prove_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="媒体代理证明/经管证明"
+                        android:textColor="@color/text_bg"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray"/>
+
+                <!-- 描述 －键盘 -->
+                <LinearLayout
+                    android:id="@+id/layout_keyboard"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ic_keyboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/keyboard_change_bg"/>
+
+                    <Button
+                        android:id="@+id/record_bt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:background="@drawable/btn_bg_white"
+                        android:hint="按住说话"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_gray_bg"
+                        />
+
+                </LinearLayout>
+
+                <!-- 描述－语音 -->
+                <LinearLayout
+                    android:id="@+id/layout_voice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ic_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/voice_change_bg"/>
+
+                    <EditText
+                        android:id="@+id/et_details"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:background="@drawable/btn_board_gray"
+                        android:hint="请输入详细描述"
+                        android:textColorHint="@color/text_gray_bg"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/voice_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+                <!-- 添加条件 -->
+                <LinearLayout android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="添加新的搜索条件"
+                        android:textColor="@color/text_gray_bg"
+                        android:textSize="18sp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:padding="@dimen/dimen_10"
+                        android:src="@drawable/bg_add"
+                        />
+                </LinearLayout>
+
+                <!-- 提交发布 -->
+                <LinearLayout
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <!-- 提交 -->
+                    <Button
+                        android:id="@+id/bt_submit_release"
+                        style="@style/btn_bule3_borad_style"
+                        android:layout_weight="1"
+                        android:focusable="false"
+                        android:text="提&#160;&#160;交"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
+            <!-- 继续发布 -->
             <LinearLayout
-                android:id="@+id/voice_layout"
-                android:layout_width="fill_parent"
+                android:id="@+id/media_add"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:orientation="horizontal">
-            </LinearLayout>
-
-            <!-- 添加条件 -->
-            <LinearLayout android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
                 android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_ok"
+                    android:paddingTop="60dp"
+                    android:paddingBottom="25dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:text="您的媒体资源信息已经提交成功！\n\n\n我们的客服人员会在24小时内进行审核，请耐心等待。"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="添加新的搜索条件"
-                    android:textColor="@color/text_gray_bg"
-                    android:textSize="18sp"/>
-
-                <ImageView
-                    android:id="@+id/iv_add"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:padding="@dimen/dimen_10"
-                    android:src="@drawable/bg_add"
-                    />
-            </LinearLayout>
-
-            <!-- 提交发布 -->
-            <LinearLayout
-                android:id="@+id/bottom_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
-
-                <!-- 提交 -->
-                <Button
-                    android:id="@+id/bt_submit_release"
-                    style="@style/btn_white_borad_style"
-                    android:layout_weight="1"
-                    android:focusable="false"
-                    android:text="提&#160;&#160;交"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textColor="@color/text_bg"/>
 
-                <!-- 提交并继续 -->
-                <Button
-                    android:id="@+id/bt_add"
-                    style="@style/btn_bule3_borad_style"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="提交并继续添加"/>
+                <!-- 关闭，上传营业执照 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <!-- 继续添加媒体 -->
+                    <Button
+                        android:id="@+id/bt_goon"
+                        style="@style/btn_bule3_borad_style"
+                        android:layout_weight="1"
+                        android:focusable="false"
+                        android:text="继续添加媒体"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"/>
+
+                    <!-- 关闭 -->
+                    <Button
+                        android:id="@+id/bt_close"
+                        style="@style/ucf_btn_gray_borad_style"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="关&#160;&#160;闭"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 

@@ -41,13 +41,9 @@ import java.util.Map;
  */
 public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = MediaReoeaseUploadPicActivity.class.getSimpleName();
-    /**
-     * 上下文
-     **/
+    // 上下文
     private Activity mContext;
-    /**
-     * 顶部布局
-     **/
+    // 顶部布局
     private TitleView mTitleView;
     private ImageView pic_1, pic_2;
     private Button btn_save;
@@ -55,6 +51,8 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     private String img_name1, img_name2;
     private MyInfoBean.DataEntity myInfoBean;
     String picurl;
+    // 判断是否公司认证
+    String isCompany;
 
     @Override
     public int setLayoutById() {
@@ -71,6 +69,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     public void initViews() {
         Intent intent = getIntent();
         picurl = intent.getStringExtra("picurl");
+        isCompany = intent.getStringExtra("is_company");
         mTitleView = (TitleView) findViewById(R.id.title);
         pic_1 = (ImageView) findViewById(R.id.pic_1);
         pic_2 = (ImageView) findViewById(R.id.pic_2);
@@ -273,10 +272,18 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
                 BaseBean base = (BaseBean) t;
                 if (base != null) {
                     ToastUtil.show(mContext, base.getMsg());
-                    Intent intent = new Intent(MediaReoeaseUploadPicActivity.this, MediaReleaseActivity.class);
-                    intent.putExtra("mediacert", img_name1);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    Intent intent;
+                    if("1".equals(isCompany)){
+                        intent = new Intent(MediaReoeaseUploadPicActivity.this, MyMediaActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        intent = new Intent(MediaReoeaseUploadPicActivity.this, MediaReleaseActivity.class);
+                        intent.putExtra("mediacert", img_name1);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+
                 }
             }
 
@@ -284,7 +291,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
             public void onFailure(BaseBean base) {
                 int status = base.getStatus();// 状态码
                 String msg = base.getMsg();// 错误信息
-                ToastUtil.show(mContext, msg);
+//                ToastUtil.show(mContext, msg);
             }
         }, BaseBean.class);
 
