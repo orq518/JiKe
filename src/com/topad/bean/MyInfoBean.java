@@ -66,7 +66,15 @@ public class MyInfoBean extends BaseBean {
         private String imgcard1;
         private String imgcard2;
         private String mobile;
+        private String iscompany;//是否是公司
 
+        public void setIscompany(String iscompany) {
+            this.iscompany = iscompany;
+        }
+
+        public String getIscompany() {
+            return iscompany;
+        }
         public void setMobile(String mobile) {
             this.mobile = mobile;
         }

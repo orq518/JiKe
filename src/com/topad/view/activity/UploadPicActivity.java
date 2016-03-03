@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -55,6 +56,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
     String pathString1, pathString2;
     String img_name1, img_name2;
     MyInfoBean.DataEntity myInfoBean;
+    TextView tips;
     /**
      * 0：上传身份证  1：上传毕业证  2：上传名片  3，上传公司认证
      */
@@ -76,6 +78,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         type = intent.getIntExtra("type", 0);
+        tips= (TextView) findViewById(R.id.tips);
         mTitleView = (TitleView) findViewById(R.id.title);
         pic_1 = (ImageView) findViewById(R.id.pic_1);
         pic_2 = (ImageView) findViewById(R.id.pic_2);
@@ -129,6 +132,12 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                     getPic(headerpicUrl, pic_1);
                 } else {
                     pic_1.setImageResource(R.drawable.uploadback);
+                }
+
+                if(myInfoBean!=null&&Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
+                    tips.setVisibility(View.VISIBLE);
+                }else{
+                    tips.setVisibility(View.GONE);
                 }
                 break;
         }
