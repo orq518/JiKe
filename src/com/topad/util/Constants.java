@@ -98,6 +98,8 @@ public class Constants {
     public static final String URL_NEED_GETIT = "/need/getit";
     // 删除媒体
     public static final String URL_MEDIA_DELMEDIA = "/media/delmedia";
+    // 判断是否为公司
+    public static final String URL_USER_IS_COMPANY = "/user/iscompany";
 
     public static String ALIAS_TYPE="topad";
     /**
