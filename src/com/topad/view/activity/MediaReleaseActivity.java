@@ -290,9 +290,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
     @Override
     public void initData() {
-        if(!Utils.isEmpty(TopADApplication.getSelf().getMyInfo().getImglicense())){
-            mediacert = TopADApplication.getSelf().getMyInfo().getImglicense();
-        }
+
     }
 
     /**
