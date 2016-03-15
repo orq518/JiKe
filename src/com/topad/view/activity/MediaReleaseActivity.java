@@ -290,7 +290,9 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
     @Override
     public void initData() {
-
+        if(!Utils.isEmpty(TopADApplication.getSelf().getMyInfo().getImglicense())){
+            mediacert = TopADApplication.getSelf().getMyInfo().getImglicense();
+        }
     }
 
     /**
@@ -364,6 +366,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
             // 证明
             case R.id.lay_prove_media:
                 intent = new Intent(mContext, MediaReoeaseUploadPicActivity.class);
+
                 if(!Utils.isEmpty(mediacert)) {
                     intent.putExtra("picurl", mediacert);
                 }
