@@ -87,6 +87,9 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
         if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
             String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
             getPic(headerpicUrl, pic_1);
+            btn_save.setClickable(false);
+            btn_save.setEnabled(false);
+            pic_1.setClickable(false);
         } else {
             pic_1.setImageResource(R.drawable.uploadback);
         }
