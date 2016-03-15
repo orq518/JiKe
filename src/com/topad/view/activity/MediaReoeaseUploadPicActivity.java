@@ -71,6 +71,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
         tips= (TextView) findViewById(R.id.tips);
         Intent intent = getIntent();
         picurl = intent.getStringExtra("picurl");
+
         isCompany = intent.getStringExtra("is_company");
         mTitleView = (TitleView) findViewById(R.id.title);
         pic_1 = (ImageView) findViewById(R.id.pic_1);
@@ -83,15 +84,11 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
         pic_2.setOnClickListener(this);
         btn_save.setOnClickListener(this);
 
-        myInfoBean = TopADApplication.getSelf().getMyInfo();
-        if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
-            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
+        if(Utils.isEmpty(picurl)){
+            pic_1.setImageResource(R.drawable.mediapic);
+        }else{
+            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + picurl;
             getPic(headerpicUrl, pic_1);
-            btn_save.setClickable(false);
-            btn_save.setEnabled(false);
-            pic_1.setClickable(false);
-        } else {
-            pic_1.setImageResource(R.drawable.uploadback);
         }
 
         if(myInfoBean!=null&&Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
@@ -143,7 +140,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle("公司认证");
+        mTitleView.setTitle("媒体代理/经营证明");
         mTitleView.setLeftVisiable(true);
         mTitleView.setRightVisiable(false);
         mTitleView.setLeftClickListener(new TitleRightOnClickListener());
