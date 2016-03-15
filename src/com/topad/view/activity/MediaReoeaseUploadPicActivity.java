@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -53,7 +54,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
     String picurl;
     // 判断是否公司认证
     String isCompany;
-
+    TextView tips;
     @Override
     public int setLayoutById() {
         mContext = this;
@@ -67,6 +68,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
 
     @Override
     public void initViews() {
+        tips= (TextView) findViewById(R.id.tips);
         Intent intent = getIntent();
         picurl = intent.getStringExtra("picurl");
         isCompany = intent.getStringExtra("is_company");
@@ -81,15 +83,9 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
         pic_2.setOnClickListener(this);
         btn_save.setOnClickListener(this);
 
-//        myInfoBean = TopADApplication.getSelf().getMyInfo();
-//        if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
-//            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
-//            getPic(headerpicUrl, pic_1);
-//        } else {
-//            pic_1.setImageResource(R.drawable.uploadback);
-//        }
-        if (!Utils.isEmpty(picurl)) {
-            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + picurl;
+        myInfoBean = TopADApplication.getSelf().getMyInfo();
+        if (myInfoBean != null && !Utils.isEmpty(myInfoBean.getImglicense())) {
+            String headerpicUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + myInfoBean.getImglicense();
             getPic(headerpicUrl, pic_1);
             btn_save.setClickable(false);
             btn_save.setEnabled(false);
@@ -97,6 +93,13 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
         } else {
             pic_1.setImageResource(R.drawable.uploadback);
         }
+
+        if(myInfoBean!=null&&Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
+            tips.setVisibility(View.VISIBLE);
+        }else{
+            tips.setVisibility(View.GONE);
+        }
+
 
 
         int width = Utils.getScreenWidth(this);

@@ -86,6 +86,8 @@ public class IsCompanyActivity extends BaseActivity implements View.OnClickListe
             case R.id.bt_up:
                 intent = new Intent(IsCompanyActivity.this, MediaReoeaseUploadPicActivity.class);
                 intent.putExtra("is_company", "1");
+
+
                 intent.putExtra("picurl", "");
                 startActivity(intent);
                 finish();
