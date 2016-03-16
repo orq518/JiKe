@@ -290,7 +290,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
              * latitude : 116.465878
              * mediacert :
              */
-             SearchResultBean.DataEntity bean = searchResultList.get(position);
+            SearchResultBean.DataEntity bean = searchResultList.get(position);
             final String mediaid = bean.getId();
             String addtime = bean.getAddtime();
             String medianame = bean.getMedianame();
@@ -304,14 +304,14 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             String imageHead = bean.getImghead();
             //左侧头像
             String picUrl = Constants.getCurrUrl() + Constants.IMAGE_URL_HEADER + imageHead;
-            LogUtil.d("picUrl:"+picUrl);
-            if(!Utils.isEmpty(imageHead)){
+            LogUtil.d("picUrl:" + picUrl);
+            if (!Utils.isEmpty(imageHead)) {
                 ImageLoader.getInstance().displayImage(picUrl, viewHolder.left_ic, TopADApplication.getSelf().getImageLoaderOption());
 
             }
-             viewHolder.name.setText(medianame);
+            viewHolder.name.setText(medianame);
 //            viewHolder.lanmu.setText(type2);
-            viewHolder.type.setText(type1+"-"+type2);
+            viewHolder.type.setText(type1 + "-" + type2);
             Date date = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             try {
@@ -320,19 +320,24 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             viewHolder.location.setText(location);
-            viewHolder.contactme.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(Utils.isEmpty(voicePath)){
-                        contactme(userid,mediaid,"");
-                    }else{
-                        uploadMedia(userid,mediaid,voicePath);
-                    }
+            if (userid.equals(TopADApplication.getSelf().getUserId())) {
+                viewHolder.contactme.setVisibility(View.GONE);
+            } else {
+                viewHolder.contactme.setVisibility(View.VISIBLE);
+                viewHolder.contactme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Utils.isEmpty(voicePath)) {
+                            contactme(userid, mediaid, "");
+                        } else {
+                            uploadMedia(userid, mediaid, voicePath);
+                        }
 
-                }
-            });
+                    }
+                });
+            }
+
 
             return convertView;
         }
@@ -367,7 +372,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                             String status = respObj.getString("status");// 状态码
                             String msg = respObj.getString("msg");// 错误信息
                             String img = respObj.getString("img");// 图片名
-                            contactme(userid,mediaid,img);
+                            contactme(userid, mediaid, img);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
