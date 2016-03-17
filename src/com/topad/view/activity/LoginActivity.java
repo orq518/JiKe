@@ -59,6 +59,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
         mETUserName = (EditText) findViewById(R.id.et_username);
+        String phone=getIntent().getStringExtra("phone");
+        if(!Utils.isEmpty(phone)){
+            mUserName=phone;
+            mETUserName.setText(phone);
+        }
         mETPassword = (EditText) findViewById(R.id.et_password);
         mBTLogin = (Button) findViewById(R.id.btn_login);
 
@@ -177,6 +182,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.forget_psw:
+                Intent intent = new Intent(this, ResetPasswordActivity.class);
+                startActivity(intent);
+                finish();
+                break;
             // 登录
             case R.id.btn_login:
                 TopADApplication.getSelf().logout();

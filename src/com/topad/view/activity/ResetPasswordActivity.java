@@ -10,13 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.topad.R;
+import com.topad.TopADApplication;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
+import com.topad.bean.LoginBean;
 import com.topad.bean.RegisterBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
 import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 
@@ -26,31 +29,57 @@ import com.topad.view.customviews.TitleView;
  * @author lht
  * @data: on 15/11/3 09:38
  */
-public class ResetPasswordActivity  extends BaseActivity implements View.OnClickListener{
+public class ResetPasswordActivity extends BaseActivity implements View.OnClickListener {
     private static final String LTAG = ResetPasswordActivity.class.getSimpleName();
-    /** 上下文 **/
+    /**
+     * 上下文
+     **/
     private Context mContext;
-    /** 顶部布局 **/
+    /**
+     * 顶部布局
+     **/
     private TitleView mTitleView;
-    /** 验证码 **/
+    /**
+     * 验证码
+     **/
     private EditText mETSmsCode;
-    /** 密码 **/
+    /**
+     * 密码
+     **/
     private EditText mETPassword;
-    /** 确认密码 **/
+    /**
+     * 确认密码
+     **/
     private EditText mETConfirmPassword;
-    /** 重获验证码 **/
+    /**
+     * 重获验证码
+     **/
     private TextView mTVCodeAgain;
-    /** 确认 **/
+    /**
+     * 确认
+     **/
     private Button mBTConfirm;
 
-    /** 用户名－－手机号 **/
+    /**
+     * 用户名－－手机号
+     **/
     private String mUserName;
-    /** 密码 **/
+    /**
+     * 密码
+     **/
     private String mPassword;
-    /** 确认密码 **/
+    /**
+     * 确认密码
+     **/
     private String mConfirmPassword;
-    /** 验证码 **/
+    /**
+     * 验证码
+     **/
     private String mSmsCode;
+    /**
+     * 手机号
+     **/
+    private EditText et_phone;
 
     @Override
     public int setLayoutById() {
@@ -71,7 +100,7 @@ public class ResetPasswordActivity  extends BaseActivity implements View.OnClick
         mETConfirmPassword = (EditText) findViewById(R.id.et_confirm_password_resetpw);
         mTVCodeAgain = (TextView) findViewById(R.id.tv_get_verify_code_again_resetpw);
         mBTConfirm = (Button) findViewById(R.id.btn_confirm);
-
+        et_phone = (EditText) findViewById(R.id.et_phone);
         mBTConfirm.setOnClickListener(this);
         mTVCodeAgain.setOnClickListener(this);
     }
@@ -221,18 +250,19 @@ public class ResetPasswordActivity  extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             // 验证码
             case R.id.tv_get_verify_code_again_resetpw:
-                if(!Utils.isEmpty(mUserName)){
+                mUserName = et_phone.getText().toString();
+                if (!Utils.isEmpty(mUserName)) {
                     // 拼接url
                     StringBuffer sb = new StringBuffer();
                     sb.append(Constants.getCurrUrl()).append(Constants.URL_GETCODE).append("?");
                     String url = sb.toString();
-                    RequestParams rp=new RequestParams();
+                    RequestParams rp = new RequestParams();
                     rp.add("mobile", mUserName);
 
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-
+                            int status = respStatusCode;// 状态码
                         }
 
                         @Override
@@ -243,22 +273,22 @@ public class ResetPasswordActivity  extends BaseActivity implements View.OnClick
                                     + "msg = " + msg);
                         }
                     }, BaseBean.class);
-                }else{
+                } else {
                     ToastUtil.show(mContext, "手机号不能为空！");
                 }
                 break;
 
             // 确认
             case R.id.btn_confirm:
-                if(!mPassword.equals(mConfirmPassword)){
+                mUserName = et_phone.getText().toString();
+                if (!mPassword.equals(mConfirmPassword)) {
                     ToastUtil.show(mContext, "两次密码输入不一致！");
-                }
-                else{
+                } else {
                     // 拼接url
                     StringBuffer sb = new StringBuffer();
                     sb.append(Constants.getCurrUrl()).append(Constants.URL_RESETPWD).append("?");
                     String url = sb.toString();
-                    RequestParams rp=new RequestParams();
+                    RequestParams rp = new RequestParams();
                     rp.add("code", mSmsCode);
                     rp.add("mobile", mUserName);
                     rp.add("pwd", Md5.md5s(mPassword));
@@ -266,7 +296,28 @@ public class ResetPasswordActivity  extends BaseActivity implements View.OnClick
                     postWithLoading(url, rp, false, new HttpCallback() {
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                            Intent intent = new Intent(ResetPasswordActivity.this, MainActivity.class);
+//                            RegisterBean registerBean = (RegisterBean) t;
+//                            if (registerBean != null) {
+//                                // 本地缓存token
+//                                if (!Utils.isEmpty(registerBean.getToken())) {
+//                                    SharedPreferencesUtils.clearCurAccount(mContext);
+//                                    SharedPreferencesUtils.getInstance(mContext, mUserName);
+//                                    SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.KEY_TOKEN, registerBean.getToken());
+//                                }
+//                                // 本地存储userid
+//                                if (!Utils.isEmpty(registerBean.getUserid())) {
+//                                    SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_ID, registerBean.getUserid());
+//                                }
+//                                TopADApplication.getSelf().bindUmeng();//绑定友盟
+//                                // 本地存储mobienumber
+//                                SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PHONR, mUserName);
+//
+//                            }
+//                            Intent intent = new Intent(ResetPasswordActivity.this, MainActivity.class);
+                            Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                            if (!Utils.isEmpty(mUserName)) {
+                                intent.putExtra("phone", mUserName);
+                            }
                             startActivity(intent);
                             finish();
                         }
