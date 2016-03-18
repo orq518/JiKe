@@ -1,8 +1,10 @@
 package com.topad.view.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,6 +75,7 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
         return null;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void initViews() {
         Intent intent = getIntent();
@@ -137,7 +140,17 @@ public class UploadPicActivity extends BaseActivity implements View.OnClickListe
                 if(myInfoBean!=null&&!Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
                     tips.setVisibility(View.VISIBLE);
                 }else{
-                    tips.setVisibility(View.GONE);
+
+                    if(myInfoBean!=null&&!Utils.isEmpty(myInfoBean.getCompanyname())){
+                        tips.setVisibility(View.VISIBLE);
+                        tips.setText(myInfoBean.getCompanyname());
+                        tips.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,null,null);
+                        btn_save.setVisibility(View.INVISIBLE);
+                        pic_1.setClickable(false);
+                    }else{
+                        tips.setVisibility(View.INVISIBLE);
+                    }
+
                 }
                 break;
         }
