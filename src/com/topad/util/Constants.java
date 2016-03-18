@@ -13,6 +13,8 @@ public class Constants {
     // 注册
     public static final String URL_REGISTER = "/user/register";
     // 获取验证码
+    public static final String URL_RESETCODE = "/user/resetcode";
+    // 获取验证码
     public static final String URL_GETCODE = "/user/getcode";
     // 重置密码
     public static final String URL_RESETPWD = "/user/resetpwd";

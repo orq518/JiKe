@@ -254,7 +254,7 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
                 if (!Utils.isEmpty(mUserName)) {
                     // 拼接url
                     StringBuffer sb = new StringBuffer();
-                    sb.append(Constants.getCurrUrl()).append(Constants.URL_GETCODE).append("?");
+                    sb.append(Constants.getCurrUrl()).append(Constants.URL_RESETCODE).append("?");
                     String url = sb.toString();
                     RequestParams rp = new RequestParams();
                     rp.add("mobile", mUserName);
@@ -263,6 +263,17 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
                         @Override
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                             int status = respStatusCode;// 状态码
+                            switch(status){
+                                case 10000:
+                                    ToastUtil.show(mContext, "已向您的手机发送短信验证码");
+                                    break;
+                                case 10002:
+                                    ToastUtil.show(mContext, "短信发送失败");
+                                    break;
+                                case 10003:
+                                    ToastUtil.show(mContext, "该手机号未注册，请直接注册");
+                                    break;
+                            }
                         }
 
                         @Override

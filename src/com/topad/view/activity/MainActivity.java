@@ -28,12 +28,14 @@ import com.topad.bean.BaseBean;
 import com.topad.bean.CheckMSGBean;
 import com.topad.bean.IsCompanyBean;
 import com.topad.bean.LocationBean;
+import com.topad.bean.LoginBean;
 import com.topad.bean.MyInfoBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.ActivityCollector;
 import com.topad.util.Constants;
 import com.topad.util.LogUtil;
+import com.topad.util.Md5;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
@@ -121,6 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext=this;
         PushAgent.getInstance(this).onAppStart();
     }
 
@@ -302,9 +305,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mDrawerToggle.syncState();
         initLeftMenu();
         getMyInfo();//获取我的个人信息
-//
-//        // Set the drawer toggle as the DrawerListener
-//        mDrawerLayout.setDrawerListener(mDrawerToggle);
         initLocation();
         TopADApplication.getSelf().bindUmeng();
         checkNewMessage();
@@ -317,9 +317,47 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initData() {
+        boolean ishaveToken=getIntent().getBooleanExtra("ishaveToken",false);
+        // 本地存储mobienumber
+        String mUserName= (String) SharedPreferencesUtils.get(mContext, SharedPreferencesUtils.USER_PHONR,"");
+        // 本地存储mobienumber
+        String mPassword=(String)SharedPreferencesUtils.get(mContext, SharedPreferencesUtils.USER_PSW,"");
+
+        if(!ishaveToken&&!Utils.isEmpty(mUserName)&&!Utils.isEmpty(mPassword)){
+            login(mUserName,mPassword);
+        }
 
     }
-
+    public  void login(final String mUserName, String mPassword){
+//        // 拼接url
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(Constants.getCurrUrl()).append(Constants.URL_LOGIN).append("?");
+//        String url = sb.toString();
+//        RequestParams rp = new RequestParams();
+//        TopADApplication.getSelf().getUserId();
+//        rp.add("mobile", mUserName);
+//        rp.add("pwd", Md5.md5s(mPassword));
+//
+//        postWithLoading(url, rp, false, new HttpCallback() {
+//            @Override
+//            public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+//                LoginBean login = (LoginBean) t;
+//                if (login != null) {
+//                    // 本地缓存token
+//                    if (!Utils.isEmpty(login.getToken())) {
+//                        SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.KEY_TOKEN, login.getToken());
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(BaseBean base) {
+//                int status = base.getStatus();// 状态码
+//                String msg = base.getMsg();// 错误信息
+//            }
+//        }, LoginBean.class);
+    }
     public void initLeftMenu() {
         left_tv_red = (TextView) findViewById(R.id.left_tv_red);
         findViewById(R.id.csmm).setOnTouchListener(this);

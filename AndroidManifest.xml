@@ -98,7 +98,9 @@
         <activity android:name=".view.activity.WebViewActivity"
                   android:theme="@style/AppTheme">
         </activity>
-
+        <activity android:name=".view.activity.PublishResyltActivity"
+                  android:theme="@style/AppTheme">
+        </activity>
         <activity android:name=".view.activity.SearchActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"

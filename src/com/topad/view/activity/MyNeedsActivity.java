@@ -219,7 +219,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
                 holder.content = (TextView) convertView.findViewById(R.id.tv_content);
                 holder.time = (TextView) convertView.findViewById(R.id.tv_time);
                 holder.countdown = (TextView) convertView.findViewById(R.id.tv_countdown);
-
+                holder.tv_ispass= (TextView) convertView.findViewById(R.id.tv_ispass);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -228,6 +228,12 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             holder.name.setText(bankList.get(position).getCompanyname());
             SpannableStringBuilder ssb = new SpannableStringBuilder("￥" + bankList.get(position).getBudget());
             holder.price.setText(ssb.toString());
+            String isPass=bankList.get(position).getIspublic();
+            if("0".equals(isPass)){
+                holder.tv_ispass.setVisibility(View.VISIBLE);
+            }else{
+                holder.tv_ispass.setVisibility(View.GONE);
+            }
             if ("0".equals(bankList.get(position).getIspay())) {
                 holder.state.setVisibility(View.GONE);
             } else {
@@ -260,6 +266,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
             TextView content;
             TextView time;
             TextView countdown;
+            TextView tv_ispass;
         }
     }
 
