@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+    <!-- 顶部标题 -->
+    <com.topad.view.customviews.TitleView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
+
+            <!-- 继续发布 -->
+            <LinearLayout
+                android:id="@+id/media_add"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_ok"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="您的需求信息已经提交成功！"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/bule2"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="我们的客服会在24小时内进行审核，通过审核的需求将被推荐给合适的用户。\n\n您可以在左侧菜单--我的需求查看"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/text_bg"/>
+                <!-- 继续添加媒体 -->
+                <Button
+                    android:id="@+id/bt_commit"
+                    style="@style/btn_bule3_borad_style"
+                    android:focusable="false"
+                    android:layout_width="100dp"
+                    android:text="关闭"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+
+            </LinearLayout>
+
+
+</LinearLayout>

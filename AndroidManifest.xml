@@ -2,7 +2,7 @@
 <manifest package="com.topad"
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="1"
-          android:versionName="0.9">
+          android:versionName="1.0.0">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -98,7 +98,9 @@
         <activity android:name=".view.activity.WebViewActivity"
                   android:theme="@style/AppTheme">
         </activity>
-
+        <activity android:name=".view.activity.PublishResyltActivity"
+                  android:theme="@style/AppTheme">
+        </activity>
         <activity android:name=".view.activity.SearchActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:theme="@style/AppTheme"

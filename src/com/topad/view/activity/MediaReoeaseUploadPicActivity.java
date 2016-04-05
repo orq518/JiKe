@@ -91,7 +91,7 @@ public class MediaReoeaseUploadPicActivity extends BaseActivity implements View.
             getPic(headerpicUrl, pic_1);
         }
 
-        if(myInfoBean!=null&&Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
+        if(myInfoBean!=null&&!Utils.isEmpty(myInfoBean.getImglicense())&&"0".equals(myInfoBean.getIscompany())){//审核中
             tips.setVisibility(View.VISIBLE);
         }else{
             tips.setVisibility(View.GONE);

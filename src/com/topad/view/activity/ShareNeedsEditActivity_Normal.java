@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
-import com.topad.amap.PoiKeywordSearchActivity;
 import com.topad.amap.ToastUtil;
 import com.topad.bean.BaseBean;
 import com.topad.bean.MyInfoBean;
@@ -358,8 +357,9 @@ public class ShareNeedsEditActivity_Normal extends BaseActivity implements IReco
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ToastUtil.show(mContext, ((BaseBean) t).getMsg());
-                Intent intent = new Intent(mContext, MyNeedsActivity.class);
-                intent.putExtra("toMainpage",true);
+                Intent intent = new Intent(mContext, PublishResyltActivity.class);
+//                Intent intent = new Intent(mContext, MyNeedsActivity.class);
+//                intent.putExtra("toMainpage",true);
                 startActivity(intent);
                 finish();
             }

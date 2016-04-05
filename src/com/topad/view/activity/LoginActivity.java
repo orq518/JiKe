@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.topad.bean.BaseBean;
 import com.topad.bean.LoginBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
+import com.topad.util.ActivityCollector;
 import com.topad.util.Constants;
 import com.topad.util.Md5;
 import com.topad.util.SharedPreferencesUtils;
@@ -59,6 +61,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void initViews() {
         mTitleView = (TitleView) findViewById(R.id.title);
         mETUserName = (EditText) findViewById(R.id.et_username);
+        String phone=getIntent().getStringExtra("phone");
+        if(!Utils.isEmpty(phone)){
+            mUserName=phone;
+            mETUserName.setText(phone);
+        }
         mETPassword = (EditText) findViewById(R.id.et_password);
         mBTLogin = (Button) findViewById(R.id.btn_login);
 
@@ -177,6 +184,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.forget_psw:
+                Intent intent = new Intent(this, ResetPasswordActivity.class);
+                startActivity(intent);
+                finish();
+                break;
             // 登录
             case R.id.btn_login:
                 TopADApplication.getSelf().logout();
@@ -207,8 +219,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             TopADApplication.getSelf().bindUmeng();//绑定友盟
                             // 本地存储mobienumber
                             SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PHONR, mUserName);
+                            // 本地存储mobienumber
+                            SharedPreferencesUtils.put(mContext, SharedPreferencesUtils.USER_PSW, mPassword);
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("ishaveToken",true);
                             startActivity(intent);
                             finish();
 
@@ -254,5 +269,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             return;
         mBTLogin.setEnabled(flag);
         mBTLogin.setClickable(flag);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            System.exit(0);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

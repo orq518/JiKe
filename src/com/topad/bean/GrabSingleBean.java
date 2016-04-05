@@ -38,6 +38,16 @@ public class GrabSingleBean implements Serializable {
     public String adddate;
     public String isdelete;
     public String companyname;
+    public String ispublic;
+
+
+    public String getIspublic() {
+        return ispublic;
+    }
+
+    public void setIspublic(String ispublic) {
+        this.ispublic = ispublic;
+    }
 
     public String getId() {
         return id;

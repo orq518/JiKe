@@ -334,7 +334,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_10"
-                    android:text="注销"
+                    android:text="退出登录"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_18"/>
 

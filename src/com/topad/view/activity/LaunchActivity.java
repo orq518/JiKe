@@ -8,6 +8,15 @@ import android.widget.ImageView;
 
 import com.topad.R;
 import com.topad.TopADApplication;
+import com.topad.amap.ToastUtil;
+import com.topad.bean.BaseBean;
+import com.topad.bean.LoginBean;
+import com.topad.net.HttpCallback;
+import com.topad.net.http.RequestParams;
+import com.topad.util.Constants;
+import com.topad.util.Md5;
+import com.topad.util.SharedPreferencesUtils;
+import com.topad.util.Utils;
 
 /**
  * ${todo}<闪屏页>
@@ -39,7 +48,6 @@ public class LaunchActivity extends BaseActivity {
         mImageV = (ImageView) findViewById(R.id.Imagev_launch);
 
     }
-
 
     @Override
     public void initData() {

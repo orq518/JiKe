@@ -256,8 +256,9 @@ public class ShareNeedsEditActivity_Zhaopin extends BaseActivity implements IRec
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 ToastUtil.show(mContext, ((BaseBean) t).getMsg());
-                Intent intent = new Intent(mContext, MyNeedsActivity.class);
-                intent.putExtra("toMainpage",true);
+                Intent intent = new Intent(mContext, PublishResyltActivity.class);
+//                Intent intent = new Intent(mContext, MyNeedsActivity.class);
+//                intent.putExtra("toMainpage",true);
                 startActivity(intent);
                 finish();
             }
