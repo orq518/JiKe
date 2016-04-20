@@ -401,7 +401,13 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
 
             // 提交
             case R.id.bt_submit_release:
-                submit();
+                if("1".equals(category) || "6".equals(category) || "7".equals(category)){
+                    submit();
+                }else{
+                    if(Utils.isEmpty(mediacert.trim())){
+                        ToastUtil.show(mContext,"请上传媒体代理证明/经营证明");
+                    }
+                }
                 break;
 
             // 提交并继续
