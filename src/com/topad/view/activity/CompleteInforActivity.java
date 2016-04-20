@@ -54,17 +54,11 @@ import java.util.Map;
  */
 public class CompleteInforActivity extends BaseActivity implements View.OnClickListener, IDatePick {
     private static final String LTAG = CompleteInforActivity.class.getSimpleName();
-    /**
-     * 上下文
-     **/
+    // 上下文
     private Activity mContext;
-    /**
-     * 顶部布局
-     **/
+    // 顶部布局
     private TitleView mTitleView;
-    /**
-     * 登录
-     **/
+    // 登录
     private Button mBTLogin;
 
     LinearLayout mainlayout;

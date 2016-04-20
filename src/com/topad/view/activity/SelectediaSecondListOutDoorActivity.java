@@ -38,8 +38,12 @@ public class SelectediaSecondListOutDoorActivity extends BaseActivity implements
     private ListViewAdapter adapter;
     private String[] huwaiString;
     private String[] mediaString;
+    // 来源 0－我有资产
+    private String from;
     /** 类别 **/
     private String type;
+    /** 一层类别 **/
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,9 @@ public class SelectediaSecondListOutDoorActivity extends BaseActivity implements
     public void initViews() {
         Intent intent = getIntent();
         if (intent != null) {
+            from = intent.getStringExtra("from");
             type = intent.getStringExtra("type");
+            category = intent.getStringExtra("category");
         }
         if("0".equals(type)){
             huwaiString = getResources().getStringArray(R.array.jichang);
@@ -94,11 +100,19 @@ public class SelectediaSecondListOutDoorActivity extends BaseActivity implements
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(Constants.BROADCAST_ACTION_MEDIA_CLASS);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra( "media_class", mediaString[Integer.parseInt(type)] + "-" + huwaiString[position]);
-                sendBroadcast(intent);
-                finish();
+                if("0".equals(from)){
+                    Intent intent = new Intent(SelectediaSecondListOutDoorActivity.this, MediaReleaseActivity.class );
+                    intent.putExtra( "mediaName", mediaString[Integer.parseInt(type)] + "-" + huwaiString[position]);
+                    intent.putExtra("category", category);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(Constants.BROADCAST_ACTION_MEDIA_CLASS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra( "media_class", mediaString[Integer.parseInt(type)] + "-" + huwaiString[position]);
+                    sendBroadcast(intent);
+                    finish();
+                }
             }
         });
     }

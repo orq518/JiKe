@@ -102,6 +102,8 @@ public class Constants {
     public static final String URL_MEDIA_DELMEDIA = "/media/delmedia";
     // 判断是否为公司
     public static final String URL_USER_IS_COMPANY = "/user/iscompany";
+    // 意见反馈
+    public static final String URL_SUGGEST = "http://topad.uput.cn/suggest/";
 
     public static String ALIAS_TYPE="topad";
     /**

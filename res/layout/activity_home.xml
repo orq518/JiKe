@@ -26,7 +26,7 @@
             android:id="@+id/my_media"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/homepage_icon_ihave"
+            android:background="@drawable/index_ihave"
             android:layout_weight="1"/>
 
         <View
@@ -40,7 +40,7 @@
             android:id="@+id/release_demand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/homepage_icon_publish"
+            android:background="@drawable/index_publish"
             android:layout_weight="1"/>
 
         <View
@@ -54,7 +54,7 @@
             android:id="@+id/grab_single"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/homepage_icon_iwant"
+            android:background="@drawable/index_iwant"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="5dp">
 
                 <ImageView
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我需要媒体资源"
+                    android:text="我需要媒体及资源"
                     android:textColor="@color/text_bg"
                     android:textSize="16sp"/>
 
@@ -223,13 +223,54 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/dark_gray_text" />
+
+            <RelativeLayout
+                android:id="@+id/rl_other1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/im_other1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:src="@drawable/icon_qtfw"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/tv_other1_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="其他"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/im_other1"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/dark_gray_text" />
+
             <!-- 我需要广告服务 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="5dp">
 
                 <ImageView
@@ -329,6 +370,41 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_other2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/im_other2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:src="@drawable/icon_qtfw"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/tv_other2_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="其他"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/im_other2"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/dark_gray_text" />
 
             <!-- 我需要平面设计 -->
             <LinearLayout

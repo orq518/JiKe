@@ -20,13 +20,17 @@
         android:layout_below="@id/title"
         android:background="@color/app_bg"
         android:fillViewport="true">
-        <TableLayout android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     android:padding="1dp"
-            >
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp">
+
             <TableRow android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:background="@color/app_bg">
+                      android:background="@color/app_bg"
+                      android:layout_marginTop="20dp"
+                      android:layout_marginLeft="15dp"
+                      android:layout_marginRight="15dp">
                 <TextView android:id="@+id/tab01"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
@@ -67,6 +71,28 @@
                           android:background="@color/white"
                           android:clickable="true"
                           android:drawablePadding="@dimen/dimen_10"
+                          android:drawableTop="@drawable/index_mtyx"
+                          android:gravity="center_horizontal"
+                          android:onClick="onClick"
+                          android:paddingBottom="@dimen/dimen_15"
+                          android:paddingTop="@dimen/dimen_20"
+                          android:text="媒体营销"
+                    />
+            </TableRow>
+            <TableRow android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/app_bg"
+                      android:layout_marginLeft="15dp"
+                      android:layout_marginRight="15dp">
+                <TextView android:id="@+id/tab04"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="@dimen/dimen_1"
+                          android:layout_marginRight="@dimen/dimen_1"
+                          android:layout_weight="1"
+                          android:background="@color/white"
+                          android:clickable="true"
+                          android:drawablePadding="@dimen/dimen_10"
                           android:drawableTop="@drawable/icon_yx"
                           android:gravity="center_horizontal"
                           android:onClick="onClick"
@@ -74,11 +100,7 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="营销推广"
                     />
-            </TableRow>
-            <TableRow android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/app_bg">
-                <TextView android:id="@+id/tab04"
+                <TextView android:id="@+id/tab05"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
@@ -94,11 +116,10 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="影视动漫"
                     />
-                <TextView android:id="@+id/tab05"
+                <TextView android:id="@+id/tab06"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
-                          android:layout_marginRight="@dimen/dimen_1"
                           android:layout_weight="1"
                           android:background="@color/white"
                           android:clickable="true"
@@ -110,10 +131,17 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="文案策划"
                     />
-                <TextView android:id="@+id/tab06"
+            </TableRow>
+            <TableRow android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/app_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <TextView android:id="@+id/tab07"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
+                          android:layout_marginRight="@dimen/dimen_1"
                           android:layout_weight="1"
                           android:background="@color/white"
                           android:clickable="true"
@@ -125,11 +153,7 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="广告监测"
                     />
-            </TableRow>
-            <TableRow android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/app_bg">
-                <TextView android:id="@+id/tab07"
+                <TextView android:id="@+id/tab08"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
@@ -145,11 +169,10 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="专家培训"
                     />
-                <TextView android:id="@+id/tab08"
+                <TextView android:id="@+id/tab09"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
-                          android:layout_marginRight="@dimen/dimen_1"
                           android:layout_weight="1"
                           android:background="@color/white"
                           android:clickable="true"
@@ -161,10 +184,17 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="管理咨询"
                     />
-                <TextView android:id="@+id/tab09"
+            </TableRow>
+            <TableRow android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/app_bg"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <TextView android:id="@+id/tab10"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
+                          android:layout_marginRight="@dimen/dimen_1"
                           android:layout_weight="1"
                           android:background="@color/white"
                           android:clickable="true"
@@ -176,11 +206,7 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="网站建设"
                     />
-            </TableRow>
-            <TableRow android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/app_bg">
-                <TextView android:id="@+id/tab10"
+                <TextView android:id="@+id/tab11"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
@@ -196,11 +222,10 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="公关服务"
                     />
-                <TextView android:id="@+id/tab11"
+                <TextView android:id="@+id/tab12"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginBottom="@dimen/dimen_1"
-                          android:layout_marginRight="@dimen/dimen_1"
                           android:layout_weight="1"
                           android:background="@color/white"
                           android:clickable="true"
@@ -212,22 +237,31 @@
                           android:paddingTop="@dimen/dimen_20"
                           android:text="企业招聘"
                     />
-                <TextView android:id="@+id/tab12"
-                          android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginBottom="@dimen/dimen_1"
-                          android:layout_weight="1"
-                          android:background="@color/white"
-                          android:clickable="true"
-                          android:drawablePadding="@dimen/dimen_10"
-                          android:drawableTop="@drawable/icon_others"
-                          android:gravity="center_horizontal"
-                          android:onClick="onClick"
-                          android:paddingBottom="@dimen/dimen_15"
-                          android:paddingTop="@dimen/dimen_20"
-                          android:text="其他服务"
+            </TableRow>
+            <TableRow android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/tab13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_1"
+                    android:clickable="true"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableLeft="@drawable/icon_others"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:paddingBottom="@dimen/dimen_5"
+                    android:paddingTop="@dimen/dimen_5"
+                    android:text="其他服务"
                     />
             </TableRow>
+
+
         </TableLayout>
 
 

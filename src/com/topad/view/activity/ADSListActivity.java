@@ -54,6 +54,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
     private TitleView mTitleView;
     /** listView **/
     private MyListView mListView;
+//    /** 无结果 **/
+//    private LinearLayout mLYNothing;
     /** 只是用来模拟异步获取数据 **/
     private Handler handler;
     /** 适配器 **/
@@ -69,6 +71,8 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
     private String type1;
     /** 类别2 **/
     private String type2;
+    /** 关键词搜索 **/
+    private String sname = " ";
     /** 请求页数 **/
     private int page = 1;
 
@@ -143,6 +147,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             title = intent.getStringExtra("title");
             type1 = intent.getStringExtra("type1");
             type2 = intent.getStringExtra("type2");
+            sname = intent.getStringExtra("sname");
         }
 
         // 顶部标题布局
@@ -154,7 +159,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
 
         // listview
         mListView = (MyListView) findViewById(R.id.listview);
-
+//        mLYNothing = (LinearLayout) findViewById(R.id.ly_nothing);
     }
 
     /**
@@ -419,6 +424,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         rp.add("userid", "0");
         rp.add("type1", type1);
         rp.add("type2", type2);
+        rp.add("sname", sname);
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override

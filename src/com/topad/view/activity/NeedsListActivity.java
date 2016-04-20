@@ -32,40 +32,51 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
 
     String[] guanggaochuangyi = new String[]{"创意文案", "创意脚本", "创意策略", "广告语", "广告摄影"};
     int[] guanggaochuangyi_ic = new int[]{R.drawable.ai_wenan, R.drawable.ai_jiaoben, R.drawable.ai_celve, R.drawable.ai_slogan, R.drawable.ai_cam};
+
     String[] pingmiansheji = new String[]{"LOGO设计", "VI设计", "CIS 设计", "APP/UI 设计", "包装设计", "海报设计", "装修设计"};
     int[] pingmiansheji_ic = new int[]{R.drawable.vi_logo_design, R.drawable.vi_design, R.drawable.vi_cis_design, R.drawable.vi_ui_design, R.drawable.vi_baozhuang_design, R.drawable.vi_haibao_design, R.drawable.vi_zhuangxiu_design};
+
+    String[] meitiyingxiao = new String[]{"媒介策划", "媒介代理", "媒介研究", "媒体经营", "媒体推广"};
+    int[] meitiyingxiao_ic = new int[]{R.drawable.mt_cehua, R.drawable.mt_daili, R.drawable.mt_yanjiu, R.drawable.mt_jingying, R.drawable.mt_tuiguang};
+
     String[] yingxiaotuiguang = new String[]{"营销方案", "产品定位", "渠道建设", "网络营销", "终端促销", "新闻传播"};
     int[] yingxiaotuiguang_ic = new int[]{R.drawable.sales_idea, R.drawable.sales_dingwei, R.drawable.sales_qudao, R.drawable.sales_wangluo, R.drawable.sales_cuxiao, R.drawable.sales_news};
+
     String[] yingshidongman = new String[]{"广告片拍摄", "影视后期", "宣传片制作", "广告配音/配乐", "动漫创作", "微电影拍摄", "寻找代言人", "MV 创作"};
     int[] yingshidongman_ic = new int[]{R.drawable.comic_paishe, R.drawable.comic_houqi, R.drawable.comic_xuanchuan, R.drawable.comic_peiyue, R.drawable.comic_dongman, R.drawable.comic_weidiany, R.drawable.comic_daiyan, R.drawable.comic_mv};
+
     String[] wenancehua = new String[]{"活动策划", "软文创作", "公文写作", "英文翻译", "网店文案", "品牌策划"};
     int[] wenancehua_ic = new int[]{R.drawable.write_huodong, R.drawable.write_ruanwen, R.drawable.write_gongwen, R.drawable.write_etranslat, R.drawable.write_wangdian, R.drawable.write_pinpai};
+
     String[] guanggaojiance = new String[]{"客户广告投放监测报告", "竞品广告投放分析报告", " 行业广告投放分析报告", "单一媒体广告投放分析报告", "全媒体广告投放分析报告", "媒体价值分析报告"};
     int[] guanggaojiance_ic = new int[]{R.drawable.jiance_kehu, R.drawable.jiance_jingpin, R.drawable.jiance_hangye, R.drawable.jiance_danyi, R.drawable.jiance_quanmeiti, R.drawable.jiance_jiazhi};
+
     String[] zhuanjiapeixun = new String[]{"创意专家", "媒体经营专家", "企业管理专家", "营销策划专家", "广告界学术专家", "广告主培训专家", "互联网培训专家"};
     int[] zhuanjiapeixun_ic = new int[]{R.drawable.teach_chuangyi, R.drawable.teach_meiti, R.drawable.teach_qiye, R.drawable.teach_yingxiao, R.drawable.teach_xueshu, R.drawable.teach_guanggaozhu, R.drawable.teach_web};
+
     String[] gusnlixicun = new String[]{"制定企业发展战略", "企业经营诊断", "股权激励策略", "企业上市/融资战略规划", "项目商业计划书撰写", "各类行业研究报告"};
     int[] gusnlixicun_ic = new int[]{R.drawable.guanli_fazhancl, R.drawable.guanli_zhenduan, R.drawable.guanli_guquanjl, R.drawable.guanli_rongzi, R.drawable.guanli_fazhancl, R.drawable.guanli_hangyeyj};
+
     String[] wangzhanruanjian = new String[]{"网站规划/设计/编程", "APP 开发", "网站维护/代管/测试", "微信商务开发", "网站服务器托管/带宽租赁", "软件开发", "网站二次开发/升级/优化"};
     int[] wangzhanruanjian_ic = new int[]{R.drawable.web_design, R.drawable.web_app, R.drawable.web_weihu, R.drawable.web_weixin, R.drawable.web_zulin, R.drawable.web_ruanjian, R.drawable.web_erci};
+
     String[] gongguanfuwu = new String[]{"公关活动策划", "危机公关处理", "网络舆情监测", "事件营销方案策划", "公关培训服务"};
     int[] gongguanfuwu_ic = new int[]{R.drawable.web_design, R.drawable.web_app, R.drawable.web_weihu, R.drawable.web_weixin, R.drawable.web_zulin, R.drawable.web_ruanjian, R.drawable.web_erci};
+
     String[] qiyezhaopin = new String[]{"广告公司类", "广告主类", "电视媒体类", "广播媒体类", "报纸/杂志类", "户外媒体类", "互联网媒体类", "营销策划类", "技术人才", "大学生实习"};
     int[] qiyezhaopin_ic = new int[]{R.drawable.zhaopin_adc, R.drawable.zhaopin_ad2, R.drawable.zhaopin_tv, R.drawable.zhaopin_radio, R.drawable.zhaopin_baokan,
             R.drawable.zhaopin_outdoor, R.drawable.zhaopin_web, R.drawable.zhaopin_yx, R.drawable.zhaopin_it, R.drawable.zhaopin_students, R.drawable.zhaopin_jianzhi};
+
     String[] qitafuwu = new String[]{"品牌起名/公司起名", "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询服务"};
     int[] qitafuwu_ic = new int[]{R.drawable.others_quming, R.drawable.others_mingpian, R.drawable.others_shuchu, R.drawable.others_chuban, R.drawable.others_zhanlan, R.drawable.others_law};
 
-    private String[] arrayTV = new String[]{"广告创意", "平面设计", "营销推广",
-            "影视动漫", "文案策划", "广告监测",
-            "专家培训", "管理咨询", "网站建设",
-            "公关服务", "企业招聘", "其他服务"};
+    private String[] arrayTV = new String[]{"广告创意", "平面设计", "媒体营销","营销推广", "影视动漫", "文案策划",
+            "广告监测", "专家培训", "管理咨询", "网站软件", "公关服务", "品牌／公司起名",
+            "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询","其他服务"};
 
     String[] tempArray;
     int[] tempArray_ic;
-    /**
-     * title布局
-     **/
+    // title布局
     private TitleView mTitle;
     ListView listview;
     ListViewAdapter adapter;
@@ -89,7 +100,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     }
 
     String titleString = null;
-    /** from: null或者0 来自发布需求   1：来自职业选择 2: 产品类别列表页 **/
+    // from: null或者0 来自发布需求   1：来自职业选择 2: 产品类别列表页 4:我有服务
     String from;
 
     @Override
@@ -108,42 +119,46 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                 tempArray_ic = pingmiansheji_ic;
                 break;
             case 2:
+                tempArray = meitiyingxiao;
+                tempArray_ic = meitiyingxiao_ic;
+                break;
+            case 3:
                 tempArray = yingxiaotuiguang;
                 tempArray_ic = yingxiaotuiguang_ic;
                 break;
-            case 3:
+            case 4:
                 tempArray = yingshidongman;
                 tempArray_ic = yingshidongman_ic;
                 break;
-            case 4:
+            case 5:
                 tempArray = wenancehua;
                 tempArray_ic = wenancehua_ic;
                 break;
-            case 5:
+            case 6:
                 tempArray = guanggaojiance;
                 tempArray_ic = guanggaojiance_ic;
                 break;
-            case 6:
+            case 7:
                 tempArray = zhuanjiapeixun;
                 tempArray_ic = zhuanjiapeixun_ic;
                 break;
-            case 7:
+            case 8:
                 tempArray = gusnlixicun;
                 tempArray_ic = gusnlixicun_ic;
                 break;
-            case 8:
+            case 9:
                 tempArray = wangzhanruanjian;
                 tempArray_ic = wangzhanruanjian_ic;
                 break;
-            case 9:
+            case 10:
                 tempArray = gongguanfuwu;
                 tempArray_ic = gongguanfuwu_ic;
                 break;
-            case 10:
+            case 11:
                 tempArray = qiyezhaopin;
                 tempArray_ic = qiyezhaopin_ic;
                 break;
-            case 11:
+            case 12:
                 tempArray = qitafuwu;
                 tempArray_ic = qitafuwu_ic;
                 break;
@@ -183,7 +198,14 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                     intent.putExtra("type2",tempArray[position]);
                     startActivity(intent);
                     finish();
-                }else {
+                } else if("4".equals(from)){
+                    Intent intent = new Intent(NeedsListActivity.this, AddProductActivity.class);
+                    intent.putExtra("from", "2");
+                    intent.putExtra( "type1", arrayTV[type]);
+                    intent.putExtra( "type2", tempArray[position]);
+                    startActivity(intent);
+                    finish();
+                } else {
                     switch (type) {
                         case 0:
                         case 1:
@@ -191,23 +213,24 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
                         case 3:
                         case 4:
                         case 5:
-                        case 7:
+                        case 6:
                         case 8:
                         case 9:
-                        case 11:
+                        case 10:
+                        case 12:
                             Intent intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity_Normal.class);
                             intent.putExtra("type1",titleString);
                             intent.putExtra("type2",tempArray[position]);
                             startActivity(intent);
                             break;
-                        case 6:
+                        case 7:
                             intent = new Intent(NeedsListActivity.this, ShareNeedsEditActivity_Peixun.class);
                             intent.putExtra("type1",titleString);
                             intent.putExtra("type2",tempArray[position]);
                             startActivity(intent);
                             break;
 
-                        case 10:
+                        case 11:
                             intent = new Intent(NeedsListActivity.this, QiyeZhaopin3Activity.class);
                             intent.putExtra("type",position);
                             intent.putExtra("type1",titleString);
@@ -360,8 +383,7 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
             }
             return convertView;
         }
-
-
+        
         class ViewHolder {
             ImageView left_ic, right_ic;
             TextView name;

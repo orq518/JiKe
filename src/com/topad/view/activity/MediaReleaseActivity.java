@@ -35,7 +35,7 @@ import com.topad.view.interfaces.IRecordFinish;
 
 /**
  * ${todo}<媒体发布>
- *     category＝ 电视－1、广播－2、报纸－3、户外－4、杂志－5、网络－6
+ *     category＝ 电视－1、广播－2、报纸－3、户外－4、杂志－5、网络－6、其他－7
  * @author lht
  * @data: on 15/10/30 16:09
  */
@@ -98,7 +98,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
     /** lon **/
     private double lon = 0;
     /** 类别 **/
-    private String[] categoryArray ={"电视","广播","报纸","户外","杂志","网络"};
+    private String[] categoryArray ={"电视","广播","报纸","户外","杂志","网络","其他"};
     /** 媒体代理证明上传文件 **/
     private String mediacert = " ";
     public static int SELECT_MEDIA = 1;
@@ -122,6 +122,7 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         Intent intent = getIntent();
         if (intent != null) {
             category = intent.getStringExtra("category");
+            mediaName = intent.getStringExtra("mediaName");
         }
 
         // 顶部标题布局
@@ -175,6 +176,11 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 mTitleView.setTitle("网络媒体发布");
                 mETMediaName.setHint("网媒名称：例如 爱奇艺");
                 mETColumn.setVisibility(View.GONE);
+            }else if(category.equals("7")){
+                mTitleView.setTitle("其他媒体发布");
+                mETMediaName.setHint("项目名称");
+                mETColumn.setVisibility(View.GONE);
+                mLaySelectMedia.setVisibility(View.GONE);
             }
         }
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
@@ -286,6 +292,11 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 }
             }
         });
+
+        if(mediaName != null && !"".equals(mediaName.trim())){
+            mMedia.setVisibility(View.VISIBLE);
+            mMedia.setText(mediaName);
+        }
     }
 
     @Override

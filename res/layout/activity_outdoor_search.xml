@@ -25,6 +25,7 @@
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/outdoor_search_item"
                 android:layout_width="fill_parent"

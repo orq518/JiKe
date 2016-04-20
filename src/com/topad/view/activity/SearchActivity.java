@@ -37,35 +37,23 @@ import java.util.ArrayList;
  * 主界面
  */
 public class SearchActivity extends BaseActivity implements IRecordFinish, View.OnClickListener {
-
-    /**
-     * title布局
-     **/
+    // title布局
     private TitleView mTitle;
-    LinearLayout search_selected_layout, layout_voice, layout_keyboard, outdoor_search_item;
-    int searchType;
-    Button record;
-    ImageView add_type;
-    TextView locationTV;
-    /**
-     * 沉浸式状态栏
-     **/
-    private SystemBarTintManager mTintManager;
-    /**
-     * 选择好的条件
-     */
-    ArrayList<SearchItemBean> itemBeans = new ArrayList<SearchItemBean>();
-    LinearLayout voice_layout;
+    private LinearLayout search_selected_layout, layout_voice, layout_keyboard, outdoor_search_item;
+    private int searchType;
+    private Button record;
+    private ImageView add_type;
+    private TextView locationTV;
+
+    // 选择好的条件
+    private ArrayList<SearchItemBean> itemBeans = new ArrayList<SearchItemBean>();
+    private LinearLayout voice_layout;
+    private String mediaType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-    }
-
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
     }
 
     @Override
@@ -88,14 +76,10 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
     @Override
     public void initViews() {
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
-
-
         searchType = getIntent().getIntExtra("searchtype", 0);
+        mediaType = getIntent().getStringExtra("mediaType");
         LogUtil.d("ouou", "searchType:" + searchType);
+
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
         // 设置顶部布局
@@ -131,11 +115,14 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         search_selected_layout = (LinearLayout) findViewById(R.id.search_selected_layout);
         outdoor_search_item = (LinearLayout) findViewById(R.id.outdoor_search_item);
 
-
+        TextView media_type;
         switch (searchType) {
             case 0://电视
             case 1://广播
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.tv_search_item, null);
+                media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                media_type.setText(mediaType);
+
                 if (searchType == 1) {
                     TextView tv_tips = (TextView) outdoor_search_layout.findViewById(R.id.tips);
                     tv_tips.setText("广播类别");
@@ -145,14 +132,20 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 //                    tv_program_name.setHint("请输入广播名称");
                 }
                 break;
+
             case 2://报纸
             case 4://杂志
             case 5://网络
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.baozhi_search_item, null);
+                media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                media_type.setText(mediaType);
                 break;
+
             case 3://户外
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.outdoor_search_item, null);
                 locationTV = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
+                media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                media_type.setText(mediaType);
                 break;
 
         }
@@ -322,9 +315,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
      * 提交搜索
      */
     public void submitSearch() {
-
-
-            addNewSearch();//判断一下输入界面是否有未添加的搜索条件
+        addNewSearch();//判断一下输入界面是否有未添加的搜索条件
 
         if (itemBeans.size() <= 0) {
             ToastUtil.show(mContext, "搜索条件为空");
@@ -470,6 +461,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                 Intent cityIntent = new Intent(SearchActivity.this, CitySelectActivity.class);
                 startActivityForResult(cityIntent, PICKCITY);
                 break;
+
             case R.id.select_media_type:
                 if (searchType == 3) {//户外
                     Intent intent = new Intent(SearchActivity.this, OutDoorSearchListActivity.class);
@@ -479,20 +471,23 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                     intent.putExtra("searchType", searchType);
                     startActivityForResult(intent, BAOZHILIST);
                 }
-
                 break;
+
             case R.id.ic_voice:
                 layout_voice.setVisibility(View.GONE);
                 layout_keyboard.setVisibility(View.VISIBLE);
                 break;
+
             case R.id.ic_keyboard:
                 layout_keyboard.setVisibility(View.GONE);
                 layout_voice.setVisibility(View.VISIBLE);
                 record.setText("按住说话");
                 break;
+
             case R.id.bt_identity_next_step:
                 submitSearch();
                 break;
+
             default:
                 break;
         }

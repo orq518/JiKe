@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -69,6 +70,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private LinearLayout mLYMz;
     // 网络
     private LinearLayout mLYNet;
+    // 其他1
+    private RelativeLayout mRLQiTa1;
+    // 其他2
+    private RelativeLayout mRLQiTa2;
     // 广告创意
     private LinearLayout mAdvertisingCreativEe;
     // 营销策略
@@ -120,6 +125,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     MyInfoBean.DataEntity myInfoBean;
     TextView left_tv_red;
 
+    int OUTDOORLIST = 1;
+    int BAOZHILIST = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +160,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mLYOd = (LinearLayout) findViewById(R.id.outdoor_layout);
         mLYMz = (LinearLayout) findViewById(R.id.magazine_layout);
         mLYNet = (LinearLayout) findViewById(R.id.net_layout);
+        mRLQiTa1 = (RelativeLayout) findViewById(R.id.rl_other1);
+        mRLQiTa2 = (RelativeLayout) findViewById(R.id.rl_other2);
         mAdvertisingCreativEe = (LinearLayout) findViewById(R.id.advertising_creative_layout);
         mMarketingStrategy = (LinearLayout) findViewById(R.id.marketing_strategy_layout);
         mTVC = (LinearLayout) findViewById(R.id.tvc_layout);
@@ -182,6 +192,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mMyMedia.setOnClickListener(this);
         mReleaseDemand.setOnClickListener(this);
         mGrabSingle.setOnClickListener(this);
+        mRLQiTa1.setOnClickListener(this);
+        mRLQiTa2.setOnClickListener(this);
         mAdvertisingCreativEe.setOnClickListener(this);
         mMarketingStrategy.setOnClickListener(this);
         mTVC.setOnClickListener(this);
@@ -369,6 +381,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.fbmt).setOnTouchListener(this);
         findViewById(R.id.wdqb).setOnTouchListener(this);
         findViewById(R.id.xtxx).setOnTouchListener(this);
+        findViewById(R.id.yjfk).setOnTouchListener(this);
         findViewById(R.id.quit).setOnTouchListener(this);
         imageView_header = (CircleImageView) findViewById(R.id.header_im);
         tv_name = (TextView) findViewById(R.id.tv_name);
@@ -446,38 +459,58 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Intent intent;
         switch (v.getId()) {
             case R.id.tv_layout://电视
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 0);
+                intent = new Intent(MainActivity.this, OtherSearchListActivity.class);
+                intent.putExtra("searchType", 0);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.broadcast_layout://广播
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 1);
+                intent = new Intent(MainActivity.this, OtherSearchListActivity.class);
+                intent.putExtra("searchType", 1);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.newspaper_layout://报纸
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 2);
+                intent = new Intent(MainActivity.this, OtherSearchListActivity.class);
+                intent.putExtra("searchType", 2);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.outdoor_layout://户外
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 3);
+                intent = new Intent(MainActivity.this, OutDoorSearchListActivity.class);
+                intent.putExtra("searchType", 3);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.magazine_layout://杂志
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 4);
+                intent = new Intent(MainActivity.this, OtherSearchListActivity.class);
+                intent.putExtra("searchType", 4);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.net_layout://网络
-                intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putExtra("searchtype", 5);
+                intent = new Intent(MainActivity.this, OtherSearchListActivity.class);
+                intent.putExtra("searchType", 5);
+                intent.putExtra("from", "0");
+                startActivity(intent);
+                break;
+
+            case R.id.rl_other1://其他1，媒体搜索
+                intent = new Intent(MainActivity.this, OtherSearchActivity.class);
+                intent.putExtra("title", "搜索资源");
+                intent.putExtra("from", "0");
+                startActivity(intent);
+                break;
+
+            case R.id.rl_other2://其他2，服务搜素
+                intent = new Intent(MainActivity.this, OtherSearchActivity.class);
+                intent.putExtra("title", "搜索服务");
+                intent.putExtra("from", "1");
                 startActivity(intent);
                 break;
 
@@ -649,8 +682,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
 
-            case R.id.my_media://我有媒体
-                isCompany();// 判断是否为公司，如果不是公司，则打开提示界面
+            case R.id.my_media://我有资源
+                intent = new Intent(MainActivity.this, MyMediaActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.release_demand://发布需求
@@ -747,6 +781,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ((ImageView) (v.findViewById(R.id.im_xtxx))).setImageResource(R.drawable.left_message_blue);
                     ((TextView) (v.findViewById(R.id.tv_xtxx))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
                     break;
+                case R.id.yjfk:
+                    ((ImageView) (v.findViewById(R.id.im_yjfk))).setImageResource(R.drawable.left_message_blue);
+                    ((TextView) (v.findViewById(R.id.tv_yjfk))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
+                    break;
                 case R.id.quit:
                     ((ImageView) (v.findViewById(R.id.im_quit))).setImageResource(R.drawable.left_zhux_blue);
                     ((TextView) (v.findViewById(R.id.tv_quit))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
@@ -791,6 +829,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ((ImageView) (v.findViewById(R.id.im_xtxx))).setImageResource(R.drawable.left_message);
                     ((TextView) (v.findViewById(R.id.tv_xtxx))).setTextColor(getResources().getColor(R.color.white));
                     break;
+                case R.id.yjfk:
+                    ((ImageView) (v.findViewById(R.id.im_yjfk))).setImageResource(R.drawable.left_message);
+                    ((TextView) (v.findViewById(R.id.tv_yjfk))).setTextColor(getResources().getColor(R.color.white));
+                    break;
                 case R.id.quit:
                     ((ImageView) (v.findViewById(R.id.im_quit))).setImageResource(R.drawable.left_zhux);
                     ((TextView) (v.findViewById(R.id.tv_quit))).setTextColor(getResources().getColor(R.color.white));
@@ -811,7 +853,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
 
-            case R.id.wszl://完善资料
+            case R.id.wszl://完善资料，个人资料
                 intent = new Intent(MainActivity.this, CompleteInforActivity.class);
                 startActivity(intent);
                 break;
@@ -823,11 +865,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
 
-            case R.id.cpsj://我的服务产品
-                intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
-                intent.putExtra("category", "1");//广告创意1营销策略2影视广告3动漫创作4
-                startActivity(intent);
-                break;
+//            case R.id.cpsj://我的服务产品
+//                intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
+//                intent.putExtra("category", "1");//广告创意1营销策略2影视广告3动漫创作4
+//                startActivity(intent);
+//                break;
 
             case R.id.wdqd://我的抢单
                 intent = new Intent(MainActivity.this, MyGrabSingleListActivity.class);
@@ -855,7 +897,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 left_tv_red.setVisibility(View.GONE);
                 break;
 
-            case R.id.quit://注销
+            case R.id.yjfk://意见反馈
+                WebViewActivity.LaunchSelf(mContext, Constants.URL_SUGGEST, "意见反馈");
+                break;
+
+            case R.id.quit://退出登录
                 ((TopADApplication) TopADApplication.getContext()).logout();
 
                 intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -1051,7 +1097,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     };
 
     /**
-     * 判断是否为公司
+     * 判断是否为公司,已启用20160419
      *
      * @return
      */
