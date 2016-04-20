@@ -268,7 +268,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_mtyx_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 2);
                 startActivity(intent);
                 break;
 
@@ -276,7 +276,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_yxtg_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
 
@@ -284,7 +284,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_ysdm_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 4);
                 startActivity(intent);
                 break;
 
@@ -292,7 +292,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_wach_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 5);
                 startActivity(intent);
                 break;
 
@@ -300,7 +300,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_ggjc_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 6);
                 startActivity(intent);
                 break;
 
@@ -308,7 +308,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_zypx_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 7);
                 startActivity(intent);
                 break;
 
@@ -316,7 +316,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_glzx_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 8);
                 startActivity(intent);
                 break;
 
@@ -324,7 +324,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_wzrj_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 9);
                 startActivity(intent);
                 break;
 
@@ -332,63 +332,70 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
             case R.id.ih_ggfw_layout:
                 intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
                 intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 10);
                 startActivity(intent);
                 break;
 
             // 我的服务产品－品牌／公司起名
             case R.id.ih_name_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "品牌起名/公司起名");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－名片设计
             case R.id.ih_mpsj_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "名片设计");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－图文输出
             case R.id.ih_twsc_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "图文输出");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－出版印刷
             case R.id.ih_cbys_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "出版印刷");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－展览服务
             case R.id.ih_zlfw_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "展览服务");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－法律咨询
             case R.id.ih_flzx_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "法律咨询服务");
                 startActivity(intent);
                 break;
 
             // 我的服务产品－其他服务
             case R.id.ih_qtfw_layout:
-                intent = new Intent(MyMediaActivity.this, NeedsListActivity.class);
-                intent.putExtra("from", "4");
-                intent.putExtra("type", 1);
+                intent = new Intent(MyMediaActivity.this, AddProductActivity.class);
+                intent.putExtra("from", "2");
+                intent.putExtra( "type1", "其他服务");
+                intent.putExtra( "type2", "其他服务");
                 startActivity(intent);
                 break;
 
