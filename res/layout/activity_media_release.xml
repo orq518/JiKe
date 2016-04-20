@@ -106,7 +106,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
-                    android:hint="具体栏目：中国新闻"
+                    android:hint="项目名称：中国新闻"
                     android:textColorHint="@color/text_gray_bg"
                     android:textSize="14sp"
                     android:singleLine="true"

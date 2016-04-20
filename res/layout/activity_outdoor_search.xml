@@ -13,7 +13,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/app_bg">
+        android:background="@color/white">
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
@@ -39,8 +39,8 @@
                 android:id="@+id/layout_voice"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -51,14 +51,14 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:onClick="onClick"
+                    android:visibility="gone"
                     android:src="@drawable/voice_change_bg"/>
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
                     android:background="@drawable/btn_board_gray"
                     android:hint="请输入详细描述"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:padding="@dimen/dimen_10"
                     />
             </LinearLayout>

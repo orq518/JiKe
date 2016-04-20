@@ -65,7 +65,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
     TextView tv_bithday;
     TextView gerenjianjie, gerenjianjie_detail, xuanzezhiye, shenfenyanzheng;
     CircleImageView add_head_pic;
-    EditText et_realname, et_address;
+    EditText et_realname, et_address,et_company,et_zhiwu;
     RadioButton sex1, sex2;
     MyInfoBean.DataEntity myInfoBean;
 
@@ -88,6 +88,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         sex2 = (RadioButton) findViewById(R.id.sex2);
         et_realname = (EditText) findViewById(R.id.et_realname);
         et_address = (EditText) findViewById(R.id.et_address);
+        et_company= (EditText) findViewById(R.id.et_company);
+        et_zhiwu= (EditText) findViewById(R.id.et_zhiwu);
         add_head_pic = (CircleImageView) findViewById(R.id.add_head_pic);
         add_head_pic.setOnClickListener(this);
         mainlayout = (LinearLayout) findViewById(R.id.scroll_layout);
@@ -161,6 +163,12 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
             }
             if (!Utils.isEmpty(myInfoBean.getIntro())) {
                 gerenjianjie_detail.setText(myInfoBean.getIntro());
+            }
+            if (!Utils.isEmpty(myInfoBean.getCompanyname())) {
+                et_company.setText(myInfoBean.getCompanyname());
+            }
+            if (!Utils.isEmpty(myInfoBean.getZhiwu())) {
+                et_zhiwu.setText(myInfoBean.getZhiwu());
             }
 
         } catch (Exception e) {
@@ -288,6 +296,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         String birthday = tv_bithday.getText().toString();
         String address = et_address.getText().toString();
         String sex = sex1.isChecked() ? "1" : "0";
+        String companyname = et_company.getText().toString();
+        String zhiwu = et_zhiwu.getText().toString();
 
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
@@ -296,6 +306,8 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
         rp.add("birthday", birthday);
         rp.add("address", address);
         rp.add("sex", sex);
+        rp.add("companyname", companyname);
+        rp.add("zhiwu", zhiwu);
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
