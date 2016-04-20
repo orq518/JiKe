@@ -164,6 +164,42 @@
                     android:orientation="horizontal"
                     android:gravity="center">
 
+                    <!-- 地址 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="手机"
+                        android:layout_weight="2"
+                        android:gravity="center|right"
+                        android:background="#f2f2f2"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+
+                    <!-- 地址 -->
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_bg"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
                     <!-- 职业 -->
                     <TextView
                         android:layout_width="match_parent"
@@ -230,6 +266,56 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/ly_tadefuwu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/white"
+                    android:gravity="left|center"
+                    android:onClick="onClick"
+                    android:padding="10dp"
+                    android:text="ta的服务"
+                    android:textSize="16dp"
+                    android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/gerenjianjie_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/arrow"
+                    android:gravity="right|center"
+                    android:onClick="onClick"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text=""
+                    android:textColor="@color/text_gray_bg"
+                    android:textSize="14dp"
+                    android:visibility="visible"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
 
             <com.topad.view.customviews.MyGridView
                 android:id="@+id/gv_in"

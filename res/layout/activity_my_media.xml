@@ -256,7 +256,7 @@
                     <LinearLayout
                         android:id="@+id/ih_ggcy_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_ggcy"
                         android:gravity="center_vertical"
@@ -271,7 +271,7 @@
                     <LinearLayout
                         android:id="@+id/ih_pmsj_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_pmsj"
                         android:gravity="center_vertical"
@@ -288,7 +288,7 @@
                     <LinearLayout
                         android:id="@+id/ih_mtyx_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_mtyx"
                         android:gravity="center_vertical"
@@ -314,7 +314,7 @@
                     <LinearLayout
                         android:id="@+id/ih_yxtg_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_yxtg"
                         android:gravity="center_vertical"
@@ -329,7 +329,7 @@
                     <LinearLayout
                         android:id="@+id/ih_ysdm_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_ysdm"
                         android:gravity="center_vertical"
@@ -346,7 +346,7 @@
                     <LinearLayout
                         android:id="@+id/ih_wach_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_wach"
                         android:gravity="center_vertical"
@@ -379,7 +379,7 @@
                     <LinearLayout
                         android:id="@+id/ih_ggjc_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_ggjc"
                         android:gravity="center_vertical"
@@ -394,7 +394,7 @@
                     <LinearLayout
                         android:id="@+id/ih_zypx_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_zypx"
                         android:gravity="center_vertical"
@@ -411,7 +411,7 @@
                     <LinearLayout
                         android:id="@+id/ih_glzx_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_glzx"
                         android:gravity="center_vertical"
@@ -437,7 +437,7 @@
                     <LinearLayout
                         android:id="@+id/ih_wzrj_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_wzrj"
                         android:gravity="center_vertical"
@@ -452,7 +452,7 @@
                     <LinearLayout
                         android:id="@+id/ih_ggfw_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_ggfw"
                         android:gravity="center_vertical"
@@ -469,7 +469,7 @@
                     <LinearLayout
                         android:id="@+id/ih_name_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_name"
                         android:gravity="center_vertical"
@@ -502,7 +502,7 @@
                     <LinearLayout
                         android:id="@+id/ih_mpsj_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_mpsj"
                         android:gravity="center_vertical"
@@ -517,7 +517,7 @@
                     <LinearLayout
                         android:id="@+id/ih_twsc_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_twsc"
                         android:gravity="center_vertical"
@@ -534,7 +534,7 @@
                     <LinearLayout
                         android:id="@+id/ih_cbys_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_cbys"
                         android:gravity="center_vertical"
@@ -560,7 +560,7 @@
                     <LinearLayout
                         android:id="@+id/ih_zlfw_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_zlfw"
                         android:gravity="center_vertical"
@@ -575,7 +575,7 @@
                     <LinearLayout
                         android:id="@+id/ih_flzx_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_flzx"
                         android:gravity="center_vertical"
@@ -592,7 +592,7 @@
                     <LinearLayout
                         android:id="@+id/ih_qtfw_layout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:orientation="horizontal"
                         android:background="@drawable/pro_icon_qtfw"
                         android:gravity="center_vertical"

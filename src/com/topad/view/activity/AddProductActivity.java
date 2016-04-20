@@ -630,14 +630,12 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
         finish();
     }
 
-
     /**
      * 自定义适配器
      */
     class MediaAdapter extends BaseAdapter {
         private LayoutInflater inflater;
         int width;
-
 
         public MediaAdapter(Context context) {
             super();

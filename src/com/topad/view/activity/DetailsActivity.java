@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -57,10 +58,14 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private TextView mTVBirthday;
     // 地址
     private TextView mTVAddress;
+    // 手机
+    private TextView mTVPhone;
     // 职业
     private TextView mTVOccupation;
     // 个人简介
     private TextView mTVPersonal;
+    // ta的服务
+    private LinearLayout mLyTadefuwu;
     // 案例
     private MyGridView mGridView;
     // 数据源
@@ -88,9 +93,20 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         mTVName = (TextView) findViewById(R.id.tv_details_name);
         mTVBirthday = (TextView) findViewById(R.id.tv_birthday);
         mTVAddress = (TextView) findViewById(R.id.tv_address);
+        mTVPhone = (TextView) findViewById(R.id.tv_phone);
+        mLyTadefuwu = (LinearLayout) findViewById(R.id.ly_tadefuwu);
         mTVOccupation = (TextView) findViewById(R.id.tv_occupation);
         mTVPersonal = (TextView) findViewById(R.id.tv_personal);
         mGridView = (MyGridView) findViewById(R.id.gv_in);
+
+
+        mLyTadefuwu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailsActivity.this, MyShareMediaListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //为GridView设置适配器
         mGridView.setAdapter(new MyAdapter(this, setData()));
@@ -156,6 +172,10 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
             if(!Utils.isEmpty(myNeedBean.getAddress())){
                 mTVAddress.setText(myNeedBean.getAddress());
+            }
+
+            if(!Utils.isEmpty(TopADApplication.getSelf().getMyInfo().getMobile())){
+                mTVPhone.setText(TopADApplication.getSelf().getMyInfo().getMobile());
             }
 
             if(!Utils.isEmpty(myNeedBean.getJob1()) && !Utils.isEmpty(myNeedBean.getJob2())){
