@@ -97,6 +97,8 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
 
     /** 来源 1-编辑，2-添加 **/
     private String from;
+    /** 媒体类别－－从NeedsList来 **/
+    private String mediaClass;
 
     /** 添加案例 **/
     private static final int AD_CASE = 0;
@@ -148,7 +150,8 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
             mAdDetailsBean = (AdDetailsBean) intent.getSerializableExtra("data_details");
             mAdCaseListBean = (AdServiceCaseListBean) intent.getSerializableExtra("data_case");
             from = intent.getStringExtra("from");
-
+            type1 = intent.getStringExtra("type1");
+            type2 = intent.getStringExtra("type2");
         } else {
             LogUtil.d(LTAG + "--" + "intent is null!");
         }
@@ -199,11 +202,15 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                 caseTypeList.add(0, meidaType);
             }
         } else {
-
+            if (!Utils.isEmpty(type1) &&
+                    !Utils.isEmpty(type2)) {
+                mTVClass.setText(type1 + "-" + type2);
+                mTVClass.setVisibility(View.VISIBLE);
+            }
         }
 
         // 设置顶部标题布局
-        mTitleView.setTitle("我的服务产品设计方案");
+        mTitleView.setTitle("添加服务");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         if (!Utils.isEmpty(mETName.getText().toString())
@@ -551,6 +558,8 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
                         msg.setData(b);
                         updateHandler.sendMessage(msg);
                     }
+                    Intent intent = new Intent(AddProductActivity.this, MyShareMediaListActivity.class);
+                    startActivity(intent);
                     finish();
                 }
 
@@ -608,14 +617,16 @@ public class AddProductActivity extends BaseActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(BaseBean base) {
-                    int status = base.getStatus();// 状态码
-                    String msg = base.getMsg();// 错误信息
-
-                    LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
-                    ToastUtil.show(mContext, msg);
+//                    int status = base.getStatus();// 状态码
+//                    String msg = base.getMsg();// 错误信息
+//
+//                    LogUtil.d(LTAG, "status = " + status + "\n" + "msg = " + msg);
+//                    ToastUtil.show(mContext, msg);
                 }
             }, AddCaseBean.class, true);
         }
+        Intent intent = new Intent(AddProductActivity.this, MyShareMediaListActivity.class);
+        startActivity(intent);
         finish();
     }
 

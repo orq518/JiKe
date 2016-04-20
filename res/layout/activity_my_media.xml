@@ -1,4 +1,4 @@
-<!-- 我有媒体 -->
+<!-- 我有资源 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,210 +26,586 @@
             android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <!-- 上 -->
+            android:orientation="vertical">
+
+            <!-- 我有资源 -->
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/homepage_title_icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我有资源"
+                    android:textColor="@color/text_bg"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="20dp">
+                    android:background="@color/white"
+                    android:padding="5dp">
 
                     <!-- 电视 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_tv"
+                        android:id="@+id/ih_tv_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_tv"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="25dp"
-                            style="@style/btn_tv_borad_style"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="电视"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_tv"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
 
                     </LinearLayout>
 
                     <!-- 广播 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_radio"
+                        android:id="@+id/ih_broadcast_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_airwave"
+                        android:gravity="center_vertical"
                         android:layout_weight="1"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_radio"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="25dp"
-                            style="@style/btn_radio_borad_style"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="广播"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
 
                     </LinearLayout>
 
                     <!-- 报纸 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_newspaper"
+                        android:id="@+id/ih_newspaper_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_newspaper"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="25dp"
-                            style="@style/btn_newspaper_borad_style"/>
-
-                        <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="报纸"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_paper"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            <!-- 下 -->
-            <LinearLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="30dp">
+                    android:background="@color/white"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
 
                     <!-- 户外 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_outdoor"
+                        android:id="@+id/ih_outdoor_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_outdoor"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="25dp"
-                            style="@style/btn_outdoor_borad_style"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="户外"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_outdoor"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
 
                     </LinearLayout>
 
                     <!-- 杂志 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_mgz"
+                        android:id="@+id/ih_magazine_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_magazine"
+                        android:gravity="center_vertical"
                         android:layout_weight="1"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_mgz"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="25dp"
-                            style="@style/btn_mgz_borad_style"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="杂志"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:padding="15dp"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
 
                     </LinearLayout>
 
                     <!-- 网络 -->
                     <LinearLayout
-                        android:id="@+id/media_icon_web"
+                        android:id="@+id/ih_net_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/my_media_icon_web"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="22dp"
-                            style="@style/btn_web_borad_style"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|left"
-                            android:text="网络"
-                            android:textSize="16sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/text_gray_bg"/>
+                        android:orientation="horizontal"
+                        android:background="@drawable/homepage_icon_web"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/dark_gray_text" />
+
+            <RelativeLayout
+                android:id="@+id/rl_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/im_other1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:src="@drawable/icon_qtzy"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/tv_other1_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="其他资源"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/im_other1"/>
+
+            </RelativeLayout>
+
+            <!-- 我有服务 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/homepage_title_icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我有资源"
+                    android:textColor="@color/text_bg"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:padding="5dp">
+
+                    <!-- 广告创意 -->
+                    <LinearLayout
+                        android:id="@+id/ih_ggcy_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_ggcy"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 平面设计 -->
+                    <LinearLayout
+                        android:id="@+id/ih_pmsj_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_pmsj"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 媒体营销 -->
+                    <LinearLayout
+                        android:id="@+id/ih_mtyx_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_mtyx"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <!-- 营销推广 -->
+                    <LinearLayout
+                        android:id="@+id/ih_yxtg_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_yxtg"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 影视动漫 -->
+                    <LinearLayout
+                        android:id="@+id/ih_ysdm_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_ysdm"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 文案策划 -->
+                    <LinearLayout
+                        android:id="@+id/ih_wach_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_wach"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:padding="5dp">
+
+                    <!-- 广告检测 -->
+                    <LinearLayout
+                        android:id="@+id/ih_ggjc_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_ggjc"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 专业培训 -->
+                    <LinearLayout
+                        android:id="@+id/ih_zypx_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_zypx"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 管理咨询 -->
+                    <LinearLayout
+                        android:id="@+id/ih_glzx_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_glzx"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <!-- 网站软件 -->
+                    <LinearLayout
+                        android:id="@+id/ih_wzrj_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_wzrj"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 公关服务 -->
+                    <LinearLayout
+                        android:id="@+id/ih_ggfw_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_ggfw"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 品牌／公司起名 -->
+                    <LinearLayout
+                        android:id="@+id/ih_name_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_name"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:padding="5dp">
+
+                    <!-- 名片设计 -->
+                    <LinearLayout
+                        android:id="@+id/ih_mpsj_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_mpsj"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 图文输出 -->
+                    <LinearLayout
+                        android:id="@+id/ih_twsc_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_twsc"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 出版印刷 -->
+                    <LinearLayout
+                        android:id="@+id/ih_cbys_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_cbys"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <!-- 展览服务 -->
+                    <LinearLayout
+                        android:id="@+id/ih_zlfw_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_zlfw"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                    <!-- 法律咨询 -->
+                    <LinearLayout
+                        android:id="@+id/ih_flzx_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_flzx"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp">
+
+                    </LinearLayout>
+
+                    <!-- 其他服务 -->
+                    <LinearLayout
+                        android:id="@+id/ih_qtfw_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/pro_icon_qtfw"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:clickable="true"
+                        android:padding="15dp">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

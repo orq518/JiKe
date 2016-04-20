@@ -27,17 +27,16 @@ import java.util.ArrayList;
  * 户外搜索二级
  */
 public class OutDoorSearchSecondListActivity extends BaseActivity implements View.OnClickListener {
-
-
-    int curID=-1;
-    /**
-     * title布局
-     **/
+    // title布局
     private TitleView mTitle;
-    ListView listview;
-    ArrayList<SearchListBean> dataList = new ArrayList<SearchListBean>();
-    ListViewAdapter adapter;
-    int type;
+    private ListView listview;
+    private ArrayList<SearchListBean> dataList = new ArrayList<SearchListBean>();
+    private  ListViewAdapter adapter;
+    private int type;
+    private int searchType;
+    // 来源 0-首页
+    private String from;
+    private int curID=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +53,12 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
         return null;
     }
 
-    /** 沉浸式状态栏 **/
-    private SystemBarTintManager mTintManager;
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
-    }
     @Override
     public void initViews() {
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
-
+        searchType = getIntent().getIntExtra("searchType", 0);
         type = getIntent().getIntExtra("type", 0);
+        from = getIntent().getStringExtra("from");
+
         Resources res = getResources();
         String[] tempArray = null;
         switch (type) {
@@ -170,11 +161,18 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
     @Override
     public void onBack() {
         if(curID>=0) {
-            Intent intent = new Intent();
-//            intent.putExtra("id", curID);
-            SearchListBean bean = dataList.get(curID);
-            intent.putExtra("mediaType", bean.name);
-            setResult(RESULT_OK, intent);
+            if("0".equals(from)){
+                Intent intent = new Intent(this, SearchActivity.class);
+                SearchListBean bean = dataList.get(curID);
+                intent.putExtra("mediaType", bean.name);
+                intent.putExtra("searchtype", searchType);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent();
+                SearchListBean bean = dataList.get(curID);
+                intent.putExtra("mediaType", bean.name);
+                setResult(RESULT_OK, intent);
+            }
         }
         finish();
     }

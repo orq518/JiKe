@@ -193,7 +193,7 @@ public class HttpUtil {
                         status = respObj.optInt("status");// 状态码
                         msg = respObj.optString("msg");// 错误信息
 
-                        if("OK".equals(msg)){
+                        if("OK".equals(msg) || "ok".equals(msg)){
                             msg = " ";
                         }
 

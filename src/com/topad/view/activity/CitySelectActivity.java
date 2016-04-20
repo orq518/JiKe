@@ -87,8 +87,6 @@ public class CitySelectActivity extends BaseActivity implements OnScrollListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -116,7 +114,6 @@ public class CitySelectActivity extends BaseActivity implements OnScrollListener
                 onBack();
             }
         });
-
 
         personList = (ListView) findViewById(R.id.list_view);
         allCity_lists = new ArrayList<City>();

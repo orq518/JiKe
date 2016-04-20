@@ -401,6 +401,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
 
+        <!-- 首页其他搜索页面 -->
+        <activity
+            android:name=".view.activity.OtherSearchActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

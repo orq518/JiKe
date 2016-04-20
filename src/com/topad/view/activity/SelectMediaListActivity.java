@@ -38,6 +38,8 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
     private String[] mediaString;
     /** 类别 **/
     private String category;
+    // 来源 0-我有资源
+    private String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
         Intent intent = getIntent();
         if (intent != null) {
             category = intent.getStringExtra("category");
+            from = intent.getStringExtra("from");
         }
         if("1".equals(category)){
             mediaString =  getResources().getStringArray(R.array.dianshi);
@@ -89,18 +92,36 @@ public class SelectMediaListActivity extends BaseActivity implements View.OnClic
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // 户外
-                if("4".equals(category)){
-                    Intent intent = new Intent(SelectMediaListActivity.this, SelectediaSecondListOutDoorActivity.class );
-                    intent.putExtra( "type", position +"");
-                    startActivity(intent);
-                    finish();
+                // 我有资源
+                if("0".equals(from)){
+                    // 户外
+                    if("4".equals(category)){
+                        Intent intent = new Intent(SelectMediaListActivity.this, SelectediaSecondListOutDoorActivity.class );
+                        intent.putExtra( "type", position +"");
+                        intent.putExtra("category", category);
+                        intent.putExtra("from", "0");
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Intent intent = new Intent(SelectMediaListActivity.this, MediaReleaseActivity.class );
+                        intent.putExtra( "mediaName", mediaString[position]);
+                        intent.putExtra("category", category);
+                        startActivity(intent);
+                        finish();
+                    }
                 }else{
-                    Intent intent = new Intent(SelectMediaListActivity.this, MediaReleaseActivity.class );
-                    intent.putExtra( "mediaName", mediaString[position]);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    // 户外
+                    if("4".equals(category)){
+                        Intent intent = new Intent(SelectMediaListActivity.this, SelectediaSecondListOutDoorActivity.class );
+                        intent.putExtra( "type", position +"");
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Intent intent = new Intent(SelectMediaListActivity.this, MediaReleaseActivity.class );
+                        intent.putExtra( "mediaName", mediaString[position]);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
             }
         });

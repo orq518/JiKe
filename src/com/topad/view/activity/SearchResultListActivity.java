@@ -510,12 +510,11 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         }
         //A531F3B9-205A-A44A-34B4-4BB73A72FA87
 //          A531F3B9-205A-A44A-34B4-4BB73A72FA87
-        postWithLoading(url, rp, false, new HttpCallback() {
+        postWithLoading(url, rp, false, new HttpCallback()  {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                 SearchResultBean base = (SearchResultBean) t;
                 if (base != null) {
-                    ToastUtil.show(mContext, base.getMsg());
                     curPage++;
                     if (refreshType == 0) {
                         mListView.stopRefresh();
@@ -526,6 +525,13 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
                         mListView.stopLoadMore();
                     }
                     adapter.notifyDataSetChanged();
+
+                    if(searchResultList == null || searchResultList.size() == 0){
+                        mListView.setPullLoadEnable(false);
+                        ToastUtil.show(mContext, "没有您想要的结果");
+                    }else{
+                        mListView.setPullLoadEnable(true);
+                    }
                 }
             }
 
@@ -533,7 +539,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
             public void onFailure(BaseBean base) {
                 int status = base.getStatus();// 状态码
                 String msg = base.getMsg();// 错误信息
-                ToastUtil.show(mContext, msg);
+//                ToastUtil.show(mContext, msg);
             }
         }, SearchResultBean.class);
 

@@ -38,8 +38,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray"
-                    android:layout_marginTop="15dp"/>
+                    android:background="@color/gray" />
 
                 <RelativeLayout
                     android:id="@+id/lay_select_media"

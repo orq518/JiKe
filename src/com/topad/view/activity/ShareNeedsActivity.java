@@ -34,9 +34,10 @@ import java.io.IOException;
  * 发布需求主界面
  */
 public class ShareNeedsActivity extends BaseActivity implements View.OnClickListener{
-
-    /** title布局 **/
+    // title布局
     private TitleView mTitle;
+    private String from;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +52,10 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
     public View setLayoutByView() {
         return null;
     }
-    /** 沉浸式状态栏 **/
-    private SystemBarTintManager mTintManager;
-    String from;
+
+
     @Override
     public void initViews() {
-        from=getIntent().getStringExtra("from");
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
         // 设置顶部布局
@@ -68,13 +63,10 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
 
     }
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
-    }
+
     @Override
     public void initData() {
-
+        from = getIntent().getStringExtra("from");
     }
 
     @Override
@@ -126,6 +118,9 @@ public class ShareNeedsActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tab12:
                 intent.putExtra("type",11);
+                break;
+            case R.id.tab13:
+                intent.putExtra("type",12);
                 break;
             default:
                 break;

@@ -26,17 +26,15 @@ import java.util.ArrayList;
  * 户外搜索二级
  */
 public class OtherSearchListActivity extends BaseActivity implements View.OnClickListener {
-
-
-    int curID=-1;
-    /**
-     * title布局
-     **/
+    // title布局
     private TitleView mTitle;
-    ListView listview;
-    ArrayList<SearchListBean> dataList = new ArrayList<SearchListBean>();
-    ListViewAdapter adapter;
-    int type;
+    private ListView listview;
+    private ArrayList<SearchListBean> dataList = new ArrayList<SearchListBean>();
+    private ListViewAdapter adapter;
+    private int type;
+    // 来源 0-首页
+    private String from;
+    private int curID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,34 +51,30 @@ public class OtherSearchListActivity extends BaseActivity implements View.OnClic
         return null;
     }
 
-    /** 沉浸式状态栏 **/
-    private SystemBarTintManager mTintManager;
-    private void applySelectedColor() {
-        int color = Color.argb(0, Color.red(0), Color.green(0), Color.blue(0));
-        mTintManager.setTintColor(color);
-    }
     @Override
     public void initViews() {
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setNavigationBarTintEnabled(true);
-        applySelectedColor();
         type = getIntent().getIntExtra("searchType", 0);
+        from = getIntent().getStringExtra("from");
+
         Resources res = getResources();
         String[] tempArray = null;
         switch (type) {
             case 0:
                 tempArray = res.getStringArray(R.array.dianshi);
                 break;
+
             case 1:
                 tempArray = res.getStringArray(R.array.guangbo);
                 break;
+
             case 2:
                 tempArray = res.getStringArray(R.array.baozhi);
                 break;
+
             case 4:
                 tempArray = res.getStringArray(R.array.zazhi);
                 break;
+
             case 5:
                 tempArray = res.getStringArray(R.array.wangluo);
                 break;
@@ -149,6 +143,7 @@ public class OtherSearchListActivity extends BaseActivity implements View.OnClic
         }
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -156,20 +151,27 @@ public class OtherSearchListActivity extends BaseActivity implements View.OnClic
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public void onBack() {
         if(curID>=0) {
-            Intent intent = new Intent();
-//            intent.putExtra("id", curID);
-            SearchListBean bean = dataList.get(curID);
-            intent.putExtra("mediaType", bean.name);
-            setResult(RESULT_OK, intent);
+            if("0".equals(from)){
+                Intent intent = new Intent(this, SearchActivity.class);
+                SearchListBean bean = dataList.get(curID);
+                intent.putExtra("mediaType", bean.name);
+                intent.putExtra("searchtype", type);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent();
+                SearchListBean bean = dataList.get(curID);
+                intent.putExtra("mediaType", bean.name);
+                setResult(RESULT_OK, intent);
+            }
         }
         finish();
     }
 
     public class ListViewAdapter extends BaseAdapter {
-
         private Context mCtx;
         private LayoutInflater mInflater;
         private ViewHolder mHolder;
