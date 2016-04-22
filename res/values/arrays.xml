@@ -430,6 +430,7 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>其他</item>
     </string-array>
     <string-array name="province">
+        <item>全国</item>
         <item>安徽</item>
         <item>北京</item>
         <item>福建</item>
