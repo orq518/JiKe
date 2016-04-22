@@ -233,7 +233,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我有资源"
+                    android:text="我有服务"
                     android:textColor="@color/text_bg"
                     android:textSize="16sp"/>
 
