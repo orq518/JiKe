@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/dimen_5"
         android:background="@drawable/btn_board_gray"
         android:hint="请输入电视名称"
+        android:textSize="15sp"
         android:padding="@dimen/dimen_10"
         />
     <EditText
@@ -68,6 +69,7 @@
         android:layout_marginLeft="@dimen/dimen_10"
         android:layout_marginRight="@dimen/dimen_10"
         android:layout_marginTop="@dimen/dimen_5"
+        android:textSize="15sp"
         android:background="@drawable/btn_board_gray"
         android:hint="请输入栏目名称"
         android:padding="@dimen/dimen_10"

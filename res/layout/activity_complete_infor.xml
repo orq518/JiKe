@@ -262,13 +262,13 @@
                         android:visibility="visible"/>
 
                     <EditText
-                        android:id="@+id/et_address"
+                        android:id="@+id/et_zhiwu"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="1dp"
                         android:background="@color/white"
                         android:completionThreshold="1"
-                        android:hint="请输入地址"
+                        android:hint="请输入职务"
                         android:singleLine="true"
                         android:textColorHint="#AAAAAA"
                         android:textSize="16dp"/>

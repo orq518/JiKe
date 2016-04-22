@@ -154,12 +154,12 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 mTitleView.setTitle("电视媒体发布");
                 mETMediaName.setHint("电视台名称：例如 CCTV1");
                 mETColumn.setVisibility(View.VISIBLE);
-                mETColumn.setHint("具体栏目：中国新闻");
+                mETColumn.setHint("项目名称：中国新闻");
             }else if(category.equals("2")){
                 mTitleView.setTitle("广播媒体发布");
                 mETMediaName.setHint("广播电台名称：例如 中央人民广播电台");
                 mETColumn.setVisibility(View.VISIBLE);
-                mETColumn.setHint("具体栏目：中国之声");
+                mETColumn.setHint("项目名称：中国之声");
             }else if(category.equals("3")){
                 mTitleView.setTitle("报纸媒体发布");
                 mETMediaName.setHint("报纸名称：例如 人民日报");
