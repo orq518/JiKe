@@ -72,6 +72,7 @@
             android:layout_marginRight="8dp"
             android:paddingBottom="3dp"
             android:paddingLeft="8dp"
+            android:drawablePadding="3dp"
             android:paddingRight="8dp"
             android:paddingTop="3dp"
             android:textColor="@color/white"

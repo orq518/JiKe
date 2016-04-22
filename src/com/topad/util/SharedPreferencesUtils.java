@@ -28,6 +28,7 @@ public class SharedPreferencesUtils {
     public static String USER_PSW = "password";
     private static SharedPreferences sp = null;
     private static String curAccount;  //当前账户
+    public static String KEY_PROVICE = "provice";    //当前省
     /**
      * 获取数据存储实例句柄
      *

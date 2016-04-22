@@ -1,9 +1,11 @@
 package com.topad.view.customviews;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +112,27 @@ public class TitleView extends RelativeLayout {
             mRigh.setVisibility(View.GONE);
         }
     }
-
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void setRightClickListener1(OnClickListener lis, String text, int drawableID) {
+        mRigh.setOnClickListener(lis);
+        if (text != null) {
+            mRigh.setText(text);
+            mRigh.setTextSize(14);
+            mRigh.setVisibility(View.VISIBLE);
+        } else {
+            mRigh.setVisibility(View.GONE);
+        }
+        if(drawableID>0){
+            mRigh.setCompoundDrawablesRelativeWithIntrinsicBounds(getResources().getDrawable(drawableID),null,null,null);
+        }
+    }
+    public void setRightText(String text) {
+        if (text != null) {
+            mRigh.setText(text);
+            mRigh.setTextSize(14);
+            mRigh.setVisibility(View.VISIBLE);
+        }
+    }
     public void setRightImageClickListener(OnClickListener lis, int drawid) {
         mRightImage.setOnClickListener(lis);
         if (drawid != 0) {

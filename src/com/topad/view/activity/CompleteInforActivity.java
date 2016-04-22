@@ -358,7 +358,7 @@ public class CompleteInforActivity extends BaseActivity implements View.OnClickL
                 intent = new Intent(mContext, NeedsListActivity.class);
                 intent.putExtra("from", "3");
                 intent.putExtra("title", "选择职业");
-                intent.putExtra("type", 10);
+                intent.putExtra("type", 11);
                 startActivity(intent);
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(Constants.BROADCAST_ACTION_GETZHIYE);

@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     int OUTDOORLIST = 1;
     int BAOZHILIST = 2;
-
+    final int getprovice = 12313;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +147,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initViews() {
-
         // 顶部布局
         mTitle = (TitleView) findViewById(R.id.title);
         mMyMedia = (ImageView) findViewById(R.id.my_media);
@@ -184,11 +183,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mIntellectualProperty = (LinearLayout) findViewById(R.id.intellectual_property_layout);
         mWebsiteSuggestion = (LinearLayout) findViewById(R.id.website_suggestion_layout);
 
+        String proviceString= TopADApplication.getSelf().getProvice();
         // 设置顶部布局
         mTitle.setTitle(getString(R.string.app_name));
         mTitle.setLeftVisiable(true);
         mTitle.setLeftIcon(R.drawable.leftmenu);
         mTitle.setLeftClickListener(new TitleLeftOnClickListener());
+        mTitle.setRightClickListener1(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProvinceActivity.class);
+                startActivityForResult(intent,getprovice);
+            }
+        },proviceString,R.drawable.outdoor_location);
         mMyMedia.setOnClickListener(this);
         mReleaseDemand.setOnClickListener(this);
         mGrabSingle.setOnClickListener(this);
@@ -422,6 +429,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             locationBean.location = curAddress;
             locationBean.longitude = geoLng;
             locationBean.latitude = geoLat;
+            locationBean.province = aMapLocation.getProvince();
             TopADApplication.getSelf().setLocation(locationBean);
         }
 
@@ -1134,5 +1142,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                ToastUtil.show(mContext, msg);
             }
         }, IsCompanyBean.class, true);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case getprovice:
+                if (data != null) {
+                    String provice = data.getStringExtra("provice");
+                    if (!Utils.isEmpty(provice)) {
+                        mTitle.setRightText(provice);
+                        SharedPreferencesUtils.put(this, SharedPreferencesUtils.KEY_PROVICE, provice);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

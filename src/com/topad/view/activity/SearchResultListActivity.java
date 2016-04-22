@@ -452,7 +452,7 @@ public class SearchResultListActivity extends BaseActivity implements View.OnCli
         rp.add("token", TopADApplication.getSelf().getToken());
         rp.add("page", "" + page);
         rp.add("type1", type1);
-
+        rp.add("province", TopADApplication.getSelf().getProvice());
         for (int i = 0; i < itemBeans.size(); i++) {
             SearchItemBean itembean = itemBeans.get(i);
 

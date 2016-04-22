@@ -242,15 +242,16 @@
                 <ImageView
                     android:id="@+id/im_other1"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/icon_qtfw"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"/>
 
                 <TextView
                     android:id="@+id/tv_other1_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:text="其他"
                     android:textSize="16sp"
                     android:layout_marginLeft="@dimen/dimen_10"
@@ -384,7 +385,7 @@
                 <ImageView
                     android:id="@+id/im_other2"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/icon_qtfw"
                     android:layout_alignParentLeft="true"/>
 
@@ -392,7 +393,7 @@
                     android:id="@+id/tv_other2_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:text="其他"
                     android:textSize="16sp"
                     android:layout_marginLeft="@dimen/dimen_10"

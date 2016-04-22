@@ -427,6 +427,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         RequestParams rp = new RequestParams();
         rp.add("type1", "");
         rp.add("type2", "");
+        rp.add("province", TopADApplication.getSelf().getProvice());
         if("0".equals(from)){
             rp.add("userid", userid);
         }else{

@@ -302,7 +302,18 @@ public class TopADApplication extends Application {
         SharedPreferencesUtils.put(this, SharedPreferencesUtils.USER_PHONR, "");
 
     }
-
+    /**
+     * 获取选择的省
+     *
+     * @return
+     */
+    public String getProvice() {
+        String proviceString= (String) SharedPreferencesUtils.get(this, SharedPreferencesUtils.KEY_PROVICE,"");
+        if(Utils.isEmpty(proviceString)){
+            proviceString="全国";
+        }
+        return proviceString;
+    }
     /**
      * 保存我的个人信息
      *

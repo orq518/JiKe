@@ -425,6 +425,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
         rp.add("type1", type1);
         rp.add("type2", type2);
         rp.add("sname", sname);
+        rp.add("province", TopADApplication.getSelf().getProvice());
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
