@@ -275,6 +275,7 @@ public class MyWantGrabSingleFragment extends BaseFragment{
 			rp.add("isselfpost", "0"); // 是否是自己发布的
 			rp.add("isqd", "1"); // 我要抢单该值为1
 			rp.add("page", page + "");
+			rp.add("province", TopADApplication.getSelf().getProvice());
 			postWithLoading(url, rp, false, new HttpCallback() {
 				@Override
 				public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {

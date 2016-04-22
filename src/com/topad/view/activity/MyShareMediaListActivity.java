@@ -415,6 +415,7 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         rp.add("type1", "");
         rp.add("type2", "");
         rp.add("userid", TopADApplication.getSelf().getUserId());
+        rp.add("province", TopADApplication.getSelf().getProvice());
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override

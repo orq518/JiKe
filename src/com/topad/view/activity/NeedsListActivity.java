@@ -67,8 +67,8 @@ public class NeedsListActivity extends BaseActivity implements View.OnClickListe
     int[] qiyezhaopin_ic = new int[]{R.drawable.zhaopin_adc, R.drawable.zhaopin_ad2, R.drawable.zhaopin_tv, R.drawable.zhaopin_radio, R.drawable.zhaopin_baokan,
             R.drawable.zhaopin_outdoor, R.drawable.zhaopin_web, R.drawable.zhaopin_yx, R.drawable.zhaopin_it, R.drawable.zhaopin_students, R.drawable.zhaopin_jianzhi};
 
-    String[] qitafuwu = new String[]{"品牌起名/公司起名", "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询服务"};
-    int[] qitafuwu_ic = new int[]{R.drawable.others_quming, R.drawable.others_mingpian, R.drawable.others_shuchu, R.drawable.others_chuban, R.drawable.others_zhanlan, R.drawable.others_law};
+    String[] qitafuwu = new String[]{"品牌起名/公司起名", "名片设计", "图文输出", "出版印刷", "展览服务", "法律咨询服务", "其他服务"};
+    int[] qitafuwu_ic = new int[]{R.drawable.others_quming, R.drawable.others_mingpian, R.drawable.others_shuchu, R.drawable.others_chuban, R.drawable.others_zhanlan, R.drawable.others_law, R.drawable.icon_qtfw};
 
     private String[] arrayTV = new String[]{"广告创意", "平面设计", "媒体营销","营销推广", "影视动漫", "文案策划",
             "广告监测", "专家培训", "管理咨询", "网站软件", "公关服务", "品牌／公司起名",

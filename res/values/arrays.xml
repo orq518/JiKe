@@ -242,20 +242,20 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>县级广播电台</item>
     </string-array>
 
-        <declare-styleable name="SwipeLayout">
-            <attr name="drag_edge" format="enum">
-                <enum name="left" value="0"/>
-                <enum name="right" value="1"/>
-                <enum name="top" value="2"/>
-                <enum name="bottom" value="3"/>
-            </attr>
-            <attr name="show_mode" format="enum">
-                <enum name="lay_down" value="0"/>
-                <enum name="pull_out" value="1"/>
-            </attr>
-        </declare-styleable>
+    <declare-styleable name="SwipeLayout">
+        <attr name="drag_edge" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="top" value="2"/>
+            <enum name="bottom" value="3"/>
+        </attr>
+        <attr name="show_mode" format="enum">
+            <enum name="lay_down" value="0"/>
+            <enum name="pull_out" value="1"/>
+        </attr>
+    </declare-styleable>
 
-   <!-- <key>广告公司类</key>-->
+    <!-- <key>广告公司类</key>-->
     <string-array name="guanggaogongsi">
         <item>企业管理</item>
         <item>广告创意</item>
@@ -289,7 +289,7 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>法务</item>
         <item>其他</item>
     </string-array>
-   <!-- <key>电视媒体类</key>-->
+    <!-- <key>电视媒体类</key>-->
     <string-array name="dianshimeiti">
         <item>广告管理</item>
         <item>广告销售</item>
@@ -305,7 +305,7 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>法务</item>
         <item>其他</item>
     </string-array>
-   <!-- <key>广播媒体类</key>-->
+    <!-- <key>广播媒体类</key>-->
     <string-array name="guangbomeiti">
         <item>广告管理</item>
         <item>广告销售</item>
@@ -321,7 +321,7 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>法务</item>
         <item>其他</item>
     </string-array>
-   <!-- <key>报纸/杂志类</key>-->
+    <!-- <key>报纸/杂志类</key>-->
     <string-array name="baozhizazhi">
         <item>广告管理</item>
         <item>广告销售</item>
@@ -353,7 +353,7 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>法务</item>
         <item>其他</item>
     </string-array>
-   <!-- <key>互联网媒体类</key>-->
+    <!-- <key>互联网媒体类</key>-->
     <string-array name="hulianwangmeiti">
         <item>广告管理</item>
         <item>广告销售</item>
@@ -428,5 +428,38 @@ LED、座椅、出站门头、检票口门头灯箱、玻璃贴、高铁内电�
         <item>物理</item>
         <item>数学</item>
         <item>其他</item>
+    </string-array>
+    <string-array name="province">
+        <item>安徽</item>
+        <item>北京</item>
+        <item>福建</item>
+        <item>甘肃</item>
+        <item>广东</item>
+        <item>广西</item>
+        <item>贵州</item>
+        <item>海南</item>
+        <item>河北</item>
+        <item>河南</item>
+        <item>黑龙江</item>
+        <item>湖北</item>
+        <item>湖南</item>
+        <item>吉林</item>
+        <item>江苏</item>
+        <item>江西</item>
+        <item>辽宁</item>
+        <item>内蒙古</item>
+        <item>宁夏</item>
+        <item>青海</item>
+        <item>山东</item>
+        <item>山西</item>
+        <item>陕西</item>
+        <item>上海</item>
+        <item>四川</item>
+        <item>天津</item>
+        <item>西藏</item>
+        <item>新疆</item>
+        <item>云南</item>
+        <item>浙江</item>
+        <item>重庆</item>
     </string-array>
 </resources>

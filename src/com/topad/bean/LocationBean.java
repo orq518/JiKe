@@ -8,4 +8,5 @@ public class LocationBean {
     public String location;
     public double longitude;
     public double latitude;
+    public String province;
 }

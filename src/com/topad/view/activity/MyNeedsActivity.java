@@ -285,6 +285,7 @@ public class MyNeedsActivity extends BaseActivity implements View.OnClickListene
         rp.add("isselfpost", "1"); // 是否是自己发布的
         rp.add("isqd", "0"); // 我要抢单该值为1
         rp.add("page", page + "");
+        rp.add("province", TopADApplication.getSelf().getProvice());
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
             public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
