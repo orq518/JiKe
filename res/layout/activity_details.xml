@@ -26,12 +26,11 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_gravity="center">
 
                 <!-- 头像 -->
                 <com.topad.view.customviews.CircleImageView
@@ -43,7 +42,16 @@
                     android:layout_marginBottom="20dp"
                     android:src="@drawable/stay_tuned_icon" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_vip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:layout_gravity="bottom|right"
+                    android:drawableRight="@drawable/pic_vip"
+                    android:visibility="gone"
+                    android:layout_marginBottom="20dp"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -287,7 +295,6 @@
                     android:layout_marginRight="5dp"
                     android:background="@color/white"
                     android:gravity="left|center"
-                    android:onClick="onClick"
                     android:padding="10dp"
                     android:text="ta的服务"
                     android:textSize="16dp"
@@ -301,7 +308,6 @@
                     android:background="@color/white"
                     android:drawableRight="@drawable/arrow"
                     android:gravity="right|center"
-                    android:onClick="onClick"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:paddingLeft="10dp"

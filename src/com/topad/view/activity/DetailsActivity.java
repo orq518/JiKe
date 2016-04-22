@@ -52,6 +52,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private TitleView mTitleView;
     // 头像
     private CircleImageView mIVIcon;
+    // vip
+    private TextView mTVVip;
     // 名字
     private TextView mTVName;
     // 生日
@@ -90,6 +92,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
         mTitleView = (TitleView) findViewById(R.id.title);
         mIVIcon = (CircleImageView) findViewById(R.id.im_details_icon);
+        mTVVip = (TextView) findViewById(R.id.tv_vip);
         mTVName = (TextView) findViewById(R.id.tv_details_name);
         mTVBirthday = (TextView) findViewById(R.id.tv_birthday);
         mTVAddress = (TextView) findViewById(R.id.tv_address);
@@ -99,14 +102,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         mTVPersonal = (TextView) findViewById(R.id.tv_personal);
         mGridView = (MyGridView) findViewById(R.id.gv_in);
 
-
-        mLyTadefuwu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailsActivity.this, MyShareMediaListActivity.class);
-                startActivity(intent);
-            }
-        });
+        mLyTadefuwu.setOnClickListener(this);
 
         //为GridView设置适配器
         mGridView.setAdapter(new MyAdapter(this, setData()));
@@ -129,6 +125,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         // 设置顶部标题布局
         mTitleView.setTitle("查看资料");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+
         if(myNeedBean != null){
             if(!Utils.isEmpty(myNeedBean.getImghead())){
                 String picUrl = Constants.getCurrUrl() + Constants.CASE_IMAGE_URL_HEADER + myNeedBean.getImghead();
@@ -186,6 +183,14 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 mTVPersonal.setText(myNeedBean.getIntro());
             }
         }
+
+        if(!Utils.isEmpty(TopADApplication.getSelf().getMyInfo().getIscompany())){
+            if("1".equals(TopADApplication.getSelf().getMyInfo().getIscompany())){
+                mTVVip.setVisibility(View.VISIBLE);
+            }else{
+                mTVVip.setVisibility(View.GONE);
+            }
+        }
     }
 
     /**
@@ -204,9 +209,10 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            // 登录
-            case R.id.btn_login:
-
+            // ta的服务
+            case R.id.ly_tadefuwu:
+                Intent intent = new Intent(DetailsActivity.this, MyShareMediaListActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
