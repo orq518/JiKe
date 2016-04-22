@@ -65,6 +65,12 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     private LinearLayout view;
     /** 请求页数 **/
     private int page = 1;
+    /** 来源0-DetailsActivity **/
+    private String from;
+    /** title **/
+    private String title;
+    /** userid **/
+    private String userid;
 
     private final int MSG_CASE_LIST = 1000;
     protected android.os.Handler mHandler = new android.os.Handler() {
@@ -124,14 +130,8 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
     public void initViews() {
         // 顶部标题布局
         mTitleView = (TitleView) view.findViewById(R.id.title);
-        mTitleView.setTitle("我的服务产品设计");
-        mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
-        mTitleView.setRightVisiable(true);
-        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "+" , 30);
-
         // listview
         mListView = (MyListView) findViewById(R.id.listview);
-
     }
 
     /**
@@ -139,6 +139,19 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
      */
     @Override
     public void initData() {
+        from = getIntent().getStringExtra("from");
+        title = getIntent().getStringExtra("title");
+        userid = getIntent().getStringExtra("userid");
+
+        mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
+        mTitleView.setRightClickListener(new TitleRightOnClickListener(), "+" , 30);
+        if("0".equals(from)){
+            mTitleView.setTitle(title);
+            mTitleView.setRightVisiable(false);
+        }else{
+            mTitleView.setTitle("我的服务产品设计");
+            mTitleView.setRightVisiable(true);
+        }
     }
 
     @Override
@@ -411,10 +424,14 @@ public class MyShareMediaListActivity extends BaseActivity implements View.OnCli
         StringBuffer sb = new StringBuffer();
         sb.append(Constants.getCurrUrl()).append(Constants.URL_AD_SERVICE_GETLIST).append("?");
         String url = sb.toString();
-        RequestParams rp=new RequestParams();
+        RequestParams rp = new RequestParams();
         rp.add("type1", "");
         rp.add("type2", "");
-        rp.add("userid", TopADApplication.getSelf().getUserId());
+        if("0".equals(from)){
+            rp.add("userid", userid);
+        }else{
+            rp.add("userid", TopADApplication.getSelf().getUserId());
+        }
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {
             @Override
