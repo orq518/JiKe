@@ -406,6 +406,8 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
                 }else{
                     if(Utils.isEmpty(mediacert.trim())){
                         ToastUtil.show(mContext,"请上传媒体代理证明/经营证明");
+                    }else{
+                        submit();
                     }
                 }
                 break;

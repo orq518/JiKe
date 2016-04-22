@@ -198,7 +198,6 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
                 intent.putExtra("category", "1");
                 intent.putExtra("from", "0");
                 startActivity(intent);
-
                 break;
 
             // 广播
