@@ -212,6 +212,9 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             // ta的服务
             case R.id.ly_tadefuwu:
                 Intent intent = new Intent(DetailsActivity.this, MyShareMediaListActivity.class);
+                intent.putExtra("from", "0");
+                intent.putExtra("title", "ta的服务产品设计");
+                intent.putExtra("userid", myNeedBean.getUserid());
                 startActivity(intent);
                 break;
             default:
