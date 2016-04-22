@@ -503,8 +503,16 @@ public class MediaReleaseActivity extends BaseActivity implements OnClickListene
         RequestParams rp = new RequestParams();
         rp.add("userid", TopADApplication.getSelf().getUserId());
         rp.add("type1", categoryArray[Integer.parseInt(category) - 1]); // 1-6
-        rp.add("type2", mMedia.getText().toString()); // 传中文名
-        rp.add("type3", " ");
+        // 户型
+        if("4".equals(category)){
+            String[] strarray = mMedia.getText().toString().split("-");
+            rp.add("type2", strarray[0]); // 传中文名
+            rp.add("type3", strarray[1]);
+        }else{
+            rp.add("type2", mMedia.getText().toString()); // 传中文名
+            rp.add("type3", " ");
+        }
+
         rp.add("medianame", mediaName);
         if(!Utils.isEmpty(category)){
             if(category.equals("1") || category.equals("2")){
