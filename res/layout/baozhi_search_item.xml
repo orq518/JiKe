@@ -55,5 +55,6 @@
         android:background="@drawable/btn_board_gray"
         android:hint="请输入报纸名称"
         android:padding="@dimen/dimen_10"
+        android:textSize="15sp"
         />
 </LinearLayout>

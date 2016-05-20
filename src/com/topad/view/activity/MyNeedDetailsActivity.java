@@ -40,6 +40,7 @@ import com.topad.bean.MyNeedListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.DialogManager;
 import com.topad.util.LogUtil;
 import com.topad.util.Utils;
 import com.topad.view.customviews.CircleImageView;
@@ -236,10 +237,20 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.VISIBLE);
             mLYTrust.setVisibility(View.GONE);
-            mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
-            mTVState.setVisibility(View.VISIBLE);
+
+            // 托管
+            if (!Utils.isEmpty(grabSingleBean.getIspay())){
+                if("0".equals(grabSingleBean.getIspay())){
+                    mProjectTrust.setVisibility(View.VISIBLE);
+                    mTVState.setVisibility(View.GONE);
+                }else{
+                    mProjectTrust.setVisibility(View.GONE);
+                    mTVState.setVisibility(View.VISIBLE);
+                }
+            }
+
             // 类别
             if (!Utils.isEmpty(grabSingleBean.getType1())
                     && !Utils.isEmpty(grabSingleBean.getType2())) {
@@ -257,10 +268,18 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.GONE);
-            mProjectTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
-            mTVState.setVisibility(View.VISIBLE);
+            mProjectTrust.setVisibility(View.GONE);
+            // 托管
+            if (!Utils.isEmpty(grabSingleBean.getIspay())){
+                if("0".equals(grabSingleBean.getIspay())){
+                    mTVState.setVisibility(View.GONE);
+                }else{
+                    mTVState.setVisibility(View.VISIBLE);
+                }
+            }
+
             // 类别
             if (!Utils.isEmpty(grabSingleBean.getType1())
                     && !Utils.isEmpty(grabSingleBean.getType2())) {
@@ -284,29 +303,37 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             // 项目完成
             case R.id.btn_finish:
-                // 拼接url
-                StringBuffer sb = new StringBuffer();
-                sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_ENDPRJ).append("?");
-                String url = sb.toString();
-                RequestParams rp = new RequestParams();
-                rp.add("needid", needId);
-                rp.add("userid", grabSingleBean.getUserid());
-                rp.add("token", TopADApplication.getSelf().getToken());
-                postWithLoading(url, rp, false, new HttpCallback() {
-                    @Override
-                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
-                        mFinish.setVisibility(View.GONE);
-                        mTVProgectState.setText("项目已完成");
-                    }
+                DialogManager.showDialog(MyNeedDetailsActivity.this, null, "点击确定，将完成项目。托管的项目款将直接打入接单方钱包。",
+                        "确定", "", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // 拼接url
+                                StringBuffer sb = new StringBuffer();
+                                sb.append(Constants.getCurrUrl()).append(Constants.URL_NEED_ENDPRJ).append("?");
+                                String url = sb.toString();
+                                RequestParams rp = new RequestParams();
+                                rp.add("needid", needId);
+                                rp.add("userid", grabSingleBean.getUserid());
+                                rp.add("token", TopADApplication.getSelf().getToken());
+                                postWithLoading(url, rp, false, new HttpCallback() {
+                                    @Override
+                                    public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
+                                        mFinish.setVisibility(View.GONE);
+                                        mTVProgectState.setText("项目已完成");
+                                    }
 
-                    @Override
-                    public void onFailure(BaseBean base) {
-                        int status = base.getStatus();// 状态码
-                        String msg = base.getMsg();// 错误信息
+                                    @Override
+                                    public void onFailure(BaseBean base) {
+                                        int status = base.getStatus();// 状态码
+                                        String msg = base.getMsg();// 错误信息
 //                        ToastUtil.show(mContext, "status = " + status + "\n"
 //                                + "msg = " + msg);
-                    }
-                }, BaseBean.class);
+                                    }
+                                }, BaseBean.class);
+                            }
+                        }, null ,true, null);
+
+
                 break;
 
             // 项目款托管

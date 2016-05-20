@@ -296,7 +296,7 @@
                     android:background="@color/white"
                     android:gravity="left|center"
                     android:padding="10dp"
-                    android:text="ta的服务"
+                    android:text="查看ta的服务"
                     android:textSize="16dp"
                     android:visibility="visible"/>
                 <TextView
