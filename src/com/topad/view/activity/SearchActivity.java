@@ -135,11 +135,17 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                 break;
 
             case 2://报纸
+                outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.baozhi_search_item, null);
+                media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                media_type.setText(mediaType);
+                break;
             case 4://杂志
             case 5://网络
                 outdoor_search_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.baozhi_search_item, null);
                 media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
                 media_type.setText(mediaType);
+                EditText tv_name = (EditText) outdoor_search_layout.findViewById(R.id.et_name);
+                tv_name.setHint("请输入项目名称");
                 break;
 
             case 3://户外

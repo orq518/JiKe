@@ -20,10 +20,14 @@ import com.topad.bean.GrabSingleListBean;
 import com.topad.net.HttpCallback;
 import com.topad.net.http.RequestParams;
 import com.topad.util.Constants;
+import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
 import com.topad.view.customviews.mylist.MyListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Handler;
 
 /**
@@ -48,6 +52,8 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
     private ArrayList<GrabSingleBean> bankList = new ArrayList<GrabSingleBean>();
     /** 请求页数 **/
     private int page = 1;
+    /** 来源0-我的抢单，1-我的订单 **/
+    private String from;
 
     @Override
     public int setLayoutById() {
@@ -68,6 +74,11 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initData() {
+        // 接收数据
+        Intent intent = getIntent();
+        if (intent != null) {
+            from = intent.getStringExtra("from");
+        }
         setData();
 
         showView();
@@ -78,7 +89,12 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
      */
     private void showView() {
         // 设置顶部标题布局
-        mTitleView.setTitle("我的抢单");
+        if("0".equals(from)){
+            mTitleView.setTitle("我的抢单");
+        }else{
+            mTitleView.setTitle("我的订单");
+        }
+
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
 
         // 设置listview可以加载、刷新
@@ -205,8 +221,28 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
             holder.content.setText(bankList.get(position).getDetail());
             String[] sourceStrArray = bankList.get(position).getAdddate().split(" ");
             holder.time.setText(sourceStrArray[0]);
-            SpannableStringBuilder ssbs = new SpannableStringBuilder("还有" + bankList.get(position).getEnddate() + "天到期");
-            holder.countdown.setText(ssbs.toString());
+
+            if (!Utils.isEmpty(bankList.get(position).getEnddate())) {
+                // 时间
+                Date date = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try {
+                    date = sdf.parse(bankList.get(position).getEnddate());
+                    long diff = new Date().getTime() - date.getTime();
+                    long day = 60 * 60 * 24 * 1000;// 1天
+                    long r = 0;
+                    if (diff > day) {
+                        r = (diff / day);
+                        holder.countdown.setText("还有" + r + "天有效期");
+                    }else{
+                        holder.countdown.setText("项目已过期");
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return convertView;
         }
 
@@ -234,7 +270,11 @@ public class MyGrabSingleListActivity extends BaseActivity implements View.OnCli
         rp.add("type1", "0"); // 当是我的数据默认为0
         rp.add("type2", "0");// 当是我的数据默认为0
         rp.add("isselfpost", "0"); // 是否是自己发布的
-        rp.add("isqd", "0"); // 我要抢单该值为1
+        if("0".equals(from)){
+            rp.add("isqd", "0"); // 我的抢单该值为0，我要抢单该值为1，我的订单该值为2
+        }else{
+            rp.add("isqd", "2");
+        }
         rp.add("province",TopADApplication.getSelf().getProvice());
         rp.add("page", page + "");
         postWithLoading(url, rp, false, new HttpCallback() {

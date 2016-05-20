@@ -182,6 +182,12 @@
             android:theme="@style/AppTheme">
         </activity>
 
+        <!-- ta的服务列表 -->
+        <activity
+            android:name=".view.activity.TaDeFuWuListActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <!-- 我要抢单 -->
         <activity
             android:name=".view.activity.MyWantGrabsingleActivity"

@@ -162,6 +162,63 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/wddd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:background="@drawable/left_menu_bg_selector"
+                android:paddingBottom="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_10">
+
+                <ImageView
+                    android:id="@+id/im_wddd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/left_dingdan"/>
+
+                <TextView
+                    android:id="@+id/tv_wddd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:text="我的订单"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_18"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cpsj"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:background="@drawable/left_menu_bg_selector"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_10"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/im_cpsj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/left_products"/>
+
+                <TextView
+                    android:id="@+id/tv_cpsj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:text="我的服务产品设计"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_18"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/wdqd"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -309,35 +366,6 @@
                     android:text="重设密码"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_18"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/cpsj"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="@drawable/left_menu_bg_selector"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dimen_10"
-                android:paddingLeft="@dimen/dimen_20"
-                android:paddingTop="@dimen/dimen_10"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/im_cpsj"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/left_products"/>
-
-                <TextView
-                    android:id="@+id/tv_cpsj"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:text="我的服务产品设计"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textsize_18"/>
-
             </LinearLayout>
 
             <LinearLayout

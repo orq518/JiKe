@@ -111,6 +111,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
                                 intent.putExtra("data_mobile", mobile);
                                 intent.putExtra("data_serviceid", serviceid);
                                 startActivity(intent);
+                                finish();
                             }
                         }
 
@@ -357,7 +358,7 @@ public class ADSListActivity extends BaseActivity implements View.OnClickListene
             mClass.setText(bankList.get(position).getType1() + "-" + bankList.get(position).getType2());
 
 
-            SpannableStringBuilder ssb = new SpannableStringBuilder("￥" +  bankList.get(position).getPrice() + "/单品");
+            SpannableStringBuilder ssb = new SpannableStringBuilder(bankList.get(position).getPrice());
             money.setText(ssb.toString());
             SpannableStringBuilder ssb2 = new SpannableStringBuilder("已出售：" +  bankList.get(position).getSalecount() + "笔");
             count.setText(ssb2.toString());

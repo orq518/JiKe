@@ -385,6 +385,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.cpsj).setOnTouchListener(this);
         findViewById(R.id.wdqd).setOnTouchListener(this);
         findViewById(R.id.wdxq).setOnTouchListener(this);
+        findViewById(R.id.wddd).setOnTouchListener(this);
         findViewById(R.id.fbmt).setOnTouchListener(this);
         findViewById(R.id.wdqb).setOnTouchListener(this);
         findViewById(R.id.xtxx).setOnTouchListener(this);
@@ -777,6 +778,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ((ImageView) (v.findViewById(R.id.im_wdxq))).setImageResource(R.drawable.left_demands_blue);
                     ((TextView) (v.findViewById(R.id.tv_wdxq))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
                     break;
+                case R.id.wddd:
+                    ((ImageView) (v.findViewById(R.id.im_wddd))).setImageResource(R.drawable.left_dingdan_blue);
+                    ((TextView) (v.findViewById(R.id.tv_wddd))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
+                    break;
                 case R.id.fbmt:
                     ((ImageView) (v.findViewById(R.id.im_fbmt))).setImageResource(R.drawable.left_media_blue);
                     ((TextView) (v.findViewById(R.id.tv_fbmt))).setTextColor(getResources().getColor(R.color.act_home_tab_blue_normal));
@@ -824,6 +829,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 case R.id.wdxq:
                     ((ImageView) (v.findViewById(R.id.im_wdxq))).setImageResource(R.drawable.left_demands);
                     ((TextView) (v.findViewById(R.id.tv_wdxq))).setTextColor(getResources().getColor(R.color.white));
+                    break;
+                case R.id.wddd:
+                    ((ImageView) (v.findViewById(R.id.im_wddd))).setImageResource(R.drawable.left_dingdan);
+                    ((TextView) (v.findViewById(R.id.tv_wddd))).setTextColor(getResources().getColor(R.color.white));
                     break;
                 case R.id.fbmt:
                     ((ImageView) (v.findViewById(R.id.im_fbmt))).setImageResource(R.drawable.left_media);
@@ -873,19 +882,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(intent);
                 break;
 
-//            case R.id.cpsj://我的服务产品
-//                intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
-//                intent.putExtra("category", "1");//广告创意1营销策略2影视广告3动漫创作4
-//                startActivity(intent);
-//                break;
+            case R.id.cpsj://我的服务产品
+                intent = new Intent(MainActivity.this, MyShareMediaListActivity.class);
+                startActivity(intent);
+                break;
 
             case R.id.wdqd://我的抢单
                 intent = new Intent(MainActivity.this, MyGrabSingleListActivity.class);
+                intent.putExtra("from", "0");
                 startActivity(intent);
                 break;
 
             case R.id.wdxq://我的需求
                 intent = new Intent(MainActivity.this, MyNeedsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.wddd://我的订单
+                intent = new Intent(MainActivity.this, MyGrabSingleListActivity.class);
+                intent.putExtra("from", "1");
                 startActivity(intent);
                 break;
 
