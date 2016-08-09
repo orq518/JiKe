@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:layout_marginTop="5dp"
-                android:text="名字山东科技发达是克己复礼看电视减肥了可是当减肥了看电视"
+                android:autoLink="phone"
+                android:text="名字山东科技发达是克己18600565155复礼看电视减肥了可是当减肥了看电视"
                 android:textSize="16sp"
                 />
 

@@ -105,6 +105,7 @@ public class OutDoorSearchListActivity extends BaseActivity implements View.OnCl
                 adapter.notifyDataSetChanged();
                 
                 Intent intent = new Intent(OutDoorSearchListActivity.this, OutDoorSearchSecondListActivity.class);
+                intent.putExtra("name", bean.name);
                 intent.putExtra("type", position);
                 intent.putExtra("searchType", 3);
                 intent.putExtra("from", "0");

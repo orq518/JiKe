@@ -26,6 +26,7 @@ import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.RecordMediaPlayer;
 import com.topad.util.RecordTools;
+import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.SystemBarTintManager;
 import com.topad.util.Utils;
 import com.topad.view.customviews.TitleView;
@@ -152,6 +153,7 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
                 locationTV = (TextView) outdoor_search_layout.findViewById(R.id.city_name);
                 media_type = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
                 media_type.setText(mediaType);
+                locationTV.setText(TopADApplication.getSelf().getProvice());
                 break;
 
         }
@@ -281,11 +283,19 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
                 break;
             case 3://户外
+                media_type1 = (TextView) outdoor_search_layout.findViewById(R.id.media_type);
+                curItem.type = media_type1.getText().toString();
                 if (!Utils.isEmpty(curItem.type) && !curItem.type.equals("--")) {
                     SearchItemBean bean = new SearchItemBean();
                     bean.locaion = curItem.locaion;
                     bean.name = curItem.name;
                     bean.type = curItem.type;
+                    int index=curItem.type.indexOf("-");
+                    if(index>=0){
+                        String[] ss=curItem.type.split("-");
+                        bean.type = ss[0];
+                        bean.name = ss[1];
+                    }
                     bean.voice = curItem.voice;
                     if (Utils.isEmpty(bean.locaion)) {
                         bean.locaion = " ";
@@ -449,9 +459,17 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
 
         } else if (requestCode == PICKCITY && resultCode == RESULT_OK && data != null) {
             if (locationTV != null) {
-                String cityString = data.getStringExtra("city");
-                locationTV.setText(cityString);
-                curItem.locaion = cityString;
+//                String cityString = data.getStringExtra("city");
+//                locationTV.setText(cityString);
+//                curItem.locaion = cityString;
+
+                if (data != null) {
+                    String provice = data.getStringExtra("provice");
+                    if (!Utils.isEmpty(provice)) {
+                        locationTV.setText(provice);
+                        curItem.locaion = provice;
+                    }
+                }
             }
 
         }
@@ -464,8 +482,10 @@ public class SearchActivity extends BaseActivity implements IRecordFinish, View.
         super.onClick(v);
         switch (v.getId()) {
             case R.id.city_layout:
-                Intent cityIntent = new Intent(SearchActivity.this, CitySelectActivity.class);
-                startActivityForResult(cityIntent, PICKCITY);
+//                Intent cityIntent = new Intent(SearchActivity.this, CitySelectActivity.class);
+//                startActivityForResult(cityIntent, PICKCITY);
+                Intent cityIntent = new Intent(SearchActivity.this, ProvinceActivity.class);
+                startActivityForResult(cityIntent,PICKCITY);
                 break;
 
             case R.id.select_media_type:
