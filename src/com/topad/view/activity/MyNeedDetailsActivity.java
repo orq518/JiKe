@@ -95,11 +95,15 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     private TextView mTVProgectTime;
     /** 项目完成 **/
     private Button mFinish;
+    /** 完成文案提示 **/
+    private TextView mTVPrompt;
 
     /** 已、未托管布局 **/
     private LinearLayout mLYTrust;
     /** 项目款托管 **/
     private Button mProjectTrust;
+    /** 未完成文案提示 **/
+    private TextView mTVPrompt2;
     /** 取消项目 **/
     private Button mProjectCancel;
     /** 列表 **/
@@ -161,9 +165,12 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         mTVProgectState = (TextView) findViewById(R.id.tv_progect_state);
         mTVProgectTime = (TextView) findViewById(R.id.tv_progect_time);
         mFinish = (Button) findViewById(R.id.btn_finish);
+        mTVPrompt = (TextView) findViewById(R.id.tv_prompt);
+
 
         mLYTrust = (LinearLayout) findViewById(R.id.ly_trust);
         mProjectTrust = (Button) findViewById(R.id.btn_project_trust);
+        mTVPrompt2 = (TextView) findViewById(R.id.tv_prompt2);
         mProjectCancel = (Button) findViewById(R.id.btn_project_cancel);
         mListview = (ListView) findViewById(R.id.listview);
 
@@ -217,6 +224,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         if ("0".equals(state)) {//  未开始
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
+            mTVPrompt.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.VISIBLE);
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
@@ -225,9 +233,11 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             if (!Utils.isEmpty(grabSingleBean.getIspay())){
                 if("0".equals(grabSingleBean.getIspay())){
                     mProjectTrust.setVisibility(View.VISIBLE);
+                    mTVPrompt2.setVisibility(View.VISIBLE);
                     mTVState.setVisibility(View.GONE);
                 }else{
                     mProjectTrust.setVisibility(View.GONE);
+                    mTVPrompt2.setVisibility(View.GONE);
                     mTVState.setVisibility(View.VISIBLE);
                 }
             }
@@ -236,6 +246,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         }else if ("1".equals(state)) {// 项目进行中
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.VISIBLE);
+            mTVPrompt.setVisibility(View.VISIBLE);
             mLYTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
@@ -244,9 +255,11 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             if (!Utils.isEmpty(grabSingleBean.getIspay())){
                 if("0".equals(grabSingleBean.getIspay())){
                     mProjectTrust.setVisibility(View.VISIBLE);
+                    mTVPrompt2.setVisibility(View.VISIBLE);
                     mTVState.setVisibility(View.GONE);
                 }else{
                     mProjectTrust.setVisibility(View.GONE);
+                    mTVPrompt2.setVisibility(View.GONE);
                     mTVState.setVisibility(View.VISIBLE);
                 }
             }
@@ -267,10 +280,12 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         } else if ("2".equals(state)) {// 项目完成
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
+            mTVPrompt.setVisibility(View.GONE);
             mLYTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
             mProjectTrust.setVisibility(View.GONE);
+            mTVPrompt2.setVisibility(View.GONE);
             // 托管
             if (!Utils.isEmpty(grabSingleBean.getIspay())){
                 if("0".equals(grabSingleBean.getIspay())){
@@ -319,6 +334,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                                     @Override
                                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                                         mFinish.setVisibility(View.GONE);
+                                        mTVPrompt.setVisibility(View.GONE);
                                         mTVProgectState.setText("项目已完成");
                                     }
 
@@ -390,6 +406,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                     Toast.LENGTH_SHORT).show();
             // 成功后
             mProjectTrust.setVisibility(View.GONE);
+            mTVPrompt2.setVisibility(View.GONE);
             mTVState.setVisibility(View.VISIBLE);
         } else {
             // 判断resultStatus 为非"9000"则代表可能支付失败
@@ -525,8 +542,10 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                         public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                             mLYProductFinish.setVisibility(View.VISIBLE);
                             mFinish.setVisibility(View.VISIBLE);
+                            mTVPrompt.setVisibility(View.VISIBLE);
                             mLYTrust.setVisibility(View.GONE);
                             mProjectTrust.setVisibility(View.GONE);
+                            mTVPrompt2.setVisibility(View.GONE);
                             mProjectCancel.setVisibility(View.GONE);
                             mListview.setVisibility(View.GONE);
                             mTVState.setVisibility(View.VISIBLE);
