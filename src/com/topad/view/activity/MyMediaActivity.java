@@ -172,7 +172,7 @@ public class MyMediaActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initData() {
-        mTitleView.setTitle("我有媒体");
+        mTitleView.setTitle("我有资源");
         mTitleView.setLeftClickListener(new TitleLeftOnClickListener());
     }
 
