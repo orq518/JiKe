@@ -37,7 +37,7 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
     // 来源 0-首页
     private String from;
     private int curID=-1;
-
+String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
         searchType = getIntent().getIntExtra("searchType", 0);
         type = getIntent().getIntExtra("type", 0);
         from = getIntent().getStringExtra("from");
-
+        name=getIntent().getStringExtra("name");
         Resources res = getResources();
         String[] tempArray = null;
         switch (type) {
@@ -164,13 +164,13 @@ public class OutDoorSearchSecondListActivity extends BaseActivity implements Vie
             if("0".equals(from)){
                 Intent intent = new Intent(this, SearchActivity.class);
                 SearchListBean bean = dataList.get(curID);
-                intent.putExtra("mediaType", bean.name);
+                intent.putExtra("mediaType", name+"-"+bean.name);
                 intent.putExtra("searchtype", searchType);
                 startActivity(intent);
             }else{
                 Intent intent = new Intent();
                 SearchListBean bean = dataList.get(curID);
-                intent.putExtra("mediaType", bean.name);
+                intent.putExtra("mediaType",name+"-"+bean.name);
                 setResult(RESULT_OK, intent);
             }
         }

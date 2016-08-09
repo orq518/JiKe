@@ -918,6 +918,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 intent = new Intent(MainActivity.this, SystemNewsActivity.class);
                 startActivity(intent);
                 left_tv_red.setVisibility(View.GONE);
+                mTitle.setLeftRedVisiable(false);
                 break;
 
             case R.id.yjfk://意见反馈

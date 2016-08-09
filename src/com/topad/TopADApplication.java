@@ -3,6 +3,7 @@ package com.topad;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -31,6 +33,9 @@ import com.topad.util.Constants;
 import com.topad.util.LogUtil;
 import com.topad.util.SharedPreferencesUtils;
 import com.topad.util.Utils;
+import com.topad.view.activity.MainActivity;
+import com.topad.view.activity.SystemNewsActivity;
+import com.topad.view.activity.WebViewActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
@@ -38,6 +43,10 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.UmengRegistrar;
 import com.umeng.message.entity.UMessage;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * The author ou on 2015/7/15.
@@ -94,6 +103,7 @@ public class TopADApplication extends Application {
              * */
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
+                LogUtil.d("处理消息1");
                 new Handler().post(new Runnable() {
 
                     @Override
@@ -120,6 +130,7 @@ public class TopADApplication extends Application {
             @Override
             public Notification getNotification(Context context,
                                                 UMessage msg) {
+                LogUtil.d("处理消息getNotification1");
                 switch (msg.builder_id) {
                     case 1:
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -148,20 +159,29 @@ public class TopADApplication extends Application {
         /**
          * 该Handler是在BroadcastReceiver中被调用，故
          * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
-         * 参考集成文档的1.6.2
-         * http://dev.umeng.com/push/android/integration#1_6_2
          * */
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-                Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void launchApp(Context context, UMessage msg) {
+                super.launchApp(context,msg);
+//                Intent intent = new Intent(context, SystemNewsActivity.class);
+//                startActivity(intent);
+            }
+
+            @Override
+            public void openUrl(Context context, UMessage msg) {
+            }
+
+
+            @Override
+            public void openActivity(Context context, UMessage msg) {
             }
         };
-        //使用自定义的NotificationHandler，来结合友盟统计处理消息通知
-        //参考http://bbs.umeng.com/thread-11112-1-1.html
-        //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
-
     }
 
     public static void initImageLoader(Context context) {
