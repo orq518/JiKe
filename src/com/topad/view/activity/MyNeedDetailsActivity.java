@@ -336,6 +336,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                                     @Override
                                     public <T> void onModel(int respStatusCode, String respErrorMsg, T t) {
                                         mFinish.setVisibility(View.GONE);
+                                        mProjectTrust.setVisibility(View.GONE);
+                                        mTVPrompt2.setVisibility(View.GONE);
                                         mTVPrompt.setVisibility(View.GONE);
                                         mTVProgectState.setText("项目已完成");
                                     }
