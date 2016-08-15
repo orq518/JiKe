@@ -98,8 +98,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
     /** 完成文案提示 **/
     private TextView mTVPrompt;
 
-    /** 已、未托管布局 **/
-    private LinearLayout mLYTrust;
+//    /** 已、未托管布局 **/
+//    private LinearLayout mLYTrust;
     /** 项目款托管 **/
     private Button mProjectTrust;
     /** 未完成文案提示 **/
@@ -168,7 +168,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
         mTVPrompt = (TextView) findViewById(R.id.tv_prompt);
 
 
-        mLYTrust = (LinearLayout) findViewById(R.id.ly_trust);
+//        mLYTrust = (LinearLayout) findViewById(R.id.ly_trust);
         mProjectTrust = (Button) findViewById(R.id.btn_project_trust);
         mTVPrompt2 = (TextView) findViewById(R.id.tv_prompt2);
         mProjectCancel = (Button) findViewById(R.id.btn_project_cancel);
@@ -225,7 +225,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.GONE);
             mFinish.setVisibility(View.GONE);
             mTVPrompt.setVisibility(View.GONE);
-            mLYTrust.setVisibility(View.VISIBLE);
+//            mLYTrust.setVisibility(View.VISIBLE);
+            mTVPrompt2.setVisibility(View.VISIBLE);
             mProjectCancel.setVisibility(View.VISIBLE);
             mListview.setVisibility(View.VISIBLE);
 
@@ -247,7 +248,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.VISIBLE);
             mTVPrompt.setVisibility(View.VISIBLE);
-            mLYTrust.setVisibility(View.GONE);
+//            mLYTrust.setVisibility(View.GONE);
+            mTVPrompt2.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
 
@@ -281,7 +283,7 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
             mLYProductFinish.setVisibility(View.VISIBLE);
             mFinish.setVisibility(View.GONE);
             mTVPrompt.setVisibility(View.GONE);
-            mLYTrust.setVisibility(View.GONE);
+//            mLYTrust.setVisibility(View.GONE);
             mProjectCancel.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
             mProjectTrust.setVisibility(View.GONE);
@@ -543,7 +545,8 @@ public class MyNeedDetailsActivity extends BaseActivity implements View.OnClickL
                             mLYProductFinish.setVisibility(View.VISIBLE);
                             mFinish.setVisibility(View.VISIBLE);
                             mTVPrompt.setVisibility(View.VISIBLE);
-                            mLYTrust.setVisibility(View.GONE);
+//                            mLYTrust.setVisibility(View.GONE);
+
                             mProjectTrust.setVisibility(View.GONE);
                             mTVPrompt2.setVisibility(View.GONE);
                             mProjectCancel.setVisibility(View.GONE);

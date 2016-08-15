@@ -201,6 +201,38 @@
 
             </LinearLayout>
 
+            <!-- 项目款托管，未托管显示 -->
+            <Button
+                android:id="@+id/btn_project_trust"
+                style="@style/btn_red_my_wallet_borad_style"
+                android:layout_height="50dp"
+                android:focusable="false"
+                android:text="项目款托管"
+                android:textColor="@color/white"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tv_need_details_content"
+                android:visibility="gone"/>
+
+            <!-- 文案提示，显示生命周期和“项目托管”一样 -->
+            <TextView
+                android:id="@+id/tv_prompt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="1、托管的赏金会冻结在你的账户中，服务商完成工作且你验收完毕后才支付给对方，请放心托管。\n\n2、在你托管赏金后，服务商才会开始为你工作"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/text_bg"
+                android:visibility="gone"/>
+
             <!-- 项目已完成，进行中都显示 -->
             <LinearLayout
                 android:id="@+id/ly_product_finish"
@@ -355,38 +387,6 @@
                 android:orientation="vertical"
                 android:layout_marginTop="0dp"
                 android:visibility="visible">
-
-                <!-- 项目款托管，未托管显示 -->
-                <Button
-                    android:id="@+id/btn_project_trust"
-                    style="@style/btn_red_my_wallet_borad_style"
-                    android:layout_height="50dp"
-                    android:focusable="false"
-                    android:text="项目款托管"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/tv_need_details_content"
-                    android:visibility="gone"/>
-
-                <!-- 文案提示，显示生命周期和“项目托管”一样 -->
-                <TextView
-                    android:id="@+id/tv_prompt2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|left"
-                    android:text="1、托管的赏金会冻结在你的账户中，服务商完成工作且你验收完毕后才支付给对方，请放心托管。\n\n2、在你托管赏金后，服务商才会开始为你工作"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:textColor="@color/text_bg"
-                    android:visibility="gone"/>
 
                 <!-- 取消项目，都显示 -->
                 <Button
